@@ -9,33 +9,30 @@ namespace Lance.TowerWar.LevelBase
 
         [SerializeField, ReadOnly] private int levelIndex;
         [SerializeField, ReadOnly] private LevelMap levelMapPrefab;
-
+        [SerializeField, ReadOnly] private LevelMap levelMap;
         public int LevelIndex => levelIndex;
 
-        public LevelMap LevelMap { get; private set; }
+        public LevelMap LevelMap => levelMap;
+        public LevelMap LevelMapPrefab => levelMapPrefab;
 
         #endregion
 
         #region function
 
-        public virtual void Initialized(int level, LevelMap prefab)
+        public virtual void Initialized(int level, LevelMap levelMapPrefab)
         {
             levelIndex = level;
-            levelMapPrefab = prefab;
+            this.levelMapPrefab = levelMapPrefab;
         }
 
-        public virtual void Install()
+        public void Install()
         {
-            if (LevelMap != null)
+            Clear();
+            if (levelMapPrefab != null)
             {
-                DestroyImmediate(LevelMap);
+                levelMap = Instantiate(levelMapPrefab, transform, false);
+                levelMap.transform.localPosition = Vector3.zero;
             }
-
-            LevelMap = Instantiate(levelMapPrefab, transform);
-            var levelMap = LevelMap.transform;
-            levelMap.localPosition = Vector3.zero;
-            levelMap.localScale = Vector3.one;
-            levelMap.localEulerAngles = Vector3.zero;
         }
 
         /// <summary>

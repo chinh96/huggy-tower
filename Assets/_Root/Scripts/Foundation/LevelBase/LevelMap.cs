@@ -1,11 +1,29 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lance.TowerWar.Unit;
 
 namespace Lance.TowerWar.LevelBase
 {
     public class LevelMap : Unit
     {
+        public HomeTower homeTower;
+        public VisitTower visitTower;
+
+        public int CurrentLevelIndex { get; private set; }
         public List<IUnit> Units { get; private set; }
+
+        private void Start()
+        {
+            homeTower = GetComponentInChildren<HomeTower>();
+            visitTower = GetComponentInChildren<VisitTower>();
+        }
+
+        /// <summary>
+        /// set hold current level
+        /// </summary>
+        /// <param name="levelIndex"></param>
+        public void SetLevelLoaded(int levelIndex) { CurrentLevelIndex = levelIndex; }
 
         public override void DarknessRise()
         {
@@ -13,7 +31,11 @@ namespace Lance.TowerWar.LevelBase
 
             foreach (var unit in Units)
             {
-                if ((LevelMap) unit != this) unit.DarknessRise();
+                var levelMap = unit as LevelMap;
+                if (levelMap != null && levelMap != this)
+                {
+                    unit.DarknessRise();
+                }
             }
         }
 
