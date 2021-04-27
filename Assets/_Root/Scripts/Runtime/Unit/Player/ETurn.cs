@@ -5,5 +5,6 @@ namespace Lance.TowerWar.Unit
         None = 0,
         Move = 1,
         Attack = 2,
+        Attacking = 3,
     }
 }

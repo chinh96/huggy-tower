@@ -1,4 +1,11 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
+#if UNITY_EDITOR
+using Lance.Editor;
+using UnityEditor;
+
+#endif
 
 namespace Lance.TowerWar.Unit
 {
@@ -21,13 +28,20 @@ namespace Lance.TowerWar.Unit
         [SerializeField] private PlayerAttackHandle attackHandle;
         [SerializeField] private float countdownAttack = 1.25f;
 
+        [SerializeField] private TextMeshProUGUI txtDamage;
+
+        [Space(30)] public int damage;
         public bool CanGoBackHome { get; set; } = false;
         public bool FirstTurn { get; set; }
+        public TextMeshProUGUI TxtDamage => txtDamage;
         public ETurn Turn { get; private set; } = ETurn.None;
 
         private Vector3 _defaultPosition;
+        private RoomTower _defaultRoom = null;
         private float _countdownAttack = 0f;
         private List<Collider2D> _cachedSearchCollider = new List<Collider2D>();
+        private IEnemy _enemyTarget;
+        public bool _flag;
 
         private void Start()
         {
@@ -36,7 +50,11 @@ namespace Lance.TowerWar.Unit
             StartMoveTurn();
         }
 
-        public void UpdateDefaultPosition() { _defaultPosition = transform.localPosition; }
+        public void UpdateDefaultPosition()
+        {
+            _defaultPosition = transform.localPosition;
+            _defaultRoom = transform.parent.GetComponent<RoomTower>();
+        }
 
         /// <summary>
         /// 
@@ -60,7 +78,11 @@ namespace Lance.TowerWar.Unit
             return (check, indexSlot);
         }
 
-        public void ResetPlayerState() { transform.localPosition = _defaultPosition; }
+        public void ResetPlayerState()
+        {
+            transform.SetParent(_defaultRoom.transform, false);
+            transform.localPosition = _defaultPosition;
+        }
 
         public void OnSelected()
         {
@@ -95,13 +117,15 @@ namespace Lance.TowerWar.Unit
 
             if (checkArea.Item1)
             {
+                var room = Gamemanager.Instance.Root.LevelMap.visitTower.slots[checkArea.Item2];
+                transform.SetParent(room.transform, false);
+                transform.localPosition = room.spawnPoint.localPosition;
                 UpdateDefaultPosition();
-                if (!FirstTurn)
-                {
-                    FirstTurn = true;
-                }
+                if (!FirstTurn) FirstTurn = true;
 
-                StartAttackTurn();
+                Gamemanager.Instance.Root.LevelMap.visitTower.RefreshRoom();
+                Gamemanager.Instance.Root.LevelMap.homeTower.RefreshRoom();
+                Timer.Register(0.1f, StartAttackTurn);
                 OnDeSelected();
                 leanSelectableByFinger.Deselect();
             }
@@ -124,7 +148,6 @@ namespace Lance.TowerWar.Unit
 
         #endregion
 
-
         private void Update()
         {
             if (Gamemanager.Instance.GameState != EGameState.Playing) return;
@@ -141,7 +164,8 @@ namespace Lance.TowerWar.Unit
             if (Turn != ETurn.Attack) return;
 
             _cachedSearchCollider = new List<Collider2D>();
-            searchTargetCollider.OverlapCollider(new ContactFilter2D() {layerMask = searchTargetMark.value, useTriggers = true, useLayerMask = true}, _cachedSearchCollider);
+            searchTargetCollider.OverlapCollider(new ContactFilter2D() {layerMask = searchTargetMark.value, useTriggers = true, useLayerMask = true},
+                _cachedSearchCollider);
 
             _cachedSearchCollider.RemoveAll(_ => _.gameObject.CompareTag("Ground") || _ == coll2D || _ == groundCollider);
             if (_cachedSearchCollider.Count == 0) return;
@@ -168,27 +192,46 @@ namespace Lance.TowerWar.Unit
             var cacheCollider = _cachedSearchCollider[index];
             if (cacheCollider == coll2D) return;
 
-            var localEnemy = cacheCollider.GetComponentInParent<IEnemy>();
-            if (localEnemy is {State: EUnitState.Die}) return;
-
-            if (localEnemy is {State: EUnitState.Normal} && _countdownAttack <= 0)
+            _enemyTarget = cacheCollider.GetComponentInParent<IEnemy>();
+            if (_enemyTarget is {State: EUnitState.Die})
             {
+                _enemyTarget = null;
+                return;
+            }
+
+            if (_enemyTarget is {State: EUnitState.Normal} && _countdownAttack <= 0)
+            {
+                Turn = ETurn.Attacking;
                 _countdownAttack = countdownAttack;
-                
-                PlayAttack();
+
+                // check damage
+                _flag = damage > _enemyTarget.Damage;
+                if (_flag)
+                {
+                    PlayAttack();
+                    damage += _enemyTarget.Damage;
+                }
+                else
+                {
+                    damage = 0;
+                }
+
+                TxtDamage.text = damage.ToString();
+
                 return;
             }
         }
 
         private void Attack()
         {
-            Debug.Log("Attack enemy");
-
-            StartMoveTurn();
-
-            Timer.Register(0.6f, () => PlayIdle(true));
+            _enemyTarget?.BeingAttacked(_flag, damage);
+            Timer.Register(0.6f,
+                () =>
+                {
+                    StartMoveTurn();
+                    PlayIdle(true);
+                });
         }
-
 
         public override void DarknessRise() { }
 
@@ -206,4 +249,25 @@ namespace Lance.TowerWar.Unit
 
         public void PlayLose(bool isLoop) { skeleton.Play("fail 1", true); }
     }
+
+
+#if UNITY_EDITOR
+    [CustomEditor(typeof(Player))]
+    public class PlayerEditor : UnityEditor.Editor
+    {
+        private Player _player;
+
+        private void OnEnable() { _player = (Player) target; }
+
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            _player.TxtDamage.text = _player.damage.ToString();
+
+            serializedObject.Update();
+            serializedObject.ApplyModifiedProperties();
+        }
+    }
+#endif
 }

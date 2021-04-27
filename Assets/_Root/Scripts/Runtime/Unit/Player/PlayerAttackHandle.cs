@@ -11,13 +11,10 @@ namespace Lance.TowerWar.Unit
     public class PlayerAttackHandle : MonoBehaviour
     {
         [SpineEvent] public string onAttack = "OnBullet";
-        [SerializeField, ReadOnly] private SkeletonGraphic skeleton;
 
         private IAnimationStateComponent _iAnimationState;
         private ISkeletonAnimation _iSkeletonAnimation;
         private ISkeletonComponent _iSkeletonComponen;
-
-        public SkeletonGraphic Skeleton => skeleton;
 
         private Action _onAttackAction;
         public void Initialize(Action onAttackAction) { _onAttackAction = onAttackAction; }

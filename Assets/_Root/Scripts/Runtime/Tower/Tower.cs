@@ -10,4 +10,12 @@ public class Tower : MonoBehaviour
     {
         slots = GetComponentsInChildren<RoomTower>();
     }
+
+    public void RefreshRoom()
+    {
+        foreach (var roomTower in slots)
+        {
+            roomTower.UpdateUnitCollection();
+        }
+    }
 }

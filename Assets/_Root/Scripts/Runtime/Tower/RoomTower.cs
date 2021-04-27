@@ -8,10 +8,15 @@ namespace Lance.TowerWar.LevelBase
 
     public class RoomTower : MonoBehaviour
     {
+        public RectTransform spawnPoint;
         [ReadOnly] public List<Unit> units = new List<Unit>();
 
         private void Start() { UpdateUnitCollection(); }
 
-        public void UpdateUnitCollection() { units = GetComponentsInChildren<Unit>().ToList(); }
+        public void UpdateUnitCollection()
+        {
+            units = GetComponentsInChildren<Unit>().ToList();
+            
+        }
     }
 }
