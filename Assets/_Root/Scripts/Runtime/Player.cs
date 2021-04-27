@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 #if UNITY_EDITOR
-using Lance.Editor;
 using UnityEditor;
 
 #endif
@@ -29,19 +27,20 @@ namespace Lance.TowerWar.Unit
         [SerializeField] private float countdownAttack = 1.25f;
 
         [SerializeField] private TextMeshProUGUI txtDamage;
+        [SerializeField, ReadOnly] private ETurn turn = ETurn.None;
 
         [Space(30)] public int damage;
         public bool CanGoBackHome { get; set; } = false;
         public bool FirstTurn { get; set; }
         public TextMeshProUGUI TxtDamage => txtDamage;
-        public ETurn Turn { get; private set; } = ETurn.None;
+        public ETurn Turn { get => turn; private set => turn = value; }
 
         private Vector3 _defaultPosition;
         private RoomTower _defaultRoom = null;
         private float _countdownAttack = 0f;
         private List<Collider2D> _cachedSearchCollider = new List<Collider2D>();
         private IEnemy _enemyTarget;
-        public bool _flag;
+        private bool _flagAttack;
 
         private void Start()
         {
@@ -125,7 +124,7 @@ namespace Lance.TowerWar.Unit
 
                 Gamemanager.Instance.Root.LevelMap.visitTower.RefreshRoom();
                 Gamemanager.Instance.Root.LevelMap.homeTower.RefreshRoom();
-                Timer.Register(0.1f, StartAttackTurn);
+                Timer.Register(0.2f, StartAttackTurn);
                 OnDeSelected();
                 leanSelectableByFinger.Deselect();
             }
@@ -168,7 +167,11 @@ namespace Lance.TowerWar.Unit
                 _cachedSearchCollider);
 
             _cachedSearchCollider.RemoveAll(_ => _.gameObject.CompareTag("Ground") || _ == coll2D || _ == groundCollider);
-            if (_cachedSearchCollider.Count == 0) return;
+            if (_cachedSearchCollider.Count == 0)
+            {
+                StartMoveTurn();
+                return;
+            }
             float length = 1000;
             int index = 0;
             for (int i = 0; i < _cachedSearchCollider.Count; i++)
@@ -205,8 +208,8 @@ namespace Lance.TowerWar.Unit
                 _countdownAttack = countdownAttack;
 
                 // check damage
-                _flag = damage > _enemyTarget.Damage;
-                if (_flag)
+                _flagAttack = damage > _enemyTarget.Damage;
+                if (_flagAttack)
                 {
                     PlayAttack();
                     damage += _enemyTarget.Damage;
@@ -224,7 +227,7 @@ namespace Lance.TowerWar.Unit
 
         private void Attack()
         {
-            _enemyTarget?.BeingAttacked(_flag, damage);
+            _enemyTarget?.BeingAttacked(_flagAttack, damage);
             Timer.Register(0.6f,
                 () =>
                 {
