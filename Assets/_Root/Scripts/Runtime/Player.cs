@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using TMPro;
+using DG.Tweening;
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -41,11 +41,11 @@ namespace Lance.TowerWar.Unit
         private void Start()
         {
             attackHandle.Initialize(Attack, OnEndAttack);
-            UpdateDefaultPosition();
+            UpdateDefault();
             StartMoveTurn();
         }
 
-        public void UpdateDefaultPosition()
+        public void UpdateDefault()
         {
             _defaultPosition = transform.localPosition;
             _defaultRoom = transform.parent.GetComponent<RoomTower>();
@@ -60,12 +60,12 @@ namespace Lance.TowerWar.Unit
             bool check = false;
             int indexSlot = 0;
             var tower = Gamemanager.Instance.Root.LevelMap.visitTower;
-            for (int i = 0; i < tower.slots.Length; i++)
+            for (int i = 0; i < tower.slots.Count; i++)
             {
                 check = GetComponent<RectTransform>().Overlaps(tower.slots[i].GetComponent<RectTransform>());
                 if (check)
                 {
-                    var isEmptyRoom = tower.slots[i].IsClearRoom();
+                    var isEmptyRoom = tower.slots[i].IsClearEnemyInRoom();
                     if (isEmptyRoom) return (false, 0);
                     indexSlot = i;
                     break;
@@ -114,10 +114,28 @@ namespace Lance.TowerWar.Unit
 
             if (checkArea.Item1)
             {
+                RoomTower cache = null;
                 var room = Gamemanager.Instance.Root.LevelMap.visitTower.slots[checkArea.Item2];
+                var currentRoom = transform.parent.GetComponent<RoomTower>();
+                if (currentRoom != null && Gamemanager.Instance.Root.LevelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom())
+                {
+                    cache = currentRoom;
+                }
+
                 transform.SetParent(room.transform, false);
                 transform.localPosition = room.spawnPoint.localPosition;
-                UpdateDefaultPosition();
+                UpdateDefault();
+
+                if (cache != null)
+                {
+                    Gamemanager.Instance.Root.LevelMap.visitTower.slots.Remove(cache);
+                    cache.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.OutQuad).OnComplete(() => cache.gameObject.Destroy());
+                    var newRoom = Instantiate(Gamemanager.Instance.RoomPrefab, Gamemanager.Instance.Root.LevelMap.homeTower.transform, false);
+                    newRoom.transform.localScale = Vector3.zero;
+                    newRoom.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InQuad);
+                    Gamemanager.Instance.Root.LevelMap.homeTower.slots.Add(newRoom);
+                }
+
                 if (!FirstTurn) FirstTurn = true;
 
                 Gamemanager.Instance.Root.LevelMap.visitTower.RefreshRoom();
@@ -137,7 +155,11 @@ namespace Lance.TowerWar.Unit
 
         #region turn
 
-        public void StartMoveTurn() { Turn = ETurn.Move; }
+        public void StartMoveTurn()
+        {
+            Turn = ETurn.Move;
+            _countdownAttack = countdownAttack;
+        }
 
         public void StartAttackTurn() { Turn = ETurn.Attack; }
 
@@ -147,7 +169,7 @@ namespace Lance.TowerWar.Unit
 
         private void Update()
         {
-            if (Gamemanager.Instance.GameState != EGameState.Playing) return;
+            if (Gamemanager.Instance.GameState != EGameState.Playing && (Turn == ETurn.Move || Turn == ETurn.None)) return;
 
             _countdownAttack = Mathf.Max(0, _countdownAttack - Time.deltaTime);
             if (_countdownAttack <= 0)
@@ -236,6 +258,11 @@ namespace Lance.TowerWar.Unit
         {
             StartMoveTurn();
             PlayIdle(true);
+
+            if (Gamemanager.Instance.Root.LevelMap.visitTower.IsClearTower())
+            {
+                Gamemanager.Instance.OnWinLevel();
+            }
         }
 
         public override void BeingAttacked(bool attack, int damage) { }

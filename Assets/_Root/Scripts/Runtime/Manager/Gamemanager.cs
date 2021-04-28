@@ -1,6 +1,7 @@
 using Lance.Common;
 using Lance.TowerWar.Data;
 using Lance.TowerWar.LevelBase;
+using Lance.TowerWar.UI;
 using Lance.TowerWar.Unit;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace Lance.TowerWar.Controller
     public class Gamemanager : Singleton<Gamemanager>
     {
         [SerializeField] private LevelRoot root;
+        [SerializeField] private RoomTower roomPrefab;
 
         private bool _isReplay;
 
@@ -16,6 +18,7 @@ namespace Lance.TowerWar.Controller
 
         public LevelRoot Root => root;
         public EGameState GameState { get; set; }
+        public RoomTower RoomPrefab => roomPrefab;
 
         #endregion
 
@@ -115,7 +118,6 @@ namespace Lance.TowerWar.Controller
             SavePreviousLevel(levelInstall);
         }
 
-
         private void InternalPlayLevel()
         {
             ResetFlagNextLevel();
@@ -132,6 +134,27 @@ namespace Lance.TowerWar.Controller
                 Debug.LogError("Can not instantiate level!");
             }
         }
+
+        private void OnNextLevel()
+        {
+            Instance.root.Clear();
+            Instance.LoadLevel(Data.Data.UserCurrentLevel);
+        }
+
+        private void OnReplayLevel() { }
+
+        #endregion
+
+        #region show-popup
+
+        public void OnWinLevel()
+        {
+            Data.Data.UserCurrentLevel++;
+            GameState = EGameState.Win;
+            ShowPopupWin();
+        }
+        
+        public void ShowPopupWin() { GamePopup.Instance.ShowPopupWin(OnNextLevel, "You Win"); }
 
         #endregion
     }

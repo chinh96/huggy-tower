@@ -1,21 +1,37 @@
-using System;
-using Lance.TowerWar.LevelBase;
-using UnityEngine;
-
-public class Tower : MonoBehaviour
+namespace Lance.TowerWar.Unit
 {
-    public RoomTower[] slots;
+    using System.Collections.Generic;
+    using System.Linq;
+    using LevelBase;
+    using UnityEngine;
 
-    private void Start()
+    public class Tower : MonoBehaviour
     {
-        slots = GetComponentsInChildren<RoomTower>();
-    }
+        public List<RoomTower> slots;
 
-    public void RefreshRoom()
-    {
-        foreach (var roomTower in slots)
+        private void Start() { slots = GetComponentsInChildren<RoomTower>().ToList(); }
+
+        public void RefreshRoom()
         {
-            roomTower.UpdateUnitCollection();
+            foreach (var roomTower in slots)
+            {
+                roomTower.UpdateUnitCollection();
+            }
+        }
+
+        public bool IsClearTower()
+        {
+            var flag = true;
+            foreach (var slot in slots)
+            {
+                flag = slot.IsClearEnemyInRoom();
+                if (!flag)
+                {
+                    break;
+                }
+            }
+
+            return flag;
         }
     }
 }

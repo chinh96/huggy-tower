@@ -20,12 +20,12 @@ namespace Lance.TowerWar.LevelBase
         /// return true if enemy in room Cleared
         /// </summary>
         /// <returns></returns>
-        public bool IsClearRoom()
+        public bool IsClearEnemyInRoom()
         {
             var flag = true; // room cleared
             foreach (var unit in units)
             {
-                if (unit.State != EUnitState.Invalid)
+                if (unit.State != EUnitState.Invalid && unit.Type == EUnitType.Enemy)
                 {
                     flag = false; // room not cleared
                     break;
