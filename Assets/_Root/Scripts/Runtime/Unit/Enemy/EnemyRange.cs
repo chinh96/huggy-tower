@@ -6,23 +6,14 @@ namespace Lance.TowerWar.Unit
 {
     using LevelBase;
 
-    public class EnemyRange : Unit, IEnemy, IAnim
+    public class EnemyRange : Unit, IAnim
     {
         public SkeletonGraphic skeleton;
-        public int damage;
-        public TextMeshProUGUI txtDamage;
         public override void DarknessRise() { }
 
         public override void LightReturn() { }
-        
-        public EUnitState State { get; set; }
-        public int Damage { get => damage; set => damage = value; }
-        public TextMeshProUGUI TxtDamage => txtDamage;
 
-        public void BeingAttacked(bool attack, int damage)
-        {
-            
-        }
+        public override void BeingAttacked(bool attack, int damage) { }
 
         public SkeletonGraphic Skeleton => skeleton;
         public void PlayIdle(bool isLoop) { skeleton.Play("idle", true); }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Lance.TowerWar.Unit;
 
 namespace Lance.TowerWar.LevelBase
 {
@@ -13,10 +14,25 @@ namespace Lance.TowerWar.LevelBase
 
         private void Start() { UpdateUnitCollection(); }
 
-        public void UpdateUnitCollection()
+        public void UpdateUnitCollection() { units = GetComponentsInChildren<Unit>().ToList(); }
+
+        /// <summary>
+        /// return true if enemy in room Cleared
+        /// </summary>
+        /// <returns></returns>
+        public bool IsClearRoom()
         {
-            units = GetComponentsInChildren<Unit>().ToList();
-            
+            var flag = true; // room cleared
+            foreach (var unit in units)
+            {
+                if (unit.State != EUnitState.Invalid)
+                {
+                    flag = false; // room not cleared
+                    break;
+                }
+            }
+
+            return flag;
         }
     }
 }

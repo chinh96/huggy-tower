@@ -11,19 +11,30 @@ namespace Lance.TowerWar.Unit
     public class PlayerAttackHandle : MonoBehaviour
     {
         [SpineEvent] public string onAttack = "OnBullet";
+        [SpineEvent] public string endAttack = "EndAttack";
 
         private IAnimationStateComponent _iAnimationState;
         private ISkeletonAnimation _iSkeletonAnimation;
         private ISkeletonComponent _iSkeletonComponen;
 
         private Action _onAttackAction;
-        public void Initialize(Action onAttackAction) { _onAttackAction = onAttackAction; }
+        private Action _onEndAttackAction;
+
+        public void Initialize(Action onAttackAction, Action onEndAttackAction)
+        {
+            _onAttackAction = onAttackAction;
+            _onEndAttackAction = onEndAttackAction;
+        }
 
         private void HandleEvent(TrackEntry trackentry, Spine.Event e)
         {
             if (e.Data.Name == onAttack)
             {
                 _onAttackAction?.Invoke();
+            }
+            else if (e.Data.Name == endAttack)
+            {
+                _onEndAttackAction?.Invoke();
             }
         }
 

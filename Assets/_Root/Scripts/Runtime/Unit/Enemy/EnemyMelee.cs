@@ -8,22 +8,17 @@ namespace Lance.TowerWar.Unit
 {
     using LevelBase;
 
-    public class EnemyMelee : Unit, IEnemy, IAnim
+    public class EnemyMelee : Unit, IAnim
     {
         public SkeletonGraphic skeleton;
         public Rigidbody2D rigid;
         public Collider2D coll2D;
-        public int damage;
-        public TextMeshProUGUI txtDamage;
+        public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
         public override void DarknessRise() { }
 
         public override void LightReturn() { }
-        public int Damage { get => damage; set => damage = value; }
-        public EUnitState State { get; set; }
 
-        public TextMeshProUGUI TxtDamage => txtDamage;
-
-        public void BeingAttacked(bool attack, int damage)
+        public override void BeingAttacked(bool attack, int damage)
         {
             if (!attack)
             {
@@ -38,7 +33,7 @@ namespace Lance.TowerWar.Unit
 
         public void OnDead()
         {
-            State = EUnitState.Die;
+            State = EUnitState.Invalid;
             coll2D.enabled = false;
             rigid.simulated = false;
             TxtDamage.gameObject.SetActive(false);

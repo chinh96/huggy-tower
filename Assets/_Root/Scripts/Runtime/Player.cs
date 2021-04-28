@@ -25,26 +25,22 @@ namespace Lance.TowerWar.Unit
         [SerializeField] private LayerMask searchTargetMark;
         [SerializeField] private PlayerAttackHandle attackHandle;
         [SerializeField] private float countdownAttack = 1.25f;
-
-        [SerializeField] private TextMeshProUGUI txtDamage;
         [SerializeField, ReadOnly] private ETurn turn = ETurn.None;
 
-        [Space(30)] public int damage;
-        public bool CanGoBackHome { get; set; } = false;
+        public override EUnitType Type { get; protected set; } = EUnitType.Player;
         public bool FirstTurn { get; set; }
-        public TextMeshProUGUI TxtDamage => txtDamage;
         public ETurn Turn { get => turn; private set => turn = value; }
 
         private Vector3 _defaultPosition;
         private RoomTower _defaultRoom = null;
         private float _countdownAttack = 0f;
         private List<Collider2D> _cachedSearchCollider = new List<Collider2D>();
-        private IEnemy _enemyTarget;
+        private Unit _enemyTarget;
         private bool _flagAttack;
 
         private void Start()
         {
-            attackHandle.Initialize(Attack);
+            attackHandle.Initialize(Attack, OnEndAttack);
             UpdateDefaultPosition();
             StartMoveTurn();
         }
@@ -69,6 +65,8 @@ namespace Lance.TowerWar.Unit
                 check = GetComponent<RectTransform>().Overlaps(tower.slots[i].GetComponent<RectTransform>());
                 if (check)
                 {
+                    var isEmptyRoom = tower.slots[i].IsClearRoom();
+                    if (isEmptyRoom) return (false, 0);
                     indexSlot = i;
                     break;
                 }
@@ -172,6 +170,7 @@ namespace Lance.TowerWar.Unit
                 StartMoveTurn();
                 return;
             }
+
             float length = 1000;
             int index = 0;
             for (int i = 0; i < _cachedSearchCollider.Count; i++)
@@ -181,8 +180,8 @@ namespace Lance.TowerWar.Unit
 
                 if (distance < length)
                 {
-                    var enemy = coll.GetComponentInParent<IEnemy>();
-                    if (enemy is {State: EUnitState.Die})
+                    var unit = coll.GetComponentInParent<IUnit>();
+                    if (unit is {State: EUnitState.Invalid})
                     {
                         continue;
                     }
@@ -195,8 +194,8 @@ namespace Lance.TowerWar.Unit
             var cacheCollider = _cachedSearchCollider[index];
             if (cacheCollider == coll2D) return;
 
-            _enemyTarget = cacheCollider.GetComponentInParent<IEnemy>();
-            if (_enemyTarget is {State: EUnitState.Die})
+            _enemyTarget = cacheCollider.GetComponentInParent<Unit>();
+            if (_enemyTarget is {State: EUnitState.Invalid})
             {
                 _enemyTarget = null;
                 return;
@@ -227,14 +226,19 @@ namespace Lance.TowerWar.Unit
 
         private void Attack()
         {
-            _enemyTarget?.BeingAttacked(_flagAttack, damage);
-            Timer.Register(0.6f,
-                () =>
-                {
-                    StartMoveTurn();
-                    PlayIdle(true);
-                });
+            if (_enemyTarget != null)
+            {
+                _enemyTarget.BeingAttacked(_flagAttack, damage);
+            }
         }
+
+        private void OnEndAttack()
+        {
+            StartMoveTurn();
+            PlayIdle(true);
+        }
+
+        public override void BeingAttacked(bool attack, int damage) { }
 
         public override void DarknessRise() { }
 

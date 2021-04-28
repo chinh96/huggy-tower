@@ -3,6 +3,6 @@ namespace Lance.TowerWar.Unit
     public enum EUnitState
     {
         Normal = 0,
-        Die = 1,
+        Invalid = 1, // die or if it is an item, it is used
     }
 }

@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Lance.TowerWar.Unit;
+using UnityEngine;
 
 namespace Lance.TowerWar.LevelBase
 {
-    public class LevelMap : Unit
+    public class LevelMap : MonoBehaviour
     {
         public HomeTower homeTower;
         public VisitTower visitTower;
@@ -25,27 +26,23 @@ namespace Lance.TowerWar.LevelBase
         /// <param name="levelIndex"></param>
         public void SetLevelLoaded(int levelIndex) { CurrentLevelIndex = levelIndex; }
 
-        public override void DarknessRise()
+        public void DarknessRise()
         {
             if (Units == null || Units.Count == 0) Units = GetComponentsInChildren<IUnit>().ToList();
 
             foreach (var unit in Units)
             {
-                var levelMap = unit as LevelMap;
-                if (levelMap != null && levelMap != this)
-                {
-                    unit.DarknessRise();
-                }
+                unit?.DarknessRise();
             }
         }
 
-        public override void LightReturn()
+        public void LightReturn()
         {
             if (Units == null || Units.Count == 0) Units = GetComponentsInChildren<IUnit>().ToList();
 
             foreach (var unit in Units)
             {
-                if ((LevelMap) unit != this) unit.LightReturn();
+                unit?.LightReturn();
             }
         }
     }
