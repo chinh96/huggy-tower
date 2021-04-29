@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 
 namespace Lance.TowerWar.Unit
@@ -6,7 +7,7 @@ namespace Lance.TowerWar.Unit
     {
         int Damage { get; set; }
         TextMeshProUGUI TxtDamage { get; }
-
-        void BeingAttacked(bool attack, int damage);
+        void OnBeingAttacked();
+        void OnAttack(int damage, Action callback);
     }
 }

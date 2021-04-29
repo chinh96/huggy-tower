@@ -609,8 +609,9 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
     1: LANCE_DOTWEEN_SUPPORT;LANCE_LOADING_SUPPORT
-    7: LANCE_DOTWEEN_SUPPORT;LANCE_LOADING_SUPPORT
-  additionalCompilerArguments: {}
+    7: LANCE_DOTWEEN_SUPPORT;LANCE_LOADING_SUPPORT;LANCE_TMP_SUPPORT
+  additionalCompilerArguments:
+    7: []
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
@@ -627,7 +628,8 @@ PlayerSettings:
   gcIncremental: 1
   assemblyVersionValidation: 1
   gcWBarrierValidation: 0
-  apiCompatibilityLevelPerPlatform: {}
+  apiCompatibilityLevelPerPlatform:
+    Android: 3
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: tower-war

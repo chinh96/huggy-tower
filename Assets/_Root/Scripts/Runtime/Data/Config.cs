@@ -23,4 +23,16 @@ namespace Lance.TowerWar.Data
 
         #endregion
     }
+
+#if UNITY_EDITOR
+    public class ConfigEditor : UnityEditor.Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+            
+            // todo
+        }
+    }
+#endif
 }

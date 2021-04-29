@@ -73,11 +73,11 @@ namespace Lance.TowerWar.Data
         }
 
         /// <summary>
-        /// return level prefab and real level index
+        /// return level prefab and RealLevelIndex, FakeLevelIndex
         /// </summary>
         /// <param name="levelIndex"></param>
         /// <returns></returns>
-        public async UniTask<(GameObject, int)> GetLevel(int levelIndex)
+        public async UniTask<(GameObject, int, int)> GetLevel(int levelIndex)
         {
             if (Data.OnlyUseAdmob)
             {
@@ -128,12 +128,14 @@ namespace Lance.TowerWar.Data
                 }
 
                 var obj = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, _cacheLevels[temp] + 1));
-                return (obj, _cacheLevels[temp]);
+                //Debug.Log("realIndex:" + _cacheLevels[temp] + "       fakeIndex:" + levelIndex);
+                return (obj, _cacheLevels[temp], levelIndex);
             }
 
             var levelObject = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, levelIndex + 1));
 
-            return (levelObject, levelIndex);
+            //Debug.Log("realIndex:" + levelIndex + "       fakeIndex:" + levelIndex);
+            return (levelObject, levelIndex, levelIndex);
         }
 
         #endregion

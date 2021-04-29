@@ -11,7 +11,8 @@ namespace Lance.TowerWar.LevelBase
         public HomeTower homeTower;
         public VisitTower visitTower;
 
-        public int CurrentLevelIndex { get; private set; }
+        public int CurrentRealLevelIndex { get; private set; }
+        public int CurrentFakeLevelIndex { get; private set; }
         public List<IUnit> Units { get; private set; }
 
         private void Start()
@@ -23,8 +24,13 @@ namespace Lance.TowerWar.LevelBase
         /// <summary>
         /// set hold current level
         /// </summary>
-        /// <param name="levelIndex"></param>
-        public void SetLevelLoaded(int levelIndex) { CurrentLevelIndex = levelIndex; }
+        /// <param name="realLevelIndex"></param>
+        /// <param name="fakeLevelIndex"></param>
+        public void SetLevelLoaded(int realLevelIndex, int fakeLevelIndex)
+        {
+            CurrentRealLevelIndex = realLevelIndex;
+            CurrentFakeLevelIndex = fakeLevelIndex;
+        }
 
         public void DarknessRise()
         {

@@ -6,7 +6,6 @@
 
 
 #if true // MODULE_MARKER
-#if LANCE_TMP_SUPPORT
 using System;
 using System.Globalization;
 using System.Collections.Generic;
@@ -1194,6 +1193,4 @@ namespace DG.Tweening
 
     #endregion
 }
-#endif
-
 #endif

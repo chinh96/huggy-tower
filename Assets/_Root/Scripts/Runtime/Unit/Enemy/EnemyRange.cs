@@ -1,3 +1,4 @@
+using System;
 using Lance.Common;
 using Spine.Unity;
 using TMPro;
@@ -9,12 +10,14 @@ namespace Lance.TowerWar.Unit
     public class EnemyRange : Unit, IAnim
     {
         public SkeletonGraphic skeleton;
+        public override void OnBeingAttacked() {  }
+
+        public override void OnAttack(int damage, Action callback) {  }
+
         public override void DarknessRise() { }
 
         public override void LightReturn() { }
-
-        public override void BeingAttacked(bool attack, int damage) { }
-
+        
         public SkeletonGraphic Skeleton => skeleton;
         public void PlayIdle(bool isLoop) { skeleton.Play("idle", true); }
 

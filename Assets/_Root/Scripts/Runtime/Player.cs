@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 #if UNITY_EDITOR
@@ -23,7 +24,7 @@ namespace Lance.TowerWar.Unit
         [SerializeField] private Collider2D searchTargetCollider;
         [SerializeField] private LeanSelectableByFinger leanSelectableByFinger;
         [SerializeField] private LayerMask searchTargetMark;
-        [SerializeField] private PlayerAttackHandle attackHandle;
+        [SerializeField] private SpineAttackHandle attackHandle;
         [SerializeField] private float countdownAttack = 1.25f;
         [SerializeField, ReadOnly] private ETurn turn = ETurn.None;
 
@@ -40,7 +41,7 @@ namespace Lance.TowerWar.Unit
 
         private void Start()
         {
-            attackHandle.Initialize(Attack, OnEndAttack);
+            attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
             UpdateDefault();
             StartMoveTurn();
         }
@@ -129,7 +130,15 @@ namespace Lance.TowerWar.Unit
                 if (cache != null)
                 {
                     Gamemanager.Instance.Root.LevelMap.visitTower.slots.Remove(cache);
-                    cache.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.OutQuad).OnComplete(() => cache.gameObject.Destroy());
+                    var fitter = Gamemanager.Instance.Root.LevelMap.visitTower.fitter;
+                    cache.transform.DOScale(Vector3.zero, 0.5f)
+                        .SetEase(Ease.OutQuad)
+                        .OnUpdate(() =>
+                        {
+                            fitter.enabled = false;
+                            fitter.enabled = true;
+                        })
+                        .OnComplete(() => cache.gameObject.Destroy());
                     var newRoom = Instantiate(Gamemanager.Instance.RoomPrefab, Gamemanager.Instance.Root.LevelMap.homeTower.transform, false);
                     newRoom.transform.localScale = Vector3.zero;
                     newRoom.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InQuad);
@@ -140,7 +149,7 @@ namespace Lance.TowerWar.Unit
 
                 Gamemanager.Instance.Root.LevelMap.visitTower.RefreshRoom();
                 Gamemanager.Instance.Root.LevelMap.homeTower.RefreshRoom();
-                Timer.Register(0.2f, StartAttackTurn);
+                Timer.Register(0.5f, StartAttackTurn);
                 OnDeSelected();
                 leanSelectableByFinger.Deselect();
             }
@@ -233,28 +242,38 @@ namespace Lance.TowerWar.Unit
                 if (_flagAttack)
                 {
                     PlayAttack();
-                    damage += _enemyTarget.Damage;
                 }
                 else
                 {
-                    damage = 0;
+                    _enemyTarget.OnAttack(damage, BeingAttackedCallback);
                 }
-
-                TxtDamage.text = damage.ToString();
 
                 return;
             }
         }
 
-        private void Attack()
+        /// <summary>
+        /// method call directly by event in anim attack
+        /// </summary>
+        private void OnAttackByEvent()
         {
             if (_enemyTarget != null)
             {
-                _enemyTarget.BeingAttacked(_flagAttack, damage);
+                var cacheDamage = damage;
+                if (_flagAttack)
+                {
+                    damage += _enemyTarget.Damage;
+                    _enemyTarget.OnBeingAttacked();
+                }
+
+                TxtDamage.DOCounter(cacheDamage, damage, 0.5f).OnComplete(() => TxtDamage.text = damage.ToString());
             }
         }
 
-        private void OnEndAttack()
+        /// <summary>
+        /// method call directly by event in anim attack
+        /// </summary>
+        private void OnEndAttackByEvent()
         {
             StartMoveTurn();
             PlayIdle(true);
@@ -265,23 +284,36 @@ namespace Lance.TowerWar.Unit
             }
         }
 
-        public override void BeingAttacked(bool attack, int damage) { }
+        private void BeingAttackedCallback()
+        {
+            var cacheDamage = damage;
+            damage = 0;
+            TxtDamage.DOCounter(cacheDamage, damage, 0.5f).OnComplete(() => TxtDamage.text = damage.ToString());
+            State = EUnitState.Invalid;
+            PlayDead();
+
+            Gamemanager.Instance.OnLoseLevel();
+        }
+
+
+        public override void OnAttack(int damage, Action callback) { }
+        public override void OnBeingAttacked() { }
 
         public override void DarknessRise() { }
 
         public override void LightReturn() { }
         public SkeletonGraphic Skeleton => skeleton;
-        public void PlayIdle(bool isLoop) { skeleton.Play("idle", true); }
+        public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-        public void PlayAttack() { skeleton.Play("attack (kiem)", false); }
+        public void PlayAttack() { skeleton.Play("Attack", false); }
 
-        public void PLayMove(bool isLoop) { skeleton.Play("run", true); }
+        public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
-        public void PlayDead() { skeleton.Play("die", false); }
+        public void PlayDead() { skeleton.Play("Die", false); }
 
-        public void PlayWin(bool isLoop) { skeleton.Play("win", true); }
+        public void PlayWin(bool isLoop) { skeleton.Play("Win", true); }
 
-        public void PlayLose(bool isLoop) { skeleton.Play("fail 1", true); }
+        public void PlayLose(bool isLoop) { skeleton.Play("Die", true); }
     }
 
 

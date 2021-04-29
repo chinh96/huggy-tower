@@ -1,3 +1,4 @@
+using System;
 using Lance.TowerWar.Unit;
 using TMPro;
 using UnityEngine;
@@ -13,7 +14,9 @@ namespace Lance.TowerWar.LevelBase
         public virtual EUnitType Type { get; protected set; } = EUnitType.Enemy;
         public int Damage { get => damage; set => damage = value; }
         public TextMeshProUGUI TxtDamage => txtDamage;
-        public abstract void BeingAttacked(bool attack, int damage);
+        public abstract void OnBeingAttacked();
+
+        public abstract void OnAttack(int damage, Action callback);
 
         public abstract void DarknessRise();
 

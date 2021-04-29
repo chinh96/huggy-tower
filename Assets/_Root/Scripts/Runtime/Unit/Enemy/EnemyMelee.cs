@@ -1,4 +1,6 @@
+using System;
 using Lance.Common;
+using Lance.TowerWar.Controller;
 using Spine.Unity;
 using TMPro;
 using UnityEditor;
@@ -13,23 +15,34 @@ namespace Lance.TowerWar.Unit
         public SkeletonGraphic skeleton;
         public Rigidbody2D rigid;
         public Collider2D coll2D;
+        public SpineAttackHandle attackHandle;
         public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
+
+        private Action _callbackAttackPlayer;
+
+        private void Start() { attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent); }
+
+        public override void OnAttack(int damage, Action callback)
+        {
+            _callbackAttackPlayer = callback;
+            PlayAttack();
+        }
+
+        public override void OnBeingAttacked() { OnDead(); }
+
+        /// <summary>
+        /// call by event attack of anim attack
+        /// </summary>
+        private void OnAttackByEvent() { _callbackAttackPlayer?.Invoke(); }
+
+        /// <summary>
+        /// call by event end attack of anim attack
+        /// </summary>
+        private void OnEndAttackByEvent() { PlayIdle(true); }
+
         public override void DarknessRise() { }
 
         public override void LightReturn() { }
-
-        public override void BeingAttacked(bool attack, int damage)
-        {
-            if (!attack)
-            {
-                PlayAttack();
-                Timer.Register(1.16f, () => PlayIdle(true));
-            }
-            else
-            {
-                OnDead();
-            }
-        }
 
         public void OnDead()
         {

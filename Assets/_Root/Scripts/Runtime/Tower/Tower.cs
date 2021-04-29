@@ -1,3 +1,5 @@
+using UnityEngine.UI;
+
 namespace Lance.TowerWar.Unit
 {
     using System.Collections.Generic;
@@ -7,6 +9,7 @@ namespace Lance.TowerWar.Unit
 
     public class Tower : MonoBehaviour
     {
+        public ContentSizeFitter fitter;
         public List<RoomTower> slots;
 
         private void Start() { slots = GetComponentsInChildren<RoomTower>().ToList(); }
