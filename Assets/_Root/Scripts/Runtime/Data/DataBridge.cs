@@ -92,8 +92,7 @@ namespace Lance.TowerWar.Data
 
             if (levelIndex > Config.MaxLevelCanReach - 1)
             {
-                var temp = (levelIndex - Config.MaxLevelCanReach) % (Config.MaxLevelWithOutTutorial - 1);
-
+                var temp = (levelIndex - Config.MaxLevelCanReach) % (Config.MaxLevelWithOutTutorial);
                 if (Data.CountPlayLevel >= Config.MaxLevelWithOutTutorial)
                 {
                     MakeCacheLevel();
@@ -126,7 +125,7 @@ namespace Lance.TowerWar.Data
                         }
                     }
                 }
-
+                
                 var obj = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, _cacheLevels[temp] + 1));
                 //Debug.Log("realIndex:" + _cacheLevels[temp] + "       fakeIndex:" + levelIndex);
                 return (obj, _cacheLevels[temp], levelIndex);
