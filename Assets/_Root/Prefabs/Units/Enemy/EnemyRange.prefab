@@ -244,10 +244,10 @@ GameObject:
   - component: {fileID: 6771375067339128393}
   - component: {fileID: 6771375067339128392}
   - component: {fileID: 6771375067339128395}
-  - component: {fileID: 6946605952395193657}
   - component: {fileID: 1063424500047576231}
+  - component: {fileID: 5871905933737163505}
   m_Layer: 8
-  m_Name: EnemyMelee
+  m_Name: EnemyRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -304,7 +304,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   skeletonDataAsset: {fileID: 11400000, guid: e15a237d5433a794a89d0df81dc44b7f, type: 2}
-  initialSkinName: kiem
+  initialSkinName: cung
   initialFlipX: 0
   initialFlipY: 0
   startingAnimation: idle
@@ -350,25 +350,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6946605952395193657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6771375067339128398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e43fde7637903946863d1492a6cfe0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 0
-  txtDamage: {fileID: 3633725909476926089}
-  damage: 0
-  skeleton: {fileID: 6771375067339128392}
-  rigid: {fileID: 6771375067339128395}
-  coll2D: {fileID: 5773493915887730507}
-  attackHandle: {fileID: 1063424500047576231}
 --- !u!114 &1063424500047576231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,6 +364,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onAttack: chem
   endAttack: EndAttack
+--- !u!114 &5871905933737163505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6771375067339128398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c350fe47b5b2da4c958c903a6c607c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  txtDamage: {fileID: 3633725909476926089}
+  damage: 0
+  skeleton: {fileID: 6771375067339128392}
 --- !u!1 &7443301087090086825
 GameObject:
   m_ObjectHideFlags: 0

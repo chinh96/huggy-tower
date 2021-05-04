@@ -2,6 +2,7 @@ using System;
 using Lance.Common;
 using Spine.Unity;
 using TMPro;
+using UnityEngine;
 
 namespace Lance.TowerWar.Unit
 {
@@ -10,6 +11,23 @@ namespace Lance.TowerWar.Unit
     public class EnemyRange : Unit, IAnim
     {
         public SkeletonGraphic skeleton;
+        public Rigidbody2D rigid;
+        public Collider2D coll2D;
+        public SpineAttackHandle attackHandle;
+        public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
+
+        private Action _callbackAttackPlayer;
+
+        private void Start()
+        {
+           // attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
+        }
+
+        private void OnAttackByEvent()
+        {
+            
+        }
+
         public override void OnBeingAttacked() {  }
 
         public override void OnAttack(int damage, Action callback) {  }
