@@ -2,6 +2,7 @@ using System;
 using Lance.Common;
 using Spine.Unity;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 namespace Lance.TowerWar.Unit
@@ -20,17 +21,35 @@ namespace Lance.TowerWar.Unit
 
         private void Start()
         {
-           // attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
+            attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
+        }
+
+        private void OnEndAttackByEvent()
+        {
+            PlayIdle(true);
         }
 
         private void OnAttackByEvent()
         {
-            
+            _callbackAttackPlayer?.Invoke();
         }
 
-        public override void OnBeingAttacked() {  }
+        public override void OnBeingAttacked() { OnDead(); }
 
-        public override void OnAttack(int damage, Action callback) {  }
+        public override void OnAttack(int damage, Action callback)
+        {
+            _callbackAttackPlayer = callback;
+            PlayAttack();
+        }
+        
+        public void OnDead()
+        {
+            State = EUnitState.Invalid;
+            coll2D.enabled = false;
+            rigid.simulated = false;
+            TxtDamage.gameObject.SetActive(false);
+            PlayDead();
+        }
 
         public override void DarknessRise() { }
 
@@ -49,4 +68,24 @@ namespace Lance.TowerWar.Unit
 
         public void PlayLose(bool isLoop) { }
     }
+    
+#if UNITY_EDITOR
+    [CustomEditor(typeof(EnemyRange))]
+    public class EnemyRangeEditor : UnityEditor.Editor
+    {
+        private EnemyRange _enemyRange;
+
+        private void OnEnable() { _enemyRange = (EnemyRange) target; }
+
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            _enemyRange.TxtDamage.text = _enemyRange.damage.ToString();
+
+            serializedObject.Update();
+            serializedObject.ApplyModifiedProperties();
+        }
+    }
+#endif
 }
