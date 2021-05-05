@@ -153,7 +153,11 @@ namespace Lance.TowerWar.Controller
             Instance.LoadLevel(Data.Data.UserCurrentLevel);
         }
 
-        private void OnSkipLevel() { OnNextLevel(); }
+        private void OnSkipLevel()
+        {
+            Data.Data.UserCurrentLevel++;
+            OnNextLevel();
+        }
 
         #endregion
 

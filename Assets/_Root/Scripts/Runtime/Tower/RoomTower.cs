@@ -9,6 +9,7 @@ namespace Lance.TowerWar.LevelBase
 
     public class RoomTower : MonoBehaviour
     {
+        public Collider2D floor;
         public RectTransform spawnPoint;
         [ReadOnly] public List<Unit> units = new List<Unit>();
 

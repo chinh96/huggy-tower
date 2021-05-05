@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -23,6 +24,7 @@ namespace Lance.TowerWar.Unit
         [SerializeField] private Collider2D groundCollider;
         [SerializeField] private Collider2D searchTargetCollider;
         [SerializeField] private LeanSelectableByFinger leanSelectableByFinger;
+        [SerializeField] private PlayerDragTranslate dragTranslate;
         [SerializeField] private LayerMask searchTargetMark;
         [SerializeField] private SpineAttackHandle attackHandle;
         [SerializeField] private float countdownAttack = 1.25f;
@@ -39,11 +41,22 @@ namespace Lance.TowerWar.Unit
         private Unit _enemyTarget;
         private bool _flagAttack;
 
+        private bool _isMouseUpDragDetected;
+        private RoomTower _parentRoom;
+
         private void Start()
         {
             attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
             UpdateDefault();
             StartMoveTurn();
+        }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (_isMouseUpDragDetected && other.gameObject == _parentRoom.floor.gameObject)
+            {
+                StartAttackTurn();
+            }
         }
 
         public void UpdateDefault()
@@ -102,29 +115,43 @@ namespace Lance.TowerWar.Unit
 
         private void OnMouseDown()
         {
+            _isMouseUpDragDetected = false;
             if (Turn == ETurn.Move)
             {
                 OnSelected();
                 leanSelectableByFinger.SelfSelected = true;
             }
+            // else
+            // {
+            //     OnDeSelected();
+            //     leanSelectableByFinger.SelfSelected = false;
+            // }
         }
 
         private void OnMouseUp()
         {
-            var checkArea = CheckCorrectArea();
+            if (!dragTranslate.DragTranslateFlag)
+            {
+                _isMouseUpDragDetected = false;
+                OnDeSelected();
+                leanSelectableByFinger.Deselect();
+                return;
+            }
 
+            dragTranslate.DragTranslateFlag = false;
+            var checkArea = CheckCorrectArea();
             if (checkArea.Item1)
             {
                 RoomTower cache = null;
-                var room = Gamemanager.Instance.Root.LevelMap.visitTower.slots[checkArea.Item2];
+                _parentRoom = Gamemanager.Instance.Root.LevelMap.visitTower.slots[checkArea.Item2];
                 var currentRoom = transform.parent.GetComponent<RoomTower>();
                 if (currentRoom != null && Gamemanager.Instance.Root.LevelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom())
                 {
                     cache = currentRoom;
                 }
 
-                transform.SetParent(room.transform, false);
-                transform.localPosition = room.spawnPoint.localPosition;
+                transform.SetParent(_parentRoom.transform, false);
+                transform.localPosition = _parentRoom.spawnPoint.localPosition;
                 UpdateDefault();
 
                 if (cache != null)
@@ -149,12 +176,14 @@ namespace Lance.TowerWar.Unit
 
                 Gamemanager.Instance.Root.LevelMap.visitTower.RefreshRoom();
                 Gamemanager.Instance.Root.LevelMap.homeTower.RefreshRoom();
-                Timer.Register(0.5f, StartAttackTurn);
                 OnDeSelected();
                 leanSelectableByFinger.Deselect();
+
+                _isMouseUpDragDetected = true;
             }
             else
             {
+                _isMouseUpDragDetected = false;
                 ResetPlayerState();
                 OnDeSelected();
                 leanSelectableByFinger.Deselect();
@@ -284,7 +313,7 @@ namespace Lance.TowerWar.Unit
                 SearchingTarget();
                 return;
             }
-            
+
             StartMoveTurn();
             if (Gamemanager.Instance.Root.LevelMap.visitTower.IsClearTower())
             {
