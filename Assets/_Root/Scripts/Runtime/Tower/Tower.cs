@@ -36,5 +36,18 @@ namespace Lance.TowerWar.Unit
 
             return flag;
         }
+
+        public RoomTower RoomContainPlayer(Player player)
+        {
+            for (int i = 0; i < slots.Count; i++)
+            {
+                if (slots[i].units.Contains(player))
+                {
+                    return slots[i];
+                }
+            }
+
+            return null;
+        }
     }
 }

@@ -275,9 +275,17 @@ namespace Lance.TowerWar.Unit
         /// </summary>
         private void OnEndAttackByEvent()
         {
-            StartMoveTurn();
             PlayIdle(true);
 
+            var room = Gamemanager.Instance.Root.LevelMap.visitTower.RoomContainPlayer(this);
+            if (room != null && !room.IsClearEnemyInRoom())
+            {
+                StartAttackTurn();
+                SearchingTarget();
+                return;
+            }
+            
+            StartMoveTurn();
             if (Gamemanager.Instance.Root.LevelMap.visitTower.IsClearTower())
             {
                 Gamemanager.Instance.OnWinLevel();
