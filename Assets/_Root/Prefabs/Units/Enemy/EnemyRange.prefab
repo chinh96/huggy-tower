@@ -163,11 +163,46 @@ RectTransform:
   m_Children:
   - {fileID: 5730095324774070197}
   m_Father: {fileID: 6771375067339128399}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &5281126124683766878
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5019214619218452890}
+  m_Layer: 8
+  m_Name: Attacker
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5019214619218452890
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5281126124683766878}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6771375067339128399}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -27.5, y: -23.4}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6694313270357015987
@@ -219,7 +254,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 10, y: -26}
+  m_Offset: {x: 18, y: -26}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -266,6 +301,7 @@ RectTransform:
   m_Children:
   - {fileID: 6346210811188840564}
   - {fileID: 4774660096087560199}
+  - {fileID: 5019214619218452890}
   - {fileID: 2361701744989182928}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -380,6 +416,10 @@ MonoBehaviour:
   txtDamage: {fileID: 3633725909476926089}
   damage: 0
   skeleton: {fileID: 6771375067339128392}
+  rigid: {fileID: 6771375067339128395}
+  coll2D: {fileID: 5773493915887730507}
+  attackHandle: {fileID: 1063424500047576231}
+  arrowSpawnPosition: {fileID: 5019214619218452890}
 --- !u!1 &7443301087090086825
 GameObject:
   m_ObjectHideFlags: 0

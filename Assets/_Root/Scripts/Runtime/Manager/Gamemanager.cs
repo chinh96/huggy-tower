@@ -3,6 +3,7 @@ using Lance.TowerWar.Data;
 using Lance.TowerWar.LevelBase;
 using Lance.TowerWar.UI;
 using Lance.TowerWar.Unit;
+using Lean.Pool;
 using UnityEngine;
 
 namespace Lance.TowerWar.Controller
@@ -13,6 +14,7 @@ namespace Lance.TowerWar.Controller
         [SerializeField] private RoomTower roomPrefab;
 
         [SerializeField] private HubGameplay hub;
+        public LeanGameObjectPool poolArrow;
 
         private bool _isReplay;
 
@@ -40,8 +42,6 @@ namespace Lance.TowerWar.Controller
         /// <param name="fakeIndex"></param>
         public async void LoadLevel(int fakeIndex)
         {
-            Debug.Log("Load fakeIndex :" + fakeIndex);
-
             async void LoadNextLevel(int fakeLevelIndex)
             {
                 var go = await DataBridge.Instance.GetLevel(fakeLevelIndex + 1);
@@ -54,8 +54,6 @@ namespace Lance.TowerWar.Controller
 
             void SavePreviousLevel(LevelMap localLevelMap)
             {
-                Debug.Log("previous real level index :" + localLevelMap.CurrentRealLevelIndex);
-                Debug.Log("previous fake level index :" + localLevelMap.CurrentFakeLevelIndex);
                 DataBridge.Instance.PreviousLevelLoaded = localLevelMap;
                 DataBridge.Instance.PreviousLevelLoaded.SetLevelLoaded(localLevelMap.CurrentRealLevelIndex, localLevelMap.CurrentFakeLevelIndex);
             }
@@ -152,8 +150,6 @@ namespace Lance.TowerWar.Controller
         {
             _isReplay = true;
 
-
-            Debug.Log("USER CURRENT LEVEL: " + Data.Data.UserCurrentLevel);
             Instance.LoadLevel(Data.Data.UserCurrentLevel);
         }
 

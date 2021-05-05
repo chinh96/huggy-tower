@@ -292,9 +292,8 @@ namespace Lance.TowerWar.Unit
             State = EUnitState.Invalid;
             PlayDead();
 
-            Gamemanager.Instance.OnLoseLevel();
+            Timer.Register(0.6f, Gamemanager.Instance.OnLoseLevel);
         }
-
 
         public override void OnAttack(int damage, Action callback) { }
         public override void OnBeingAttacked() { }

@@ -1,5 +1,6 @@
 using System;
 using Lance.Common;
+using Lance.TowerWar.Controller;
 using Spine.Unity;
 using TMPro;
 using UnityEditor;
@@ -15,23 +16,30 @@ namespace Lance.TowerWar.Unit
         public Rigidbody2D rigid;
         public Collider2D coll2D;
         public SpineAttackHandle attackHandle;
+        public RectTransform arrowSpawnPosition;
         public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
 
         private Action _callbackAttackPlayer;
 
-        private void Start()
-        {
-            attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
-        }
+        private void Start() { attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent); }
 
-        private void OnEndAttackByEvent()
-        {
-            PlayIdle(true);
-        }
+        private void OnEndAttackByEvent() { PlayIdle(true); }
 
         private void OnAttackByEvent()
         {
-            _callbackAttackPlayer?.Invoke();
+            var pool = Gamemanager.Instance.poolArrow;
+
+            var arrow = pool.Spawn(pool.transform, false);
+            var arowHandle = arrow.GetComponent<ArrowHandle>();
+            arowHandle.Initialize((go) =>
+            {
+                _callbackAttackPlayer?.Invoke();
+                Gamemanager.Instance.poolArrow.Despawn(go);
+            });
+            arrow.transform.position = arrowSpawnPosition.position;
+            arrow.transform.localEulerAngles = new Vector3(0, 0, 180);
+            arrow.SetActive(true);
+            arrow.GetComponent<Rigidbody2D>().velocity = Vector2.left * 12;
         }
 
         public override void OnBeingAttacked() { OnDead(); }
@@ -41,7 +49,7 @@ namespace Lance.TowerWar.Unit
             _callbackAttackPlayer = callback;
             PlayAttack();
         }
-        
+
         public void OnDead()
         {
             State = EUnitState.Invalid;
@@ -54,7 +62,7 @@ namespace Lance.TowerWar.Unit
         public override void DarknessRise() { }
 
         public override void LightReturn() { }
-        
+
         public SkeletonGraphic Skeleton => skeleton;
         public void PlayIdle(bool isLoop) { skeleton.Play("idle", true); }
 
@@ -68,7 +76,7 @@ namespace Lance.TowerWar.Unit
 
         public void PlayLose(bool isLoop) { }
     }
-    
+
 #if UNITY_EDITOR
     [CustomEditor(typeof(EnemyRange))]
     public class EnemyRangeEditor : UnityEditor.Editor
