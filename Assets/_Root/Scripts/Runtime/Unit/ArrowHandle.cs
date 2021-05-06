@@ -22,7 +22,7 @@ namespace Lance.TowerWar.Unit
             {
                 var player = other.GetComponentInParent<Player>();
 
-                if (player != null && player.state != EUnitState.Invalid)
+                if (player != null && player.State != EUnitState.Invalid)
                 {
                     _callbackAttackPlayer?.Invoke(gameObject);
                 }

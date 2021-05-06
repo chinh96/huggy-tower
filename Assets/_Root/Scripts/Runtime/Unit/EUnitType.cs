@@ -2,7 +2,8 @@ namespace Lance.TowerWar.Unit
 {
     public enum EUnitType
     {
-        Player,
-        Enemy
+        Player = 0,
+        Enemy = 1,
+        Item = 2
     }
 }

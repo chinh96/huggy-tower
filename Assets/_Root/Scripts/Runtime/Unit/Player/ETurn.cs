@@ -3,8 +3,10 @@ namespace Lance.TowerWar.Unit
     public enum ETurn
     {
         None = 0,
-        Move = 1,
-        Attack = 2,
+        Drag = 1,
+        Searching = 2,
         Attacking = 3,
+        UsingItem = 4,
+        MoveToItem = 5,
     }
 }

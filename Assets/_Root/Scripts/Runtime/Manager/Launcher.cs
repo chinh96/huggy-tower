@@ -5,9 +5,6 @@ namespace Lance.TowerWar.Controller
 {
     public class Launcher : MonoBehaviour
     {
-        private void Start()
-        {
-            SceneManager.LoadScene("menu");
-        }
+        private void Start() { SceneManager.LoadScene("menu"); }
     }
 }

@@ -12,10 +12,15 @@ namespace Lance.TowerWar.LevelBase
         public Collider2D floor;
         public RectTransform spawnPoint;
         [ReadOnly] public List<Unit> units = new List<Unit>();
+        [ReadOnly] public List<Item> items = new List<Item>();
 
         private void Start() { UpdateUnitCollection(); }
 
-        public void UpdateUnitCollection() { units = GetComponentsInChildren<Unit>().ToList(); }
+        public void UpdateUnitCollection()
+        {
+            units = GetComponentsInChildren<Unit>().ToList();
+            items = GetComponentsInChildren<Item>().ToList();
+        }
 
         /// <summary>
         /// return true if enemy in room Cleared
@@ -23,17 +28,28 @@ namespace Lance.TowerWar.LevelBase
         /// <returns></returns>
         public bool IsClearEnemyInRoom()
         {
-            var flag = true; // room cleared
             foreach (var unit in units)
             {
                 if (unit.State != EUnitState.Invalid && unit.Type == EUnitType.Enemy)
                 {
-                    flag = false; // room not cleared
-                    break;
+                    return false; // room not cleared
                 }
             }
 
-            return flag;
+            return true;
+        }
+
+        public bool IsContaintItem()
+        {
+            foreach (var unit in items)
+            {
+                if (unit.State != EUnitState.Invalid && unit.Type == EUnitType.Item)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

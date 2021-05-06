@@ -28,7 +28,11 @@ namespace Lance.TowerWar.Controller
 
         #region unity-api
 
-        private void Start() { LoadLevel(Data.Data.UserCurrentLevel); }
+        private void Start()
+        {
+            hub.AddListenerReplay(OnReplayLevel);
+            LoadLevel(Data.Data.UserCurrentLevel);
+        }
 
         #endregion
 
@@ -118,7 +122,7 @@ namespace Lance.TowerWar.Controller
             }
 
             Root.Initialized(fakeIndex, levelInstall);
-            hub.UpdateDislayCurrentLevel(fakeIndex);
+            hub.UpdateDislayCurrentLevel(fakeIndex, levelInstall.condition);
             InternalPlayLevel();
             SavePreviousLevel(levelInstall);
         }
@@ -179,9 +183,9 @@ namespace Lance.TowerWar.Controller
             ShowPopupLose();
         }
 
-        public void ShowPopupWin() { GamePopup.Instance.ShowPopupWin(OnNextLevel, "You Win"); }
+        private void ShowPopupWin() { GamePopup.Instance.ShowPopupWin(OnNextLevel, "You Win"); }
 
-        public void ShowPopupLose() { GamePopup.Instance.ShowPopupLose(OnReplayLevel, OnSkipLevel, "You Lose"); }
+        private void ShowPopupLose() { GamePopup.Instance.ShowPopupLose(OnReplayLevel, OnSkipLevel, "You Lose"); }
 
         #endregion
     }

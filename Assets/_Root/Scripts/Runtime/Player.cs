@@ -28,6 +28,7 @@ namespace Lance.TowerWar.Unit
         [SerializeField] private LayerMask searchTargetMark;
         [SerializeField] private SpineAttackHandle attackHandle;
         [SerializeField] private float countdownAttack = 1.25f;
+        [SerializeField, Range(0, 10)] private float moveSpeed = 1.5f;
         [SerializeField, ReadOnly] private ETurn turn = ETurn.None;
 
         public override EUnitType Type { get; protected set; } = EUnitType.Player;
@@ -39,7 +40,10 @@ namespace Lance.TowerWar.Unit
         private float _countdownAttack = 0f;
         private List<Collider2D> _cachedSearchCollider = new List<Collider2D>();
         private Unit _enemyTarget;
+        private Item _itemTarget;
         private bool _flagAttack;
+        private Vector2 _movement; // vector move player
+        private RaycastHit2D _hitItem; // check hit item to stop moving
 
         private bool _isMouseUpDragDetected;
         private RoomTower _parentRoom;
@@ -48,14 +52,14 @@ namespace Lance.TowerWar.Unit
         {
             attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
             UpdateDefault();
-            StartMoveTurn();
+            StartDragTurn();
         }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (_isMouseUpDragDetected && other.gameObject == _parentRoom.floor.gameObject)
             {
-                StartAttackTurn();
+                StartSearchingTurn();
             }
         }
 
@@ -116,7 +120,7 @@ namespace Lance.TowerWar.Unit
         private void OnMouseDown()
         {
             _isMouseUpDragDetected = false;
-            if (Turn == ETurn.Move)
+            if (Turn == ETurn.Drag)
             {
                 OnSelected();
                 leanSelectableByFinger.SelfSelected = true;
@@ -193,21 +197,23 @@ namespace Lance.TowerWar.Unit
 
         #region turn
 
-        public void StartMoveTurn()
+        public void StartDragTurn()
         {
-            Turn = ETurn.Move;
+            Turn = ETurn.Drag;
             _countdownAttack = countdownAttack;
         }
 
-        public void StartAttackTurn() { Turn = ETurn.Attack; }
+        private void StartSearchingTurn() { Turn = ETurn.Searching; }
 
-        public void StartAwaitTurn() { Turn = ETurn.None; }
+        public void StartMoveToItemTurn() { Turn = ETurn.MoveToItem; }
+
+        private void StartAwaitTurn() { Turn = ETurn.None; }
 
         #endregion
 
         private void Update()
         {
-            if (Gamemanager.Instance.GameState != EGameState.Playing && (Turn == ETurn.Move || Turn == ETurn.None)) return;
+            if (Gamemanager.Instance.GameState != EGameState.Playing && (Turn == ETurn.Drag || Turn == ETurn.None) || state == EUnitState.Invalid) return;
 
             _countdownAttack = Mathf.Max(0, _countdownAttack - Time.deltaTime);
             if (_countdownAttack <= 0)
@@ -218,7 +224,7 @@ namespace Lance.TowerWar.Unit
 
         private void SearchingTarget()
         {
-            if (Turn != ETurn.Attack) return;
+            if (Turn != ETurn.Searching) return;
 
             _cachedSearchCollider = new List<Collider2D>();
             searchTargetCollider.OverlapCollider(new ContactFilter2D() {layerMask = searchTargetMark.value, useTriggers = true, useLayerMask = true},
@@ -227,9 +233,11 @@ namespace Lance.TowerWar.Unit
             _cachedSearchCollider.RemoveAll(_ => _.gameObject.CompareTag("Ground") || _ == coll2D || _ == groundCollider);
             if (_cachedSearchCollider.Count == 0)
             {
-                StartMoveTurn();
+                StartDragTurn();
                 return;
             }
+
+            #region detect target
 
             float length = 1000;
             int index = 0;
@@ -254,32 +262,134 @@ namespace Lance.TowerWar.Unit
             var cacheCollider = _cachedSearchCollider[index];
             if (cacheCollider == coll2D) return;
 
+            #endregion
+
             _enemyTarget = cacheCollider.GetComponentInParent<Unit>();
-            if (_enemyTarget is {State: EUnitState.Invalid})
+            if (_enemyTarget != null)
             {
-                _enemyTarget = null;
-                return;
-            }
-
-            if (_enemyTarget is {State: EUnitState.Normal} && _countdownAttack <= 0)
-            {
-                Turn = ETurn.Attacking;
-                _countdownAttack = countdownAttack;
-
-                // check damage
-                _flagAttack = damage > _enemyTarget.Damage;
-                if (_flagAttack)
+                if (_enemyTarget is {State: EUnitState.Invalid})
                 {
-                    PlayAttack();
+                    _enemyTarget = null;
+                    return;
+                }
+
+                if (_enemyTarget is {State: EUnitState.Normal} && _countdownAttack <= 0)
+                {
+                    Turn = ETurn.Attacking;
+                    _countdownAttack = countdownAttack;
+
+                    // check damage
+                    _flagAttack = damage > _enemyTarget.Damage;
+                    if (_flagAttack)
+                    {
+                        PlayAttack();
+                    }
+                    else
+                    {
+                        _enemyTarget.OnAttack(damage, BeingAttackedCallback);
+                    }
+
+                    return;
+                }
+            }
+            else
+            {
+                _itemTarget = cacheCollider.GetComponentInParent<Item>();
+                if (_itemTarget != null && _itemTarget.State != EUnitState.Invalid && Turn != ETurn.MoveToItem)
+                {
+                    Turn = ETurn.MoveToItem;
+                    DOTween.Kill(transform);
+                    PLayMove(true);
+                    transform.DOLocalMoveX(_itemTarget.transform.localPosition.x - 50, 1f)
+                        .SetEase(Ease.Linear)
+                        .OnComplete(() =>
+                        {
+                            PlayUseItem();
+                            Timer.Register(1.2f,
+                                () =>
+                                {
+                                    if (Gamemanager.Instance.Root.LevelMap.condition == ELevelCondition.CollectChest)
+                                    {
+                                        PlayWin(true);
+                                        Gamemanager.Instance.OnWinLevel();
+                                    }
+                                    else
+                                    {
+                                        PlayIdle(true);
+                                    }
+
+                                    _itemTarget.Collect(this);
+                                });
+                        });
                 }
                 else
                 {
-                    _enemyTarget.OnAttack(damage, BeingAttackedCallback);
+                    _itemTarget = null;
                 }
-
-                return;
             }
         }
+
+        #region movement
+
+        /// <summary>
+        /// move to left
+        /// </summary>
+        private void MoveLeft()
+        {
+            if (_hitItem.collider != null && state != EUnitState.Invalid)
+            {
+                rigid2D.velocity = new Vector2(0, rigid2D.velocity.y);
+                if (IsStop()) return;
+                PLayMove(true);
+                return;
+            }
+
+            if (state != EUnitState.Invalid)
+            {
+                if (IsStop()) return;
+                _movement = Vector2.left * moveSpeed;
+                rigid2D.velocity = new Vector2(_movement.x, rigid2D.velocity.y);
+                PLayMove(true);
+            }
+            else
+            {
+                rigid2D.velocity = new Vector2(0, rigid2D.velocity.y);
+            }
+        }
+
+        /// <summary>
+        /// move to right
+        /// </summary>
+        private void MoveRight()
+        {
+            if (_hitItem.collider != null && state != EUnitState.Invalid)
+            {
+                rigid2D.velocity = new Vector2(0, rigid2D.velocity.y);
+                if (IsStop()) return;
+                PLayMove(true);
+                return;
+            }
+
+            if (state != EUnitState.Invalid)
+            {
+                if (IsStop()) return;
+                _movement = Vector2.right * moveSpeed;
+                rigid2D.velocity = new Vector2(_movement.x, rigid2D.velocity.y);
+                PLayMove(true);
+            }
+            else
+            {
+                rigid2D.velocity = new Vector2(0, rigid2D.velocity.y);
+            }
+        }
+
+        private bool IsStop()
+        {
+            return Gamemanager.Instance.GameState == EGameState.Lose || Gamemanager.Instance.GameState == EGameState.Win || Turn == ETurn.UsingItem ||
+                   Turn == ETurn.MoveToItem;
+        }
+
+        #endregion
 
         /// <summary>
         /// method call directly by event in anim attack
@@ -307,15 +417,15 @@ namespace Lance.TowerWar.Unit
             PlayIdle(true);
 
             var room = Gamemanager.Instance.Root.LevelMap.visitTower.RoomContainPlayer(this);
-            if (room != null && !room.IsClearEnemyInRoom())
+            if (room != null && !room.IsClearEnemyInRoom() || room.IsContaintItem())
             {
-                StartAttackTurn();
+                StartSearchingTurn();
                 SearchingTarget();
                 return;
             }
 
-            StartMoveTurn();
-            if (Gamemanager.Instance.Root.LevelMap.visitTower.IsClearTower())
+            StartDragTurn();
+            if (Gamemanager.Instance.Root.LevelMap.visitTower.IsClearTower() && Gamemanager.Instance.Root.LevelMap.condition == ELevelCondition.KillAll)
             {
                 Gamemanager.Instance.OnWinLevel();
             }
@@ -332,6 +442,10 @@ namespace Lance.TowerWar.Unit
             Timer.Register(0.6f, Gamemanager.Instance.OnLoseLevel);
         }
 
+        private void CollectChest() { }
+
+        private void OnTriggerEnter2D(Collider2D other) { }
+
         public override void OnAttack(int damage, Action callback) { }
         public override void OnBeingAttacked() { }
 
@@ -343,13 +457,15 @@ namespace Lance.TowerWar.Unit
 
         public void PlayAttack() { skeleton.Play("Attack", false); }
 
-        public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
+        public void PLayMove(bool isLoop) { skeleton.Play("RunKiem", true); }
 
         public void PlayDead() { skeleton.Play("Die", false); }
 
         public void PlayWin(bool isLoop) { skeleton.Play("Win", true); }
 
         public void PlayLose(bool isLoop) { skeleton.Play("Die", true); }
+
+        public void PlayUseItem() { skeleton.Play("Open1", false); }
     }
 
 

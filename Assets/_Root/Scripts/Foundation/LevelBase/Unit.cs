@@ -7,7 +7,7 @@ namespace Lance.TowerWar.LevelBase
 {
     public abstract class Unit : MonoBehaviour, IUnit, IAttack
     {
-        public EUnitState state;
+        [SerializeField] protected EUnitState state;
         public TextMeshProUGUI txtDamage;
         public int damage;
         public EUnitState State { get => state; set => state = value; }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Lance.TowerWar.Unit;
@@ -8,6 +7,7 @@ namespace Lance.TowerWar.LevelBase
 {
     public class LevelMap : MonoBehaviour
     {
+        public ELevelCondition condition;
         public HomeTower homeTower;
         public VisitTower visitTower;
 
