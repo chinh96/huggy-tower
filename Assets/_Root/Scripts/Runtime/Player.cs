@@ -83,7 +83,7 @@ namespace Lance.TowerWar.Unit
                 check = GetComponent<RectTransform>().Overlaps(tower.slots[i].GetComponent<RectTransform>());
                 if (check)
                 {
-                    var isEmptyRoom = tower.slots[i].IsClearEnemyInRoom();
+                    var isEmptyRoom = tower.slots[i].IsClearEnemyInRoom() && !tower.slots[i].IsContaintItem();
                     if (isEmptyRoom) return (false, 0);
                     indexSlot = i;
                     break;
@@ -149,7 +149,8 @@ namespace Lance.TowerWar.Unit
                 RoomTower cache = null;
                 _parentRoom = Gamemanager.Instance.Root.LevelMap.visitTower.slots[checkArea.Item2];
                 var currentRoom = transform.parent.GetComponent<RoomTower>();
-                if (currentRoom != null && Gamemanager.Instance.Root.LevelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom())
+                if (currentRoom != null && Gamemanager.Instance.Root.LevelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom() &&
+                    !currentRoom.IsContaintItem())
                 {
                     cache = currentRoom;
                 }
@@ -167,6 +168,7 @@ namespace Lance.TowerWar.Unit
                         .OnUpdate(() =>
                         {
                             fitter.enabled = false;
+                            // ReSharper disable once Unity.InefficientPropertyAccess
                             fitter.enabled = true;
                         })
                         .OnComplete(() => cache.gameObject.Destroy());
@@ -315,6 +317,7 @@ namespace Lance.TowerWar.Unit
                                     }
                                     else
                                     {
+                                        StartSearchingTurn();
                                         PlayIdle(true);
                                     }
 
@@ -398,15 +401,22 @@ namespace Lance.TowerWar.Unit
         {
             if (_enemyTarget != null)
             {
-                var cacheDamage = damage;
+                var cacheDamage = Damage;
                 if (_flagAttack)
                 {
-                    damage += _enemyTarget.Damage;
+                    Damage += _enemyTarget.Damage;
                     _enemyTarget.OnBeingAttacked();
                 }
 
-                TxtDamage.DOCounter(cacheDamage, damage, 0.5f).OnComplete(() => TxtDamage.text = damage.ToString());
+                TxtDamage.DOCounter(cacheDamage, Damage, 0.5f).OnComplete(() => TxtDamage.text = Damage.ToString());
             }
+        }
+
+        public void IncreaseDamage(int damage)
+        {
+            var cacheDamage = Damage;
+            Damage += damage;
+            TxtDamage.DOCounter(cacheDamage, Damage, 0.5f).OnComplete(() => TxtDamage.text = Damage.ToString());
         }
 
         /// <summary>
@@ -481,7 +491,7 @@ namespace Lance.TowerWar.Unit
         {
             base.OnInspectorGUI();
 
-            _player.TxtDamage.text = _player.damage.ToString();
+            _player.TxtDamage.text = _player.Damage.ToString();
 
             serializedObject.Update();
             serializedObject.ApplyModifiedProperties();

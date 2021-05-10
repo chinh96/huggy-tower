@@ -7,7 +7,7 @@ namespace Lance.TowerWar.Unit
 {
     public class ItemChest : Item, IAnim
     {
-        public SkeletonGraphic skeleton;
+        [SerializeField] private SkeletonGraphic skeleton;
         public Rigidbody2D rigid;
         public Collider2D coll2D;
 
@@ -24,11 +24,6 @@ namespace Lance.TowerWar.Unit
 
         public void PlayLose(bool isLoop = false) { skeleton.Play("Fire", isLoop); }
 
-        public override void Collect(IUnit affectTarget)
-        {
-            PlayWin();
-        }
+        public override void Collect(IUnit affectTarget) { PlayWin(); }
     }
-    
-    
 }

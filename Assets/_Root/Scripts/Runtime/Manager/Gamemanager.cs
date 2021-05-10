@@ -31,6 +31,7 @@ namespace Lance.TowerWar.Controller
         private void Start()
         {
             hub.AddListenerReplay(OnReplayLevel);
+            hub.AddListenerSkip(OnSkipLevel);
             LoadLevel(Data.Data.UserCurrentLevel);
         }
 

@@ -10,6 +10,7 @@ namespace Lance.TowerWar.UI
     {
         public TextMeshProUGUI txtQuest;
         public Button btnReplay;
+        public Button btnSkip;
 
         public void UpdateDislayCurrentLevel(int level, ELevelCondition condition)
         {
@@ -34,6 +35,12 @@ namespace Lance.TowerWar.UI
         {
             btnReplay.onClick.RemoveAllListeners();
             btnReplay.onClick.AddListener(() => action?.Invoke());
+        }
+
+        public void AddListenerSkip(Action action)
+        {
+            btnSkip.onClick.RemoveAllListeners();
+            btnSkip.onClick.AddListener(() => action?.Invoke());
         }
     }
 }

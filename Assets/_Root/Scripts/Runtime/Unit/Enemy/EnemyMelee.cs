@@ -77,7 +77,7 @@ namespace Lance.TowerWar.Unit
         {
             base.OnInspectorGUI();
 
-            _enemyMelee.TxtDamage.text = _enemyMelee.damage.ToString();
+            _enemyMelee.TxtDamage.text = _enemyMelee.Damage.ToString();
 
             serializedObject.Update();
             serializedObject.ApplyModifiedProperties();
