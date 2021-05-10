@@ -305,28 +305,37 @@ namespace Lance.TowerWar.Unit
                     Turn = ETurn.MoveToItem;
                     DOTween.Kill(transform);
                     PLayMove(true);
-                    transform.DOLocalMoveX(_itemTarget.transform.localPosition.x - 50, 1f)
-                        .SetEase(Ease.Linear)
-                        .OnComplete(() =>
-                        {
-                            PlayUseItem();
-                            Timer.Register(1.2f,
-                                () =>
-                                {
-                                    if (Gamemanager.Instance.Root.LevelMap.condition == ELevelCondition.CollectChest)
-                                    {
-                                        PlayWin(true);
-                                        Gamemanager.Instance.OnWinLevel();
-                                    }
-                                    else
-                                    {
-                                        StartSearchingTurn();
-                                        PlayIdle(true);
-                                    }
 
-                                    _itemTarget.Collect(this);
-                                });
-                        });
+                    void UseItem()
+                    {
+                        PlayUseItem();
+                        Timer.Register(1.2f,
+                            () =>
+                            {
+                                if (Gamemanager.Instance.Root.LevelMap.condition == ELevelCondition.CollectChest)
+                                {
+                                    PlayWin(true);
+                                    Gamemanager.Instance.OnWinLevel();
+                                }
+                                else
+                                {
+                                    StartSearchingTurn();
+                                    PlayIdle(true);
+                                }
+
+                                _itemTarget.Collect(this);
+                            });
+                    }
+
+                    var distance = Math.Abs((_itemTarget.transform.localPosition.x - transform.localPosition.x));
+                    if (distance >= 80)
+                    {
+                        transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(UseItem);
+                    }
+                    else
+                    {
+                        UseItem();
+                    }
                 }
                 else
                 {
