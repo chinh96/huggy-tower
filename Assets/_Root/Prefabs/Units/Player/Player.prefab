@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 1520873680537687479}
   - component: {fileID: 1520873680537687476}
   - component: {fileID: 3884596101946377725}
+  - component: {fileID: 7514894187046888719}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -210,7 +211,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   skeletonDataAsset: {fileID: 11400000, guid: c86ceadda8f93d74fac2806db79f7a61, type: 2}
-  initialSkinName: Hero1/Kiem
+  initialSkinName: Hero
   initialFlipX: 0
   initialFlipY: 0
   startingAnimation: Idle
@@ -327,7 +328,9 @@ MonoBehaviour:
     m_Bits: 1280
   attackHandle: {fileID: 3884596101946377725}
   countdownAttack: 1
+  moveSpeed: 1.5
   turn: 0
+  mixAndMatchSkin: {fileID: 7514894187046888719}
 --- !u!114 &1520873680537687476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +371,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onAttack: OnBullet
   endAttack: EndAttack
+--- !u!114 &7514894187046888719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520873680537687470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2703c4af3346f824b9f9a2b9b5a2c134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swordSkins:
+  - Kiem
+  - Kiem2
+  runtimeMaterial: {fileID: 0}
+  runtimeAtlas: {fileID: 0}
 --- !u!1 &2736312079464604091
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Lance.TowerWar.Helper;
 using UnityEngine.EventSystems;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -30,10 +31,12 @@ namespace Lance.TowerWar.Unit
         [SerializeField] private float countdownAttack = 1.25f;
         [SerializeField, Range(0, 10)] private float moveSpeed = 1.5f;
         [SerializeField, ReadOnly] private ETurn turn = ETurn.None;
+        [SerializeField] private MixAndMatchSkin mixAndMatchSkin;
 
         public override EUnitType Type { get; protected set; } = EUnitType.Player;
         public bool FirstTurn { get; set; }
         public ETurn Turn { get => turn; private set => turn = value; }
+        public MixAndMatchSkin MixAndMatchSkin => mixAndMatchSkin;
 
         private Vector3 _defaultPosition;
         private RoomTower _defaultRoom = null;

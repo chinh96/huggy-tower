@@ -9,6 +9,7 @@ namespace Lance.TowerWar.Unit
 
     public class ItemSword : Item
     {
+        public int indexSkin = 0;
         public Image render;
         public Rigidbody2D rigid;
         public Collider2D coll2D;
@@ -22,6 +23,7 @@ namespace Lance.TowerWar.Unit
             {
                 gameObject.SetActive(false);
                 player.IncreaseDamage(damage);
+                player.MixAndMatchSkin.Refresh(indexSkin);
                 // play effect
             }
         }

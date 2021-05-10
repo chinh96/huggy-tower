@@ -12,7 +12,9 @@ namespace Lance.TowerWar.Data
 
         private const string MAX_LEVEL_KEY = "max_level";
         public static int UserMaxLevel { get => PlayerPrefs.GetInt(MAX_LEVEL_KEY, 0); set => PlayerPrefs.SetInt(MAX_LEVEL_KEY, value); }
-
+        
+        private const string CURRENT_SKIN_HERO = "current_skin_hero";
+        public static int CurrentSkinHero { get => PlayerPrefs.GetInt(CURRENT_SKIN_HERO, 0); set => PlayerPrefs.SetInt(CURRENT_SKIN_HERO, value); }
 
         private const string SOUND_STATE_KEY = "sound_state";
 
