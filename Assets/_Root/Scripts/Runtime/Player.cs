@@ -307,10 +307,10 @@ namespace Lance.TowerWar.Unit
 
                     if (_itemTarget.Type == EUnitType.Item)
                     {
-                        PLayMove(true);
                         var distance = Math.Abs((_itemTarget.transform.localPosition.x - transform.localPosition.x));
                         if (distance >= 80)
                         {
+                            PLayMove(true);
                             transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
                         }
                         else
@@ -320,7 +320,16 @@ namespace Lance.TowerWar.Unit
                     }
                     else if (_itemTarget.Type == EUnitType.Gem)
                     {
-                        UseItem(ELevelCondition.CollectGold);
+                        var distance = Math.Abs((_itemTarget.transform.localPosition.x - cacheCollider.transform.localPosition.x));
+                        if (distance >= 50)
+                        {
+                            PLayMove(true);
+                            transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem(ELevelCondition.CollectGold));
+                        }
+                        else
+                        {
+                            UseItem(ELevelCondition.CollectGold);
+                        }
                     }
 
                     void UseItem(ELevelCondition condition = ELevelCondition.CollectChest)
@@ -332,17 +341,16 @@ namespace Lance.TowerWar.Unit
                             {
                                 if (Gamemanager.Instance.Root.LevelMap.condition == condition)
                                 {
+                                    Timer.Register(1f, () => { Gamemanager.Instance.OnWinLevel(); });
                                     PlayWin(true);
-                                    Gamemanager.Instance.OnWinLevel();
                                 }
                                 else
                                 {
                                     StartSearchingTurn();
                                     PlayIdle(true);
                                 }
-
-                                _itemTarget.Collect(this);
                             });
+                        Timer.Register(0.5f, () => _itemTarget.Collect(this));
                     }
                 }
                 else
