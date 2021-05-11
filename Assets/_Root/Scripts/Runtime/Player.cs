@@ -105,7 +105,6 @@ namespace Lance.TowerWar.Unit
         public void OnSelected()
         {
             rigid2D.gravityScale = 0;
-            coll2D.isTrigger = true;
             coll2D.enabled = false;
             groundCollider.enabled = false;
             searchTargetCollider.enabled = false;
@@ -114,7 +113,6 @@ namespace Lance.TowerWar.Unit
         public void OnDeSelected()
         {
             rigid2D.gravityScale = 1;
-            coll2D.isTrigger = false;
             coll2D.enabled = true;
             groundCollider.enabled = true;
             searchTargetCollider.enabled = true;
@@ -321,7 +319,7 @@ namespace Lance.TowerWar.Unit
                     else if (_itemTarget.Type == EUnitType.Gem)
                     {
                         var distance = Math.Abs((_itemTarget.transform.localPosition.x - cacheCollider.transform.localPosition.x));
-                        if (distance >= 50)
+                        if (distance >= 80)
                         {
                             PLayMove(true);
                             transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem(ELevelCondition.CollectGold));
