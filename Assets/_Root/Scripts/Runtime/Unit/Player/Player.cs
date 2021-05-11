@@ -42,7 +42,7 @@ namespace Lance.TowerWar.Unit
         private RoomTower _defaultRoom = null;
         private float _countdownAttack = 0f;
         private List<Collider2D> _cachedSearchCollider = new List<Collider2D>();
-        private Unit _enemyTarget;
+        private Unit _target;
         private Item _itemTarget;
         private bool _flagAttack;
         private Vector2 _movement; // vector move player
@@ -86,8 +86,8 @@ namespace Lance.TowerWar.Unit
                 check = GetComponent<RectTransform>().Overlaps(tower.slots[i].GetComponent<RectTransform>());
                 if (check)
                 {
-                    var isEmptyRoom = tower.slots[i].IsClearEnemyInRoom() && !tower.slots[i].IsContaintItem();
-                    if (isEmptyRoom) return (false, 0);
+                    var hasUnitNotInvalid = !tower.slots[i].IsRoomHaveUnitNotInvalid();
+                    if (hasUnitNotInvalid) return (false, 0);
                     indexSlot = i;
                     break;
                 }
@@ -267,32 +267,67 @@ namespace Lance.TowerWar.Unit
 
             #endregion
 
-            _enemyTarget = cacheCollider.GetComponentInParent<Unit>();
-            if (_enemyTarget != null)
+            _target = cacheCollider.GetComponentInParent<Unit>();
+            if (_target != null)
             {
-                if (_enemyTarget is {State: EUnitState.Invalid})
+                if (_target is {State: EUnitState.Invalid})
                 {
-                    _enemyTarget = null;
+                    _target = null;
                     return;
                 }
 
-                if (_enemyTarget is {State: EUnitState.Normal} && _countdownAttack <= 0)
+                switch (_target.Type)
                 {
-                    Turn = ETurn.Attacking;
-                    _countdownAttack = countdownAttack;
+                    case EUnitType.Enemy:
+                        if (_target is {State: EUnitState.Normal} && _countdownAttack <= 0)
+                        {
+                            Turn = ETurn.Attacking;
+                            _countdownAttack = countdownAttack;
 
-                    // check damage
-                    _flagAttack = damage > _enemyTarget.Damage;
-                    if (_flagAttack)
-                    {
-                        PlayAttack();
-                    }
-                    else
-                    {
-                        _enemyTarget.OnAttack(damage, BeingAttackedCallback);
-                    }
+                            // check damage
+                            _flagAttack = damage > _target.Damage;
+                            if (_flagAttack)
+                            {
+                                PlayAttack();
+                            }
+                            else
+                            {
+                                _target.OnAttack(damage, BeingAttackedCallback);
+                            }
+                        }
 
-                    return;
+                        break;
+                    case EUnitType.Princess:
+                        if (_target is {State: EUnitState.Normal} && _countdownAttack <= 0)
+                        {
+                            Turn = ETurn.SavingPrincess;
+                            _countdownAttack = countdownAttack;
+
+                            var distance = Math.Abs((_itemTarget.transform.localPosition.x - transform.localPosition.x));
+                            if (distance >= 80)
+                            {
+                                PLayMove(true);
+                                transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(() => { SavePrincess();});
+                            }
+                            else
+                            {
+                                SavePrincess();
+                            }
+
+                            void SavePrincess()
+                            {
+                                PlayUseItem();
+                                (_target as Princess)?.PlayWin(true);
+                                Timer.Register(1f,
+                                    () =>
+                                    {
+                                        Timer.Register(1f, () => { Gamemanager.Instance.OnWinLevel(); });
+                                        PlayWin(true);
+                                    });
+                            }
+                        }
+
+                        break;
                 }
             }
             else
@@ -425,13 +460,13 @@ namespace Lance.TowerWar.Unit
         /// </summary>
         private void OnAttackByEvent()
         {
-            if (_enemyTarget != null)
+            if (_target != null)
             {
                 var cacheDamage = Damage;
                 if (_flagAttack)
                 {
-                    Damage += _enemyTarget.Damage;
-                    _enemyTarget.OnBeingAttacked();
+                    Damage += _target.Damage;
+                    _target.OnBeingAttacked();
                 }
 
                 TxtDamage.DOCounter(cacheDamage, Damage, 0.5f).OnComplete(() => TxtDamage.text = Damage.ToString());

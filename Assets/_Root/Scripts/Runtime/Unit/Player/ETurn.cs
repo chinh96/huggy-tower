@@ -8,5 +8,6 @@ namespace Lance.TowerWar.Unit
         Attacking = 3,
         UsingItem = 4,
         MoveToItem = 5,
+        SavingPrincess = 6,
     }
 }

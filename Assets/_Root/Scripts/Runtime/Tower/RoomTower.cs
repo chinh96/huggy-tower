@@ -36,6 +36,16 @@ namespace Lance.TowerWar.LevelBase
             return true;
         }
 
+        public bool IsContaintPrincess()
+        {
+            foreach (var unit in units)
+            {
+                if (unit.State != EUnitState.Invalid && unit.Type == EUnitType.Princess) return true;
+            }
+
+            return false;
+        }
+
         public bool IsContaintItem()
         {
             foreach (var unit in items)
@@ -44,6 +54,22 @@ namespace Lance.TowerWar.LevelBase
             }
 
             return false;
+        }
+
+        public bool IsRoomHaveUnitNotInvalid()
+        {
+            bool flag = false;
+            foreach (var unit in units)
+            {
+                if (unit.State != EUnitState.Invalid) flag = true;
+            }
+
+            foreach (var item in items)
+            {
+                if (item.State != EUnitState.Invalid) flag = true;
+            }
+
+            return flag;
         }
     }
 }

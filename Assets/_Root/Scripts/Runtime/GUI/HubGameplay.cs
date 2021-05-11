@@ -26,6 +26,9 @@ namespace Lance.TowerWar.UI
                 case ELevelCondition.SavePrincess:
                     str = "save the princess";
                     break;
+                case ELevelCondition.CollectGold:
+                    str = "collect golds";
+                    break;
             }
 
             txtQuest.text = $"Level {level + 1}: {str.ToUpper()}";
