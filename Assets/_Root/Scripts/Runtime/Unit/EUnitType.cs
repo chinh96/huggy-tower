@@ -4,6 +4,7 @@ namespace Lance.TowerWar.Unit
     {
         Player = 0,
         Enemy = 1,
-        Item = 2
+        Item = 2,
+        Gem= 3,
     }
 }

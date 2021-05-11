@@ -304,15 +304,33 @@ namespace Lance.TowerWar.Unit
                 {
                     Turn = ETurn.MoveToItem;
                     DOTween.Kill(transform);
-                    PLayMove(true);
 
-                    void UseItem()
+                    if (_itemTarget.Type == EUnitType.Item)
                     {
+                        PLayMove(true);
+                        var distance = Math.Abs((_itemTarget.transform.localPosition.x - transform.localPosition.x));
+                        if (distance >= 80)
+                        {
+                            transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
+                        }
+                        else
+                        {
+                            UseItem();
+                        }
+                    }
+                    else if (_itemTarget.Type == EUnitType.Gem)
+                    {
+                        UseItem(ELevelCondition.CollectGold);
+                    }
+
+                    void UseItem(ELevelCondition condition = ELevelCondition.CollectChest)
+                    {
+                        Turn = ETurn.UsingItem;
                         PlayUseItem();
                         Timer.Register(1.2f,
                             () =>
                             {
-                                if (Gamemanager.Instance.Root.LevelMap.condition == ELevelCondition.CollectChest)
+                                if (Gamemanager.Instance.Root.LevelMap.condition == condition)
                                 {
                                     PlayWin(true);
                                     Gamemanager.Instance.OnWinLevel();
@@ -325,16 +343,6 @@ namespace Lance.TowerWar.Unit
 
                                 _itemTarget.Collect(this);
                             });
-                    }
-
-                    var distance = Math.Abs((_itemTarget.transform.localPosition.x - transform.localPosition.x));
-                    if (distance >= 80)
-                    {
-                        transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(UseItem);
-                    }
-                    else
-                    {
-                        UseItem();
                     }
                 }
                 else

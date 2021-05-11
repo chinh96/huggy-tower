@@ -5,6 +5,7 @@ namespace Lance.TowerWar.Unit
 {
     public abstract class Item : MonoBehaviour, IUnit
     {
+        public GameObject ThisGameObject => gameObject;
         public EUnitState State { get; set; }
         public virtual EUnitType Type { get; } = EUnitType.Item;
         public virtual void DarknessRise() {  }

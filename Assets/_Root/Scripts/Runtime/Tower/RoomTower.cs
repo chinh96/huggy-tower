@@ -30,10 +30,7 @@ namespace Lance.TowerWar.LevelBase
         {
             foreach (var unit in units)
             {
-                if (unit.State != EUnitState.Invalid && unit.Type == EUnitType.Enemy)
-                {
-                    return false; // room not cleared
-                }
+                if (unit.State != EUnitState.Invalid && unit.Type == EUnitType.Enemy) return false; // room not cleared
             }
 
             return true;
@@ -43,10 +40,7 @@ namespace Lance.TowerWar.LevelBase
         {
             foreach (var unit in items)
             {
-                if (unit.State != EUnitState.Invalid && unit.Type == EUnitType.Item)
-                {
-                    return true;
-                }
+                if (unit.State != EUnitState.Invalid && (unit.Type == EUnitType.Item || unit.Type == EUnitType.Gem)) return true;
             }
 
             return false;

@@ -1,32 +1,23 @@
 using System.Collections.Generic;
 using System.Linq;
+using Lance.TowerWar.LevelBase;
 using MEC;
 
 namespace Lance.TowerWar.Unit
 {
     using UnityEngine;
 
-    public class GemHandles : MonoBehaviour
+    public class GemHandles : Item
     {
+        public float duration;
+        public float durationIncreasePerGem;
+
         public Gems[] gems;
 
         private bool _flagCollectGem;
         private CoroutineHandle _collectGemHandle;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="root"></param>
-        /// <param name="duration"></param>
-        /// <param name="durationIncreasePerGem"></param>
-        public void StartCollectGem(Transform root, float duration, float durationIncreasePerGem)
-        {
-            if (!_flagCollectGem)
-            {
-                _flagCollectGem = true;
-                _collectGemHandle = IeStartCollectGem(root, duration, durationIncreasePerGem).RunCoroutine();
-            }
-        }
+        public override EUnitType Type { get; } = EUnitType.Gem;
 
         private IEnumerator<float> IeStartCollectGem(Transform root, float duration, float durationIncreasePerGem)
         {
@@ -47,6 +38,15 @@ namespace Lance.TowerWar.Unit
             foreach (var gem in gems)
             {
                 if (gem != null) gem.Dispose();
+            }
+        }
+
+        public override void Collect(IUnit affectTarget)
+        {
+            if (!_flagCollectGem)
+            {
+                _flagCollectGem = true;
+                _collectGemHandle = IeStartCollectGem(affectTarget.ThisGameObject.transform, duration, durationIncreasePerGem).RunCoroutine();
             }
         }
     }
