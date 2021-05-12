@@ -303,7 +303,7 @@ namespace Lance.TowerWar.Unit
                             Turn = ETurn.SavingPrincess;
                             _countdownAttack = countdownAttack;
 
-                            var distance = Math.Abs((_itemTarget.transform.localPosition.x - transform.localPosition.x));
+                            var distance = Math.Abs((_target.transform.localPosition.x - transform.localPosition.x));
                             if (distance >= 80)
                             {
                                 PLayMove(true);
