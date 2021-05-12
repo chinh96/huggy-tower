@@ -1,7 +1,9 @@
 using System;
 using Lance.Common;
 using Spine.Unity;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace Lance.TowerWar.Unit

@@ -86,8 +86,8 @@ namespace Lance.TowerWar.Unit
                 check = GetComponent<RectTransform>().Overlaps(tower.slots[i].GetComponent<RectTransform>());
                 if (check)
                 {
-                    var hasUnitNotInvalid = !tower.slots[i].IsRoomHaveUnitNotInvalid();
-                    if (hasUnitNotInvalid) return (false, 0);
+                    var hasUnitNotInvalid = tower.slots[i].IsRoomHaveUnitNotInvalid();
+                    if (!hasUnitNotInvalid) return (false, 0);
                     indexSlot = i;
                     break;
                 }

@@ -3,7 +3,9 @@ using Lance.Common;
 using Lance.TowerWar.Controller;
 using Spine.Unity;
 using TMPro;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace Lance.TowerWar.Unit

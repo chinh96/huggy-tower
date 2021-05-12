@@ -61,7 +61,7 @@ namespace Lance.TowerWar.LevelBase
             bool flag = false;
             foreach (var unit in units)
             {
-                if (unit.State != EUnitState.Invalid) flag = true;
+                if (unit.State != EUnitState.Invalid && unit.Type != EUnitType.Player) flag = true;
             }
 
             foreach (var item in items)
