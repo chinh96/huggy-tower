@@ -373,7 +373,7 @@ namespace Lance.TowerWar.Unit
                     if (_itemTarget.Type == EUnitType.Item)
                     {
                         var distance = Math.Abs((_itemTarget.transform.localPosition.x - transform.localPosition.x));
-                        if (distance >= 80)
+                        if (distance >= 110)
                         {
                             PLayMove(true);
                             transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
@@ -386,7 +386,7 @@ namespace Lance.TowerWar.Unit
                     else if (_itemTarget.Type == EUnitType.Gem)
                     {
                         var distance = Math.Abs((_itemTarget.transform.localPosition.x - cacheCollider.transform.localPosition.x));
-                        if (distance >= 80)
+                        if (distance >= 110)
                         {
                             PLayMove(true);
                             transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem(ELevelCondition.CollectGold));
@@ -406,8 +406,25 @@ namespace Lance.TowerWar.Unit
                             {
                                 if (Gamemanager.Instance.Root.LevelMap.condition == condition)
                                 {
-                                    Timer.Register(1f, () => { Gamemanager.Instance.OnWinLevel(); });
-                                    PlayWin(true);
+                                    if (condition == ELevelCondition.CollectChest)
+                                    {
+                                        if (_itemTarget as ItemChest != null)
+                                        {
+                                            Timer.Register(1f, () => { Gamemanager.Instance.OnWinLevel(); });
+                                            PlayWin(true);
+                                        }
+                                        else
+                                        {
+                                            StartSearchingTurn();
+                                            PlayIdle(true);
+                                        }
+                                        
+                                    }
+                                    else
+                                    {
+                                        Timer.Register(1f, () => { Gamemanager.Instance.OnWinLevel(); });
+                                        PlayWin(true);
+                                    }
                                 }
                                 else
                                 {
