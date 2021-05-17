@@ -607,7 +607,17 @@ namespace Lance.TowerWar.Unit
             }
         }
 
-        public void PLayMove(bool isLoop) { skeleton.Play("RunKiem", true); }
+        public void PLayMove(bool isLoop)
+        {
+            if (isUsingSword)
+            {
+                skeleton.Play("RunKiem", true);
+            }
+            else
+            {
+                skeleton.Play("Run", true);
+            }
+        }
 
         public void PlayDead() { skeleton.Play("Die", false); }
 
