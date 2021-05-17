@@ -43,10 +43,13 @@ namespace Lance.TowerWar.LevelBase
 
         public void UpdateStatusSelectRoom(bool flagActive, bool flagSelect = false)
         {
-            selectedObject.gameObject.SetActive(flagActive);
-            if (flagActive)
+            if (selectedObject != null)
             {
-                selectedObject.sprite = flagSelect ? canSelectSprite : cantSelectSprite;
+                selectedObject.gameObject.SetActive(flagActive);
+                if (flagActive)
+                {
+                    selectedObject.sprite = flagSelect ? canSelectSprite : cantSelectSprite;
+                }
             }
         }
 
