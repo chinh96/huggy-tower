@@ -22,6 +22,7 @@ namespace Lance.TowerWar.Unit
             if (player != null)
             {
                 gameObject.SetActive(false);
+                player.isUsingSword = true;
                 player.IncreaseDamage(damage);
                 player.MixAndMatchSkin.Refresh(indexSkin);
                 // play effect

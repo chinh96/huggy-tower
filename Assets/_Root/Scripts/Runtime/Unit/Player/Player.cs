@@ -33,6 +33,8 @@ namespace Lance.TowerWar.Unit
         [SerializeField, ReadOnly] private ETurn turn = ETurn.None;
         [SerializeField] private MixAndMatchSkin mixAndMatchSkin;
 
+        [ReadOnly] public bool isUsingSword;
+
         public override EUnitType Type { get; protected set; } = EUnitType.Player;
         public bool FirstTurn { get; set; }
         public ETurn Turn { get => turn; private set => turn = value; }
@@ -50,9 +52,11 @@ namespace Lance.TowerWar.Unit
 
         private bool _isMouseUpDragDetected;
         private RoomTower _parentRoom;
+        private bool _dragValidateRoomFlag;
 
         private void Start()
         {
+            dragTranslate.valiateAction = ValidateChooseRoom;
             attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
             UpdateDefault();
             StartDragTurn();
@@ -94,6 +98,34 @@ namespace Lance.TowerWar.Unit
             }
 
             return (check, indexSlot);
+        }
+
+
+        public void ValidateChooseRoom()
+        {
+            var result = CheckCorrectArea();
+
+            if (result.Item1)
+            {
+                if (!_dragValidateRoomFlag)
+                {
+                    _dragValidateRoomFlag = true;
+
+                    var temp = Gamemanager.Instance.Root.LevelMap.visitTower.slots[result.Item2];
+                    temp.UpdateStatusSelectRoom(true, true);
+                }
+            }
+            else
+            {
+                if (_dragValidateRoomFlag)
+                {
+                    _dragValidateRoomFlag = false;
+                    foreach (var room in Gamemanager.Instance.Root.LevelMap.visitTower.slots)
+                    {
+                        room.UpdateStatusSelectRoom(false);
+                    }
+                }
+            }
         }
 
         public void ResetPlayerState()
@@ -307,7 +339,7 @@ namespace Lance.TowerWar.Unit
                             if (distance >= 80)
                             {
                                 PLayMove(true);
-                                transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(() => { SavePrincess();});
+                                transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(() => { SavePrincess(); });
                             }
                             else
                             {
@@ -526,7 +558,17 @@ namespace Lance.TowerWar.Unit
         public SkeletonGraphic Skeleton => skeleton;
         public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-        public void PlayAttack() { skeleton.Play("Attack", false); }
+        public void PlayAttack()
+        {
+            if (isUsingSword)
+            {
+                skeleton.Play("Attack", false);
+            }
+            else
+            {
+                skeleton.Play("Attack2", false);
+            }
+        }
 
         public void PLayMove(bool isLoop) { skeleton.Play("RunKiem", true); }
 

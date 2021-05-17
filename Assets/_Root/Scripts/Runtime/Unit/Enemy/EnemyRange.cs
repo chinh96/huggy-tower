@@ -66,13 +66,13 @@ namespace Lance.TowerWar.Unit
         public override void LightReturn() { }
 
         public SkeletonGraphic Skeleton => skeleton;
-        public void PlayIdle(bool isLoop) { skeleton.Play("idle", true); }
+        public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-        public void PlayAttack() { skeleton.Play("attack (cung)", false); }
+        public void PlayAttack() { skeleton.Play("AttackArchery", false); }
 
-        public void PLayMove(bool isLoop) { skeleton.Play("run", true); }
+        public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
-        public void PlayDead() { skeleton.Play("die", false); }
+        public void PlayDead() { skeleton.Play("Die", false); }
 
         public void PlayWin(bool isLoop) { }
 

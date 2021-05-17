@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lance.TowerWar.Unit;
+using UnityEngine.UI;
 
 namespace Lance.TowerWar.LevelBase
 {
@@ -11,6 +12,10 @@ namespace Lance.TowerWar.LevelBase
     {
         public Collider2D floor;
         public RectTransform spawnPoint;
+        public Image selectedObject;
+
+        public Sprite canSelectSprite;
+        public Sprite cantSelectSprite;
         [ReadOnly] public List<Unit> units = new List<Unit>();
         [ReadOnly] public List<Item> items = new List<Item>();
 
@@ -34,6 +39,15 @@ namespace Lance.TowerWar.LevelBase
             }
 
             return true;
+        }
+
+        public void UpdateStatusSelectRoom(bool flagActive, bool flagSelect = false)
+        {
+            selectedObject.gameObject.SetActive(flagActive);
+            if (flagActive)
+            {
+                selectedObject.sprite = flagSelect ? canSelectSprite : cantSelectSprite;
+            }
         }
 
         public bool IsContaintPrincess()

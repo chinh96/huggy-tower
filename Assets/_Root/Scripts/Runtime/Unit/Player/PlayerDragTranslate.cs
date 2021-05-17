@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using FSA = UnityEngine.Serialization.FormerlySerializedAsAttribute;
 using Lean.Common;
@@ -9,6 +10,7 @@ namespace Lean.Touch
     [AddComponentMenu("Player Drag Translate")]
     public class PlayerDragTranslate : MonoBehaviour
     {
+        public Action valiateAction;
         public bool DragTranslateFlag { get; set; }
 
         /// <summary>The method used to find fingers to use with this component. See LeanFingerFilter documentation for more information.</summary>
@@ -129,6 +131,7 @@ namespace Lean.Touch
             if (RectTransformUtility.ScreenPointToWorldPointInRectangle(transform.parent as RectTransform, screenPoint, camera, out worldPoint) == true)
             {
                 transform.position = worldPoint;
+                valiateAction?.Invoke();
             }
         }
 

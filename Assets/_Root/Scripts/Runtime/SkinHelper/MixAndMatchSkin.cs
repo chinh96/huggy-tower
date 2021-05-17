@@ -1,3 +1,4 @@
+using Lance.Common;
 using Lance.TowerWar.Data;
 using Spine;
 using Spine.Unity;
@@ -18,12 +19,10 @@ namespace Lance.TowerWar.Helper
         private Skin _characterSkin;
 
         // for repacking the skin to a new atlas texture
-        public Material runtimeMaterial;
-        public Texture2D runtimeAtlas;
+        [ReadOnly] public Material runtimeMaterial;
+        [ReadOnly] public Texture2D runtimeAtlas;
 
         private void Awake() { _skeletonGraphic = this.GetComponent<SkeletonGraphic>(); }
-
-        private void Start() { Refresh(); }
 
         public void Refresh(int index = 0)
         {
