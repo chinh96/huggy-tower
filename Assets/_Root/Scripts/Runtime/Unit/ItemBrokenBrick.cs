@@ -8,6 +8,7 @@ namespace Lance.TowerWar.Unit
     public class ItemBrokenBrick : Item
     {
         public Collision2D coll2D;
+        public GameObject effectBreak;
         public TextMeshProUGUI txtDamage;
         public int damage;
         public override void Collect(IUnit affectTarget)
@@ -17,9 +18,9 @@ namespace Lance.TowerWar.Unit
             {
                 player.IncreaseDamage(-damage);
                 // play effect
-                var go = transform.GetChild(0);
-                go.transform.SetParent(transform.parent, false);
-                go.gameObject.SetActive(true);
+                
+                effectBreak.transform.SetParent(transform.parent, false);
+                effectBreak.gameObject.SetActive(true);
                 gameObject.SetActive(false);
             }
         }
