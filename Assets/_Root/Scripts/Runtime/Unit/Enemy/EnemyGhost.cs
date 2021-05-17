@@ -22,9 +22,9 @@ namespace Lance.TowerWar.Unit
 
         private void Start() { attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent); }
 
-        private void OnEndAttackByEvent() { _callbackAttackPlayer?.Invoke(); }
+        private void OnEndAttackByEvent() { PlayIdle(true); }
 
-        private void OnAttackByEvent() { PlayIdle(true); }
+        private void OnAttackByEvent() { _callbackAttackPlayer?.Invoke(); }
 
         public override void OnBeingAttacked() { OnDead(); }
 
