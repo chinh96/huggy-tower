@@ -120,10 +120,7 @@ namespace Lance.TowerWar.Unit
                 if (_dragValidateRoomFlag)
                 {
                     _dragValidateRoomFlag = false;
-                    foreach (var room in Gamemanager.Instance.Root.LevelMap.visitTower.slots)
-                    {
-                        room.UpdateStatusSelectRoom(false);
-                    }
+                    Gamemanager.Instance.Root.LevelMap.ResetSelectVisitTower();
                 }
             }
         }
@@ -176,6 +173,7 @@ namespace Lance.TowerWar.Unit
             }
 
             dragTranslate.DragTranslateFlag = false;
+            Gamemanager.Instance.Root.LevelMap.ResetSelectVisitTower();
             var checkArea = CheckCorrectArea();
             if (checkArea.Item1)
             {

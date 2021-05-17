@@ -32,6 +32,14 @@ namespace Lance.TowerWar.LevelBase
             CurrentFakeLevelIndex = fakeLevelIndex;
         }
 
+        public void ResetSelectVisitTower()
+        {
+            foreach (var room in visitTower.slots)
+            {
+                room.UpdateStatusSelectRoom(false);
+            }
+        }
+        
         public void DarknessRise()
         {
             if (Units == null || Units.Count == 0) Units = GetComponentsInChildren<IUnit>().ToList();

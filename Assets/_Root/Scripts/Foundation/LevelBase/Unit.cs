@@ -12,7 +12,7 @@ namespace Lance.TowerWar.LevelBase
         [SerializeField] protected int damage;
         public GameObject ThisGameObject => gameObject;
         public EUnitState State { get => state; set => state = value; }
-        public virtual EUnitType Type { get; protected set; } = EUnitType.Enemy;
+        public abstract EUnitType Type { get; protected set; } 
         public int Damage { get => damage; set => damage = value; }
         public TextMeshProUGUI TxtDamage => txtDamage;
         public abstract void OnBeingAttacked();
