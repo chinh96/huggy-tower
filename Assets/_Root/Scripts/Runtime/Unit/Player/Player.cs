@@ -35,6 +35,8 @@ namespace Lance.TowerWar.Unit
 
         [ReadOnly] public bool isUsingSword;
 
+        [Space] [SerializeField] public ParticleSystem effectIncreaseDamge;
+
         public override EUnitType Type { get; protected set; } = EUnitType.Player;
         public bool FirstTurn { get; set; }
         public ETurn Turn { get => turn; private set => turn = value; }
@@ -496,6 +498,12 @@ namespace Lance.TowerWar.Unit
                 if (_flagAttack)
                 {
                     Damage += _target.Damage;
+                    if (damage > 0)
+                    {
+                        effectIncreaseDamge.gameObject.SetActive(true);
+                        effectIncreaseDamge.Play();
+                    }
+
                     _target.OnBeingAttacked();
                 }
 
@@ -506,6 +514,12 @@ namespace Lance.TowerWar.Unit
         public void IncreaseDamage(int damage)
         {
             var cacheDamage = Damage;
+            if (damage > 0)
+            {
+                effectIncreaseDamge.gameObject.SetActive(true);
+                effectIncreaseDamge.Play();
+            }
+
             Damage += damage;
             TxtDamage.DOCounter(cacheDamage, Damage, 0.5f).OnComplete(() => TxtDamage.text = Damage.ToString());
         }
