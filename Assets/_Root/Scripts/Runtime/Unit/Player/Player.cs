@@ -539,6 +539,14 @@ namespace Lance.TowerWar.Unit
 
             Damage += damage;
             TxtDamage.DOCounter(cacheDamage, Damage, 0.5f).OnComplete(() => TxtDamage.text = Damage.ToString());
+
+            if (Damage <= 0)
+            {
+                State = EUnitState.Invalid;
+                Turn = ETurn.None;
+                PlayDead();
+                Gamemanager.Instance.OnLoseLevel();
+            }
         }
 
         /// <summary>
