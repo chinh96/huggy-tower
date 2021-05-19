@@ -1,19 +1,15 @@
-using Lance.TowerWar.LevelBase;
 using TMPro;
 
-namespace Lance.TowerWar.Unit
+public class ItemTrap : Item
 {
-    public class ItemTrap : Item
-    {
-        public TextMeshProUGUI txtDamage;
-        public int damage;
+    public TextMeshProUGUI txtDamage;
+    public int damage;
 
-        public override void Collect(IUnit affectTarget)
+    public override void Collect(IUnit affectTarget)
+    {
+        if (State == EUnitState.Invalid)
         {
-            if (State == EUnitState.Invalid)
-            {
-                return;
-            }
+            return;
         }
     }
 }

@@ -1,27 +1,24 @@
 using System;
+using Lance;
 using Lance.Engine.Tool;
 using TMPro;
+using UnityEngine;
 
-namespace Lance.TowerWar.UI
+public class PopupWin : PopupBase
 {
-    using UnityEngine;
+    [SerializeField] private TextMeshProUGUI txtMessage;
+    [SerializeField] private UniButton btnNextLevel;
 
-    public class PopupWin : PopupBase
+    private Action _actionNextLevel;
+
+    public void Initialized(Action actionNextLevel, string message)
     {
-        [SerializeField] private TextMeshProUGUI txtMessage;
-        [SerializeField] private UniButton btnNextLevel;
+        _actionNextLevel = actionNextLevel;
+        txtMessage.text = message;
 
-        private Action _actionNextLevel;
-
-        public void Initialized(Action actionNextLevel, string message)
-        {
-            _actionNextLevel = actionNextLevel;
-            txtMessage.text = message;
-
-            btnNextLevel.onClick.RemoveListener(OnNextLevelButtonPressed);
-            btnNextLevel.onClick.AddListener(OnNextLevelButtonPressed);
-        }
-
-        private void OnNextLevelButtonPressed() { _actionNextLevel?.Invoke(); }
+        btnNextLevel.onClick.RemoveListener(OnNextLevelButtonPressed);
+        btnNextLevel.onClick.AddListener(OnNextLevelButtonPressed);
     }
+
+    private void OnNextLevelButtonPressed() { _actionNextLevel?.Invoke(); }
 }

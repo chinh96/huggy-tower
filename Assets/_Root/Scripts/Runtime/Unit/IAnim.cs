@@ -1,25 +1,22 @@
 using Spine.Unity;
 
-namespace Lance.TowerWar.Unit
+public interface IAnim
 {
-    public interface IAnim
-    {
-        public SkeletonGraphic Skeleton { get; }
+    public SkeletonGraphic Skeleton { get; }
 
-        #region animation
+    #region animation
 
-        void PlayIdle(bool isLoop);
+    void PlayIdle(bool isLoop);
 
-        void PlayAttack();
+    void PlayAttack();
 
-        void PLayMove(bool isLoop);
+    void PLayMove(bool isLoop);
 
-        void PlayDead();
+    void PlayDead();
 
-        void PlayWin(bool isLoop);
+    void PlayWin(bool isLoop);
 
-        void PlayLose(bool isLoop);
+    void PlayLose(bool isLoop);
 
-        #endregion
-    }
+    #endregion
 }

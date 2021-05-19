@@ -1,58 +1,86 @@
 using Lance.Common;
 using UnityEngine;
 
-namespace Lance.TowerWar.LevelBase
+public class LevelRoot : MonoBehaviour
 {
-    public class LevelRoot : MonoBehaviour
+    [SerializeField, ReadOnly] private int levelIndex;
+    [SerializeField, ReadOnly] private LevelMap levelMapPrefab;
+    [SerializeField, ReadOnly] private LevelMap levelMap;
+    private int times = 0;
+    private int totalTimesPlay = 0;
+    private int totalLevelWin = 0;
+
+    public int LevelIndex => levelIndex;
+    public LevelMap LevelMap => levelMap;
+    public LevelMap LevelMapPrefab => levelMapPrefab;
+
+    public virtual void Initialized(int level, LevelMap levelMapPrefab)
     {
-        #region properties
+        levelIndex = level;
+        this.levelMapPrefab = levelMapPrefab;
+    }
 
-        [SerializeField, ReadOnly] private int levelIndex;
-        [SerializeField, ReadOnly] private LevelMap levelMapPrefab;
-        [SerializeField, ReadOnly] private LevelMap levelMap;
-        public int LevelIndex => levelIndex;
-
-        public LevelMap LevelMap => levelMap;
-        public LevelMap LevelMapPrefab => levelMapPrefab;
-
-        #endregion
-
-        #region function
-
-        public virtual void Initialized(int level, LevelMap levelMapPrefab)
+    public void Install()
+    {
+        Clear();
+        if (levelMapPrefab != null)
         {
-            levelIndex = level;
-            this.levelMapPrefab = levelMapPrefab;
+            levelMap = Instantiate(levelMapPrefab, transform, false);
+            levelMap.transform.localPosition = Vector3.zero;
+            StartTimer();
         }
+    }
 
-        public void Install()
-        {
-            Clear();
-            if (levelMapPrefab != null)
-            {
-                levelMap = Instantiate(levelMapPrefab, transform, false);
-                levelMap.transform.localPosition = Vector3.zero;
-            }
-        }
+    public virtual void DarknessRise() { LevelMap.DarknessRise(); }
 
-        /// <summary>
-        /// enable
-        /// </summary>
-        public virtual void DarknessRise() { LevelMap.DarknessRise(); }
+    public virtual void LightReturn() { LevelMap.LightReturn(); }
 
-        /// <summary>
-        /// disable
-        /// </summary>
-        public virtual void LightReturn() { LevelMap.LightReturn(); }
+    public virtual void Clear()
+    {
+        if (LevelMap != null) LevelMap.gameObject.Destroy();
+        IncreaseTotalLevelWin();
+        StopTimer();
+    }
 
-        /// <summary>
-        /// clear level in root
-        /// </summary>
-        public virtual void Clear()
-        {
-            if (LevelMap != null) LevelMap.gameObject.Destroy();
-        }
+    public void StartTimer()
+    {
+        times = 0;
+        InvokeRepeating("IncreaseTimes", 0, 1);
+    }
 
-        #endregion
+    public void StopTimer()
+    {
+        totalTimesPlay += times;
+        CancelInvoke("IncreaseTimes");
+    }
+
+    private void IncreaseTimes()
+    {
+        times++;
+    }
+
+    public void ResetTotalTimesPlay()
+    {
+        totalTimesPlay = 0;
+    }
+
+    public int GetTotalTimesPlay()
+    {
+        return totalTimesPlay;
+    }
+
+    private void IncreaseTotalLevelWin()
+    {
+        totalLevelWin++;
+    }
+
+    public int GetTotalLevelWin()
+    {
+        return totalLevelWin;
+    }
+
+    public void ResetTotalLevelWin()
+    {
+        totalLevelWin = 0;
     }
 }

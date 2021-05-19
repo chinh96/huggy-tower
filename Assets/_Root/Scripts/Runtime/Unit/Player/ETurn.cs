@@ -1,13 +1,10 @@
-namespace Lance.TowerWar.Unit
+public enum ETurn
 {
-    public enum ETurn
-    {
-        None = 0,
-        Drag = 1,
-        Searching = 2,
-        Attacking = 3,
-        UsingItem = 4,
-        MoveToItem = 5,
-        SavingPrincess = 6,
-    }
+    None = 0,
+    Drag = 1,
+    Searching = 2,
+    Attacking = 3,
+    UsingItem = 4,
+    MoveToItem = 5,
+    SavingPrincess = 6,
 }

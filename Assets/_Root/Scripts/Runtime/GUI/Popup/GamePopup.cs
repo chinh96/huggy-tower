@@ -4,60 +4,57 @@ using Lance.Engine.Tool;
 using Lance.TowerWar.Unit;
 using UnityEngine;
 
-namespace Lance.TowerWar.UI
+public class GamePopup : Singleton<GamePopup>
 {
-    public class GamePopup : Singleton<GamePopup>
+    [SerializeField] private Canvas canvas;
+    [SerializeField] private Transform container;
+
+    [SerializeField] private PopupWin popupWinPrefab;
+    [SerializeField] private PopupLose popupLosePrefab;
+
+
+    public IPopupHandler winHandler;
+    public IPopupHandler loseHandler;
+
+    public void ShowPopupWin(Action actionNextLevel, string message)
     {
-        [SerializeField] private Canvas canvas;
-        [SerializeField] private Transform container;
-
-        [SerializeField] private PopupWin popupWinPrefab;
-        [SerializeField] private PopupLose popupLosePrefab;
-
-
-        public IPopupHandler winHandler;
-        public IPopupHandler loseHandler;
-
-        public void ShowPopupWin(Action actionNextLevel, string message)
+        if (winHandler != null)
         {
-            if (winHandler != null)
-            {
-                if (winHandler.GameObject.activeSelf) return;
+            if (winHandler.GameObject.activeSelf) return;
 
-                Display();
-                return;
-            }
-
-            winHandler = Instantiate(popupWinPrefab, container, false);
             Display();
-
-            void Display()
-            {
-                var popup = (PopupWin) winHandler;
-                popup.Initialized(actionNextLevel, message);
-                Popup.Instance.Show(winHandler);
-            }
+            return;
         }
 
-        public void ShowPopupLose(Action actionReplayLevel, Action actionSkipLevel, string message)
+        winHandler = Instantiate(popupWinPrefab, container, false);
+        Display();
+
+        void Display()
         {
-            if (loseHandler != null)
-            {
-                if (loseHandler.GameObject.activeSelf) return;
+            var popup = (PopupWin)winHandler;
+            popup.Initialized(actionNextLevel, message);
+            Popup.Instance.Show(winHandler);
+        }
+    }
 
-                Display();
-                return;
-            }
+    public void ShowPopupLose(Action actionReplayLevel, Action actionSkipLevel, string message)
+    {
+        if (loseHandler != null)
+        {
+            if (loseHandler.GameObject.activeSelf) return;
 
-            loseHandler = Instantiate(popupLosePrefab, container, false);
             Display();
+            return;
+        }
 
-            void Display()
-            {
-                var popup = (PopupLose) loseHandler;
-                popup.Initialized(actionReplayLevel, actionSkipLevel, message);
-                Popup.Instance.Show(loseHandler);
-            }
+        loseHandler = Instantiate(popupLosePrefab, container, false);
+        Display();
+
+        void Display()
+        {
+            var popup = (PopupLose)loseHandler;
+            popup.Initialized(actionReplayLevel, actionSkipLevel, message);
+            Popup.Instance.Show(loseHandler);
         }
     }
 }

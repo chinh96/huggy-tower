@@ -1,6 +1,3 @@
-namespace Lance.TowerWar.Unit
+public class HomeTower : Tower
 {
-    public class HomeTower : Tower
-    {
-    }
 }

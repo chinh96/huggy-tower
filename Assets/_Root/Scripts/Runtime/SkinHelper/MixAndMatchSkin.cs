@@ -1,80 +1,76 @@
 using Lance.Common;
-using Lance.TowerWar.Data;
 using Spine;
 using Spine.Unity;
 using Spine.Unity.AttachmentTools;
 
-namespace Lance.TowerWar.Helper
+using UnityEngine;
+
+public class MixAndMatchSkin : MonoBehaviour
 {
-    using UnityEngine;
+    // here we use arrays of strings to be able to cycle between them easily.
+    [SpineSkin] public string[] swordSkins = { };
+    private SkeletonGraphic _skeletonGraphic;
 
-    public class MixAndMatchSkin : MonoBehaviour
+    // This "naked body" skin will likely change only once upon character creation,
+    // so we store this combined set of non-equipment Skins for later re-use.
+    private Skin _characterSkin;
+
+    // for repacking the skin to a new atlas texture
+    [ReadOnly] public Material runtimeMaterial;
+    [ReadOnly] public Texture2D runtimeAtlas;
+
+    private void Awake() { _skeletonGraphic = this.GetComponent<SkeletonGraphic>(); }
+
+    public void Refresh(int index = 0)
     {
-        // here we use arrays of strings to be able to cycle between them easily.
-        [SpineSkin] public string[] swordSkins = { };
-        private SkeletonGraphic _skeletonGraphic;
+        UpdateCharacterSkin(index);
+        UpdateCombinedSkin();
+    }
 
-        // This "naked body" skin will likely change only once upon character creation,
-        // so we store this combined set of non-equipment Skins for later re-use.
-        private Skin _characterSkin;
+    public void OptimizeSkin()
+    {
+        // Create a repacked skin.
+        var previousSkin = _skeletonGraphic.Skeleton.Skin;
+        // Note: materials and textures returned by GetRepackedSkin() behave like 'new Texture2D()' and need to be destroyed
+        if (runtimeMaterial)
+            Destroy(runtimeMaterial);
+        if (runtimeAtlas)
+            Destroy(runtimeAtlas);
+        Skin repackedSkin = previousSkin.GetRepackedSkin("Repacked skin",
+            _skeletonGraphic.SkeletonDataAsset.atlasAssets[0].PrimaryMaterial,
+            out runtimeMaterial,
+            out runtimeAtlas);
+        previousSkin.Clear();
 
-        // for repacking the skin to a new atlas texture
-        [ReadOnly] public Material runtimeMaterial;
-        [ReadOnly] public Texture2D runtimeAtlas;
+        // Use the repacked skin.
+        _skeletonGraphic.Skeleton.Skin = repackedSkin;
+        _skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+        _skeletonGraphic.AnimationState.Apply(_skeletonGraphic.Skeleton);
 
-        private void Awake() { _skeletonGraphic = this.GetComponent<SkeletonGraphic>(); }
+        // You can optionally clear the cache after multiple repack operations.
+        AtlasUtilities.ClearCache();
+    }
 
-        public void Refresh(int index = 0)
-        {
-            UpdateCharacterSkin(index);
-            UpdateCombinedSkin();
-        }
+    private void UpdateCharacterSkin(int index)
+    {
+        var skeleton = _skeletonGraphic.Skeleton;
+        var skeletonData = skeleton.Data;
+        _characterSkin = new Skin("character-base");
+        // Note that the result Skin returned by calls to skeletonData.FindSkin()
+        // could be cached once in Start() instead of searching for the same skin
+        // every time. For demonstration purposes we keep it simple here.
+        _characterSkin.AddSkin(skeletonData.FindSkin(swordSkins[index]));
+        _characterSkin.AddSkin(skeletonData.FindSkin(HeroSkinData.SkinHeroByIndex(Data.CurrentSkinHero)));
+    }
 
-        public void OptimizeSkin()
-        {
-            // Create a repacked skin.
-            var previousSkin = _skeletonGraphic.Skeleton.Skin;
-            // Note: materials and textures returned by GetRepackedSkin() behave like 'new Texture2D()' and need to be destroyed
-            if (runtimeMaterial)
-                Destroy(runtimeMaterial);
-            if (runtimeAtlas)
-                Destroy(runtimeAtlas);
-            Skin repackedSkin = previousSkin.GetRepackedSkin("Repacked skin",
-                _skeletonGraphic.SkeletonDataAsset.atlasAssets[0].PrimaryMaterial,
-                out runtimeMaterial,
-                out runtimeAtlas);
-            previousSkin.Clear();
+    private void UpdateCombinedSkin()
+    {
+        var skeleton = _skeletonGraphic.Skeleton;
+        var resultCombinedSkin = new Skin("character-combined");
 
-            // Use the repacked skin.
-            _skeletonGraphic.Skeleton.Skin = repackedSkin;
-            _skeletonGraphic.Skeleton.SetSlotsToSetupPose();
-            _skeletonGraphic.AnimationState.Apply(_skeletonGraphic.Skeleton);
+        resultCombinedSkin.AddSkin(_characterSkin);
 
-            // You can optionally clear the cache after multiple repack operations.
-            AtlasUtilities.ClearCache();
-        }
-
-        private void UpdateCharacterSkin(int index)
-        {
-            var skeleton = _skeletonGraphic.Skeleton;
-            var skeletonData = skeleton.Data;
-            _characterSkin = new Skin("character-base");
-            // Note that the result Skin returned by calls to skeletonData.FindSkin()
-            // could be cached once in Start() instead of searching for the same skin
-            // every time. For demonstration purposes we keep it simple here.
-            _characterSkin.AddSkin(skeletonData.FindSkin(swordSkins[index]));
-            _characterSkin.AddSkin(skeletonData.FindSkin(HeroSkinData.SkinHeroByIndex(Data.Data.CurrentSkinHero)));
-        }
-
-        private void UpdateCombinedSkin()
-        {
-            var skeleton = _skeletonGraphic.Skeleton;
-            var resultCombinedSkin = new Skin("character-combined");
-
-            resultCombinedSkin.AddSkin(_characterSkin);
-
-            skeleton.SetSkin(resultCombinedSkin);
-            skeleton.SetSlotsToSetupPose();
-        }
+        skeleton.SetSkin(resultCombinedSkin);
+        skeleton.SetSlotsToSetupPose();
     }
 }

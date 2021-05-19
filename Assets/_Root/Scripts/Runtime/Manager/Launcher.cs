@@ -3,16 +3,13 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
-namespace Lance.TowerWar.Controller
+public class Launcher : MonoBehaviour
 {
-    public class Launcher : MonoBehaviour
-    {
-        public LoadingScreenManager loading;
+    public LoadingScreenManager loading;
 
-        private void Start()
-        {
-            Addressables.InitializeAsync();
-            loading.LoadScene("menu");
-        }
+    private void Start()
+    {
+        Addressables.InitializeAsync();
+        loading.LoadScene("menu");
     }
 }
