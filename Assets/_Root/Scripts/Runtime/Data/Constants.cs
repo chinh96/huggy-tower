@@ -25,4 +25,9 @@ public class Constants
     public const string IS_REMOVE_ADS = "IS_REMOVE_ADS";
     public const string CACHE_LEVEL_INDEX = "CACHE_LEVEL_INDEX";
     public const string COUNT_PLAY_LEVEL = "COUNT_PLAY_LEVEL";
+
+    // Scene
+    public const string LOADING_SCENE = "LoadingScene";
+    public const string MENU_SCENE = "MenuScene";
+    public const string GAMEPLAY_SCENE = "GameplayScene";
 }

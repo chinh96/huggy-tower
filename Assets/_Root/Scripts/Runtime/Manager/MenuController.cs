@@ -7,6 +7,6 @@ public class MenuController : Singleton<MenuController>
     private void Start()
     {
         AdController.Instance.ShowBanner();
-        // SceneManager.LoadScene("gameplay");
+        // SceneManager.LoadScene(Constants.GAMEPLAY_SCENE);
     }
 }

@@ -6,21 +6,13 @@ public class GameController : Singleton<GameController>
 {
     [SerializeField] private LevelRoot root;
     [SerializeField] private RoomTower roomPrefab;
-
     [SerializeField] private HubGameplay hub;
-    public LeanGameObjectPool poolArrow;
-
     private bool _isReplay;
 
-    #region properties
-
+    public LeanGameObjectPool poolArrow;
     public LevelRoot Root => root;
     public EGameState GameState { get; set; }
     public RoomTower RoomPrefab => roomPrefab;
-
-    #endregion
-
-    #region unity-api
 
     private void Start()
     {
@@ -29,16 +21,8 @@ public class GameController : Singleton<GameController>
         LoadLevel(Data.CurrentLevel);
     }
 
-    #endregion
-
-    #region function
-
     private void ResetFlagNextLevel() { }
 
-    /// <summary>
-    /// load level to play
-    /// </summary>
-    /// <param name="fakeIndex"></param>
     public async void LoadLevel(int fakeIndex)
     {
         async void LoadNextLevel(int fakeLevelIndex)
@@ -158,10 +142,6 @@ public class GameController : Singleton<GameController>
         OnNextLevel();
     }
 
-    #endregion
-
-    #region show-popup
-
     public void OnWinLevel()
     {
         Data.CurrentLevel++;
@@ -178,9 +158,7 @@ public class GameController : Singleton<GameController>
         ShowPopupLose();
     }
 
-    private void ShowPopupWin() { GamePopup.Instance.ShowPopupWin(OnNextLevel, "You Win"); }
+    private void ShowPopupWin() { }
 
-    private void ShowPopupLose() { GamePopup.Instance.ShowPopupLose(OnReplayLevel, OnSkipLevel, "You Lose"); }
-
-    #endregion
+    private void ShowPopupLose() { }
 }

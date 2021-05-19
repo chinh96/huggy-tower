@@ -3,13 +3,13 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
-public class Launcher : MonoBehaviour
+public class LoadingController : MonoBehaviour
 {
-    public LoadingScreenManager loading;
+    public LoadingScreenManager LoadingScreenManager;
 
     private void Start()
     {
         Addressables.InitializeAsync();
-        loading.LoadScene("menu");
+        LoadingScreenManager.LoadScene(Constants.MENU_SCENE);
     }
 }
