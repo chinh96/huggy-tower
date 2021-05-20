@@ -1,53 +1,49 @@
 using System.Collections.Generic;
 using System.Linq;
-using Lance.TowerWar.LevelBase;
 using MEC;
 
-namespace Lance.TowerWar.Unit
+using UnityEngine;
+
+public class GemHandles : Item
 {
-    using UnityEngine;
+    public float duration;
+    public float durationIncreasePerGem;
 
-    public class GemHandles : Item
+    public Gems[] gems;
+
+    private bool _flagCollectGem;
+    private CoroutineHandle _collectGemHandle;
+
+    public override EUnitType Type { get; } = EUnitType.Gem;
+
+    private IEnumerator<float> IeStartCollectGem(Transform root, float duration, float durationIncreasePerGem)
     {
-        public float duration;
-        public float durationIncreasePerGem;
-
-        public Gems[] gems;
-
-        private bool _flagCollectGem;
-        private CoroutineHandle _collectGemHandle;
-
-        public override EUnitType Type { get; } = EUnitType.Gem;
-
-        private IEnumerator<float> IeStartCollectGem(Transform root, float duration, float durationIncreasePerGem)
+        var tempCacheGems = gems.Where(_ => _.gameObject.activeSelf).ToArray();
+        for (int i = 0; i < tempCacheGems.Length; i++)
         {
-            var tempCacheGems = gems.Where(_ => _.gameObject.activeSelf).ToArray();
-            for (int i = 0; i < tempCacheGems.Length; i++)
-            {
-                gems[i].CollectByPlayer(root, duration + durationIncreasePerGem * i);
+            gems[i].CollectByPlayer(root, duration + durationIncreasePerGem * i);
 
-                yield return Timing.WaitForOneFrame;
-            }
+            yield return Timing.WaitForOneFrame;
         }
+    }
 
-        public void Dispose()
+    public void Dispose()
+    {
+        _flagCollectGem = false;
+        Timing.KillCoroutines(_collectGemHandle);
+
+        foreach (var gem in gems)
         {
-            _flagCollectGem = false;
-            Timing.KillCoroutines(_collectGemHandle);
-
-            foreach (var gem in gems)
-            {
-                if (gem != null) gem.Dispose();
-            }
+            if (gem != null) gem.Dispose();
         }
+    }
 
-        public override void Collect(IUnit affectTarget)
+    public override void Collect(IUnit affectTarget)
+    {
+        if (!_flagCollectGem)
         {
-            if (!_flagCollectGem)
-            {
-                _flagCollectGem = true;
-                _collectGemHandle = IeStartCollectGem(affectTarget.ThisGameObject.transform, duration, durationIncreasePerGem).RunCoroutine();
-            }
+            _flagCollectGem = true;
+            _collectGemHandle = IeStartCollectGem(affectTarget.ThisGameObject.transform, duration, durationIncreasePerGem).RunCoroutine();
         }
     }
 }

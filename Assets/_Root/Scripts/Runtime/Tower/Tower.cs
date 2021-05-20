@@ -1,53 +1,50 @@
 using UnityEngine.UI;
 
-namespace Lance.TowerWar.Unit
+using System.Collections.Generic;
+using System.Linq;
+using Lance.TowerWar.Unit;
+using UnityEngine;
+
+public class Tower : MonoBehaviour
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using LevelBase;
-    using UnityEngine;
+    public ContentSizeFitter fitter;
+    public List<RoomTower> slots;
 
-    public class Tower : MonoBehaviour
+    private void Start() { slots = GetComponentsInChildren<RoomTower>().ToList(); }
+
+    public void RefreshRoom()
     {
-        public ContentSizeFitter fitter;
-        public List<RoomTower> slots;
-
-        private void Start() { slots = GetComponentsInChildren<RoomTower>().ToList(); }
-
-        public void RefreshRoom()
+        foreach (var roomTower in slots)
         {
-            foreach (var roomTower in slots)
+            roomTower.UpdateUnitCollection();
+        }
+    }
+
+    public bool IsClearTower()
+    {
+        var flag = true;
+        foreach (var slot in slots)
+        {
+            flag = slot.IsClearEnemyInRoom();
+            if (!flag)
             {
-                roomTower.UpdateUnitCollection();
+                break;
             }
         }
 
-        public bool IsClearTower()
-        {
-            var flag = true;
-            foreach (var slot in slots)
-            {
-                flag = slot.IsClearEnemyInRoom();
-                if (!flag)
-                {
-                    break;
-                }
-            }
+        return flag;
+    }
 
-            return flag;
+    public RoomTower RoomContainPlayer(Player player)
+    {
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].units.Contains(player))
+            {
+                return slots[i];
+            }
         }
 
-        public RoomTower RoomContainPlayer(Player player)
-        {
-            for (int i = 0; i < slots.Count; i++)
-            {
-                if (slots[i].units.Contains(player))
-                {
-                    return slots[i];
-                }
-            }
-
-            return null;
-        }
+        return null;
     }
 }

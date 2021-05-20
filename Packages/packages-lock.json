@@ -1,5 +1,30 @@
 {
   "dependencies": {
+    "com.google.external-dependency-manager": {
+      "version": "1.2.165",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unityregistry-pa.googleapis.com"
+    },
+    "com.google.firebase.analytics": {
+      "version": "7.2.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.google.firebase.app": "7.2.0"
+      },
+      "url": "https://unityregistry-pa.googleapis.com"
+    },
+    "com.google.firebase.app": {
+      "version": "7.2.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.google.external-dependency-manager": "1.2.165"
+      },
+      "url": "https://unityregistry-pa.googleapis.com"
+    },
     "com.lance.lance": {
       "version": "https://github.com/yenmoc/lance.git?path=Assets/_Root",
       "depth": 0,
@@ -14,7 +39,7 @@
       "hash": "cbf03370f4d1020af18897613d9d8a57ef5bc012"
     },
     "com.unity.2d.common": {
-      "version": "4.0.3",
+      "version": "5.0.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -24,7 +49,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.2d.path": {
-      "version": "4.0.1",
+      "version": "5.0.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
@@ -37,13 +62,13 @@
       "dependencies": {}
     },
     "com.unity.2d.spriteshape": {
-      "version": "5.1.1",
+      "version": "6.0.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.1.0",
-        "com.unity.2d.common": "4.0.3",
-        "com.unity.2d.path": "4.0.1",
+        "com.unity.2d.common": "5.0.0",
+        "com.unity.2d.path": "5.0.0",
         "com.unity.modules.physics2d": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -56,7 +81,7 @@
     },
     "com.unity.addressables": {
       "version": "1.16.19",
-      "depth": 0,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.scriptablebuildpipeline": "1.15.2",
@@ -118,12 +143,10 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "2.0.7",
+      "version": "3.0.5",
       "depth": 0,
       "source": "registry",
-      "dependencies": {
-        "com.unity.test-framework": "1.1.1"
-      },
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
@@ -190,7 +213,7 @@
     },
     "com.unity.scriptablebuildpipeline": {
       "version": "1.15.2",
-      "depth": 1,
+      "depth": 2,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -226,7 +249,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.4.7",
+      "version": "1.5.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {

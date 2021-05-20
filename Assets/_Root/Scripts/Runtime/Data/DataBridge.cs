@@ -2,141 +2,126 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Lance.Common;
-using Lance.TowerWar.LevelBase;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Lance.TowerWar.Data
+public class DataBridge : Singleton<DataBridge>
 {
-    public class DataBridge : Singleton<DataBridge>
+    #region properties
+
+    [SerializeField, ReadOnly] private LevelMap previousLevelLoaded = null;
+    [SerializeField, ReadOnly] private LevelMap nextLevelLoaded = null;
+
+    public LevelMap PreviousLevelLoaded { get => previousLevelLoaded; set => previousLevelLoaded = value; }
+    public LevelMap NextLevelLoaded { get => nextLevelLoaded; set => nextLevelLoaded = value; }
+    private int[] _cacheLevels;
+
+    #endregion
+
+    #region unity-api
+
+    private void Start() { CheckCacheLevel(); }
+
+    #endregion
+
+    #region function
+
+    /// <summary>
+    /// check cache level
+    /// </summary>
+    public void CheckCacheLevel()
     {
-        #region properties
-
-        [SerializeField, ReadOnly] private LevelMap previousLevelLoaded = null;
-        [SerializeField, ReadOnly] private LevelMap nextLevelLoaded = null;
-
-        public LevelMap PreviousLevelLoaded { get => previousLevelLoaded; set => previousLevelLoaded = value; }
-        public LevelMap NextLevelLoaded { get => nextLevelLoaded; set => nextLevelLoaded = value; }
-        private int[] _cacheLevels;
-
-        #endregion
-
-        #region unity-api
-
-        private void Start() { CheckCacheLevel(); }
-
-        #endregion
-
-        #region function
-
-        /// <summary>
-        /// check cache level
-        /// </summary>
-        public void CheckCacheLevel()
+        bool flagOutLevel = false;
+        if (Data.CurrentLevel > Config.MaxLevelCanReach)
         {
-            bool flagOutLevel = false;
-            if (Data.UserCurrentLevel > Config.MaxLevelCanReach)
-            {
-                _cacheLevels = new int[Config.MaxLevelWithOutTutorial];
-
-                for (int i = 0; i < Config.MaxLevelWithOutTutorial; i++)
-                {
-                    _cacheLevels[i] = Data.GetCacheLevelIndex(i);
-                    if (_cacheLevels[i] >= Config.MaxLevelCanReach) flagOutLevel = true;
-                }
-
-                if (flagOutLevel) MakeCacheLevel();
-            }
-        }
-
-        /// <summary>
-        /// make cache level
-        /// </summary>
-        public void MakeCacheLevel()
-        {
-            var tempList = new List<int>();
-            for (int i = 0; i < Config.MaxLevelCanReach; i++)
-            {
-                if (Config.LevelSkips.Contains(i)) continue;
-                tempList.Add(i);
-            }
-
-            tempList.Shuffle();
-
             _cacheLevels = new int[Config.MaxLevelWithOutTutorial];
 
-            for (int i = 0; i < tempList.Count; i++)
+            for (int i = 0; i < Config.MaxLevelWithOutTutorial; i++)
             {
-                Data.SetCacheLevelIndex(i, tempList[i]);
-                _cacheLevels[i] = tempList[i];
+                _cacheLevels[i] = Data.GetCacheLevelIndex(i);
+                if (_cacheLevels[i] >= Config.MaxLevelCanReach) flagOutLevel = true;
             }
+
+            if (flagOutLevel) MakeCacheLevel();
+        }
+    }
+
+    /// <summary>
+    /// make cache level
+    /// </summary>
+    public void MakeCacheLevel()
+    {
+        var tempList = new List<int>();
+        for (int i = 0; i < Config.MaxLevelCanReach; i++)
+        {
+            if (Config.LevelSkips.Contains(i)) continue;
+            tempList.Add(i);
         }
 
-        /// <summary>
-        /// return level prefab and RealLevelIndex, FakeLevelIndex
-        /// </summary>
-        /// <param name="levelIndex"></param>
-        /// <returns></returns>
-        public async UniTask<(GameObject, int, int)> GetLevel(int levelIndex)
-        {
-            if (Data.OnlyUseAdmob)
-            {
-                //if (AdsManager.Instance != null) AdsManager.Instance.RequestReward();
-            }
-#if IRONSOURCE
-        else
-        {
-            //if (AdsIronSourceManager.Instance != null) AdsIronSourceManager.Instance.RequestReward();
-        }
-#endif
+        tempList.Shuffle();
 
-            if (levelIndex > Config.MaxLevelCanReach - 1)
+        _cacheLevels = new int[Config.MaxLevelWithOutTutorial];
+
+        for (int i = 0; i < tempList.Count; i++)
+        {
+            Data.SetCacheLevelIndex(i, tempList[i]);
+            _cacheLevels[i] = tempList[i];
+        }
+    }
+
+    /// <summary>
+    /// return level prefab and RealLevelIndex, FakeLevelIndex
+    /// </summary>
+    /// <param name="levelIndex"></param>
+    /// <returns></returns>
+    public async UniTask<(GameObject, int, int)> GetLevel(int levelIndex)
+    {
+        if (levelIndex > Config.MaxLevelCanReach - 1)
+        {
+            var temp = (levelIndex - Config.MaxLevelCanReach) % (Config.MaxLevelWithOutTutorial);
+            if (Data.CountPlayLevel >= Config.MaxLevelWithOutTutorial)
             {
-                var temp = (levelIndex - Config.MaxLevelCanReach) % (Config.MaxLevelWithOutTutorial);
-                if (Data.CountPlayLevel >= Config.MaxLevelWithOutTutorial)
+                MakeCacheLevel();
+                Data.CountPlayLevel = 0;
+            }
+            else
+            {
+                if (_cacheLevels == null || _cacheLevels.Length == 0 || _cacheLevels.Count(_ => _ == 0) > 0 || _cacheLevels.Length <= temp || _cacheLevels[temp] == 0)
                 {
                     MakeCacheLevel();
-                    Data.CountPlayLevel = 0;
                 }
                 else
                 {
-                    if (_cacheLevels == null || _cacheLevels.Length == 0 || _cacheLevels.Count(_ => _ == 0) > 0 || _cacheLevels.Length <= temp || _cacheLevels[temp] == 0)
+                    if (_cacheLevels != null && _cacheLevels.Length > 0)
                     {
-                        MakeCacheLevel();
-                    }
-                    else
-                    {
-                        if (_cacheLevels != null && _cacheLevels.Length > 0)
+                        var flagLevel = false;
+                        for (int i = 0; i < _cacheLevels.Length; i++)
                         {
-                            var flagLevel = false;
-                            for (int i = 0; i < _cacheLevels.Length; i++)
+                            if (_cacheLevels[i] >= Config.MaxLevelCanReach)
                             {
-                                if (_cacheLevels[i] >= Config.MaxLevelCanReach)
-                                {
-                                    flagLevel = true;
-                                    break;
-                                }
+                                flagLevel = true;
+                                break;
                             }
+                        }
 
-                            if (flagLevel)
-                            {
-                                MakeCacheLevel();
-                            }
+                        if (flagLevel)
+                        {
+                            MakeCacheLevel();
                         }
                     }
                 }
-                
-                var obj = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, _cacheLevels[temp] + 1));
-                //Debug.Log("realIndex:" + _cacheLevels[temp] + "       fakeIndex:" + levelIndex);
-                return (obj, _cacheLevels[temp], levelIndex);
             }
 
-            var levelObject = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, levelIndex + 1));
-
-            //Debug.Log("realIndex:" + levelIndex + "       fakeIndex:" + levelIndex);
-            return (levelObject, levelIndex, levelIndex);
+            var obj = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, _cacheLevels[temp] + 1));
+            //Debug.Log("realIndex:" + _cacheLevels[temp] + "       fakeIndex:" + levelIndex);
+            return (obj, _cacheLevels[temp], levelIndex);
         }
 
-        #endregion
+        var levelObject = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, levelIndex + 1));
+
+        //Debug.Log("realIndex:" + levelIndex + "       fakeIndex:" + levelIndex);
+        return (levelObject, levelIndex, levelIndex);
     }
+
+    #endregion
 }

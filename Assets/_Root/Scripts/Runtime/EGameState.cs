@@ -1,10 +1,7 @@
-namespace Lance.TowerWar.Unit
+public enum EGameState
 {
-    public enum EGameState
-    {
-        None = 0,
-        Playing = 1,
-        Win = 2,
-        Lose = 3,
-    }
+    None = 0,
+    Playing = 1,
+    Win = 2,
+    Lose = 3,
 }

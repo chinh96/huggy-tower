@@ -1,38 +1,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Lance.TowerWar.Data
+public class Config : ScriptableObject
 {
-    public class Config : ScriptableObject
-    {
-        private static Config instance;
-        private static Config Instance => instance ? instance : (instance = Resources.Load<Config>(Constants.CONFIG));
+    private static Config instance;
+    private static Config Instance => instance ? instance : (instance = Resources.Load<Config>(Constants.CONFIG));
 
 
-        [SerializeField] private int maxLevelCanReach;
-        [SerializeField] private int maxLevelWithOutTutorial;
+    [SerializeField] private int maxLevelCanReach;
+    [SerializeField] private int maxLevelWithOutTutorial;
 
-        [Space] [SerializeField] private List<int> levelSkips;
+    [Space] [SerializeField] private List<int> levelSkips;
 
 
-        #region api
+    #region api
 
-        public static int MaxLevelCanReach => Instance.maxLevelCanReach;
-        public static int MaxLevelWithOutTutorial => Instance.maxLevelWithOutTutorial;
-        public static List<int> LevelSkips => instance.levelSkips;
+    public static int MaxLevelCanReach => Instance.maxLevelCanReach;
+    public static int MaxLevelWithOutTutorial => Instance.maxLevelWithOutTutorial;
+    public static List<int> LevelSkips => instance.levelSkips;
 
-        #endregion
-    }
+    #endregion
+}
 
 #if UNITY_EDITOR
-    public class ConfigEditor : UnityEditor.Editor
+public class ConfigEditor : UnityEditor.Editor
+{
+    public override void OnInspectorGUI()
     {
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
-            
-            // todo
-        }
+        base.OnInspectorGUI();
+
+        // todo
     }
-#endif
 }
+#endif

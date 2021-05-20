@@ -2,13 +2,11 @@ using System;
 using Lance.Common;
 using UnityEngine.SceneManagement;
 
-namespace Lance.TowerWar.Controller
+public class MenuController : Singleton<MenuController>
 {
-    public class MenuController : Singleton<MenuController>
+    private void Start()
     {
-        private void Start()
-        {
-            SceneManager.LoadScene("gameplay");
-        }
+        AdController.Instance.ShowBanner();
+        // SceneManager.LoadScene(Constants.GAMEPLAY_SCENE);
     }
 }
