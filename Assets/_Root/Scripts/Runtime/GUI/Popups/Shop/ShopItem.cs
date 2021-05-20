@@ -6,6 +6,7 @@ public class ShopItem : MonoBehaviour
 {
     [SerializeField] private ShopItemType shopItemType;
     [SerializeField] private GameObject buyButton;
+    [SerializeField] private GameObject doneIcon;
 
     private ShopPopup shopPopup;
 
@@ -16,23 +17,32 @@ public class ShopItem : MonoBehaviour
 
     private void Start()
     {
-        CheckBuyButton();
+        CheckNonConsume();
     }
 
-    public void CheckBuyButton()
+    public void CheckNonConsume()
     {
         switch (shopItemType)
         {
             case ShopItemType.UnlockAllSkins:
-                buyButton.SetActive(!Data.IsUnlockAllSkins);
+                SetStateItems(Data.IsUnlockAllSkins);
                 break;
             case ShopItemType.RemoveAds:
-                buyButton.SetActive(!Data.IsRemovedAds);
+                SetStateItems(Data.IsRemovedAds);
                 break;
             case ShopItemType.Vip:
-                buyButton.SetActive(!Data.IsVip);
+                SetStateItems(Data.IsVip);
+                break;
+            default:
+                SetStateItems(false);
                 break;
         }
+    }
+
+    public void SetStateItems(bool done)
+    {
+        buyButton.SetActive(!done);
+        doneIcon.SetActive(done);
     }
 
     public void OnPurchaseSuccess()

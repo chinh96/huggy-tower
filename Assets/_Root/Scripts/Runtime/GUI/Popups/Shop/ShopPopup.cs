@@ -13,7 +13,7 @@ public class ShopPopup : Popup
 
     public void CheckItems()
     {
-        shopItems.ForEach(item => item.CheckBuyButton());
+        shopItems.ForEach(item => item.CheckNonConsume());
     }
 
     public void OnClickMoreCoins()
