@@ -28,6 +28,8 @@ public class Constants
     public const string CACHE_LEVEL_INDEX = "CACHE_LEVEL_INDEX";
     public const string COUNT_PLAY_LEVEL = "COUNT_PLAY_LEVEL";
     public const string COIN_TOTAL = "COIN_TOTAL";
+    public const string DATE_TIME_START = "DATE_TIME_START";
+    public const string DAILY_REWARD_CURRENT = "DAILY_REWARD_CURRENT";
 
     // Scene
     public const string LOADING_SCENE = "LoadingScene";

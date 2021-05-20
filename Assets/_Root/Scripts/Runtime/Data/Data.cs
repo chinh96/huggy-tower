@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public static class Data
@@ -7,6 +8,9 @@ public static class Data
 
     private static int GetInt(string key, int defaultValue) => PlayerPrefs.GetInt(key, defaultValue);
     private static void SetInt(string id, int value) => PlayerPrefs.SetInt(id, value);
+
+    private static string GetString(string key, string defaultValue) => PlayerPrefs.GetString(key, defaultValue);
+    private static void SetString(string id, string value) => PlayerPrefs.SetString(id, value);
 
     public static int CurrentLevel { get => GetInt(Constants.CURRENT_LEVEL, 0); set => SetInt(Constants.CURRENT_LEVEL, value); }
 
@@ -32,4 +36,8 @@ public static class Data
     public static int CountPlayLevel { get => GetInt(Constants.COUNT_PLAY_LEVEL, 0); set => SetInt(Constants.COUNT_PLAY_LEVEL, value); }
 
     public static int CoinTotal { get => GetInt(Constants.COIN_TOTAL, 0); set { SetInt(Constants.COIN_TOTAL, value); EventController.CoinTotalChanged(); } }
+
+    public static string DateTimeStart { get => GetString(Constants.DATE_TIME_START, ""); set => SetString(Constants.DATE_TIME_START, value); }
+
+    public static int DailyRewardCurrent { get => GetInt(Constants.DAILY_REWARD_CURRENT, 0); set => SetInt(Constants.DAILY_REWARD_CURRENT, value); }
 }
