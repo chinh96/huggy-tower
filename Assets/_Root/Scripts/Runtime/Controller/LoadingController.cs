@@ -10,6 +10,6 @@ public class LoadingController : MonoBehaviour
     private void Start()
     {
         Addressables.InitializeAsync();
-        LoadingScreenManager.LoadScene(Constants.MENU_SCENE);
+        LoadingScreenManager.LoadScene(Constants.HOME_SCENE);
     }
 }

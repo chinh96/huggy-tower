@@ -145,6 +145,8 @@ GameObject:
   - component: {fileID: 8534985266995454760}
   - component: {fileID: 8534985266995454762}
   - component: {fileID: 8534985266995454763}
+  - component: {fileID: 7241737617004594540}
+  - component: {fileID: 7533732944569134430}
   m_Layer: 5
   m_Name: CoinTotal
   m_TagString: Untagged
@@ -212,6 +214,46 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7241737617004594540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8534985266995454761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dfcf405286e2c74fa0638d8bb9a6e76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7533732944569134430}
+        m_TargetAssemblyTypeName: CoinTotal, Assembly-CSharp
+        m_MethodName: ShowShopPopup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7533732944569134430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8534985266995454761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 013f74fa41663a74c9397657f20cb5a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinTotal: {fileID: 8534985266376546786}
 --- !u!1 &8534985267867368113
 GameObject:
   m_ObjectHideFlags: 0

@@ -499,6 +499,13 @@ MonoBehaviour:
   ease: 27
   isAnimScaleDown: 0
   showAction: 0
+  shopItems:
+  - {fileID: 2453889051006625918}
+  - {fileID: 7433459350217256398}
+  - {fileID: 5573341862082045024}
+  - {fileID: 690871498697344570}
+  - {fileID: 7787433434749506918}
+  - {fileID: 6341890634476831541}
 --- !u!1 &5323625248395711779
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,6 +517,7 @@ GameObject:
   - component: {fileID: 5874658729704462924}
   - component: {fileID: 831773211791328587}
   - component: {fileID: 2320847445727501508}
+  - component: {fileID: 3354628244470013482}
   m_Layer: 0
   m_Name: CloseButton
   m_TagString: Untagged
@@ -574,6 +582,33 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3354628244470013482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5323625248395711779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dfcf405286e2c74fa0638d8bb9a6e76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8890802206138808952}
+        m_TargetAssemblyTypeName: Popup, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8489414364125626518
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,14 +931,26 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 154
       objectReference: {fileID: 0}
+    - target: {fileID: 1812119218492449690, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+      propertyPath: productId
+      value: com.herotowerwar.removeads
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812119218492449690, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+      propertyPath: consumePurchase
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6143713124612206555, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
       propertyPath: m_Name
-      value: ShopItem_4
+      value: RemoveAds
       objectReference: {fileID: 0}
     - target: {fileID: 7700175226378698017, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 6246602644198486895, guid: d590a1dfa18ca9b4c8d2aaa672e587d1, type: 3}
+    - target: {fileID: 7994419416569408740, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+      propertyPath: shopItemType
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
 --- !u!224 &127905853526525000 stripped
@@ -911,6 +958,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 226603691422006730, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
   m_PrefabInstance: {fileID: 208123710071404930}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7787433434749506918 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7994419416569408740, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+  m_PrefabInstance: {fileID: 208123710071404930}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5b7c7388c8adc429e50da06d02ef12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &709618205082747178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1010,14 +1068,22 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 98
       objectReference: {fileID: 0}
+    - target: {fileID: 1812119218492449690, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+      propertyPath: productId
+      value: com.herotowerwar.gold2
+      objectReference: {fileID: 0}
     - target: {fileID: 6143713124612206555, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
       propertyPath: m_Name
-      value: ShopItem_1
+      value: Gold2
       objectReference: {fileID: 0}
     - target: {fileID: 7700175226378698017, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -4230455776428361853, guid: d590a1dfa18ca9b4c8d2aaa672e587d1, type: 3}
+    - target: {fileID: 7994419416569408740, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+      propertyPath: shopItemType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
 --- !u!224 &791541874595445984 stripped
@@ -1025,6 +1091,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 226603691422006730, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
   m_PrefabInstance: {fileID: 709618205082747178}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7433459350217256398 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7994419416569408740, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+  m_PrefabInstance: {fileID: 709618205082747178}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5b7c7388c8adc429e50da06d02ef12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2427297383160965770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1230,14 +1307,22 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 149
       objectReference: {fileID: 0}
+    - target: {fileID: 1812119218492449690, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+      propertyPath: productId
+      value: com.herotowerwar.gold3
+      objectReference: {fileID: 0}
     - target: {fileID: 6143713124612206555, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
       propertyPath: m_Name
-      value: ShopItem_2
+      value: Gold3
       objectReference: {fileID: 0}
     - target: {fileID: 7700175226378698017, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 2384344912091348766, guid: d590a1dfa18ca9b4c8d2aaa672e587d1, type: 3}
+    - target: {fileID: 7994419416569408740, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+      propertyPath: shopItemType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
 --- !u!224 &2345407991306270030 stripped
@@ -1245,6 +1330,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 226603691422006730, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
   m_PrefabInstance: {fileID: 2569759882243475588}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5573341862082045024 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7994419416569408740, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+  m_PrefabInstance: {fileID: 2569759882243475588}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5b7c7388c8adc429e50da06d02ef12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3959519441204850641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1364,6 +1460,14 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 185
       objectReference: {fileID: 0}
+    - target: {fileID: 1812119218492449690, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+      propertyPath: productId
+      value: com.herotowerwar.vip
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812119218492449690, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+      propertyPath: consumePurchase
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4331639672540691188, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -9.2
@@ -1374,12 +1478,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6143713124612206555, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
       propertyPath: m_Name
-      value: ShopItem_5
+      value: Vip
       objectReference: {fileID: 0}
     - target: {fileID: 7700175226378698017, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -1318767241875665983, guid: d590a1dfa18ca9b4c8d2aaa672e587d1, type: 3}
+    - target: {fileID: 7994419416569408740, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+      propertyPath: shopItemType
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
 --- !u!224 &3879296028985561627 stripped
@@ -1387,6 +1495,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 226603691422006730, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
   m_PrefabInstance: {fileID: 3959519441204850641}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6341890634476831541 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7994419416569408740, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+  m_PrefabInstance: {fileID: 3959519441204850641}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5b7c7388c8adc429e50da06d02ef12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5510267959121142798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1485,6 +1604,38 @@ PrefabInstance:
     - target: {fileID: 3700194348574785750, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8890802206138808952}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickMoreCoins
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ShopPopup, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9051833788171856817, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: m_fontSize
+      value: 61.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
@@ -1586,7 +1737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6143713124612206555, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
       propertyPath: m_Name
-      value: ShopItem
+      value: Gold1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
@@ -1595,6 +1746,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 226603691422006730, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
   m_PrefabInstance: {fileID: 5547331988024886426}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2453889051006625918 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7994419416569408740, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+  m_PrefabInstance: {fileID: 5547331988024886426}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5b7c7388c8adc429e50da06d02ef12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7451088957394578142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1698,14 +1860,26 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 137
       objectReference: {fileID: 0}
+    - target: {fileID: 1812119218492449690, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+      propertyPath: productId
+      value: com.herotowerwar.unlockhero
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812119218492449690, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+      propertyPath: consumePurchase
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6143713124612206555, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
       propertyPath: m_Name
-      value: ShopItem_3
+      value: UnlockAllSkins
       objectReference: {fileID: 0}
     - target: {fileID: 7700175226378698017, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -6959295047720902959, guid: d590a1dfa18ca9b4c8d2aaa672e587d1, type: 3}
+    - target: {fileID: 7994419416569408740, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+      propertyPath: shopItemType
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
 --- !u!224 &7224507410823960340 stripped
@@ -1713,3 +1887,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 226603691422006730, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
   m_PrefabInstance: {fileID: 7451088957394578142}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &690871498697344570 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7994419416569408740, guid: 9245b225aaf181e45bdad45663fda7ff, type: 3}
+  m_PrefabInstance: {fileID: 7451088957394578142}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5b7c7388c8adc429e50da06d02ef12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

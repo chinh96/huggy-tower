@@ -15,6 +15,7 @@ public class PopupController : Singleton<PopupController>
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         Initialize();
     }
 

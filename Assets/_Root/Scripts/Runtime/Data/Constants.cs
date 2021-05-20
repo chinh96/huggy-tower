@@ -23,11 +23,14 @@ public class Constants
     public const string MUSIC_STATE = "MUSIC_STATE";
     public const string VIBRATE_STATE = "VIBRATE_STATE";
     public const string IS_REMOVE_ADS = "IS_REMOVE_ADS";
+    public const string IS_UNLOCK_ALL_SKINS = "IS_UNLOCK_ALL_SKINS";
+    public const string IS_VIP = "IS_VIP";
     public const string CACHE_LEVEL_INDEX = "CACHE_LEVEL_INDEX";
     public const string COUNT_PLAY_LEVEL = "COUNT_PLAY_LEVEL";
+    public const string COIN_TOTAL = "COIN_TOTAL";
 
     // Scene
     public const string LOADING_SCENE = "LoadingScene";
-    public const string MENU_SCENE = "MenuScene";
+    public const string HOME_SCENE = "HomeScene";
     public const string GAMEPLAY_SCENE = "GameplayScene";
 }
