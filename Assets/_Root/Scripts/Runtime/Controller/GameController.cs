@@ -1,11 +1,14 @@
 using Lean.Pool;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameController : Singleton<GameController>
 {
     [SerializeField] private LevelRoot root;
     [SerializeField] private RoomTower roomPrefab;
-    [SerializeField] private HubGameplay hub;
+    [SerializeField] private TextMeshProUGUI txtQuest;
+
     private bool _isReplay;
 
     public LeanGameObjectPool poolArrow;
@@ -15,8 +18,6 @@ public class GameController : Singleton<GameController>
 
     private void Start()
     {
-        hub.AddListenerReplay(OnReplayLevel);
-        hub.AddListenerSkip(OnSkipLevel);
         LoadLevel(Data.CurrentLevel);
     }
 
@@ -102,9 +103,31 @@ public class GameController : Singleton<GameController>
         }
 
         Root.Initialized(fakeIndex, levelInstall);
-        hub.UpdateDislayCurrentLevel(fakeIndex, levelInstall.condition);
+        UpdateDislayCurrentLevel(fakeIndex, levelInstall.condition);
         InternalPlayLevel();
         SavePreviousLevel(levelInstall);
+    }
+
+    public void UpdateDislayCurrentLevel(int level, ELevelCondition condition)
+    {
+        var str = "";
+        switch (condition)
+        {
+            case ELevelCondition.KillAll:
+                str = "kill all enemy";
+                break;
+            case ELevelCondition.CollectChest:
+                str = "open chest";
+                break;
+            case ELevelCondition.SavePrincess:
+                str = "save the princess";
+                break;
+            case ELevelCondition.CollectGold:
+                str = "collect golds";
+                break;
+        }
+
+        txtQuest.text = $"Level {level + 1}: {str.ToUpper()}";
     }
 
     private void InternalPlayLevel()
@@ -116,7 +139,6 @@ public class GameController : Singleton<GameController>
             Root.Install();
             Root.DarknessRise();
             Instance.GameState = EGameState.Playing;
-            // analytic
         }
         else
         {
@@ -124,23 +146,28 @@ public class GameController : Singleton<GameController>
         }
     }
 
-    private void OnNextLevel()
+    public void OnNextLevel()
     {
         Instance.root.Clear();
         Instance.LoadLevel(Data.CurrentLevel);
     }
 
-    private void OnReplayLevel()
+    public void OnReplayLevel()
     {
         _isReplay = true;
 
         Instance.LoadLevel(Data.CurrentLevel);
     }
 
-    private void OnSkipLevel()
+    public void OnSkipLevel()
     {
         Data.CurrentLevel++;
         OnNextLevel();
+    }
+
+    public void OnBackToHome()
+    {
+        SceneManager.LoadScene(Constants.HOME_SCENE);
     }
 
     public void OnWinLevel()
@@ -159,7 +186,13 @@ public class GameController : Singleton<GameController>
         ShowPopupLose();
     }
 
-    private void ShowPopupWin() { }
+    private void ShowPopupWin()
+    {
+        PopupController.Instance.Show<WinPopup>();
+    }
 
-    private void ShowPopupLose() { }
+    private void ShowPopupLose()
+    {
+        PopupController.Instance.Show<LosePopup>();
+    }
 }
