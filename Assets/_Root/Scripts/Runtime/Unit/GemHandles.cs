@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using MEC;
 
 using UnityEngine;
 
@@ -12,25 +11,21 @@ public class GemHandles : Item
     public Gems[] gems;
 
     private bool _flagCollectGem;
-    private CoroutineHandle _collectGemHandle;
 
     public override EUnitType Type { get; } = EUnitType.Gem;
 
-    private IEnumerator<float> IeStartCollectGem(Transform root, float duration, float durationIncreasePerGem)
+    private void IeStartCollectGem(Transform root, float duration, float durationIncreasePerGem)
     {
         var tempCacheGems = gems.Where(_ => _.gameObject.activeSelf).ToArray();
         for (int i = 0; i < tempCacheGems.Length; i++)
         {
             gems[i].CollectByPlayer(root, duration + durationIncreasePerGem * i);
-
-            yield return Timing.WaitForOneFrame;
         }
     }
 
     public void Dispose()
     {
         _flagCollectGem = false;
-        Timing.KillCoroutines(_collectGemHandle);
 
         foreach (var gem in gems)
         {
@@ -43,7 +38,7 @@ public class GemHandles : Item
         if (!_flagCollectGem)
         {
             _flagCollectGem = true;
-            _collectGemHandle = IeStartCollectGem(affectTarget.ThisGameObject.transform, duration, durationIncreasePerGem).RunCoroutine();
+            IeStartCollectGem(affectTarget.ThisGameObject.transform, duration, durationIncreasePerGem);
         }
     }
 }

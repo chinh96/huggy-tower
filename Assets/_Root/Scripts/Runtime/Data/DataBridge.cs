@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -54,7 +54,7 @@ public class DataBridge : Singleton<DataBridge>
         }
     }
 
-    public async UniTask<(GameObject, int, int)> GetLevel(int levelIndex)
+    public async Task<(GameObject, int, int)> GetLevel(int levelIndex)
     {
         if (levelIndex > Config.Instance.MaxLevelCanReach - 1)
         {
@@ -92,12 +92,11 @@ public class DataBridge : Singleton<DataBridge>
                 }
             }
 
-            var obj = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, _cacheLevels[temp] + 1));
-            //Debug.Log("realIndex:" + _cacheLevels[temp] + "       fakeIndex:" + levelIndex);
+            var obj = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, _cacheLevels[temp] + 1)).Task;
             return (obj, _cacheLevels[temp], levelIndex);
         }
 
-        var levelObject = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, levelIndex + 1));
+        var levelObject = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, levelIndex + 1)).Task;
 
         return (levelObject, levelIndex, levelIndex);
     }
