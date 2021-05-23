@@ -1,13 +1,10 @@
 using System;
-using Lance.Common.Loading;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
 public class LoadingController : MonoBehaviour
 {
-    public LoadingScreenManager LoadingScreenManager;
-
     private void Start()
     {
         if (Data.DateTimeStart == "")
@@ -16,6 +13,6 @@ public class LoadingController : MonoBehaviour
         }
 
         Addressables.InitializeAsync();
-        LoadingScreenManager.LoadScene(Constants.HOME_SCENE);
+        SceneManager.LoadScene(Constants.HOME_SCENE);
     }
 }

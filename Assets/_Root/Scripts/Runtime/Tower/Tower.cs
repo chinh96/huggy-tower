@@ -2,7 +2,6 @@ using UnityEngine.UI;
 
 using System.Collections.Generic;
 using System.Linq;
-using Lance.TowerWar.Unit;
 using UnityEngine;
 
 public class Tower : MonoBehaviour

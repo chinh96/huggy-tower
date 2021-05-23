@@ -7,7 +7,6 @@ using UnityEditor;
 using Lean.Touch;
 using UnityEngine;
 using Spine.Unity;
-using Lance.Common;
 
 public class Player : Unit, IAnim
 {
@@ -22,10 +21,10 @@ public class Player : Unit, IAnim
     [SerializeField] private SpineAttackHandle attackHandle;
     [SerializeField] private float countdownAttack = 1.25f;
     [SerializeField, Range(0, 10)] private float moveSpeed = 1.5f;
-    [SerializeField, ReadOnly] private ETurn turn = ETurn.None;
+    [SerializeField] private ETurn turn = ETurn.None;
     [SerializeField] private MixAndMatchSkin mixAndMatchSkin;
 
-    [ReadOnly] public bool isUsingSword;
+    public bool isUsingSword;
 
     [Space] [SerializeField] public ParticleSystem effectIncreaseDamge;
 
@@ -196,7 +195,7 @@ public class Player : Unit, IAnim
                         // ReSharper disable once Unity.InefficientPropertyAccess
                         fitter.enabled = true;
                     })
-                    .OnComplete(() => cache.gameObject.Destroy());
+                    .OnComplete(() => Destroy(cache.gameObject));
                 var newRoom = Instantiate(GameController.Instance.RoomPrefab, GameController.Instance.Root.LevelMap.homeTower.transform, false);
                 newRoom.transform.localScale = Vector3.zero;
                 newRoom.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InQuad);
@@ -342,12 +341,14 @@ public class Player : Unit, IAnim
                         {
                             PlayUseItem();
                             (_target as Princess)?.PlayWin(true);
-                            Timer.Register(1f,
-                                () =>
+                            DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+                            {
+                                DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                 {
-                                    Timer.Register(1f, () => { GameController.Instance.OnWinLevel(); });
-                                    PlayWin(true);
+                                    GameController.Instance.OnWinLevel();
                                 });
+                                PlayWin(true);
+                            });
                         }
                     }
 
@@ -393,38 +394,47 @@ public class Player : Unit, IAnim
                 {
                     Turn = ETurn.UsingItem;
                     PlayUseItem();
-                    Timer.Register(1.2f,
-                        () =>
+                    DOTween.Sequence().AppendInterval(1.2f).AppendCallback(() =>
+                    {
+                        if (GameController.Instance.Root.LevelMap.condition == condition)
                         {
-                            if (GameController.Instance.Root.LevelMap.condition == condition)
+                            if (condition == ELevelCondition.CollectChest)
                             {
-                                if (condition == ELevelCondition.CollectChest)
+                                if (_itemTarget as ItemChest != null)
                                 {
-                                    if (_itemTarget as ItemChest != null)
+                                    DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                     {
-                                        Timer.Register(1f, () => { GameController.Instance.OnWinLevel(); });
-                                        PlayWin(true);
-                                    }
-                                    else
-                                    {
-                                        StartSearchingTurn();
-                                        PlayIdle(true);
-                                    }
-
+                                        GameController.Instance.OnWinLevel();
+                                    });
+                                    PlayWin(true);
                                 }
                                 else
                                 {
-                                    Timer.Register(1f, () => { GameController.Instance.OnWinLevel(); });
-                                    PlayWin(true);
+                                    StartSearchingTurn();
+                                    PlayIdle(true);
                                 }
+
                             }
                             else
                             {
-                                StartSearchingTurn();
-                                PlayIdle(true);
+                                DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+                                {
+                                    GameController.Instance.OnWinLevel();
+                                });
+                                PlayWin(true);
                             }
-                        });
-                    Timer.Register(0.5f, () => _itemTarget.Collect(this));
+                        }
+                        else
+                        {
+                            StartSearchingTurn();
+                            PlayIdle(true);
+                        }
+                    });
+
+                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    {
+                        _itemTarget.Collect(this);
+                    });
                 }
             }
             else
@@ -571,7 +581,10 @@ public class Player : Unit, IAnim
         State = EUnitState.Invalid;
         PlayDead();
 
-        Timer.Register(0.6f, GameController.Instance.OnLoseLevel);
+        DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
+        {
+            GameController.Instance.OnLoseLevel();
+        });
     }
 
     private void CollectChest() { }

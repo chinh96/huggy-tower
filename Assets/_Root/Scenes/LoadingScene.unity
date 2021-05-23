@@ -176,7 +176,6 @@ GameObject:
   m_Component:
   - component: {fileID: 256365044}
   - component: {fileID: 256365043}
-  - component: {fileID: 256365045}
   m_Layer: 0
   m_Name: LoadingController
   m_TagString: Untagged
@@ -196,7 +195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b62ddfe3d087ae04cbf027c384816d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingScreenManager: {fileID: 256365045}
 --- !u!4 &256365044
 Transform:
   m_ObjectHideFlags: 0
@@ -211,23 +209,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &256365045
+--- !u!1 &468694188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 468694190}
+  - component: {fileID: 468694189}
+  m_Layer: 0
+  m_Name: ResourcesController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &468694189
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 256365042}
+  m_GameObject: {fileID: 468694188}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e528139806de5e4abb3fe17af49cc6c, type: 3}
+  m_Script: {fileID: 11500000, guid: 12d8f19d83f899e47a26aaff0aef3936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabLoadingName: LoadingCommon
-  dontDestroyOnLoad: []
-  loadingScreens:
-  - {fileID: 465593287756442139, guid: 66c1bc38545d23f41bcb62bc68ed8d68, type: 3}
-  selectedLoadingIndex: 0
+  hero: {fileID: 11400000, guid: 408f1c43baf3142478435a4cb14a5216, type: 2}
+--- !u!4 &468694190
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468694188}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1530892675
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +386,7 @@ MonoBehaviour:
   - {fileID: 8890802206138808952, guid: 56bf347aa28b0254fb4cb484874ba965, type: 3}
   - {fileID: 6506099917076881565, guid: 1a0f224997d18704a891df717d14b523, type: 3}
   - {fileID: 7122859242080500206, guid: 7bfd428440289dd42bb44714a5f08e0d, type: 3}
+  - {fileID: 6032806777992851514, guid: 1e81a559f1908b74f9d8111c808f4839, type: 3}
   canvas: {fileID: 1530892677}
 --- !u!1 &1804534346
 GameObject:

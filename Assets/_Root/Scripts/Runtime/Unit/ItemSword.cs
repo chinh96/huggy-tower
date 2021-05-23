@@ -3,15 +3,20 @@ using UnityEditor;
 using UnityEngine.UI;
 
 using UnityEngine;
+using Spine.Unity;
 
-public class ItemSword : Item
+public class ItemSword : Item, IHasSkeletonDataAsset
 {
-    public int indexSkin = 0;
+    [SerializeField] private SkeletonDataAsset skeletonDataAsset;
+    public SkeletonDataAsset SkeletonDataAsset => skeletonDataAsset;
+    [SerializeField, SpineSkin] private string itemSwordSkin;
+
     public Image render;
     public Rigidbody2D rigid;
     public Collider2D coll2D;
     public TextMeshProUGUI txtDamage;
     public int damage;
+
 
     public override void Collect(IUnit affectTarget)
     {
@@ -21,8 +26,7 @@ public class ItemSword : Item
             gameObject.SetActive(false);
             player.isUsingSword = true;
             player.IncreaseDamage(damage);
-            player.MixAndMatchSkin.Refresh(indexSkin);
-            // play effect
+            player.Skeleton.ChangeSword(itemSwordSkin);
         }
     }
 }

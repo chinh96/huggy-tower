@@ -1,5 +1,3 @@
-using System;
-using Lance.Common;
 using UnityEngine.SceneManagement;
 
 public class HomeController : Singleton<HomeController>
@@ -11,7 +9,7 @@ public class HomeController : Singleton<HomeController>
 
     public void TapToStart()
     {
-        SceneManager.LoadScene(Constants.GAMEPLAY_SCENE);
+        SceneManager.LoadSceneAsync(Constants.GAME_SCENE);
     }
 
     public void ShowSettingPopup()
@@ -31,6 +29,6 @@ public class HomeController : Singleton<HomeController>
 
     public void ShowSkinPopup()
     {
-
+        PopupController.Instance.Show<SkinPopup>();
     }
 }

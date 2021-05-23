@@ -1,4 +1,3 @@
-using Lance.Common;
 using Spine;
 using Spine.Unity;
 using Spine.Unity.AttachmentTools;
@@ -16,8 +15,8 @@ public class MixAndMatchSkin : MonoBehaviour
     private Skin _characterSkin;
 
     // for repacking the skin to a new atlas texture
-    [ReadOnly] public Material runtimeMaterial;
-    [ReadOnly] public Texture2D runtimeAtlas;
+    public Material runtimeMaterial;
+    public Texture2D runtimeAtlas;
 
     private void Awake() { _skeletonGraphic = this.GetComponent<SkeletonGraphic>(); }
 
@@ -60,7 +59,7 @@ public class MixAndMatchSkin : MonoBehaviour
         // could be cached once in Start() instead of searching for the same skin
         // every time. For demonstration purposes we keep it simple here.
         _characterSkin.AddSkin(skeletonData.FindSkin(swordSkins[index]));
-        _characterSkin.AddSkin(skeletonData.FindSkin(HeroSkinData.SkinHeroByIndex(Data.CurrentSkinHero)));
+        _characterSkin.AddSkin(skeletonData.FindSkin(HeroSkinData.Instance.SkinHeroByIndex(Data.CurrentSkinHero)));
     }
 
     private void UpdateCombinedSkin()

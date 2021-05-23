@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using Lance.Common;
 using Firebase.RemoteConfig;
 
 public class RemoteConfigController : Singleton<RemoteConfigController>

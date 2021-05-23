@@ -3,8 +3,6 @@ using System.Linq;
 using UnityEngine.UI;
 
 using UnityEngine;
-using Lance.Common;
-using Lance.TowerWar.Unit;
 
 public class RoomTower : MonoBehaviour
 {
@@ -14,8 +12,8 @@ public class RoomTower : MonoBehaviour
 
     public Sprite canSelectSprite;
     public Sprite cantSelectSprite;
-    [ReadOnly] public List<Unit> units = new List<Unit>();
-    [ReadOnly] public List<Item> items = new List<Item>();
+    public List<Unit> units = new List<Unit>();
+    public List<Item> items = new List<Item>();
 
     private void Start() { UpdateUnitCollection(); }
 

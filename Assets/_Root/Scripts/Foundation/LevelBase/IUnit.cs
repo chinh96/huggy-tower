@@ -1,5 +1,3 @@
-using Lance.TowerWar.Unit;
-
 public interface IUnit
 {
     UnityEngine.GameObject ThisGameObject { get; }

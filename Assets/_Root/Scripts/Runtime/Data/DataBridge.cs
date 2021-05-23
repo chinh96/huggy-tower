@@ -1,34 +1,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Lance.Common;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 public class DataBridge : Singleton<DataBridge>
 {
-    #region properties
+    public LevelMap PreviousLevelLoaded;
+    public LevelMap NextLevelLoaded;
 
-    [SerializeField, ReadOnly] private LevelMap previousLevelLoaded = null;
-    [SerializeField, ReadOnly] private LevelMap nextLevelLoaded = null;
-
-    public LevelMap PreviousLevelLoaded { get => previousLevelLoaded; set => previousLevelLoaded = value; }
-    public LevelMap NextLevelLoaded { get => nextLevelLoaded; set => nextLevelLoaded = value; }
     private int[] _cacheLevels;
 
-    #endregion
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+        CheckCacheLevel();
+    }
 
-    #region unity-api
-
-    private void Start() { CheckCacheLevel(); }
-
-    #endregion
-
-    #region function
-
-    /// <summary>
-    /// check cache level
-    /// </summary>
     public void CheckCacheLevel()
     {
         bool flagOutLevel = false;
@@ -46,9 +34,6 @@ public class DataBridge : Singleton<DataBridge>
         }
     }
 
-    /// <summary>
-    /// make cache level
-    /// </summary>
     public void MakeCacheLevel()
     {
         var tempList = new List<int>();
@@ -69,11 +54,6 @@ public class DataBridge : Singleton<DataBridge>
         }
     }
 
-    /// <summary>
-    /// return level prefab and RealLevelIndex, FakeLevelIndex
-    /// </summary>
-    /// <param name="levelIndex"></param>
-    /// <returns></returns>
     public async UniTask<(GameObject, int, int)> GetLevel(int levelIndex)
     {
         if (levelIndex > Config.Instance.MaxLevelCanReach - 1)
@@ -119,9 +99,6 @@ public class DataBridge : Singleton<DataBridge>
 
         var levelObject = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, levelIndex + 1));
 
-        //Debug.Log("realIndex:" + levelIndex + "       fakeIndex:" + levelIndex);
         return (levelObject, levelIndex, levelIndex);
     }
-
-    #endregion
 }

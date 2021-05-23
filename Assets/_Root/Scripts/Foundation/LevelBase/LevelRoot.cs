@@ -1,11 +1,10 @@
-using Lance.Common;
 using UnityEngine;
 
 public class LevelRoot : MonoBehaviour
 {
-    [SerializeField, ReadOnly] private int levelIndex;
-    [SerializeField, ReadOnly] private LevelMap levelMapPrefab;
-    [SerializeField, ReadOnly] private LevelMap levelMap;
+    [SerializeField] private int levelIndex;
+    [SerializeField] private LevelMap levelMapPrefab;
+    [SerializeField] private LevelMap levelMap;
     private int times = 0;
     private int totalTimesPlay = 0;
     private int totalLevelWin = 0;
@@ -37,7 +36,10 @@ public class LevelRoot : MonoBehaviour
 
     public virtual void Clear()
     {
-        if (LevelMap != null) LevelMap.gameObject.Destroy();
+        if (LevelMap != null)
+        {
+            Destroy(LevelMap.gameObject);
+        }
         IncreaseTotalLevelWin();
         StopTimer();
     }

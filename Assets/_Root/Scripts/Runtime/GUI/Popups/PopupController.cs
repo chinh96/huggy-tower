@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Lance.Common;
 using System;
 
 public class PopupController : Singleton<PopupController>

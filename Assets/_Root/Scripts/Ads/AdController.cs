@@ -1,6 +1,5 @@
 ﻿using System;
 using DG.Tweening;
-using Lance.Common;
 
 public class AdController : Singleton<AdController>
 {

@@ -1,7 +1,6 @@
 using System;
 using TMPro;
 using UnityEngine;
-using Lance.TowerWar;
 using UnityEngine.UI;
 
 public class HubGameplay : MonoBehaviour

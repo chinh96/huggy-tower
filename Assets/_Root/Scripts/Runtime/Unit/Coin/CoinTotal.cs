@@ -24,6 +24,6 @@ public class CoinTotal : MonoBehaviour
 
     public void ShowShopPopup()
     {
-        PopupController.Instance.Show<ShopPopup>();
+        PopupController.Instance.Show<ShopPopup>(null, ShowAction.DoNothing);
     }
 }

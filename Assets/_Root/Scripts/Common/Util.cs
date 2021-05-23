@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using Spine;
 using Spine.Unity;
 using UnityEngine;
 
@@ -89,5 +91,33 @@ public static partial class Util
         if (onEvent != null) i.AnimationState.Event -= onEvent;
         if (onComplete != null) i.AnimationState.Complete -= onComplete;
         if (onEnd != null) i.AnimationState.End -= onEnd;
+    }
+
+    public static void ChangeSkin(this SkeletonGraphic skeletonGraphic, string skinName)
+    {
+        skeletonGraphic.Skeleton.SetSkin(skinName);
+        skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+    }
+
+    public static void ChangeSword(this SkeletonGraphic skeletonGraphic, string swordName)
+    {
+        Skin skin = new Skin("skin");
+        skin.AddSkin(skeletonGraphic.Skeleton.Data.FindSkin(swordName));
+        skin.AddSkin(skeletonGraphic.Skeleton.Data.FindSkin(skeletonGraphic.initialSkinName));
+        skeletonGraphic.Skeleton.SetSkin(skin);
+        skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+    }
+
+    public static void Shuffle<T>(this IList<T> source)
+    {
+        var n = source.Count;
+        while (n > 1)
+        {
+            n--;
+            var k = UnityEngine.Random.Range(0, n);
+            var value = source[k];
+            source[k] = source[n];
+            source[n] = value;
+        }
     }
 }

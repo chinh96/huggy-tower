@@ -34,5 +34,5 @@ public class Constants
     // Scene
     public const string LOADING_SCENE = "LoadingScene";
     public const string HOME_SCENE = "HomeScene";
-    public const string GAMEPLAY_SCENE = "GameplayScene";
+    public const string GAME_SCENE = "GameScene";
 }

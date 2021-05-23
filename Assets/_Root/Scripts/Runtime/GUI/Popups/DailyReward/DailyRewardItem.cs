@@ -11,7 +11,7 @@ public class DailyRewardItem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private GameObject coinIcon;
     [SerializeField] private GameObject doneIcon;
-    [SerializeField] private Player player;
+    [SerializeField] private GameObject hero;
     [SerializeField] private GameObject claimButton;
     [SerializeField] private GameObject claimPendingButton;
     [SerializeField] private GameObject claimDisableButton;
@@ -47,7 +47,7 @@ public class DailyRewardItem : MonoBehaviour
         claimDisableButton.SetActive(false);
         coinIcon.SetActive(false);
         coinText.gameObject.SetActive(false);
-        player.gameObject.SetActive(false);
+        hero.SetActive(false);
     }
 
     private void Check()
@@ -72,7 +72,7 @@ public class DailyRewardItem : MonoBehaviour
 
         if (!isDayLoop && day % 7 == 6)
         {
-            player.gameObject.SetActive(true);
+            hero.SetActive(true);
         }
         else
         {

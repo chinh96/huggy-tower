@@ -40,4 +40,7 @@ public static class Data
     public static string DateTimeStart { get => GetString(Constants.DATE_TIME_START, ""); set => SetString(Constants.DATE_TIME_START, value); }
 
     public static int DailyRewardCurrent { get => GetInt(Constants.DAILY_REWARD_CURRENT, 0); set => SetInt(Constants.DAILY_REWARD_CURRENT, value); }
+
+    public static string IdCheckSkinUnlocked = "";
+    public static bool IsSkinUnlocked { get => GetBool(IdCheckSkinUnlocked, false); set => SetBool(IdCheckSkinUnlocked, value); }
 }

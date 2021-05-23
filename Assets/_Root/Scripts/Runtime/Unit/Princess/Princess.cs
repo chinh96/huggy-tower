@@ -1,7 +1,6 @@
 using System;
-using Lance.Common;
 using Spine.Unity;
-
+using DG.Tweening;
 using UnityEngine;
 
 public class Princess : Unit, IAnim
@@ -29,7 +28,10 @@ public class Princess : Unit, IAnim
     public void PlayWin(bool isLoop)
     {
         skeleton.Play("win", false);
-        Timer.Register(0.7f, () => { skeleton.Play("win 2", true); });
+        DOTween.Sequence().AppendInterval(.7f).AppendCallback(() =>
+        {
+            skeleton.Play("win 2", true);
+        });
     }
 
     public void PlayLose(bool isLoop) { }
