@@ -4,5 +4,11 @@ using UnityEngine;
 
 public class ResourcesController : Singleton<ResourcesController>
 {
-    public SkinResources hero;
+    public SkinResources Hero;
+    public SkinResources Princess;
+
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 }

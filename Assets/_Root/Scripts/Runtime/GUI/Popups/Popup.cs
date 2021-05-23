@@ -102,15 +102,9 @@ public class Popup : MonoBehaviour
 
         canvasGroup.interactable = false;
 
-        DOTween.To(() => canvasGroup.alpha, x => { canvasGroup.alpha = x; }, 0, duration * 0.5f)
-            .SetUpdate(true).SetTarget(this);
-
-        container.DOScale(Vector3.zero, duration).SetTarget(this).SetUpdate(true).OnComplete(() =>
-        {
-            canvasGroup.alpha = 0;
-            container.localScale = Vector3.zero;
-            onCompleted?.Invoke();
-        });
+        canvasGroup.alpha = 0;
+        container.localScale = Vector3.zero;
+        onCompleted?.Invoke();
     }
 
     protected virtual void AfterInstantiate()

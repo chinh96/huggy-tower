@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class SkinRow : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Transform content;
+    [SerializeField] private int maxItem = 3;
+    [SerializeField] private SkinItem skinItem;
+
+    private List<SkinItem> skinItems = new List<SkinItem>();
+
+    public void Init(SkinResources skinResources, ref int index, SkinPopup skinPopup)
     {
-        
+        content.Clear();
+
+        for (int i = 0; i < maxItem; i++)
+        {
+            if (index < skinResources.SkinDatas.Count)
+            {
+                SkinItem item = Instantiate(skinItem, content);
+                item.Init(skinResources.SkinDatas[index], skinPopup);
+                skinItems.Add(item);
+                index++;
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Reset(SkinData skinData)
     {
-        
+        skinItems.ForEach(item => item.Reset());
     }
 }

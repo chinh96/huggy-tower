@@ -74,7 +74,7 @@ public class RoomTower : MonoBehaviour
         bool flag = false;
         foreach (var unit in units)
         {
-            if (unit.State != EUnitState.Invalid && unit.Type != EUnitType.Player) flag = true;
+            if (unit.State != EUnitState.Invalid && unit.Type != EUnitType.Hero) flag = true;
         }
 
         foreach (var item in items)

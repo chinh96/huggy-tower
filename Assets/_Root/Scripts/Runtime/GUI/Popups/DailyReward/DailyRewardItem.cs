@@ -11,7 +11,7 @@ public class DailyRewardItem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private GameObject coinIcon;
     [SerializeField] private GameObject doneIcon;
-    [SerializeField] private GameObject hero;
+    [SerializeField] private SkeletonGraphic hero;
     [SerializeField] private GameObject claimButton;
     [SerializeField] private GameObject claimPendingButton;
     [SerializeField] private GameObject claimDisableButton;
@@ -21,6 +21,9 @@ public class DailyRewardItem : MonoBehaviour
     private int dayTotal;
     private bool isDayLoop;
     private DailyRewardPopup dailyRewardPopup;
+    private SkinData skinData;
+
+    private bool isSkin => !isDayLoop && day % 7 == 6;
 
     public void Init(int day, int coin, int dayTotal, bool isDayLoop, DailyRewardPopup dailyRewardPopup)
     {
@@ -47,7 +50,7 @@ public class DailyRewardItem : MonoBehaviour
         claimDisableButton.SetActive(false);
         coinIcon.SetActive(false);
         coinText.gameObject.SetActive(false);
-        hero.SetActive(false);
+        hero.gameObject.SetActive(false);
     }
 
     private void Check()
@@ -70,9 +73,11 @@ public class DailyRewardItem : MonoBehaviour
             dailyRewardPopup.SetCoinCurrent(coin);
         }
 
-        if (!isDayLoop && day % 7 == 6)
+        if (isSkin)
         {
-            hero.SetActive(true);
+            skinData = ResourcesController.Instance.Hero.SkinDailyRewards[day / 7];
+            hero.ChangeSkin(skinData.SkinName);
+            hero.gameObject.SetActive(true);
         }
         else
         {
@@ -83,6 +88,11 @@ public class DailyRewardItem : MonoBehaviour
 
     public void OnClickClaim()
     {
+        if (isSkin)
+        {
+            Data.CurrentSkinHero = skinData.SkinName;
+            skinData.IsUnlocked = true;
+        }
         dailyRewardPopup.OnClickClaim();
     }
 }

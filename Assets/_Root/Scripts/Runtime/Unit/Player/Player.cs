@@ -22,16 +22,14 @@ public class Player : Unit, IAnim
     [SerializeField] private float countdownAttack = 1.25f;
     [SerializeField, Range(0, 10)] private float moveSpeed = 1.5f;
     [SerializeField] private ETurn turn = ETurn.None;
-    [SerializeField] private MixAndMatchSkin mixAndMatchSkin;
 
     public bool isUsingSword;
 
     [Space] [SerializeField] public ParticleSystem effectIncreaseDamge;
 
-    public override EUnitType Type { get; protected set; } = EUnitType.Player;
+    public override EUnitType Type { get; protected set; } = EUnitType.Hero;
     public bool FirstTurn { get; set; }
     public ETurn Turn { get => turn; private set => turn = value; }
-    public MixAndMatchSkin MixAndMatchSkin => mixAndMatchSkin;
 
     private Vector3 _defaultPosition;
     private RoomTower _defaultRoom = null;

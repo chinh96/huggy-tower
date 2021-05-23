@@ -13,7 +13,9 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
     [SerializeField] private SkeletonDataAsset skeletonDataAsset;
     public SkeletonDataAsset SkeletonDataAsset => skeletonDataAsset;
 
-    [SerializeField] private List<SkinData> SkinDatas;
+    public List<SkinData> SkinDatas;
+    public SkinData SkinDefault;
+    public List<SkinData> SkinDailyRewards => SkinDatas.FindAll(item => item.SkinType == SkinType.Daily);
 
     public SkinData GetSkinDataByName(string skinName)
     {
@@ -26,11 +28,11 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
 [Serializable]
 public class SkinData
 {
+    [SpineSkin] public string SkinName;
+
     [GUID] public string Id;
 
     public SkinType SkinType;
-
-    [SpineSkin] public string SkinName;
 
     public int Coin;
 
@@ -40,6 +42,12 @@ public class SkinData
         {
             Data.IdCheckSkinUnlocked = Id;
             return Data.IsSkinUnlocked;
+        }
+
+        set
+        {
+            Data.IdCheckSkinUnlocked = Id;
+            Data.IsSkinUnlocked = value;
         }
     }
 }

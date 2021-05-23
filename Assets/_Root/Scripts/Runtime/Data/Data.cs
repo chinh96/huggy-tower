@@ -16,7 +16,25 @@ public static class Data
 
     public static int MaxLevel { get => GetInt(Constants.MAX_LEVEL, 0); set => SetInt(Constants.MAX_LEVEL, value); }
 
-    public static int CurrentSkinHero { get => GetInt(Constants.CURRENT_SKIN_HERO, 0); set => SetInt(Constants.CURRENT_SKIN_HERO, value); }
+    public static string CurrentSkinHero
+    {
+        get => GetString(Constants.CURRENT_SKIN_HERO, ResourcesController.Instance.Hero.SkinDefault.SkinName);
+        set
+        {
+            SetString(Constants.CURRENT_SKIN_HERO, value);
+            EventController.CurrentSkinHeroChanged();
+        }
+    }
+
+    public static string CurrentSkinPrincess
+    {
+        get => GetString(Constants.CURRENT_SKIN_PRINCESS, "");
+        set
+        {
+            SetString(Constants.CURRENT_SKIN_PRINCESS, value);
+            EventController.CurrentSkinPrincessChanged();
+        }
+    }
 
     public static bool SoundState { get => GetBool(Constants.SOUND_STATE, true); set => SetBool(Constants.SOUND_STATE, value); }
 
@@ -35,7 +53,15 @@ public static class Data
 
     public static int CountPlayLevel { get => GetInt(Constants.COUNT_PLAY_LEVEL, 0); set => SetInt(Constants.COUNT_PLAY_LEVEL, value); }
 
-    public static int CoinTotal { get => GetInt(Constants.COIN_TOTAL, 0); set { SetInt(Constants.COIN_TOTAL, value); EventController.CoinTotalChanged(); } }
+    public static int CoinTotal
+    {
+        get => GetInt(Constants.COIN_TOTAL, 0);
+        set
+        {
+            SetInt(Constants.COIN_TOTAL, value);
+            EventController.CoinTotalChanged();
+        }
+    }
 
     public static string DateTimeStart { get => GetString(Constants.DATE_TIME_START, ""); set => SetString(Constants.DATE_TIME_START, value); }
 
