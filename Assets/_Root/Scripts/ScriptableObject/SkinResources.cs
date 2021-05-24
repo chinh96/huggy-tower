@@ -14,13 +14,11 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
     public SkeletonDataAsset SkeletonDataAsset => skeletonDataAsset;
 
     public List<SkinData> SkinDatas;
-    public SkinData SkinDefault;
-    public List<SkinData> SkinDailyRewards => SkinDatas.FindAll(item => item.SkinType == SkinType.Daily);
+    [SerializeField, SpineSkin] private string skinNameDefault;
 
-    public SkinData GetSkinDataByName(string skinName)
-    {
-        return SkinDatas.Find(item => item.SkinName == skinName);
-    }
+    public SkinData SkinDefault => SkinDatas.Find(item => item.SkinName == skinNameDefault);
+    public List<SkinData> SkinsDailyReward => SkinDatas.FindAll(item => item.SkinType == SkinType.Daily);
+    public List<SkinData> SkinsLocked => SkinDatas.FindAll(item => !item.IsUnlocked);
 }
 
 

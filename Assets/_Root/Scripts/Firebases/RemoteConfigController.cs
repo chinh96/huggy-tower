@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using Firebase.RemoteConfig;
 
 public class RemoteConfigController : Singleton<RemoteConfigController>
 {
@@ -12,9 +11,6 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
     [NonSerialized] public string CurrentVersion = "";
     [NonSerialized] public string UpdateDescription = "";
     [NonSerialized] public bool OnlyAdmob = true;
-    [NonSerialized] public bool EnableCastle = false;
-
-    private FirebaseRemoteConfig firebaseRemoteConfig;
 
     private void Start()
     {
@@ -50,22 +46,22 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         defaults.Add(Constants.ONLY_ADMOB_ANDROID, true);
         defaults.Add(Constants.ONLY_ADMOB_IOS, true);
 
-        firebaseRemoteConfig.SetDefaultsAsync(defaults);
+        Firebase.RemoteConfig.FirebaseRemoteConfig.SetDefaults(defaults);
     }
 
     public Task FetchDataAsync()
     {
-        Task fetchTask = firebaseRemoteConfig.FetchAsync(TimeSpan.Zero);
+        Task fetchTask = Firebase.RemoteConfig.FirebaseRemoteConfig.FetchAsync(TimeSpan.Zero);
         return fetchTask.ContinueWith(FetchComplete);
     }
 
     private void FetchComplete(Task fetchTask)
     {
-        var info = firebaseRemoteConfig.Info;
+        var info = Firebase.RemoteConfig.FirebaseRemoteConfig.Info;
         switch (info.LastFetchStatus)
         {
             case Firebase.RemoteConfig.LastFetchStatus.Success:
-                firebaseRemoteConfig.ActivateAsync();
+                Firebase.RemoteConfig.FirebaseRemoteConfig.ActivateFetched();
                 break;
             case Firebase.RemoteConfig.LastFetchStatus.Failure:
                 switch (info.LastFetchFailureReason)
@@ -111,6 +107,6 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
 
     public string GetConfig(string name)
     {
-        return firebaseRemoteConfig.GetValue(name).StringValue;
+        return Firebase.RemoteConfig.FirebaseRemoteConfig.GetValue(name).StringValue;
     }
 }

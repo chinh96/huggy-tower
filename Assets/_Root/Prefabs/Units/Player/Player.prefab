@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 1520873680537687479}
   - component: {fileID: 1520873680537687476}
   - component: {fileID: 3884596101946377725}
+  - component: {fileID: 7770832894644043179}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -330,7 +331,6 @@ MonoBehaviour:
   countdownAttack: 1
   moveSpeed: 1.5
   turn: 0
-  mixAndMatchSkin: {fileID: 0}
   isUsingSword: 0
   effectIncreaseDamge: {fileID: 5903979865854308417}
 --- !u!114 &1520873680537687476
@@ -373,6 +373,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onAttack: OnBullet
   endAttack: EndAttack
+--- !u!114 &7770832894644043179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520873680537687470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b464a8f2fd212493fb3c985bfd2f8106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eUnitType: 0
+  character: {fileID: 1520873680537687464}
 --- !u!1 &2736312079464604091
 GameObject:
   m_ObjectHideFlags: 0

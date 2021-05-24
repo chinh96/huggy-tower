@@ -50,8 +50,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2427297383245475022}
+  - component: {fileID: 547944657915919108}
   m_Layer: 0
-  m_Name: TapToContinueButton
+  m_Name: TapToReplayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,6 +78,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 125}
   m_SizeDelta: {x: 0, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &547944657915919108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427297383245475023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dfcf405286e2c74fa0638d8bb9a6e76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8154205328553675594}
+        m_TargetAssemblyTypeName: LosePopup, Assembly-CSharp
+        m_MethodName: OnClickReplay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2427297383312220744
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,6 +325,7 @@ GameObject:
   - component: {fileID: 2427297384241041016}
   - component: {fileID: 2427297384241040998}
   - component: {fileID: 2427297384241040999}
+  - component: {fileID: 6683725377394626179}
   m_Layer: 0
   m_Name: HomeButton
   m_TagString: Untagged
@@ -320,7 +349,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 120, y: -150}
+  m_AnchoredPosition: {x: 101.5, y: -130}
   m_SizeDelta: {x: 123, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2427297384241040998
@@ -361,6 +390,33 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6683725377394626179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427297384241041017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dfcf405286e2c74fa0638d8bb9a6e76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8154205328553675594}
+        m_TargetAssemblyTypeName: LosePopup, Assembly-CSharp
+        m_MethodName: OnClickHomeButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2427297384349335243
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,6 +658,8 @@ MonoBehaviour:
   ease: 27
   isAnimScaleDown: 0
   showAction: 0
+  progressGift: {fileID: 6893569108855869999}
+  tapToReplayButton: {fileID: 2427297383245475023}
 --- !u!1 &2427297384644664294
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,7 +835,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7241737617004594540, guid: 70c8917031852de44a59dec3be4a62fc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 70c8917031852de44a59dec3be4a62fc, type: 3}
 --- !u!224 &6331258420884113826 stripped
 RectTransform:
@@ -886,3 +945,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7591940511485275624, guid: 84b8156482dc1b14293ef871d4ab8ae8, type: 3}
   m_PrefabInstance: {fileID: 5256971490542666563}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6893569108855869999 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1683892314802688364, guid: 84b8156482dc1b14293ef871d4ab8ae8, type: 3}
+  m_PrefabInstance: {fileID: 5256971490542666563}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7a91dda283e934887a29f28937c879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

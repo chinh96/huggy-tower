@@ -68,7 +68,6 @@ public class GameController : Singleton<GameController>
         }
         else
         {
-            Debug.Log(DataBridge.Instance);
             if (DataBridge.Instance.NextLevelLoaded != null && DataBridge.Instance.NextLevelLoaded.CurrentFakeLevelIndex == fakeIndex)
             {
                 levelInstall = DataBridge.Instance.NextLevelLoaded;

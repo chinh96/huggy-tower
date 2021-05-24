@@ -31,6 +31,7 @@ public class Constants
     public const string COIN_TOTAL = "COIN_TOTAL";
     public const string DATE_TIME_START = "DATE_TIME_START";
     public const string DAILY_REWARD_CURRENT = "DAILY_REWARD_CURRENT";
+    public const string PERCENT_PROGRESS_GIFT = "PERCENT_PROGRESS_GIFT";
 
     // Scene
     public const string LOADING_SCENE = "LoadingScene";

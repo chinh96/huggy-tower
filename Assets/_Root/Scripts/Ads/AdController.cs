@@ -104,14 +104,12 @@ public class AdController : Singleton<AdController>
 #else
         if (ad != null && isShowInter)
         {
-            AnalyticController.RequestAdInterstitial();
             if (ad.IsInterLoaded)
             {
-                AnalyticController.ImpressAdInterstitial();
                 handleInterAfterClosed = action;
                 ad.ShowInterstitial();
-                GameManager.Instance.Root.ResetTotalTimePlay();
-                GameManager.Instance.Root.ResetTotalLevelWin();
+                GameController.Instance.Root.ResetTotalTimesPlay();
+                GameController.Instance.Root.ResetTotalLevelWin();
             }
             else {
                 action?.Invoke();
@@ -139,10 +137,8 @@ public class AdController : Singleton<AdController>
 #else
         if (ad != null)
         {
-            AnalyticController.RequestAdReward();
             if (ad.IsRewardLoaded)
             {
-                AnalyticController.ImpressAdReward();
                 handleRewardAfterEarned = action;
                 ad.ShowRewardedAd();
             }

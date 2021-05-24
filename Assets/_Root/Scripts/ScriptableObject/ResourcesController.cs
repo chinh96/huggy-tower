@@ -10,5 +10,8 @@ public class ResourcesController : Singleton<ResourcesController>
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+
+        Hero.SkinDefault.IsUnlocked = true;
+        Princess.SkinDefault.IsUnlocked = true;
     }
 }

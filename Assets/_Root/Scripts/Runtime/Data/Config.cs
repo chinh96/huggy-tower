@@ -11,4 +11,6 @@ public class Config : ScriptableObject
     public List<int> LevelSkips;
     public List<int> DailyRewards;
     public List<int> DailyRewardsLoop;
+    public int PercentProgressGiftBonused;
+    public int CoinBonusPerLevel;
 }

@@ -69,4 +69,8 @@ public static class Data
 
     public static string IdCheckSkinUnlocked = "";
     public static bool IsSkinUnlocked { get => GetBool(IdCheckSkinUnlocked, false); set => SetBool(IdCheckSkinUnlocked, value); }
+
+    public static int PercentProgressGift { get => GetInt(Constants.PERCENT_PROGRESS_GIFT, 0); set => SetInt(Constants.PERCENT_PROGRESS_GIFT, value); }
+
+    public static SkinData SkinGift;
 }
