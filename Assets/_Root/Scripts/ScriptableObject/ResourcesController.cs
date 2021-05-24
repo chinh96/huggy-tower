@@ -12,6 +12,5 @@ public class ResourcesController : Singleton<ResourcesController>
         DontDestroyOnLoad(gameObject);
 
         Hero.SkinDefault.IsUnlocked = true;
-        Princess.SkinDefault.IsUnlocked = true;
     }
 }
