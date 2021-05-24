@@ -38,14 +38,14 @@ public class SkinData
     {
         get
         {
-            Data.IdCheckSkinUnlocked = Id;
-            return Data.IsSkinUnlocked;
+            Data.IdCheckUnlocked = Id;
+            return Data.IsUnlocked;
         }
 
         set
         {
-            Data.IdCheckSkinUnlocked = Id;
-            Data.IsSkinUnlocked = value;
+            Data.IdCheckUnlocked = Id;
+            Data.IsUnlocked = value;
         }
     }
 }

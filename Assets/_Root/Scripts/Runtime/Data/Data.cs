@@ -67,8 +67,8 @@ public static class Data
 
     public static int DailyRewardCurrent { get => GetInt(Constants.DAILY_REWARD_CURRENT, 0); set => SetInt(Constants.DAILY_REWARD_CURRENT, value); }
 
-    public static string IdCheckSkinUnlocked = "";
-    public static bool IsSkinUnlocked { get => GetBool(IdCheckSkinUnlocked, false); set => SetBool(IdCheckSkinUnlocked, value); }
+    public static string IdCheckUnlocked = "";
+    public static bool IsUnlocked { get => GetBool(IdCheckUnlocked, false); set => SetBool(IdCheckUnlocked, value); }
 
     public static int PercentProgressGift { get => GetInt(Constants.PERCENT_PROGRESS_GIFT, 0); set => SetInt(Constants.PERCENT_PROGRESS_GIFT, value); }
 
