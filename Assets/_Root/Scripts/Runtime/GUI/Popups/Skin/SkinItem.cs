@@ -69,20 +69,29 @@ public class SkinItem : MonoBehaviour
     public void OnClickButtonBuy()
     {
         Data.CoinTotal -= skinData.Coin;
-        SetSkin();
+        Done();
     }
 
     public void OnClickButtonAds()
     {
         AdController.Instance.ShowRewardedAd(() =>
         {
-            SetSkin();
+            Done();
         });
     }
 
     public void OnClickButtonDailyReward()
     {
         PopupController.Instance.Show<DailyRewardPopup>();
+    }
+
+    private void Done()
+    {
+        SetSkin();
+
+        skinData.IsUnlocked = true;
+
+        skinPopup.Reset();
     }
 
     private void SetSkin()
@@ -96,9 +105,13 @@ public class SkinItem : MonoBehaviour
                 Data.CurrentSkinPrincess = skinData.SkinName;
                 break;
         }
+    }
 
-        skinData.IsUnlocked = true;
-
-        skinPopup.Reset();
+    public void OnClick()
+    {
+        if (skinData.IsUnlocked)
+        {
+            SetSkin();
+        }
     }
 }
