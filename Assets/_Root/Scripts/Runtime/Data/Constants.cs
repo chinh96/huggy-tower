@@ -32,6 +32,7 @@ public class Constants
     public const string DATE_TIME_START = "DATE_TIME_START";
     public const string DAILY_REWARD_CURRENT = "DAILY_REWARD_CURRENT";
     public const string PERCENT_PROGRESS_GIFT = "PERCENT_PROGRESS_GIFT";
+    public const string WORLD_CURRENT = "WORLD_CURRENT";
 
     // Scene
     public const string LOADING_SCENE = "LoadingScene";

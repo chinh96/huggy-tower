@@ -22,9 +22,9 @@ public class HomeController : Singleton<HomeController>
         PopupController.Instance.Show<DailyRewardPopup>();
     }
 
-    public void ShowCastlePopup()
+    public void ShowWorldPopup()
     {
-
+        PopupController.Instance.Show<WorldPopup>();
     }
 
     public void ShowSkinPopup()

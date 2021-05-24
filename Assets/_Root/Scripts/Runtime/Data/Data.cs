@@ -72,5 +72,7 @@ public static class Data
 
     public static int PercentProgressGift { get => GetInt(Constants.PERCENT_PROGRESS_GIFT, 0); set => SetInt(Constants.PERCENT_PROGRESS_GIFT, value); }
 
+    public static WorldType WorldCurrent { get => (WorldType)GetInt(Constants.WORLD_CURRENT, 0); set => SetInt(Constants.WORLD_CURRENT, (int)value); }
+
     public static SkinData SkinGift;
 }
