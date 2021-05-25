@@ -11,4 +11,6 @@ public class UniverseResources : ScriptableObject
     public List<WorldResources> Worlds;
 
     public WorldResources WorldCurrent => Worlds.Find(item => item.WorldType == Data.WorldCurrent);
+
+    public WorldResources WorldDefault => Worlds.Find(item => item.LevelUnlock == 0);
 }

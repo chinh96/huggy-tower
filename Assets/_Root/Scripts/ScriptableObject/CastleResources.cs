@@ -13,15 +13,27 @@ public class CastleResources : ScriptableObject
         get
         {
             CastleData result = null;
-            foreach (CastleData item in Castles)
+            foreach (CastleData castle in Castles)
             {
-                if (item.IsUnlocked)
+                if (castle.IsUnlocked)
                 {
-                    result = item;
+                    result = castle;
                 }
             }
 
             return result;
+        }
+    }
+
+    public void BuildOrUpgrade()
+    {
+        foreach (CastleData item in Castles)
+        {
+            if (!item.IsUnlocked)
+            {
+                item.IsUnlocked = true;
+                break;
+            }
         }
     }
 }

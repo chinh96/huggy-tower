@@ -8,4 +8,6 @@ public static class EventController
     public static Action CoinTotalChanged;
     public static Action CurrentSkinHeroChanged;
     public static Action CurrentSkinPrincessChanged;
+    public static Action<int> CastleBuilded;
+    public static Action CastleReseted;
 }

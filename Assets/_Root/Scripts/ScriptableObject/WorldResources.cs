@@ -9,6 +9,7 @@ public class WorldResources : ScriptableObject
     public int LevelUnlock;
     public List<CastleResources> Castles;
     public bool IsUnlocked => Data.CurrentLevel >= LevelUnlock;
+    public Sprite background;
 }
 
 public enum WorldType

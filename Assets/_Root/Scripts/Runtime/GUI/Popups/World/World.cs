@@ -2,30 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class World : MonoBehaviour
 {
     [SerializeField] private WorldType worldType;
+    [SerializeField] private List<Image> castles;
+    [SerializeField] private GameObject hammer;
+    [SerializeField] private ParticleSystem smoke;
 
     public WorldType WorldType { get => worldType; set => worldType = value; }
 
-    [SerializeField] private List<Image> castles;
-
-    private void OnEnable()
+    public void Reset()
     {
         int index = 0;
-        foreach (Image item in castles)
+        foreach (Image castle in castles)
         {
             CastleData castleCurrent = UniverseResources.Instance.WorldCurrent.Castles[index].CastleCurrent;
             if (castleCurrent != null)
             {
-                item.sprite = castleCurrent.Sprite;
-                item.SetNativeSize();
+                castle.sprite = castleCurrent.Sprite;
+                castle.SetNativeSize();
             }
             else
             {
-                item.gameObject.SetActive(false);
+                castle.gameObject.SetActive(false);
             }
+            index++;
         }
+        hammer.SetActive(false);
+    }
+
+    public void Build(int castleIndex)
+    {
+        hammer.transform.position = castles[castleIndex].transform.position;
+        hammer.transform.localPosition += new Vector3(100, 100, 0);
+        hammer.SetActive(true);
+
+        DOTween.Sequence().AppendInterval(2.2f).AppendCallback(() =>
+        {
+            Reset();
+            smoke.transform.position = hammer.transform.position;
+            smoke.Play();
+        });
     }
 }

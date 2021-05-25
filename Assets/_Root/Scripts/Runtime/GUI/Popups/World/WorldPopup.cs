@@ -6,25 +6,46 @@ public class WorldPopup : Popup
 {
     [SerializeField] private List<World> worlds;
 
-    protected override void BeforeShow()
-    {
-        base.BeforeShow();
+    private World worldCurrent;
 
-        worlds.ForEach(item => item.gameObject.SetActive(item.WorldType == Data.WorldCurrent));
+    protected override void AfterInstantiate()
+    {
+        base.AfterInstantiate();
+
+        EventController.CastleBuilded = Build;
+        EventController.CastleReseted = Reset;
+        Reset();
     }
 
-    public void OnClickHomeButton()
+    private void Reset()
     {
-        GameController.Instance.OnBackToHome();
+        worlds.ForEach(item =>
+        {
+            if (item.WorldType == Data.WorldCurrent)
+            {
+                worldCurrent = item;
+                item.gameObject.SetActive(true);
+                item.Reset();
+            }
+            else
+            {
+                item.gameObject.SetActive(false);
+            }
+        });
     }
 
     public void OnClickBuildButton()
     {
-
+        PopupController.Instance.Show<CastlePopup>(null, ShowAction.DoNothing);
     }
 
     public void OnClickWorldButton()
     {
+        PopupController.Instance.Show<WorldCollectPopup>(null, ShowAction.DoNothing);
+    }
 
+    public void Build(int castleIndex)
+    {
+        worldCurrent.Build(castleIndex);
     }
 }
