@@ -20,7 +20,6 @@ public class CastleResources : ScriptableObject
                     result = castle;
                 }
             }
-
             return result;
         }
     }

@@ -23,6 +23,7 @@ public class World : MonoBehaviour
             {
                 castle.sprite = castleCurrent.Sprite;
                 castle.SetNativeSize();
+                castle.gameObject.SetActive(true);
             }
             else
             {
