@@ -7,14 +7,31 @@ using System;
 public class CastleResources : ScriptableObject
 {
     public List<CastleData> Castles;
+
+    public CastleData CastleCurrent
+    {
+        get
+        {
+            CastleData result = null;
+            foreach (CastleData item in Castles)
+            {
+                if (item.IsUnlocked)
+                {
+                    result = item;
+                }
+            }
+
+            return result;
+        }
+    }
 }
 
 [Serializable]
 public class CastleData
 {
     [GUID] public string Id;
-    public Sprite sprite;
-
+    public Sprite Sprite;
+    public int Cost;
     public bool IsUnlocked
     {
         get

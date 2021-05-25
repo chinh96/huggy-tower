@@ -9,4 +9,6 @@ public class UniverseResources : ScriptableObject
     public static UniverseResources Instance => instance ? instance : instance = Resources.Load<UniverseResources>("UniverseResources");
 
     public List<WorldResources> Worlds;
+
+    public WorldResources WorldCurrent => Worlds.Find(item => item.WorldType == Data.WorldCurrent);
 }
