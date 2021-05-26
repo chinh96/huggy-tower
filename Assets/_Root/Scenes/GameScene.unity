@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 140907781}
   - component: {fileID: 140907783}
   - component: {fileID: 140907782}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: QuestBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 193483951}
   - component: {fileID: 193483950}
   - component: {fileID: 193483949}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: UICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +329,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 1934451009}
+  m_Camera: {fileID: 764589966}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -356,7 +356,7 @@ RectTransform:
   - {fileID: 1696776564}
   - {fileID: 1952544407}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 215909401}
   - component: {fileID: 215909403}
   - component: {fileID: 215909402}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -560,7 +560,7 @@ GameObject:
   - component: {fileID: 561210632}
   - component: {fileID: 561210631}
   - component: {fileID: 561210630}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: BtnReplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -709,7 +709,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &662321545
 Canvas:
   m_ObjectHideFlags: 0
@@ -719,7 +719,7 @@ Canvas:
   m_GameObject: {fileID: 662321542}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 2
   m_Camera: {fileID: 1934451009}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -739,20 +739,20 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 662321542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
   - {fileID: 1719528328}
   - {fileID: 413705405}
   - {fileID: 14585722}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_SizeDelta: {x: 1079.7178, y: 1920}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &716342647
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,7 +764,7 @@ GameObject:
   - component: {fileID: 716342648}
   - component: {fileID: 716342650}
   - component: {fileID: 716342649}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: GroupTopLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -831,6 +831,80 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &764589965
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 764589967}
+  - component: {fileID: 764589966}
+  m_Layer: 0
+  m_Name: UICamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!20 &764589966
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764589965}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 9.6
+  m_Depth: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &764589967
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764589965}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1456450886
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,7 +916,7 @@ GameObject:
   - component: {fileID: 1456450887}
   - component: {fileID: 1456450889}
   - component: {fileID: 1456450888}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: TxtQuest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -977,7 +1051,7 @@ GameObject:
   - component: {fileID: 1581630927}
   - component: {fileID: 1581630926}
   - component: {fileID: 1581630925}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: BtnSkip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1080,7 +1154,7 @@ GameObject:
   - component: {fileID: 1696776564}
   - component: {fileID: 1696776566}
   - component: {fileID: 1696776565}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: GroupTopRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1316,7 +1390,7 @@ GameObject:
   - component: {fileID: 1952544407}
   - component: {fileID: 1952544409}
   - component: {fileID: 1952544408}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: GroupBottomRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1429,7 +1503,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1954604932
 MonoBehaviour:
@@ -1520,7 +1594,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2082175819
 GameObject:
@@ -1534,7 +1608,7 @@ GameObject:
   - component: {fileID: 2082175823}
   - component: {fileID: 2082175822}
   - component: {fileID: 2082175821}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: BtnHome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
