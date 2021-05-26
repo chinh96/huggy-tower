@@ -16,7 +16,7 @@ public class ItemChest : Item, IAnim
 
     public void PlayDead() { }
 
-    public void PlayWin(bool isLoop = false) { skeleton.Play("animation", isLoop); }
+    public void PlayWin(bool isLoop = false) { skeleton.Play("Open", isLoop); }
 
     public void PlayLose(bool isLoop = false) { skeleton.Play("Fire", isLoop); }
 
