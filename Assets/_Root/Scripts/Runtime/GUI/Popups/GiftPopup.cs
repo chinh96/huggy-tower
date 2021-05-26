@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
+using DG.Tweening;
 
 public class GiftPopup : Popup
 {
@@ -20,6 +21,7 @@ public class GiftPopup : Popup
         {
             Data.CurrentSkinHero = Data.SkinGift.SkinName;
             Data.SkinGift.IsUnlocked = true;
+            GameController.Instance.Player.ChangeSword();
             Close();
         });
     }

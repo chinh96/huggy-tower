@@ -103,7 +103,7 @@ public static partial class Util
     {
         Skin skin = new Skin("skin");
         skin.AddSkin(skeletonGraphic.Skeleton.Data.FindSkin(swordName));
-        skin.AddSkin(skeletonGraphic.Skeleton.Data.FindSkin(skeletonGraphic.initialSkinName));
+        skin.AddSkin(skeletonGraphic.Skeleton.Data.FindSkin(Data.CurrentSkinHero));
         skeletonGraphic.Skeleton.SetSkin(skin);
         skeletonGraphic.Skeleton.SetSlotsToSetupPose();
     }

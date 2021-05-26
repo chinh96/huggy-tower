@@ -27,7 +27,7 @@ public class ProgressGift : MonoBehaviour
                 if (skinsLocked.Count > 0)
                 {
                     Data.SkinGift = skinsLocked[UnityEngine.Random.Range(0, skinsLocked.Count)];
-                    PopupController.Instance.Show<GiftPopup>(null, ShowAction.PauseCurrent);
+                    PopupController.Instance.Show<GiftPopup>(null, ShowAction.DoNothing);
                 }
                 Data.PercentProgressGift = 0;
             }

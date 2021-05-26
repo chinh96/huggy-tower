@@ -12,32 +12,51 @@ public class GameController : Singleton<GameController>
     [SerializeField] private float zoomCameraDuration;
     [SerializeField] private float zoomOrthoSize;
     [SerializeField] private Vector2 zoomOffset;
+    [SerializeField] private ParticleSystem firePaper;
+    [SerializeField] private float delayWinLose = 2;
+    [SerializeField] private GameObject slicer;
 
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
 
+    private Vector3 zoomCameraPositionOrigin;
     private float zoomOrthoSizeOrigin;
     private bool _isReplay;
+    private bool isSlice;
+    private bool isZoomIn;
 
     public LeanGameObjectPool poolArrow;
     public LevelRoot Root => root;
     public EGameState GameState { get; set; }
     public RoomTower RoomPrefab => roomPrefab;
 
+    private void Update()
+    {
+        if (isSlice)
+        {
+            slicer.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
+    }
+
+    public void SetSlicerActive(bool active)
+    {
+        isSlice = active;
+        slicer.SetActive(active);
+    }
+
     private void Start()
     {
         SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
-        LoadLevel(Data.CurrentLevel, false);
+        LoadLevel(Data.CurrentLevel);
     }
 
     private void ResetFlagNextLevel() { }
 
-    public async void LoadLevel(int fakeIndex, bool needResetCamera = true)
+    public async void LoadLevel(int fakeIndex)
     {
-        if (needResetCamera)
-        {
-            ZoomOutCamera();
-        }
+        ZoomOutCamera();
+        firePaper.gameObject.SetActive(false);
+
         async void LoadNextLevel(int fakeLevelIndex)
         {
             var go = await DataBridge.Instance.GetLevel(fakeLevelIndex + 1);
@@ -125,7 +144,7 @@ public class GameController : Singleton<GameController>
         switch (condition)
         {
             case ELevelCondition.KillAll:
-                str = "kill all enemy";
+                str = "kill all enemies";
                 break;
             case ELevelCondition.CollectChest:
                 str = "open chest";
@@ -184,20 +203,30 @@ public class GameController : Singleton<GameController>
 
     public void OnWinLevel()
     {
+        firePaper.gameObject.SetActive(true);
+
         Data.CurrentLevel++;
         Data.CountPlayLevel++;
         if (Data.MaxLevel < Data.CurrentLevel) Data.MaxLevel = Data.CurrentLevel;
 
         GameState = EGameState.Win;
         SoundController.Instance.PlayOnce(SoundType.Win);
-        ShowPopupWin();
+
+        DOTween.Sequence().AppendInterval(delayWinLose).AppendCallback(() =>
+        {
+            ShowPopupWin();
+        });
     }
 
     public void OnLoseLevel()
     {
         GameState = EGameState.Lose;
         SoundController.Instance.PlayOnce(SoundType.Lose);
-        ShowPopupLose();
+
+        DOTween.Sequence().AppendInterval(delayWinLose).AppendCallback(() =>
+        {
+            ShowPopupLose();
+        });
     }
 
     private void ShowPopupWin()
@@ -215,16 +244,25 @@ public class GameController : Singleton<GameController>
     private void ZoomInCamera()
     {
         Player.TxtDamage.gameObject.SetActive(false);
+
+        zoomCameraPositionOrigin = Camera.main.transform.position;
         Vector2 endValue = new Vector2(Player.transform.position.x, Player.transform.position.y) + zoomOffset;
         Camera.main.transform.DOMove(endValue, zoomCameraDuration);
 
         zoomOrthoSizeOrigin = Camera.main.orthographicSize;
         Camera.main.DOOrthoSize(zoomOrthoSize, zoomCameraDuration);
+
+        isZoomIn = true;
     }
 
     private void ZoomOutCamera()
     {
-        Camera.main.transform.position = Vector2.zero;
-        Camera.main.orthographicSize = zoomOrthoSizeOrigin;
+        if (isZoomIn)
+        {
+            Camera.main.transform.position = zoomCameraPositionOrigin;
+            Camera.main.orthographicSize = zoomOrthoSizeOrigin;
+
+            isZoomIn = false;
+        }
     }
 }

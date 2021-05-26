@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class HomeController : Singleton<HomeController>
@@ -31,5 +32,10 @@ public class HomeController : Singleton<HomeController>
     public void ShowSkinPopup()
     {
         PopupController.Instance.Show<SkinPopup>();
+    }
+
+    public void OnClickFacebookButton()
+    {
+        Application.OpenURL("https://www.facebook.com/groups/hero.tower.wars");
     }
 }

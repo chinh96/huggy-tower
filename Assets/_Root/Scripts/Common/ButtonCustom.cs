@@ -1,10 +1,11 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ButtonCustom : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] UnityEngine.UI.Button.ButtonClickedEvent onClick;
+    [SerializeField] private Button.ButtonClickedEvent onClick;
 
     private bool isMoveEnter = true;
 

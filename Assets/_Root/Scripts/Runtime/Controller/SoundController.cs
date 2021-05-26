@@ -33,18 +33,18 @@ public class SoundController : Singleton<SoundController>
 
     public void PlayOnce(SoundType soundType)
     {
-        if (!Data.SoundState) return;
-
         AudioClip clip = audioClips[(int)soundType];
+
+        if (!clip || !Data.SoundState) return;
 
         onceAudio.PlayOneShot(clip);
     }
 
     public void PlayBackground(SoundType soundType)
     {
-        if (!Data.MusicState) return;
-
         AudioClip clip = audioClips[(int)soundType];
+
+        if (!clip || !Data.MusicState) return;
 
         if (clip && backgroundAudio.clip != clip)
         {
@@ -63,9 +63,9 @@ public class SoundController : Singleton<SoundController>
 
     public AudioSource PlayLoop(SoundType soundType)
     {
-        if (!Data.SoundState) return null;
-
         AudioClip clip = audioClips[(int)soundType];
+
+        if (!clip || !Data.SoundState) return null;
 
         AudioSource audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.clip = clip;

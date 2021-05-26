@@ -51,4 +51,12 @@ public class SkinPopup : Popup
             index++;
         });
     }
+
+    public void OnClickAdsButton()
+    {
+        AdController.Instance.ShowRewardedAd(() =>
+        {
+            Data.CoinTotal += 500;
+        });
+    }
 }

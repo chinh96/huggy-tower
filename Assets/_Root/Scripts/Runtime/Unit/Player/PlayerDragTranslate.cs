@@ -146,7 +146,7 @@ namespace Lean.Touch
                 var screenPoint = camera.WorldToScreenPoint(transform.position);
 
                 // Add the deltaPosition
-                screenPoint += (Vector3) screenDelta * Sensitivity;
+                screenPoint += (Vector3)screenDelta * Sensitivity;
 
                 // Convert back to world space
                 transform.position = camera.ScreenToWorldPoint(screenPoint);

@@ -44,6 +44,7 @@ public class Player : Unit, IAnim
     private bool _isMouseUpDragDetected;
     private RoomTower _parentRoom;
     private bool _dragValidateRoomFlag;
+    private string swordName = "";
 
     private void Start()
     {
@@ -128,6 +129,7 @@ public class Player : Unit, IAnim
         coll2D.enabled = false;
         groundCollider.enabled = false;
         searchTargetCollider.enabled = false;
+        GameController.Instance.SetSlicerActive(true);
     }
 
     public void OnDeSelected()
@@ -136,10 +138,16 @@ public class Player : Unit, IAnim
         coll2D.enabled = true;
         groundCollider.enabled = true;
         searchTargetCollider.enabled = true;
+        GameController.Instance.SetSlicerActive(false);
     }
 
     private void OnMouseDown()
     {
+        if (GameController.Instance.GameState != EGameState.Playing)
+        {
+            return;
+        }
+
         SoundController.Instance.PlayOnce(SoundType.HeroDrag);
         _isMouseUpDragDetected = false;
         if (Turn == ETurn.Drag)
@@ -147,15 +155,15 @@ public class Player : Unit, IAnim
             OnSelected();
             leanSelectableByFinger.SelfSelected = true;
         }
-        // else
-        // {
-        //     OnDeSelected();
-        //     leanSelectableByFinger.SelfSelected = false;
-        // }
     }
 
     private void OnMouseUp()
     {
+        if (GameController.Instance.GameState != EGameState.Playing)
+        {
+            return;
+        }
+
         SoundController.Instance.PlayOnce(SoundType.HeroDrop);
         if (!dragTranslate.DragTranslateFlag)
         {
@@ -553,9 +561,19 @@ public class Player : Unit, IAnim
         }
     }
 
-    /// <summary>
-    /// method call directly by event in anim attack
-    /// </summary>
+    public void ChangeSword(string swordName = "")
+    {
+        if (swordName != "")
+        {
+            this.swordName = swordName;
+        }
+
+        if (this.swordName != "")
+        {
+            Skeleton.ChangeSword(this.swordName);
+        }
+    }
+
     private void OnEndAttackByEvent()
     {
         PlayIdle(true);
@@ -571,6 +589,7 @@ public class Player : Unit, IAnim
         StartDragTurn();
         if (GameController.Instance.Root.LevelMap.visitTower.IsClearTower() && GameController.Instance.Root.LevelMap.condition == ELevelCondition.KillAll)
         {
+            PlayWin(true);
             GameController.Instance.OnWinLevel();
         }
     }
@@ -612,7 +631,8 @@ public class Player : Unit, IAnim
         else
         {
             SoundController.Instance.PlayOnce(SoundType.HeroHit);
-            skeleton.Play("Attack2", false);
+            string[] attacks = { "Attack2", "AttackHit" };
+            skeleton.Play(attacks[UnityEngine.Random.Range(0, attacks.Length)], false);
         }
     }
 

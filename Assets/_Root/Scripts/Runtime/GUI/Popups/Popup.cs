@@ -49,7 +49,7 @@ public class Popup : MonoBehaviour
     internal void Resume(object data = null)
     {
         BeforeResume();
-        ShowAnim(AfterResumed);
+        ShowAnim(AfterResumed, false);
     }
 
     internal void Dismiss(bool animated)
@@ -68,32 +68,42 @@ public class Popup : MonoBehaviour
         HideAnim(AfterPaused);
     }
 
-    void ShowAnim(System.Action onCompleted = null)
+    void ShowAnim(System.Action onCompleted = null, bool isShowAnim = true)
     {
         DOTween.Kill(this, true);
 
         canvasGroup.interactable = false;
         gameObject.SetActive(true);
 
-        if (isAnimScaleDown)
+        if (isShowAnim)
         {
-            container.localScale = Vector3.one * 2;
-            canvasGroup.alpha = 1;
+            if (isAnimScaleDown)
+            {
+                container.localScale = Vector3.one * 2;
+                canvasGroup.alpha = 1;
+            }
+            else
+            {
+                DOTween.To(() => canvasGroup.alpha, x => { canvasGroup.alpha = x; }, 1, duration)
+                    .SetUpdate(true).SetTarget(this);
+            }
+
+            container.DOScale(Vector3.one, duration).SetEase(ease).SetUpdate(true).SetTarget(this).OnComplete(
+                () =>
+                {
+                    canvasGroup.alpha = 1;
+                    container.localScale = Vector3.one;
+                    canvasGroup.interactable = true;
+                    onCompleted?.Invoke();
+                });
         }
         else
         {
-            DOTween.To(() => canvasGroup.alpha, x => { canvasGroup.alpha = x; }, 1, duration)
-                .SetUpdate(true).SetTarget(this);
+            canvasGroup.alpha = 1;
+            container.localScale = Vector3.one;
+            canvasGroup.interactable = true;
+            onCompleted?.Invoke();
         }
-
-        container.DOScale(Vector3.one, duration).SetEase(ease).SetUpdate(true).SetTarget(this).OnComplete(
-            () =>
-            {
-                canvasGroup.alpha = 1;
-                container.localScale = Vector3.one;
-                canvasGroup.interactable = true;
-                onCompleted?.Invoke();
-            });
     }
 
     void HideAnim(System.Action onCompleted)
