@@ -36,6 +36,7 @@ public class World : MonoBehaviour
 
     public void Build(int castleIndex)
     {
+        SoundController.Instance.PlayOnce(SoundType.BuildItem);
         hammer.transform.position = castles[castleIndex].transform.position;
         hammer.transform.localPosition += new Vector3(100, 100, 0);
         hammer.SetActive(true);

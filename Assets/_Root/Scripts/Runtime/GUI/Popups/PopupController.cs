@@ -48,6 +48,8 @@ public class PopupController : Singleton<PopupController>
             return;
         }
 
+        SoundController.Instance.PlayOnce(SoundType.OpenPopup);
+
         Show(data, popup, showAction);
     }
 

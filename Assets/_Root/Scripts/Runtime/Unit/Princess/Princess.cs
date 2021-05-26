@@ -27,6 +27,7 @@ public class Princess : Unit, IAnim
 
     public void PlayWin(bool isLoop)
     {
+        SoundController.Instance.PlayOnce(SoundType.RescuePrincess);
         skeleton.Play("win", false);
         DOTween.Sequence().AppendInterval(.7f).AppendCallback(() =>
         {

@@ -140,6 +140,7 @@ public class Player : Unit, IAnim
 
     private void OnMouseDown()
     {
+        SoundController.Instance.PlayOnce(SoundType.HeroDrag);
         _isMouseUpDragDetected = false;
         if (Turn == ETurn.Drag)
         {
@@ -155,6 +156,7 @@ public class Player : Unit, IAnim
 
     private void OnMouseUp()
     {
+        SoundController.Instance.PlayOnce(SoundType.HeroDrop);
         if (!dragTranslate.DragTranslateFlag)
         {
             _isMouseUpDragDetected = false;
@@ -533,6 +535,7 @@ public class Player : Unit, IAnim
         var cacheDamage = Damage;
         if (damage > 0)
         {
+            SoundController.Instance.PlayOnce(SoundType.HeroUpLevel);
             effectIncreaseDamge.gameObject.SetActive(true);
             effectIncreaseDamge.Play();
         }
@@ -542,6 +545,7 @@ public class Player : Unit, IAnim
 
         if (Damage <= 0)
         {
+            SoundController.Instance.PlayOnce(SoundType.HeroDownLevel);
             State = EUnitState.Invalid;
             Turn = ETurn.None;
             PlayDead();
@@ -602,10 +606,12 @@ public class Player : Unit, IAnim
     {
         if (isUsingSword)
         {
+            SoundController.Instance.PlayOnce(SoundType.HeroCut);
             skeleton.Play("Attack", false);
         }
         else
         {
+            SoundController.Instance.PlayOnce(SoundType.HeroHit);
             skeleton.Play("Attack2", false);
         }
     }
@@ -622,9 +628,17 @@ public class Player : Unit, IAnim
         }
     }
 
-    public void PlayDead() { skeleton.Play("Die", false); }
+    public void PlayDead()
+    {
+        SoundController.Instance.PlayOnce(SoundType.HeroDie);
+        skeleton.Play("Die", false);
+    }
 
-    public void PlayWin(bool isLoop) { skeleton.Play("Win", true); }
+    public void PlayWin(bool isLoop)
+    {
+        skeleton.Play("Win", true);
+        SoundController.Instance.PlayOnce(SoundType.HeroYeah);
+    }
 
     public void PlayLose(bool isLoop) { skeleton.Play("Die", true); }
 

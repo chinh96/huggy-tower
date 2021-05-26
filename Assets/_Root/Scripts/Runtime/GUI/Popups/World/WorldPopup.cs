@@ -14,6 +14,7 @@ public class WorldPopup : Popup
 
         EventController.CastleBuilded = Build;
         EventController.CastleReseted = Reset;
+
         Reset();
     }
 
@@ -47,5 +48,19 @@ public class WorldPopup : Popup
     public void Build(int castleIndex)
     {
         worldCurrent.Build(castleIndex);
+    }
+
+    protected override void BeforeShow()
+    {
+        base.BeforeShow();
+
+        SoundController.Instance.PlayBackground(SoundType.BackgroundCastle);
+    }
+
+    public override void Close()
+    {
+        base.Close();
+
+        SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
     }
 }

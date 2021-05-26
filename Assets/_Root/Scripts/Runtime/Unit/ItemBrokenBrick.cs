@@ -14,11 +14,10 @@ public class ItemBrokenBrick : Item
         if (player != null)
         {
             player.IncreaseDamage(-damage);
-            // play effect
-
             effectBreak.transform.SetParent(transform.parent, false);
             effectBreak.gameObject.SetActive(true);
             gameObject.SetActive(false);
+            SoundController.Instance.PlayOnce(SoundType.BlockWallBreak);
         }
     }
 }

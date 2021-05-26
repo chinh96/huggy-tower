@@ -5,6 +5,7 @@ public class HomeController : Singleton<HomeController>
     private void Start()
     {
         AdController.Instance.ShowBanner();
+        SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
     }
 
     public void TapToStart()

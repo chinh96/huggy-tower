@@ -26,6 +26,7 @@ public class GameController : Singleton<GameController>
 
     private void Start()
     {
+        SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
         LoadLevel(Data.CurrentLevel, false);
     }
 
@@ -188,12 +189,14 @@ public class GameController : Singleton<GameController>
         if (Data.MaxLevel < Data.CurrentLevel) Data.MaxLevel = Data.CurrentLevel;
 
         GameState = EGameState.Win;
+        SoundController.Instance.PlayOnce(SoundType.Win);
         ShowPopupWin();
     }
 
     public void OnLoseLevel()
     {
         GameState = EGameState.Lose;
+        SoundController.Instance.PlayOnce(SoundType.Lose);
         ShowPopupLose();
     }
 

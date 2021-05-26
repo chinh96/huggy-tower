@@ -21,6 +21,7 @@ public class ButtonCustom : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (isMoveEnter)
         {
             onClick.Invoke();
+            SoundController.Instance.PlayOnce(SoundType.ButtonClick);
         }
     }
 
