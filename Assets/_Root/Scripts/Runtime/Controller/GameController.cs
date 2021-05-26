@@ -2,13 +2,21 @@ using Lean.Pool;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class GameController : Singleton<GameController>
 {
     [SerializeField] private LevelRoot root;
     [SerializeField] private RoomTower roomPrefab;
     [SerializeField] private TextMeshProUGUI txtQuest;
+    [SerializeField] private float zoomCameraDuration;
+    [SerializeField] private float zoomOrthoSize;
+    [SerializeField] private Vector2 zoomOffset;
 
+    private Player player;
+    public Player Player => player ? player : player = FindObjectOfType<Player>();
+
+    private float zoomOrthoSizeOrigin;
     private bool _isReplay;
 
     public LeanGameObjectPool poolArrow;
@@ -18,13 +26,17 @@ public class GameController : Singleton<GameController>
 
     private void Start()
     {
-        LoadLevel(Data.CurrentLevel);
+        LoadLevel(Data.CurrentLevel, false);
     }
 
     private void ResetFlagNextLevel() { }
 
-    public async void LoadLevel(int fakeIndex)
+    public async void LoadLevel(int fakeIndex, bool needResetCamera = true)
     {
+        if (needResetCamera)
+        {
+            ZoomOutCamera();
+        }
         async void LoadNextLevel(int fakeLevelIndex)
         {
             var go = await DataBridge.Instance.GetLevel(fakeLevelIndex + 1);
@@ -165,6 +177,7 @@ public class GameController : Singleton<GameController>
 
     public void OnBackToHome()
     {
+        PopupController.Instance.DismissAll();
         SceneManager.LoadScene(Constants.HOME_SCENE);
     }
 
@@ -186,11 +199,29 @@ public class GameController : Singleton<GameController>
 
     private void ShowPopupWin()
     {
+        ZoomInCamera();
         PopupController.Instance.Show<WinPopup>();
     }
 
     private void ShowPopupLose()
     {
+        ZoomInCamera();
         PopupController.Instance.Show<LosePopup>();
+    }
+
+    private void ZoomInCamera()
+    {
+        Player.TxtDamage.gameObject.SetActive(false);
+        Vector2 endValue = new Vector2(Player.transform.position.x, Player.transform.position.y) + zoomOffset;
+        Camera.main.transform.DOMove(endValue, zoomCameraDuration);
+
+        zoomOrthoSizeOrigin = Camera.main.orthographicSize;
+        Camera.main.DOOrthoSize(zoomOrthoSize, zoomCameraDuration);
+    }
+
+    private void ZoomOutCamera()
+    {
+        Camera.main.transform.position = Vector2.zero;
+        Camera.main.orthographicSize = zoomOrthoSizeOrigin;
     }
 }
