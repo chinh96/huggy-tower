@@ -82,7 +82,7 @@ public class SkinItem : MonoBehaviour
 
     public void OnClickButtonDailyReward()
     {
-        PopupController.Instance.Show<DailyRewardPopup>();
+        PopupController.Instance.Show<DailyRewardPopup>(null, ShowAction.DoNothing);
     }
 
     private void Done()
