@@ -631,7 +631,7 @@ public class Player : Unit, IAnim
         else
         {
             SoundController.Instance.PlayOnce(SoundType.HeroHit);
-            string[] attacks = { "Attack2", "AttackHit" };
+            string[] attacks = { "Attack2", "AttackHit", "AttackHit2" };
             skeleton.Play(attacks[UnityEngine.Random.Range(0, attacks.Length)], false);
         }
     }
