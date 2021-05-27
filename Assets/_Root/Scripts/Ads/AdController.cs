@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using UnityEngine;
 
 public class AdController : Singleton<AdController>
 {
@@ -34,10 +35,16 @@ public class AdController : Singleton<AdController>
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+#if UNITY_EDITOR
+        Init();
+#endif
     }
 
     public void Init()
     {
+#if UNITY_EDITOR
+        ad = GetComponent<AdMobController>();
+#else
         if (RemoteConfigController.Instance.OnlyAdmob)
         {
             ad = GetComponent<AdMobController>();
@@ -46,24 +53,23 @@ public class AdController : Singleton<AdController>
         {
             ad = GetComponent<IronSourceController>();
         }
+#endif
 
         ad.Init(OnInterClosed, OnInterLoaded, OnRewardLoaded, OnRewardClosed, OnRewardEarned);
 
-        // ad.RequestBanner();
-        ad.RequestInterstitial();
-        ad.RequestRewarded();
+        RequestBanner();
+        RequestInterstitial();
+        RequestRewarded();
 
-        // ad.HideBanner();
+        HideBanner();
     }
 
     public void RequestBanner()
     {
-#if !UNITY_EDITOR
         if (ad != null)
         {
-            ad.RequestBanner();
+            // ad.RequestBanner();
         }
-#endif
     }
 
     public void ShowBanner()
@@ -99,9 +105,6 @@ public class AdController : Singleton<AdController>
 
     public void ShowInterstitial(Action action)
     {
-#if UNITY_EDITOR
-        action?.Invoke();
-#else
         if (ad != null && isShowInter)
         {
             if (ad.IsInterLoaded)
@@ -111,7 +114,8 @@ public class AdController : Singleton<AdController>
                 GameController.Instance.Root.ResetTotalTimesPlay();
                 GameController.Instance.Root.ResetTotalLevelWin();
             }
-            else {
+            else
+            {
                 action?.Invoke();
             }
         }
@@ -119,7 +123,6 @@ public class AdController : Singleton<AdController>
         {
             action?.Invoke();
         }
-#endif
     }
 
     public void RequestRewarded()
@@ -132,9 +135,6 @@ public class AdController : Singleton<AdController>
 
     public void ShowRewardedAd(Action action)
     {
-#if UNITY_EDITOR
-        action?.Invoke();
-#else
         if (ad != null)
         {
             if (ad.IsRewardLoaded)
@@ -143,7 +143,6 @@ public class AdController : Singleton<AdController>
                 ad.ShowRewardedAd();
             }
         }
-#endif
     }
 
     public void OnInterClosed()
@@ -161,11 +160,14 @@ public class AdController : Singleton<AdController>
     {
         RequestRewarded();
 
-        if (isRewardEarned)
+        DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
         {
-            isRewardEarned = false;
-            DOTween.Sequence().AppendInterval(.1f).AppendCallback(() => handleRewardAfterEarned?.Invoke());
-        }
+            if (isRewardEarned)
+            {
+                isRewardEarned = false;
+                handleRewardAfterEarned?.Invoke();
+            }
+        });
     }
 
     public void OnRewardLoaded()

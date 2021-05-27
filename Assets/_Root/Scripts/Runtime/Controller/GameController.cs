@@ -189,8 +189,11 @@ public class GameController : Singleton<GameController>
 
     public void OnNextLevel()
     {
-        Instance.root.Clear();
-        Instance.LoadLevel(Data.CurrentLevel);
+        AdController.Instance.ShowInterstitial(() =>
+        {
+            Instance.root.Clear();
+            Instance.LoadLevel(Data.CurrentLevel);
+        });
     }
 
     public void OnReplayLevel()
