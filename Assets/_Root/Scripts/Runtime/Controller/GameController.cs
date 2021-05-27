@@ -47,7 +47,19 @@ public class GameController : Singleton<GameController>
     private void Start()
     {
         SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
+        CheckRadioCamera();
         LoadLevel(Data.CurrentLevel);
+    }
+
+    private void CheckRadioCamera()
+    {
+        float ratio = ((Screen.height / Screen.width) - (1920 / 1080f)) * 14;
+        Debug.Log(ratio);
+        if (ratio > 0)
+        {
+            Camera.main.transform.position += new Vector3(0, ratio, 0);
+            Camera.main.orthographicSize += ratio;
+        }
     }
 
     private void ResetFlagNextLevel() { }

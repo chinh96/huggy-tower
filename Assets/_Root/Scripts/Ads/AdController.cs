@@ -49,11 +49,11 @@ public class AdController : Singleton<AdController>
 
         ad.Init(OnInterClosed, OnInterLoaded, OnRewardLoaded, OnRewardClosed, OnRewardEarned);
 
-        ad.RequestBanner();
+        // ad.RequestBanner();
         ad.RequestInterstitial();
         ad.RequestRewarded();
 
-        ad.HideBanner();
+        // ad.HideBanner();
     }
 
     public void RequestBanner()
@@ -72,11 +72,11 @@ public class AdController : Singleton<AdController>
         {
             if (isShowBanner)
             {
-                ad.ShowBanner();
+                // ad.ShowBanner();
             }
             else
             {
-                ad.HideBanner();
+                // ad.HideBanner();
             }
         }
     }
@@ -85,7 +85,7 @@ public class AdController : Singleton<AdController>
     {
         if (ad != null && ad.IsBannerLoaded)
         {
-            ad.HideBanner();
+            // ad.HideBanner();
         }
     }
 
