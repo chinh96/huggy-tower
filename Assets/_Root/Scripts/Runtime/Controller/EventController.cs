@@ -10,4 +10,6 @@ public static class EventController
     public static Action CurrentSkinPrincessChanged;
     public static Action<int> CastleBuilded;
     public static Action CastleReseted;
+    public static Action SkinPopupReseted;
+    public static Action CurrentLevelChanged;
 }

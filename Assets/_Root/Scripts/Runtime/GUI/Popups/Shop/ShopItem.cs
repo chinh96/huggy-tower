@@ -50,24 +50,27 @@ public class ShopItem : MonoBehaviour
         switch (shopItemType)
         {
             case ShopItemType.Gold1:
-                Data.CoinTotal += 10000;
+                Data.CoinTotal += 50000;
                 break;
             case ShopItemType.Gold2:
-                Data.CoinTotal += 10000;
+                Data.CoinTotal += 100000;
                 break;
             case ShopItemType.Gold3:
-                Data.CoinTotal += 10000;
+                Data.CoinTotal += 500000;
                 break;
             case ShopItemType.UnlockAllSkins:
                 Data.IsUnlockAllSkins = true;
+                EventController.SkinPopupReseted();
                 break;
             case ShopItemType.RemoveAds:
                 Data.IsRemovedAds = true;
                 break;
             case ShopItemType.Vip:
+                Data.CoinTotal += 500000;
                 Data.IsUnlockAllSkins = true;
                 Data.IsRemovedAds = true;
                 Data.IsVip = true;
+                EventController.SkinPopupReseted();
                 break;
         }
 

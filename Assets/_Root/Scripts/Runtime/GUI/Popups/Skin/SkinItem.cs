@@ -34,7 +34,7 @@ public class SkinItem : MonoBehaviour
 
         HideAllButton();
 
-        if (!skinData.IsUnlocked)
+        if (!skinData.IsUnlocked && !Data.IsUnlockAllSkins)
         {
             switch (skinData.SkinType)
             {
@@ -109,7 +109,7 @@ public class SkinItem : MonoBehaviour
 
     public void OnClick()
     {
-        if (skinData.IsUnlocked)
+        if (skinData.IsUnlocked || Data.IsUnlockAllSkins)
         {
             SetSkin();
         }

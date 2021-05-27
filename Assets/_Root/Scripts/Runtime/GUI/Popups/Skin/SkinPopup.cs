@@ -25,6 +25,8 @@ public class SkinPopup : Popup
                 skinResources = ResourcesController.Instance.Princess;
                 break;
         }
+
+        EventController.SkinPopupReseted = Reset;
     }
 
     protected override void AfterInstantiate()
@@ -40,6 +42,13 @@ public class SkinPopup : Popup
             row.Init(skinResources, ref index, this);
             skinRows.Add(row);
         }
+    }
+
+    protected override void BeforeShow()
+    {
+        base.BeforeShow();
+
+        Reset();
     }
 
     public void Reset()
