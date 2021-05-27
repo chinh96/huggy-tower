@@ -25,7 +25,12 @@ public class Player : Unit, IAnim
 
     public bool isUsingSword;
 
-    [Space] [SerializeField] public ParticleSystem effectIncreaseDamge;
+    [SerializeField] public ParticleSystem effectIncreaseDamge;
+    [SerializeField] public ParticleSystem effectBlood;
+    [SerializeField] public ParticleSystem effectBlood2;
+    [SerializeField] public ParticleSystem effectBlood3;
+    [SerializeField] public ParticleSystem effectHitWall;
+    [SerializeField] public ParticleSystem effectPickSword;
 
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
     public bool FirstTurn { get; set; }
@@ -347,7 +352,7 @@ public class Player : Unit, IAnim
 
                         void SavePrincess()
                         {
-                            PlayUseItem();
+                            PlayUseItem(ItemType.None);
                             (_target as Princess)?.PlayWin(true);
                             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                             {
@@ -377,7 +382,7 @@ public class Player : Unit, IAnim
                     if (distance >= 110)
                     {
                         PLayMove(true);
-                        transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
+                        transform.DOLocalMoveX(_itemTarget.ItemType == ItemType.Sword ? 50 : 0, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
                     }
                     else
                     {
@@ -401,7 +406,7 @@ public class Player : Unit, IAnim
                 void UseItem(ELevelCondition condition = ELevelCondition.CollectChest)
                 {
                     Turn = ETurn.UsingItem;
-                    PlayUseItem();
+                    PlayUseItem(_itemTarget.ItemType);
                     DOTween.Sequence().AppendInterval(1.2f).AppendCallback(() =>
                     {
                         if (GameController.Instance.Root.LevelMap.condition == condition)
@@ -544,8 +549,8 @@ public class Player : Unit, IAnim
         if (damage > 0)
         {
             SoundController.Instance.PlayOnce(SoundType.HeroUpLevel);
-            effectIncreaseDamge.gameObject.SetActive(true);
-            effectIncreaseDamge.Play();
+            effectPickSword.gameObject.SetActive(true);
+            effectPickSword.Play();
         }
 
         Damage += damage;
@@ -619,7 +624,13 @@ public class Player : Unit, IAnim
 
     public override void LightReturn() { }
     public SkeletonGraphic Skeleton => skeleton;
-    public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
+    public void PlayIdle(bool isLoop)
+    {
+        if (GameController.Instance.GameState != EGameState.Lose)
+        {
+            skeleton.Play("Idle", true);
+        }
+    }
 
     public void PlayAttack()
     {
@@ -627,6 +638,22 @@ public class Player : Unit, IAnim
         {
             SoundController.Instance.PlayOnce(SoundType.HeroCut);
             skeleton.Play("Attack", false);
+            DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+            {
+                var main = effectBlood.main;
+                main.startColor = _target.ColorBlood;
+
+                main = effectBlood2.main;
+                main.startColor = _target.ColorBlood;
+
+                main = effectBlood3.main;
+                main.startColor = _target.ColorBlood;
+
+                effectBlood.transform.position = _target.transform.position;
+                effectBlood.transform.localPosition += new Vector3(0, 40, 0);
+                effectBlood.gameObject.SetActive(true);
+                effectBlood.Play();
+            });
         }
         else
         {
@@ -656,13 +683,43 @@ public class Player : Unit, IAnim
 
     public void PlayWin(bool isLoop)
     {
-        skeleton.Play("Win", true);
+        string[] wins = { "Win", "Win2" };
+        skeleton.Play(wins[UnityEngine.Random.Range(0, wins.Length)], true);
         SoundController.Instance.PlayOnce(SoundType.HeroYeah);
     }
 
     public void PlayLose(bool isLoop) { skeleton.Play("Die", true); }
 
-    public void PlayUseItem() { skeleton.Play("Open1", false); }
+    public void PlayUseItem(ItemType type)
+    {
+        switch (type)
+        {
+            case ItemType.Chest:
+                if (isUsingSword)
+                {
+                    skeleton.Play("Open1", false);
+                }
+                else
+                {
+                    skeleton.Play("Open2", false);
+                }
+                break;
+            case ItemType.Sword:
+                skeleton.Play("Pick", false);
+                break;
+            case ItemType.BrokenBrick:
+                skeleton.Play("HitWall", false);
+                DOTween.Sequence().AppendInterval(.4f).AppendCallback(() =>
+                {
+                    effectHitWall.gameObject.SetActive(true);
+                    effectHitWall.Play();
+                });
+                break;
+            default:
+                skeleton.Play("Open1", false);
+                break;
+        }
+    }
 }
 
 

@@ -60,7 +60,6 @@ public class ShopItem : MonoBehaviour
                 break;
             case ShopItemType.UnlockAllSkins:
                 Data.IsUnlockAllSkins = true;
-                EventController.SkinPopupReseted();
                 break;
             case ShopItemType.RemoveAds:
                 Data.IsRemovedAds = true;
@@ -71,11 +70,11 @@ public class ShopItem : MonoBehaviour
                 Data.IsUnlockAllSkins = true;
                 Data.IsRemovedAds = true;
                 Data.IsVip = true;
-                EventController.SkinPopupReseted();
                 break;
         }
 
         shopPopup.CheckItems();
+        EventController.SkinPopupReseted();
     }
 }
 

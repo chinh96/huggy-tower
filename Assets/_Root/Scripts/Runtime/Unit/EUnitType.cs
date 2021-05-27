@@ -4,5 +4,13 @@ public enum EUnitType
     Enemy = 1,
     Item = 2,
     Gem = 3,
-    Princess = 4,
+    Princess = 4
+}
+
+public enum ItemType
+{
+    BrokenBrick,
+    Chest,
+    Sword,
+    None
 }

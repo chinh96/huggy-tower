@@ -44,5 +44,6 @@ public enum SoundType
     BlockWallBreak,
     CoinMove,
     BuildItem,
-    HeroDownLevel
+    HeroDownLevel,
+    EnemyDie
 }

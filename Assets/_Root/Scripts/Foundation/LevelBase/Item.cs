@@ -10,4 +10,5 @@ public abstract class Item : MonoBehaviour, IUnit
     public virtual void LightReturn() { }
 
     public abstract void Collect(IUnit affectTarget);
+    public ItemType ItemType = ItemType.None;
 }

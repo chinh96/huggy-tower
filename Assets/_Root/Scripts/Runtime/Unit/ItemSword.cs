@@ -26,7 +26,7 @@ public class ItemSword : Item, IHasSkeletonDataAsset
             gameObject.SetActive(false);
             player.isUsingSword = true;
             player.IncreaseDamage(damage);
-            player.ChangeSword(itemSwordSkin);
+            player.Skeleton.ChangeSword(itemSwordSkin);
         }
     }
 }

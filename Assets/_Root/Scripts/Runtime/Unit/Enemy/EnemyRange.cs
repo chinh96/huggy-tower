@@ -66,7 +66,7 @@ public class EnemyRange : Unit, IAnim
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
-    public void PlayDead() { skeleton.Play("Die", false); }
+    public void PlayDead() { skeleton.Play("Die", false); SoundController.Instance.PlayOnce(SoundType.EnemyDie); }
 
     public void PlayWin(bool isLoop) { }
 

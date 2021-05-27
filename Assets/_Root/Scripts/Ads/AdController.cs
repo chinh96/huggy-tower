@@ -105,24 +105,39 @@ public class AdController : Singleton<AdController>
 
     public void ShowInterstitial(Action action)
     {
-        if (ad != null && isShowInter)
+        void Show()
         {
-            if (ad.IsInterLoaded)
+            if (ad != null && isShowInter)
             {
-                handleInterAfterClosed = action;
-                ad.ShowInterstitial();
-                GameController.Instance.Root.ResetTotalTimesPlay();
-                GameController.Instance.Root.ResetTotalLevelWin();
+                if (ad.IsInterLoaded)
+                {
+                    handleInterAfterClosed = action;
+                    ad.ShowInterstitial();
+                    GameController.Instance.Root.ResetTotalTimesPlay();
+                    GameController.Instance.Root.ResetTotalLevelWin();
+                }
+                else
+                {
+                    action?.Invoke();
+                }
             }
             else
             {
                 action?.Invoke();
             }
         }
+#if UNITY_EDITOR
+        if (Config.Instance.EnableAds)
+        {
+            Show();
+        }
         else
         {
             action?.Invoke();
         }
+#else
+        Show();
+#endif
     }
 
     public void RequestRewarded()
@@ -135,14 +150,26 @@ public class AdController : Singleton<AdController>
 
     public void ShowRewardedAd(Action action)
     {
-        if (ad != null)
+        void Show()
         {
-            if (ad.IsRewardLoaded)
+            if (ad != null && ad.IsRewardLoaded)
             {
                 handleRewardAfterEarned = action;
                 ad.ShowRewardedAd();
             }
         }
+#if UNITY_EDITOR
+        if (Config.Instance.EnableAds)
+        {
+            Show();
+        }
+        else
+        {
+            action?.Invoke();
+        }
+#else
+        Show();
+#endif
     }
 
     public void OnInterClosed()

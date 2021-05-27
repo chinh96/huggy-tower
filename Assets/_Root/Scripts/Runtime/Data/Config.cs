@@ -13,4 +13,5 @@ public class Config : ScriptableObject
     public List<int> DailyRewardsLoop;
     public int PercentProgressGiftBonused;
     public int CoinBonusPerLevel;
+    public bool EnableAds;
 }

@@ -46,7 +46,7 @@ public class DailyRewardItem : MonoBehaviour
 
     public void Reset()
     {
-        dayText.text = $"Day {day}";
+        dayText.text = $"Day {day + 1}";
         coinText.text = $"{coin}";
         Hide();
         Check();

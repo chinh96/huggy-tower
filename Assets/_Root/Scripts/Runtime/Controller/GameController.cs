@@ -205,8 +205,11 @@ public class GameController : Singleton<GameController>
 
     public void OnSkipLevel()
     {
-        Data.CurrentLevel++;
-        OnNextLevel();
+        AdController.Instance.ShowRewardedAd(() =>
+        {
+            Data.CurrentLevel++;
+            OnNextLevel();
+        });
     }
 
     public void OnBackToHome()
@@ -237,10 +240,7 @@ public class GameController : Singleton<GameController>
         GameState = EGameState.Lose;
         SoundController.Instance.PlayOnce(SoundType.Lose);
 
-        DOTween.Sequence().AppendInterval(delayWinLose).AppendCallback(() =>
-        {
-            ShowPopupLose();
-        });
+        ShowPopupLose();
     }
 
     private void ShowPopupWin()

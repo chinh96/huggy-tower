@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 72854276}
   - component: {fileID: 72854275}
   - component: {fileID: 72854277}
+  - component: {fileID: 72854278}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -349,6 +350,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &72854278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72854273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7350220f3ab97434580b2b34efb886c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ease: 1
+  duration: 0.5
+  endValue: {x: 1.1, y: 1.1, z: 1.1}
+  isLoop: 1
+  loopOnAwake: 1
 --- !u!1 &97286384
 GameObject:
   m_ObjectHideFlags: 0
