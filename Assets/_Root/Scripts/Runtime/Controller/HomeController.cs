@@ -3,6 +3,26 @@ using UnityEngine.SceneManagement;
 
 public class HomeController : Singleton<HomeController>
 {
+    [SerializeField] private GameObject removeAdsButton;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        CheckRemoveAds();
+    }
+
+    public void OnPurchaseSuccessRemoveAds()
+    {
+        Data.IsRemovedAds = true;
+        CheckRemoveAds();
+    }
+
+    public void CheckRemoveAds()
+    {
+        removeAdsButton.SetActive(!Data.IsRemovedAds);
+    }
+
     private void Start()
     {
         AdController.Instance.ShowBanner();

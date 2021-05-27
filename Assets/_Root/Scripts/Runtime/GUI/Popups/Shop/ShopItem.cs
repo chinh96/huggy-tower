@@ -64,6 +64,7 @@ public class ShopItem : MonoBehaviour
                 break;
             case ShopItemType.RemoveAds:
                 Data.IsRemovedAds = true;
+                HomeController.Instance.CheckRemoveAds();
                 break;
             case ShopItemType.Vip:
                 Data.CoinTotal += 500000;

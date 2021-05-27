@@ -9,12 +9,8 @@ public class CoinTotal : MonoBehaviour
 
     private void Awake()
     {
-        UpdateCoinText();
-    }
-
-    private void Start()
-    {
         EventController.CoinTotalChanged += UpdateCoinText;
+        UpdateCoinText();
     }
 
     private void UpdateCoinText()

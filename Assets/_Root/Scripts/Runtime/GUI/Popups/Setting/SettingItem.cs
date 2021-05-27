@@ -22,6 +22,14 @@ public class SettingItem : MonoBehaviour
                 break;
             case SettingType.Music:
                 Data.MusicState = !Data.MusicState;
+                if (Data.MusicState)
+                {
+                    SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
+                }
+                else
+                {
+                    SoundController.Instance.PauseBackground();
+                }
                 break;
             case SettingType.Sound:
                 Data.SoundState = !Data.SoundState;

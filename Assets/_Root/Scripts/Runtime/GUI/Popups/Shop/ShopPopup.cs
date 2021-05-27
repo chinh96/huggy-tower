@@ -11,6 +11,13 @@ public class ShopPopup : Popup
         shopItems.ForEach(item => item.SetShopPopup(this));
     }
 
+    protected override void BeforeShow()
+    {
+        base.BeforeShow();
+
+        CheckItems();
+    }
+
     public void CheckItems()
     {
         shopItems.ForEach(item => item.CheckNonConsume());
