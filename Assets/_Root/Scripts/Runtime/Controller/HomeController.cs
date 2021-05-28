@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class HomeController : Singleton<HomeController>
 {
@@ -13,7 +14,7 @@ public class HomeController : Singleton<HomeController>
         base.Awake();
 
         CheckRemoveAds();
-        overlay.gameObject.SetActive(false);
+        overlay.DOFade(1, 0);
     }
 
     public void OnPurchaseSuccessRemoveAds()
@@ -31,12 +32,13 @@ public class HomeController : Singleton<HomeController>
     {
         AdController.Instance.ShowBanner();
         SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
+        FadeOutOverlay();
     }
 
     public void TapToStart()
     {
         overlay.gameObject.SetActive(true);
-        overlay.DOFade(1, .5f).OnComplete(() =>
+        FadeInOverlay(() =>
         {
             SceneManager.LoadSceneAsync(Constants.GAME_SCENE);
         });
@@ -65,5 +67,22 @@ public class HomeController : Singleton<HomeController>
     public void OnClickFacebookButton()
     {
         Application.OpenURL("https://www.facebook.com/groups/hero.tower.wars");
+    }
+
+    private void FadeInOverlay(Action action = null)
+    {
+        overlay.gameObject.SetActive(true);
+        overlay.DOFade(1, .3f).OnComplete(() =>
+        {
+            action?.Invoke();
+        });
+    }
+
+    private void FadeOutOverlay()
+    {
+        overlay.DOFade(0, .3f).OnComplete(() =>
+        {
+            overlay.gameObject.SetActive(false);
+        });
     }
 }

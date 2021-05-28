@@ -236,8 +236,11 @@ public class GameController : Singleton<GameController>
 
     public void OnBackToHome()
     {
-        PopupController.Instance.DismissAll();
-        SceneManager.LoadScene(Constants.HOME_SCENE);
+        FadeInOverlay(() =>
+        {
+            PopupController.Instance.DismissAll();
+            SceneManager.LoadScene(Constants.HOME_SCENE);
+        });
     }
 
     public void OnWinLevel()
@@ -305,7 +308,7 @@ public class GameController : Singleton<GameController>
     private void FadeInOverlay(Action action = null)
     {
         overlay.gameObject.SetActive(true);
-        overlay.DOFade(1, .5f).OnComplete(() =>
+        overlay.DOFade(1, .3f).OnComplete(() =>
         {
             action?.Invoke();
         });
@@ -313,7 +316,7 @@ public class GameController : Singleton<GameController>
 
     private void FadeOutOverlay()
     {
-        overlay.DOFade(0, .5f).OnComplete(() =>
+        overlay.DOFade(0, .3f).OnComplete(() =>
         {
             overlay.gameObject.SetActive(false);
         });
