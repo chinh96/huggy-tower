@@ -45,5 +45,6 @@ public enum SoundType
     CoinMove,
     BuildItem,
     HeroDownLevel,
-    EnemyDie
+    EnemyDie,
+    HeroPickSword
 }
