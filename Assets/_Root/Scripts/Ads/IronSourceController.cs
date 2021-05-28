@@ -6,7 +6,7 @@ public class IronSourceController : MonoBehaviour, IAd
 #if UNITY_EDITOR
     private string appKey = "85460dcd";
 #elif UNITY_ANDROID
-    private string appKey = "ea7b3ad9";
+    private string appKey = "fa796329";
 #elif UNITY_IOS
     private string appKey = "ecb15411";
 #endif
