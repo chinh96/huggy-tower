@@ -20,6 +20,7 @@ public class Castle : MonoBehaviour
     private int index;
     private CastleResources castle;
     private CastlePopup castlePopup;
+    private CastleData castleData;
 
     public void Init(int index, CastlePopup castlePopup)
     {
@@ -40,6 +41,7 @@ public class Castle : MonoBehaviour
             CastleData item = castle.Castles[i];
             if (!item.IsUnlocked)
             {
+                castleData = item;
                 done = false;
                 cost.text = item.Cost.ToString();
                 to.gameObject.SetActive(true);
@@ -96,6 +98,7 @@ public class Castle : MonoBehaviour
 
     public void OnClickBuildOrUpgrade()
     {
+        Data.CoinTotal -= castleData.Cost;
         castlePopup.Close();
         castle.BuildOrUpgrade();
         EventController.CastleBuilded(index);
