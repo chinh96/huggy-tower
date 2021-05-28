@@ -75,8 +75,6 @@ public class GameController : Singleton<GameController>
 
     public async void LoadLevel(int fakeIndex)
     {
-        AnalyticController.StartLevel();
-
         FadeOutOverlay();
         ZoomOutCamera();
         firePaper.gameObject.SetActive(false);
@@ -160,6 +158,7 @@ public class GameController : Singleton<GameController>
         UpdateDislayCurrentLevel(fakeIndex, levelInstall.condition);
         InternalPlayLevel();
         SavePreviousLevel(levelInstall);
+        AnalyticController.StartLevel();
     }
 
     public void UpdateDislayCurrentLevel(int level, ELevelCondition condition)

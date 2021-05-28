@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using DG.Tweening;
 
 public class RemoteConfigController : Singleton<RemoteConfigController>
 {
@@ -15,20 +16,24 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+
+        DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
         {
-            var dependencyStatus = task.Result;
-            switch (dependencyStatus)
+            Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
             {
-                case Firebase.DependencyStatus.Available:
-                    Firebase.FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
-                    InitalizeFirebase();
-                    FetchDataAsync();
-                    break;
-                default:
-                    Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
-                    break;
-            }
+                var dependencyStatus = task.Result;
+                switch (dependencyStatus)
+                {
+                    case Firebase.DependencyStatus.Available:
+                        Firebase.FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
+                        InitalizeFirebase();
+                        FetchDataAsync();
+                        break;
+                    default:
+                        Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
+                        break;
+                }
+            });
         });
     }
 
