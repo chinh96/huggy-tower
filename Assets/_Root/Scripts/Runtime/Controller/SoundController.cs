@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class SoundController : Singleton<SoundController>
 {
-    private AudioSource backgroundAudio;
-    private AudioSource onceAudio;
+    [SerializeField] private AudioSource backgroundAudio;
+    [SerializeField] private AudioSource onceAudio;
     private List<AudioClip> audioClips = new List<AudioClip>();
 
     private void Start()
@@ -17,12 +17,7 @@ public class SoundController : Singleton<SoundController>
 
     private void Init()
     {
-        backgroundAudio = gameObject.AddComponent<AudioSource>();
-        backgroundAudio.playOnAwake = true;
         backgroundAudio.loop = true;
-
-        onceAudio = gameObject.AddComponent<AudioSource>();
-        onceAudio.playOnAwake = true;
 
         for (int i = 0; i < Enum.GetNames(typeof(SoundType)).Length; i++)
         {

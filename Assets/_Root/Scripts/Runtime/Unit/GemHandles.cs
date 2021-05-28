@@ -39,6 +39,7 @@ public class GemHandles : Item
         {
             _flagCollectGem = true;
             IeStartCollectGem(affectTarget.ThisGameObject.transform, duration, durationIncreasePerGem);
+            SoundController.Instance.PlayOnce(SoundType.CoinMove);
         }
     }
 }

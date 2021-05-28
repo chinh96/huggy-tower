@@ -27,6 +27,7 @@ public class ItemSword : Item, IHasSkeletonDataAsset
             player.isUsingSword = true;
             player.IncreaseDamage(damage);
             player.ChangeSword(itemSwordSkin);
+            SoundController.Instance.PlayOnce(SoundType.HeroPickSword);
         }
     }
 }
