@@ -46,5 +46,6 @@ public enum SoundType
     BuildItem,
     HeroDownLevel,
     EnemyDie,
-    HeroPickSword
+    HeroPickSword,
+    EnemyDogDie
 }

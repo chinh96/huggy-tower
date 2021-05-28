@@ -55,7 +55,7 @@ public class EnemyWolf : Unit, IAnim
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
-    public void PlayDead() { skeleton.Play("Die", false); SoundController.Instance.PlayOnce(SoundType.EnemyDie); }
+    public void PlayDead() { skeleton.Play("Die", false); SoundController.Instance.PlayOnce(SoundType.EnemyDogDie); }
 
     public void PlayWin(bool isLoop) { }
 

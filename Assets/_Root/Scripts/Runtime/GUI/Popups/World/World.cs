@@ -44,7 +44,8 @@ public class World : MonoBehaviour
         DOTween.Sequence().AppendInterval(2.2f).AppendCallback(() =>
         {
             Reset();
-            smoke.transform.position = hammer.transform.position;
+            smoke.transform.position = castles[castleIndex].transform.position;
+            smoke.transform.localPosition += new Vector3(0, 100, 0);
             smoke.Play();
         });
     }
