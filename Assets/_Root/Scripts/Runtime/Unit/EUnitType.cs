@@ -12,5 +12,6 @@ public enum ItemType
     BrokenBrick,
     Chest,
     Sword,
-    None
+    None,
+    Gem
 }

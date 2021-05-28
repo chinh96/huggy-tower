@@ -25,13 +25,14 @@ public class Player : Unit, IAnim
 
     public bool isUsingSword;
 
-    [SerializeField] public ParticleSystem effectIncreaseDamge;
-    [SerializeField] public ParticleSystem effectBlood;
-    [SerializeField] public ParticleSystem effectBlood2;
-    [SerializeField] public ParticleSystem effectBlood3;
-    [SerializeField] public ParticleSystem effectHitWall;
-    [SerializeField] public ParticleSystem effectPickSword;
-    [SerializeField] public ParticleSystem effectHit;
+    [SerializeField] private ParticleSystem effectIncreaseDamge;
+    [SerializeField] private ParticleSystem effectBlood;
+    [SerializeField] private ParticleSystem effectBlood2;
+    [SerializeField] private ParticleSystem effectBlood3;
+    [SerializeField] private ParticleSystem effectHitWall;
+    [SerializeField] private ParticleSystem effectPickSword;
+    [SerializeField] private ParticleSystem effectHit;
+    [SerializeField] private ParticleSystem effectFingerPress;
 
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
     public bool FirstTurn { get; set; }
@@ -154,6 +155,8 @@ public class Player : Unit, IAnim
             return;
         }
 
+        effectFingerPress.gameObject.SetActive(true);
+        effectFingerPress.Play();
         SoundController.Instance.PlayOnce(SoundType.HeroDrag);
         _isMouseUpDragDetected = false;
         if (Turn == ETurn.Drag)
@@ -354,14 +357,14 @@ public class Player : Unit, IAnim
                         void SavePrincess()
                         {
                             PlayUseItem(ItemType.None);
-                            (_target as Princess)?.PlayWin(true);
                             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                             {
+                                (_target as Princess)?.PlayWin(true);
                                 DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                 {
                                     GameController.Instance.OnWinLevel();
                                 });
-                                PlayWin(true);
+                                GiveFlower();
                             });
                         }
                     }
@@ -446,7 +449,7 @@ public class Player : Unit, IAnim
                         }
                     });
 
-                    timeDelay = _itemTarget.ItemType == ItemType.Sword ? 0 : .5f;
+                    timeDelay = _itemTarget.ItemType == ItemType.Sword ? 0.2f : .5f;
                     DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
                         _itemTarget.Collect(this);
@@ -643,8 +646,10 @@ public class Player : Unit, IAnim
         {
             SoundController.Instance.PlayOnce(SoundType.HeroCut);
             string[] attacks = { "Attack", "AttackSword" };
-            skeleton.Play(attacks[UnityEngine.Random.Range(0, attacks.Length)], false);
-            DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+            string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
+            skeleton.Play(attack, false);
+            float timeDelay = attack == "Attack" ? .5f : .8f;
+            DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
             {
                 var main = effectBlood.main;
                 main.startColor = _target.ColorBlood;
@@ -694,12 +699,18 @@ public class Player : Unit, IAnim
         SoundController.Instance.PlayOnce(SoundType.HeroYeah);
     }
 
+    public void GiveFlower()
+    {
+        skeleton.Play("Sit", true);
+    }
+
     public void PlayLose(bool isLoop) { skeleton.Play("Die", true); }
 
     public void PlayUseItem(ItemType type)
     {
         switch (type)
         {
+            case ItemType.Gem:
             case ItemType.Chest:
                 if (isUsingSword)
                 {
