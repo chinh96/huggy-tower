@@ -407,7 +407,8 @@ public class Player : Unit, IAnim
                 {
                     Turn = ETurn.UsingItem;
                     PlayUseItem(_itemTarget.ItemType);
-                    DOTween.Sequence().AppendInterval(1.2f).AppendCallback(() =>
+                    float timeDelay = _itemTarget.ItemType == ItemType.BrokenBrick ? .5f : 1.2f;
+                    DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
                         if (GameController.Instance.Root.LevelMap.condition == condition)
                         {
