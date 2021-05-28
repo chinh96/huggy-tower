@@ -2,20 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class PopupController : Singleton<PopupController>
 {
     [SerializeField] private Popup[] popupPrefabs;
     [SerializeField] private Canvas canvas;
+    [SerializeField] private CanvasScaler canvasScaler;
 
     private Dictionary<Type, Popup> popupDict;
     private LinkedList<Popup> popups;
     private bool initialized;
+    private float canvasScalerMatchOrigin;
 
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+        canvasScalerMatchOrigin = canvasScaler.matchWidthOrHeight;
         Initialize();
+    }
+
+    public void SetCanvasScalerMatch(float match)
+    {
+        canvasScaler.matchWidthOrHeight = match;
+    }
+
+    public void ResetCanvasScalerMatch()
+    {
+        canvasScaler.matchWidthOrHeight = canvasScalerMatchOrigin;
     }
 
     public void Initialize()

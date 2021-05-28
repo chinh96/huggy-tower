@@ -53,7 +53,7 @@ public class GameController : Singleton<GameController>
 
     private void CheckRadioCamera()
     {
-        float ratio = ((Screen.height / Screen.width) - (1920 / 1080f)) * 14;
+        float ratio = ((Screen.height / Screen.width) - (1920 / 1080f)) * 12;
         if (ratio > 0)
         {
             Camera.main.transform.position += new Vector3(0, ratio, 0);
@@ -198,6 +198,7 @@ public class GameController : Singleton<GameController>
 
     public void OnReplayLevel()
     {
+        DOTween.KillAll();
         _isReplay = true;
 
         Instance.LoadLevel(Data.CurrentLevel);
@@ -205,6 +206,7 @@ public class GameController : Singleton<GameController>
 
     public void OnSkipLevel()
     {
+        DOTween.KillAll();
         AdController.Instance.ShowRewardedAd(() =>
         {
             Data.CurrentLevel++;

@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class EnemyMelee : Unit, IAnim
 {
+    public bool IsSword;
     public SkeletonGraphic skeleton;
     public Rigidbody2D rigid;
     public Collider2D coll2D;
@@ -51,7 +52,7 @@ public class EnemyMelee : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-    public void PlayAttack() { skeleton.Play("AttackSword", false); SoundController.Instance.PlayOnce(SoundType.EnemyCut); }
+    public void PlayAttack() { skeleton.Play(IsSword ? "AttackSword" : "Attack", false); SoundController.Instance.PlayOnce(SoundType.EnemyCut); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
