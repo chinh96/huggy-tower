@@ -75,6 +75,8 @@ public class GameController : Singleton<GameController>
 
     public async void LoadLevel(int fakeIndex)
     {
+        AnalyticController.StartLevel();
+
         FadeOutOverlay();
         ZoomOutCamera();
         firePaper.gameObject.SetActive(false);
@@ -225,6 +227,8 @@ public class GameController : Singleton<GameController>
 
     public void OnSkipLevel()
     {
+        AnalyticController.SkipLevel();
+
         PopupController.Instance.DismissAll();
         DOTween.KillAll();
         AdController.Instance.ShowRewardedAd(() =>
@@ -245,6 +249,8 @@ public class GameController : Singleton<GameController>
 
     public void OnWinLevel()
     {
+        AnalyticController.CompleteLevel();
+
         firePaper.gameObject.SetActive(true);
 
         Data.CurrentLevel++;
@@ -262,6 +268,8 @@ public class GameController : Singleton<GameController>
 
     public void OnLoseLevel()
     {
+        AnalyticController.FailLevel();
+
         GameState = EGameState.Lose;
         SoundController.Instance.PlayOnce(SoundType.Lose);
 

@@ -109,6 +109,8 @@ public class Castle : MonoBehaviour
 
     public void OnClickBuildOrUpgrade()
     {
+        AnalyticController.BuildCastle();
+
         Data.CoinTotal -= castleData.Cost;
         castlePopup.Close();
         castle.BuildOrUpgrade();

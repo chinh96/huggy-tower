@@ -38,4 +38,19 @@ public class Constants
     public const string LOADING_SCENE = "LoadingScene";
     public const string HOME_SCENE = "HomeScene";
     public const string GAME_SCENE = "GameScene";
+
+    // Analytics
+    public const string LEVEL_INDEX_NAME = "LEVEL_INDEX_NAME";
+    public const string LEVEL_STARTED = "LEVEL_STARTED";
+    public const string LEVEL_COMPLETED = "LEVEL_COMPLETED";
+    public const string LEVEL_FAILED = "LEVEL_FAILED";
+    public const string AD_REWARD_IMPRESSION = "AD_REWARD_IMPRESSION";
+    public const string AD_REWARD_REQUEST = "AD_REWARD_REQUEST";
+    public const string AD_INTERSTITIAL_IMPRESSION = "AD_INTERSTITIAL_IMPRESSION";
+    public const string AD_INTERSTITIAL_REQUEST = "AD_INTERSTITIAL_REQUEST";
+    public const string UNLOCK_SKIN_VIDEO = "UNLOCK_SKIN_VIDEO";
+    public const string UNLOCK_SKIN_COINS = "UNLOCK_SKIN_COINS";
+    public const string UNLOCK_SKIN_DIAMONDS = "UNLOCK_SKIN_DIAMONDS";
+    public const string BUILD_CASTLE = "BUILD_CASTLE";
+    public const string SKIP_LEVEL = "SKIP_LEVEL";
 }

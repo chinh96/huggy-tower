@@ -99,6 +99,8 @@ public class AdController : Singleton<AdController>
     {
         if (ad != null && !ad.IsInterLoaded)
         {
+            AnalyticController.RequestAdInterstitial();
+
             ad.RequestInterstitial();
         }
     }
@@ -111,6 +113,8 @@ public class AdController : Singleton<AdController>
             {
                 if (ad.IsInterLoaded)
                 {
+                    AnalyticController.ImpressAdInterstitial();
+
                     handleInterAfterClosed = action;
                     ad.ShowInterstitial();
                     GameController.Instance.Root.ResetTotalTimesPlay();
@@ -145,6 +149,8 @@ public class AdController : Singleton<AdController>
         EventController.AdsRewardRequested?.Invoke();
         if (ad != null && !ad.IsRewardLoaded)
         {
+            AnalyticController.RequestAdReward();
+
             ad.RequestRewarded();
         }
     }
@@ -155,6 +161,8 @@ public class AdController : Singleton<AdController>
         {
             if (ad != null && ad.IsRewardLoaded)
             {
+                AnalyticController.ImpressAdReward();
+
                 handleRewardAfterEarned = action;
                 ad.ShowRewardedAd();
             }

@@ -68,12 +68,16 @@ public class SkinItem : MonoBehaviour
 
     public void OnClickButtonBuy()
     {
+        AnalyticController.UnlockSkinCoins();
+
         Data.CoinTotal -= skinData.Coin;
         Done();
     }
 
     public void OnClickButtonAds()
     {
+        AnalyticController.UnlockSkinVideo();
+
         AdController.Instance.ShowRewardedAd(() =>
         {
             Done();
