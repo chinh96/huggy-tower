@@ -96,6 +96,7 @@ public class DailyRewardItem : MonoBehaviour
             dailyRewardPopup.SetCoinCurrent(coin);
 
             dailyRewardType = DailyRewardType.Current;
+            dailyRewardPopup.SetX5Text(coin);
         }
     }
 

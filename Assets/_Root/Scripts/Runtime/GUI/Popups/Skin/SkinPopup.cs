@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine.Unity;
 
 public class SkinPopup : Popup
 {
     [SerializeField] private EUnitType eUnitType;
     [SerializeField] private Transform content;
     [SerializeField] private SkinRow skinRow;
+    [SerializeField] private SkeletonGraphic character;
 
     private SkinResources skinResources;
 
@@ -53,6 +55,16 @@ public class SkinPopup : Popup
 
     public void Reset()
     {
+        switch (eUnitType)
+        {
+            case EUnitType.Hero:
+                character.ChangeSkin(Data.CurrentSkinHero);
+                break;
+            case EUnitType.Princess:
+                character.ChangeSkin(Data.CurrentSkinPrincess);
+                break;
+        }
+
         int index = 0;
         skinRows.ForEach(item =>
         {
@@ -67,5 +79,10 @@ public class SkinPopup : Popup
         {
             Data.CoinTotal += 500;
         });
+    }
+
+    public void ChangeCharacterSkin(string skinName)
+    {
+        character.ChangeSkin(skinName);
     }
 }

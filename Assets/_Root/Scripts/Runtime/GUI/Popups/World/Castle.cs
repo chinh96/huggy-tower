@@ -16,6 +16,7 @@ public class Castle : MonoBehaviour
     [SerializeField] private GameObject right;
     [SerializeField] private GameObject doneIcon;
     [SerializeField] private List<GameObject> starActives;
+    [SerializeField] private GameObject arrow;
 
     private int index;
     private CastleResources castle;
@@ -56,6 +57,7 @@ public class Castle : MonoBehaviour
                     }
                     else
                     {
+                        arrow.SetActive(true);
                         from.gameObject.SetActive(true);
                         from.sprite = castle.Castles[i - 1].Sprite;
                         upgradeButton.SetActive(true);
@@ -83,6 +85,14 @@ public class Castle : MonoBehaviour
 
         from.SetNativeSize();
         to.SetNativeSize();
+
+        if (Data.WorldCurrent == WorldType.Earth && index == 3)
+        {
+            from.transform.localScale = Vector3.one * .7f;
+            to.transform.localScale = Vector3.one * .7f;
+
+            to.transform.parent.GetComponent<HorizontalLayoutGroup>().spacing = -15;
+        }
     }
 
     private void HideAll()
@@ -94,6 +104,7 @@ public class Castle : MonoBehaviour
         disableButton.SetActive(false);
         doneIcon.SetActive(false);
         starActives.ForEach(item => item.SetActive(false));
+        arrow.SetActive(false);
     }
 
     public void OnClickBuildOrUpgrade()

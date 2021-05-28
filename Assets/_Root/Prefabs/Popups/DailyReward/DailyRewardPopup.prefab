@@ -426,6 +426,7 @@ MonoBehaviour:
   isAnimScaleDown: 0
   showAction: 0
   x5Button: {fileID: 7236879722897773935}
+  x5Text: {fileID: 2001606887139813035}
   dailyRewardItems:
   - {fileID: 510183393035277871}
   - {fileID: 819704718409232863}
@@ -1406,18 +1407,73 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3700194348574785750, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4856868207116299991, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7122859242080500206}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickClaimAds
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DailyRewardPopup, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070656733648859029, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662708330562696289, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662708330562696289, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9051833788171856817, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+      propertyPath: m_fontSize
+      value: 65.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
---- !u!1 &7236879722897773935 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 159666436122450037, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
-  m_PrefabInstance: {fileID: 7375119400219512090}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4675905828736168774 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2791554019889413724, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+  m_PrefabInstance: {fileID: 7375119400219512090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2001606887139813035 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9051833788171856817, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+  m_PrefabInstance: {fileID: 7375119400219512090}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &7236879722897773935 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 159666436122450037, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
   m_PrefabInstance: {fileID: 7375119400219512090}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7659429975838470550

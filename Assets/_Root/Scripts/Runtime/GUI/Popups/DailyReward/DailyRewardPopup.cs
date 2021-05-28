@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DailyRewardPopup : Popup
 {
     [SerializeField] private GameObject x5Button;
+    [SerializeField] private TextMeshProUGUI x5Text;
     [SerializeField] private List<DailyRewardItem> dailyRewardItems;
 
     private int coinCurrent;
@@ -69,5 +71,10 @@ public class DailyRewardPopup : Popup
     public void SetX5ButtonActive(bool active)
     {
         x5Button.SetActive(active);
+    }
+
+    public void SetX5Text(int coin)
+    {
+        x5Text.text = (coin * 5).ToString();
     }
 }

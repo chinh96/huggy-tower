@@ -113,5 +113,7 @@ public class SkinItem : MonoBehaviour
         {
             SetSkin();
         }
+
+        skinPopup.ChangeCharacterSkin(skinData.SkinName);
     }
 }

@@ -142,6 +142,7 @@ public class AdController : Singleton<AdController>
 
     public void RequestRewarded()
     {
+        EventController.AdsRewardRequested?.Invoke();
         if (ad != null && !ad.IsRewardLoaded)
         {
             ad.RequestRewarded();
@@ -199,6 +200,7 @@ public class AdController : Singleton<AdController>
 
     public void OnRewardLoaded()
     {
+        EventController.AdsRewardLoaded?.Invoke();
     }
 
     public void OnRewardEarned()

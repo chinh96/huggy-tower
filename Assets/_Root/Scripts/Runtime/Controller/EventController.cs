@@ -12,4 +12,6 @@ public static class EventController
     public static Action CastleReseted;
     public static Action SkinPopupReseted;
     public static Action CurrentLevelChanged;
+    public static Action AdsRewardLoaded;
+    public static Action AdsRewardRequested;
 }
