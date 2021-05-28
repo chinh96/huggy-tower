@@ -31,6 +31,7 @@ public class Player : Unit, IAnim
     [SerializeField] public ParticleSystem effectBlood3;
     [SerializeField] public ParticleSystem effectHitWall;
     [SerializeField] public ParticleSystem effectPickSword;
+    [SerializeField] public ParticleSystem effectHit;
 
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
     public bool FirstTurn { get; set; }
@@ -603,6 +604,8 @@ public class Player : Unit, IAnim
 
     private void BeingAttackedCallback()
     {
+        effectHit.gameObject.SetActive(true);
+        effectHit.Play();
         var cacheDamage = damage;
         damage = 0;
         TxtDamage.DOCounter(cacheDamage, damage, 0.5f).OnComplete(() => TxtDamage.text = damage.ToString());

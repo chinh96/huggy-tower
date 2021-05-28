@@ -189,6 +189,7 @@ public class GameController : Singleton<GameController>
 
     public void OnNextLevel()
     {
+        PopupController.Instance.DismissAll();
         AdController.Instance.ShowInterstitial(() =>
         {
             Instance.root.Clear();
@@ -198,6 +199,7 @@ public class GameController : Singleton<GameController>
 
     public void OnReplayLevel()
     {
+        PopupController.Instance.DismissAll();
         DOTween.KillAll();
         _isReplay = true;
 
@@ -206,6 +208,7 @@ public class GameController : Singleton<GameController>
 
     public void OnSkipLevel()
     {
+        PopupController.Instance.DismissAll();
         DOTween.KillAll();
         AdController.Instance.ShowRewardedAd(() =>
         {

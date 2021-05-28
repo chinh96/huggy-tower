@@ -41,7 +41,6 @@ public class WinPopup : Popup
     public void OnClickContinue()
     {
         GameController.Instance.OnNextLevel();
-        Close();
     }
 
     public void OnClickHomeButton()

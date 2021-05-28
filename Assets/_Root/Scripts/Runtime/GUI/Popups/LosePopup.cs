@@ -29,11 +29,18 @@ public class LosePopup : Popup
     public void OnClickReplay()
     {
         GameController.Instance.OnReplayLevel();
-        Close();
     }
 
     public void OnClickHomeButton()
     {
         GameController.Instance.OnBackToHome();
+    }
+
+    public void OnClickSkipButton()
+    {
+        AdController.Instance.ShowRewardedAd(() =>
+        {
+            GameController.Instance.OnSkipLevel();
+        });
     }
 }
