@@ -1,15 +1,19 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class HomeController : Singleton<HomeController>
 {
     [SerializeField] private GameObject removeAdsButton;
+    [SerializeField] private Image overlay;
 
     protected override void Awake()
     {
         base.Awake();
 
         CheckRemoveAds();
+        overlay.gameObject.SetActive(false);
     }
 
     public void OnPurchaseSuccessRemoveAds()
@@ -31,7 +35,11 @@ public class HomeController : Singleton<HomeController>
 
     public void TapToStart()
     {
-        SceneManager.LoadSceneAsync(Constants.GAME_SCENE);
+        overlay.gameObject.SetActive(true);
+        overlay.DOFade(1, .5f).OnComplete(() =>
+        {
+            SceneManager.LoadSceneAsync(Constants.GAME_SCENE);
+        });
     }
 
     public void ShowSettingPopup()

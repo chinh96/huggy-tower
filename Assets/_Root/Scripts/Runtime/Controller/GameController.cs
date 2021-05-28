@@ -3,6 +3,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEngine.UI;
+using System;
 
 public class GameController : Singleton<GameController>
 {
@@ -15,6 +17,7 @@ public class GameController : Singleton<GameController>
     [SerializeField] private ParticleSystem firePaper;
     [SerializeField] private float delayWinLose = 2;
     [SerializeField] private GameObject slicer;
+    [SerializeField] private Image overlay;
 
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
@@ -29,6 +32,13 @@ public class GameController : Singleton<GameController>
     public LevelRoot Root => root;
     public EGameState GameState { get; set; }
     public RoomTower RoomPrefab => roomPrefab;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        overlay.DOFade(1, 0);
+    }
 
     private void Update()
     {
@@ -65,6 +75,7 @@ public class GameController : Singleton<GameController>
 
     public async void LoadLevel(int fakeIndex)
     {
+        FadeOutOverlay();
         ZoomOutCamera();
         firePaper.gameObject.SetActive(false);
 
@@ -190,20 +201,26 @@ public class GameController : Singleton<GameController>
     public void OnNextLevel()
     {
         PopupController.Instance.DismissAll();
-        AdController.Instance.ShowInterstitial(() =>
+        FadeInOverlay(() =>
         {
-            Instance.root.Clear();
-            Instance.LoadLevel(Data.CurrentLevel);
+            AdController.Instance.ShowInterstitial(() =>
+            {
+                Instance.root.Clear();
+                Instance.LoadLevel(Data.CurrentLevel);
+            });
         });
     }
 
     public void OnReplayLevel()
     {
         PopupController.Instance.DismissAll();
-        DOTween.KillAll();
-        _isReplay = true;
+        FadeInOverlay(() =>
+        {
+            DOTween.KillAll();
+            _isReplay = true;
 
-        Instance.LoadLevel(Data.CurrentLevel);
+            Instance.LoadLevel(Data.CurrentLevel);
+        });
     }
 
     public void OnSkipLevel()
@@ -283,5 +300,22 @@ public class GameController : Singleton<GameController>
 
             isZoomIn = false;
         }
+    }
+
+    private void FadeInOverlay(Action action = null)
+    {
+        overlay.gameObject.SetActive(true);
+        overlay.DOFade(1, .5f).OnComplete(() =>
+        {
+            action?.Invoke();
+        });
+    }
+
+    private void FadeOutOverlay()
+    {
+        overlay.DOFade(0, .5f).OnComplete(() =>
+        {
+            overlay.gameObject.SetActive(false);
+        });
     }
 }

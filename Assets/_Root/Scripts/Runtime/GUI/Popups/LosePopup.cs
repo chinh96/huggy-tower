@@ -38,9 +38,6 @@ public class LosePopup : Popup
 
     public void OnClickSkipButton()
     {
-        AdController.Instance.ShowRewardedAd(() =>
-        {
-            GameController.Instance.OnSkipLevel();
-        });
+        GameController.Instance.OnSkipLevel();
     }
 }
