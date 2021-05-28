@@ -382,7 +382,7 @@ public class Player : Unit, IAnim
                     if (distance >= 110)
                     {
                         PLayMove(true);
-                        transform.DOLocalMoveX(_itemTarget.ItemType == ItemType.Sword ? 50 : 0, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
+                        transform.DOLocalMoveX(_itemTarget.ItemType == ItemType.Sword ? 25 : 0, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
                     }
                     else
                     {
@@ -445,7 +445,8 @@ public class Player : Unit, IAnim
                         }
                     });
 
-                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    timeDelay = _itemTarget.ItemType == ItemType.Sword ? 0 : .5f;
+                    DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
                         _itemTarget.Collect(this);
                     });
@@ -638,7 +639,8 @@ public class Player : Unit, IAnim
         if (isUsingSword)
         {
             SoundController.Instance.PlayOnce(SoundType.HeroCut);
-            skeleton.Play("Attack", false);
+            string[] attacks = { "Attack", "AttackSword" };
+            skeleton.Play(attacks[UnityEngine.Random.Range(0, attacks.Length)], false);
             DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
             {
                 var main = effectBlood.main;
