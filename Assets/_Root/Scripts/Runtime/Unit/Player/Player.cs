@@ -45,8 +45,8 @@ public class Player : Unit, IAnim
     private Unit _target;
     private Item _itemTarget;
     private bool _flagAttack;
-    private Vector2 _movement; // vector move player
-    private RaycastHit2D _hitItem; // check hit item to stop moving
+    private Vector2 _movement;
+    private RaycastHit2D _hitItem;
 
     private bool _isMouseUpDragDetected;
     private RoomTower _parentRoom;
@@ -75,10 +75,6 @@ public class Player : Unit, IAnim
         _defaultRoom = transform.parent.GetComponent<RoomTower>();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public (bool, int) CheckCorrectArea()
     {
         bool check = false;
@@ -391,7 +387,17 @@ public class Player : Unit, IAnim
                     if (distance >= 110)
                     {
                         PLayMove(true);
-                        transform.DOLocalMoveX(_itemTarget.ItemType == ItemType.Sword ? 25 : 0, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
+                        float endValue = 0;
+                        switch (_itemTarget.ItemType)
+                        {
+                            case ItemType.Sword:
+                                endValue = 25;
+                                break;
+                            case ItemType.BrokenBrick:
+                                endValue = -40;
+                                break;
+                        }
+                        transform.DOLocalMoveX(endValue, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
                     }
                     else
                     {
@@ -468,11 +474,6 @@ public class Player : Unit, IAnim
         }
     }
 
-    #region movement
-
-    /// <summary>
-    /// move to left
-    /// </summary>
     private void MoveLeft()
     {
         if (_hitItem.collider != null && state != EUnitState.Invalid)
@@ -496,9 +497,6 @@ public class Player : Unit, IAnim
         }
     }
 
-    /// <summary>
-    /// move to right
-    /// </summary>
     private void MoveRight()
     {
         if (_hitItem.collider != null && state != EUnitState.Invalid)
@@ -528,11 +526,6 @@ public class Player : Unit, IAnim
                 Turn == ETurn.MoveToItem;
     }
 
-    #endregion
-
-    /// <summary>
-    /// method call directly by event in anim attack
-    /// </summary>
     private void OnAttackByEvent()
     {
         if (_target != null)
@@ -649,34 +642,48 @@ public class Player : Unit, IAnim
     {
         if (isUsingSword)
         {
-            SoundController.Instance.PlayOnce(SoundType.HeroCut);
+            SoundType[] soundTypes = { SoundType.HeroCut, SoundType.HeroCut2, SoundType.HeroCut3 };
+            SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
+            SoundController.Instance.PlayOnce(soundType);
+
             string[] attacks = { "Attack", "AttackSword" };
             string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
             skeleton.Play(attack, false);
             float timeDelay = attack == "Attack" ? .5f : .8f;
-            DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
+            if (!(_target as EnemyGhost))
             {
-                var main = effectBlood.main;
-                main.startColor = _target.ColorBlood;
+                DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
+                {
+                    var main = effectBlood.main;
+                    main.startColor = _target.ColorBlood;
 
-                main = effectBlood2.main;
-                main.startColor = _target.ColorBlood;
+                    main = effectBlood2.main;
+                    main.startColor = _target.ColorBlood;
 
-                main = effectBlood3.main;
-                main.startColor = _target.ColorBlood;
+                    main = effectBlood3.main;
+                    main.startColor = _target.ColorBlood;
 
-                effectBlood.transform.position = _target.transform.position;
-                effectBlood.transform.localPosition += new Vector3(0, 40, 0);
-                effectBlood.gameObject.SetActive(true);
-                effectBlood.Play();
-            });
+                    effectBlood.transform.position = _target.transform.position;
+                    effectBlood.transform.localPosition += new Vector3(0, 40, 0);
+                    effectBlood.gameObject.SetActive(true);
+                    effectBlood.Play();
+                });
+            }
         }
         else
         {
-            SoundController.Instance.PlayOnce(SoundType.HeroHit);
+            SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
+            SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
+            SoundController.Instance.PlayOnce(soundType);
+
             string[] attacks = { "Attack2", "AttackHit", "AttackHit2" };
             skeleton.Play(attacks[UnityEngine.Random.Range(0, attacks.Length)], false);
         }
+
+        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+        {
+            Vibration.Vibrate();
+        });
     }
 
     public void PLayMove(bool isLoop)
@@ -719,6 +726,7 @@ public class Player : Unit, IAnim
                 skeleton.Play("Pick", false);
                 break;
             case ItemType.BrokenBrick:
+                SoundController.Instance.PlayOnce(SoundType.HeroPushWall);
                 skeleton.Play("HitWall", false);
                 DOTween.Sequence().AppendInterval(.4f).AppendCallback(() =>
                 {

@@ -75,6 +75,7 @@ public class GameController : Singleton<GameController>
 
     public async void LoadLevel(int fakeIndex)
     {
+        SoundController.Instance.PlayOnce(SoundType.EnemyStart);
         FadeOutOverlay();
         ZoomOutCamera();
         firePaper.gameObject.SetActive(false);
@@ -315,7 +316,7 @@ public class GameController : Singleton<GameController>
     private void FadeInOverlay(Action action = null)
     {
         overlay.gameObject.SetActive(true);
-        overlay.DOFade(1, .3f).OnComplete(() =>
+        overlay.DOFade(1, .3f).SetEase(Ease.InCubic).OnComplete(() =>
         {
             action?.Invoke();
         });
@@ -323,7 +324,7 @@ public class GameController : Singleton<GameController>
 
     private void FadeOutOverlay()
     {
-        overlay.DOFade(0, .5f).SetEase(Ease.InCubic).OnComplete(() =>
+        overlay.DOFade(0, .7f).SetEase(Ease.InCubic).OnComplete(() =>
         {
             overlay.gameObject.SetActive(false);
         });

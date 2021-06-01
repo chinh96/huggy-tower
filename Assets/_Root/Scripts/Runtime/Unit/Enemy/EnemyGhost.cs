@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Spine.Unity;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,6 +10,7 @@ using UnityEngine;
 
 public class EnemyGhost : Unit, IAnim
 {
+    public ParticleSystem fxDie;
     public SkeletonGraphic skeleton;
     public Rigidbody2D rigid;
     public Collider2D coll2D;
@@ -47,11 +49,24 @@ public class EnemyGhost : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", isLoop); }
 
-    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.EnemyHit); }
+    public void PlayAttack()
+    {
+        skeleton.Play("Attack", false);
+        SoundController.Instance.PlayOnce(SoundType.EnemyHit);
+    }
 
     public void PLayMove(bool isLoop) { }
 
-    public void PlayDead() { skeleton.Play("Die", false); SoundController.Instance.PlayOnce(SoundType.EnemyDie); }
+    public void PlayDead()
+    {
+        skeleton.Play("Die", false);
+
+        SoundType[] soundTypes = { SoundType.EnemyDie, SoundType.EnemyDie2, SoundType.EnemyDie3 };
+        SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
+        SoundController.Instance.PlayOnce(soundType);
+
+        fxDie.Play();
+    }
 
     public void PlayWin(bool isLoop) { }
 

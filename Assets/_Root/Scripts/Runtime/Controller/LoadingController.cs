@@ -25,5 +25,10 @@ public class LoadingController : MonoBehaviour
         {
             SceneManager.LoadScene(Constants.HOME_SCENE);
         });
+
+        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+        {
+            SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
+        });
     }
 }

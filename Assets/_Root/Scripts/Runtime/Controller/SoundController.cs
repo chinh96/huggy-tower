@@ -41,11 +41,11 @@ public class SoundController : Singleton<SoundController>
 
         if (!clip || !Data.MusicState) return;
 
-        if (clip && backgroundAudio.clip != clip)
+        if (backgroundAudio.clip != clip)
         {
             backgroundAudio.clip = clip;
+            backgroundAudio.Play();
         }
-        backgroundAudio.Play();
     }
 
     public void PauseBackground()

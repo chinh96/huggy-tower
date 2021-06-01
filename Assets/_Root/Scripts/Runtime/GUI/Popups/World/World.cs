@@ -47,6 +47,7 @@ public class World : MonoBehaviour
             smoke.transform.position = castles[castleIndex].transform.position;
             smoke.transform.localPosition += new Vector3(0, 100, 0);
             smoke.Play();
+            SoundController.Instance.PlayOnce(SoundType.BuildItemDone);
         });
     }
 }
