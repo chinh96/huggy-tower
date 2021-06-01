@@ -646,10 +646,10 @@ public class Player : Unit, IAnim
             SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
             SoundController.Instance.PlayOnce(soundType);
 
-            string[] attacks = { "Attack", "AttackSword" };
+            string[] attacks = { "Attack", "AttackSword", "AttackSword2" };
             string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
             skeleton.Play(attack, false);
-            float timeDelay = attack == "Attack" ? .5f : .8f;
+            float timeDelay = attack == "AttackSword" ? .8f : .5f;
             if (!(_target as EnemyGhost))
             {
                 DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
