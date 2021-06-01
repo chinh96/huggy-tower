@@ -39,17 +39,17 @@ public class ScaleAnimation : MonoBehaviour
     {
         if (isLoop)
         {
-            transform.DOScale(endValue, duration).OnComplete(() => ResetScale());
+            transform.DOScale(endValue, duration).SetEase(ease).OnComplete(() => ResetScale());
         }
         else
         {
-            transform.DOScale(endValue, duration);
+            transform.DOScale(endValue, duration).SetEase(ease);
         }
     }
 
     public void ResetScale()
     {
-        transform.DOScale(startValue, duration).OnComplete(() => StartScale());
+        transform.DOScale(startValue, duration).SetEase(ease).OnComplete(() => StartScale());
     }
 
     private void OnDestroy()

@@ -86,7 +86,12 @@ public class Player : Unit, IAnim
         var tower = GameController.Instance.Root.LevelMap.visitTower;
         for (int i = 0; i < tower.slots.Count; i++)
         {
-            check = GetComponent<RectTransform>().Overlaps(tower.slots[i].GetComponent<RectTransform>());
+            RoomTower roomTower = tower.slots[i];
+            RectTransform rectTransform = roomTower.GetComponent<RectTransform>();
+            Vector2 localPosition;
+
+            check = RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, Input.mousePosition, Camera.main, out localPosition);
+            check = rectTransform.rect.Contains(localPosition);
             if (check)
             {
                 var hasUnitNotInvalid = tower.slots[i].IsRoomHaveUnitNotInvalid();

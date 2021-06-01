@@ -323,7 +323,7 @@ public class GameController : Singleton<GameController>
 
     private void FadeOutOverlay()
     {
-        overlay.DOFade(0, .3f).OnComplete(() =>
+        overlay.DOFade(0, .5f).SetEase(Ease.InCubic).OnComplete(() =>
         {
             overlay.gameObject.SetActive(false);
         });
