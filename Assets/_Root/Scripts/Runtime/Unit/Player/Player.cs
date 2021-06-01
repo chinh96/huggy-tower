@@ -710,17 +710,6 @@ public class Player : Unit, IAnim
     {
         switch (type)
         {
-            case ItemType.Gem:
-            case ItemType.Chest:
-                if (isUsingSword)
-                {
-                    skeleton.Play("Open1", false);
-                }
-                else
-                {
-                    skeleton.Play("Open2", false);
-                }
-                break;
             case ItemType.Sword:
                 skeleton.Play("Pick", false);
                 break;
@@ -733,7 +722,14 @@ public class Player : Unit, IAnim
                 });
                 break;
             default:
-                skeleton.Play("Open1", false);
+                if (isUsingSword)
+                {
+                    skeleton.Play("Open1", false);
+                }
+                else
+                {
+                    skeleton.Play("Open2", false);
+                }
                 break;
         }
     }
