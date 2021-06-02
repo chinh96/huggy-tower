@@ -129,4 +129,11 @@ public static partial class Util
             UnityEngine.Object.DestroyImmediate(transform.GetChild(i).gameObject, true);
         }
     }
+
+    public static bool Contains(this RectTransform rectTransform, Vector3 position, Camera camera)
+    {
+        Vector2 localPosition = Vector2.zero;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, position, camera, out localPosition);
+        return rectTransform.rect.Contains(localPosition);
+    }
 }

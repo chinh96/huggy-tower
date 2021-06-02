@@ -32,6 +32,7 @@ public class GameController : Singleton<GameController>
     public LevelRoot Root => root;
     public EGameState GameState { get; set; }
     public RoomTower RoomPrefab => roomPrefab;
+    public bool IsOnboarding;
 
     protected override void Awake()
     {

@@ -82,12 +82,7 @@ public class Player : Unit, IAnim
         var tower = GameController.Instance.Root.LevelMap.visitTower;
         for (int i = 0; i < tower.slots.Count; i++)
         {
-            RoomTower roomTower = tower.slots[i];
-            RectTransform rectTransform = roomTower.GetComponent<RectTransform>();
-            Vector2 localPosition;
-
-            check = RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, Input.mousePosition, Camera.main, out localPosition);
-            check = rectTransform.rect.Contains(localPosition);
+            check = tower.slots[i].GetComponent<RectTransform>().Contains(Input.mousePosition, Camera.main);
             if (check)
             {
                 var hasUnitNotInvalid = tower.slots[i].IsRoomHaveUnitNotInvalid();
@@ -260,7 +255,7 @@ public class Player : Unit, IAnim
         if (GameController.Instance.GameState != EGameState.Playing && (Turn == ETurn.Drag || Turn == ETurn.None) || state == EUnitState.Invalid) return;
 
         _countdownAttack = Mathf.Max(0, _countdownAttack - Time.deltaTime);
-        if (_countdownAttack <= 0)
+        if (_countdownAttack <= 0 && !GameController.Instance.IsOnboarding)
         {
             SearchingTarget();
         }

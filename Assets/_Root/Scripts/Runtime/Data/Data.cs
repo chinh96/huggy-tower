@@ -75,4 +75,6 @@ public static class Data
     public static WorldType WorldCurrent { get => (WorldType)GetInt(Constants.WORLD_CURRENT, (int)(UniverseResources.Instance.WorldDefault.WorldType)); set => SetInt(Constants.WORLD_CURRENT, (int)value); }
 
     public static SkinData SkinGift;
+
+    public static bool DoneOnboarding { get => GetBool(Constants.DONE_ONBOARDING, false); set => SetBool(Constants.DONE_ONBOARDING, value); }
 }
