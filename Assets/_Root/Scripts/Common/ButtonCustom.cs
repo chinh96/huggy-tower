@@ -7,22 +7,27 @@ public class ButtonCustom : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 {
     [SerializeField] private Button.ButtonClickedEvent onClick;
 
+    public bool canClick = true;
     private bool isMoveEnter = true;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        transform.DOKill();
-        transform.DOScale(.9f, 0.15f).SetEase(Ease.OutQuint);
+        if (canClick)
+        {
+            transform.DOScale(.9f, .1f).SetEase(Ease.OutQuint);
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        transform.DOKill();
-        transform.localScale = Vector3.one;
-        if (isMoveEnter)
+        if (canClick)
         {
-            onClick.Invoke();
-            SoundController.Instance.PlayOnce(SoundType.ButtonClick);
+            transform.localScale = Vector3.one;
+            if (isMoveEnter)
+            {
+                onClick.Invoke();
+                SoundController.Instance.PlayOnce(SoundType.ButtonClick);
+            }
         }
     }
 
