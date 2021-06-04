@@ -14,9 +14,9 @@ public class AdMobController : MonoBehaviour, IAd
     private string interstitialId = "ca-app-pub-8566745611252640/8093419659";
     private string rewardedId = "ca-app-pub-8566745611252640/6780337982";
 #elif UNITY_IOS
-    private string bannerId = "ca-app-pub-8566745611252640/1287914758";
-    private string interstitialId = "ca-app-pub-8566745611252640/9268871770";
-    private string rewardedId = "ca-app-pub-8566745611252640/5329626764";
+    private string bannerId = "ca-app-pub-8566745611252640/6841494269";
+    private string interstitialId = "ca-app-pub-8566745611252640/1518096969";
+    private string rewardedId = "ca-app-pub-8566745611252640/6553719656";
 #endif
 
     private BannerView bannerView;

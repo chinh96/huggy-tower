@@ -8,7 +8,7 @@ public class IronSourceController : MonoBehaviour, IAd
 #elif UNITY_ANDROID
     private string appKey = "fa796329";
 #elif UNITY_IOS
-    private string appKey = "ecb15411";
+    private string appKey = "fb7da059";
 #endif
 
     public bool IsBannerLoaded => true;

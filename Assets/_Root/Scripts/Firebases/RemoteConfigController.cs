@@ -17,7 +17,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
     {
         DontDestroyOnLoad(gameObject);
 
-        DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
+        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
         {
             Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
             {

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 #if UNITY_ANDROID
 using Unity.Notifications.Android;
+#elif UNITY_IOS
 using Unity.Notifications.iOS;
 #endif
 using UnityEngine;
