@@ -103,9 +103,9 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         CurrentVersion = GetConfig(Constants.CURRENT_VERSION_ANDROID);
         UpdateDescription = GetConfig(Constants.ANDROID_UPDATE_DESCRIPTION);
 #elif UNITY_IOS
-        onlyAdmob = bool.Parse(GetConfig(Constants.ONLY_ADMOB_IOS));
-        currentVersion = GetConfig(Constants.CURRENT_VERSION_IOS);
-        updateDescription = GetConfig(Constants.IOS_UPDATE_DESCRIPTION);
+        OnlyAdmob = bool.Parse(GetConfig(Constants.ONLY_ADMOB_IOS));
+        CurrentVersion = GetConfig(Constants.CURRENT_VERSION_IOS);
+        UpdateDescription = GetConfig(Constants.IOS_UPDATE_DESCRIPTION);
 #endif
         AdController.Instance.Init();
     }
