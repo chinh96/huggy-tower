@@ -85,9 +85,12 @@ public class GameController : Singleton<GameController>
 
     public async void LoadLevel(int fakeIndex)
     {
+        AdController.Instance.Request();
         SoundController.Instance.PlayOnce(SoundType.EnemyStart);
+
         FadeOutOverlay();
         ZoomOutCamera();
+
         firePaper.gameObject.SetActive(false);
 
         LoadBackground();

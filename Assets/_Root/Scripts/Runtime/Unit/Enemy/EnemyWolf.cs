@@ -58,10 +58,7 @@ public class EnemyWolf : Unit, IAnim
     public void PlayDead()
     {
         skeleton.Play("Die", false);
-
-        SoundType[] soundTypes = { SoundType.EnemyDie, SoundType.EnemyDie2, SoundType.EnemyDie3 };
-        SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
-        SoundController.Instance.PlayOnce(soundType);
+        SoundController.Instance.PlayOnce(SoundType.EnemyDogDie);
     }
 
     public void PlayWin(bool isLoop) { }

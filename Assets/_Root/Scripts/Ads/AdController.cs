@@ -57,11 +57,15 @@ public class AdController : Singleton<AdController>
 
         ad.Init(OnInterClosed, OnInterLoaded, OnRewardLoaded, OnRewardClosed, OnRewardEarned);
 
+        Request();
+        HideBanner();
+    }
+
+    public void Request()
+    {
         RequestBanner();
         RequestInterstitial();
         RequestRewarded();
-
-        HideBanner();
     }
 
     public void RequestBanner()
