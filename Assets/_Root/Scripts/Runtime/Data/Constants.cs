@@ -54,7 +54,4 @@ public class Constants
     public const string UNLOCK_SKIN_DIAMONDS = "UNLOCK_SKIN_DIAMONDS";
     public const string BUILD_CASTLE = "BUILD_CASTLE";
     public const string SKIP_LEVEL = "SKIP_LEVEL";
-
-    // Notification
-    public const string ID_CHANNEL = "ID_CHANNEL";
 }

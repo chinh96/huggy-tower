@@ -77,7 +77,4 @@ public static class Data
     public static SkinData SkinGift;
 
     public static bool DoneOnboarding { get => GetBool(Constants.DONE_ONBOARDING, false); set => SetBool(Constants.DONE_ONBOARDING, value); }
-
-    // Notification
-    public static int IdChannel { get => GetInt(Constants.ID_CHANNEL, 0); set => SetInt(Constants.ID_CHANNEL, value); }
 }
