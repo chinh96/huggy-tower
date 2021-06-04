@@ -31,4 +31,10 @@ public class ButtonAd : MonoBehaviour
         loadingImage.SetActive(false);
         buttonCustom.canClick = true;
     }
+
+    private void OnDestroy()
+    {
+        EventController.AdsRewardLoaded -= HideLoading;
+        EventController.AdsRewardRequested -= ShowLoading;
+    }
 }

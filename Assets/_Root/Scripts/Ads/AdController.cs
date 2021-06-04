@@ -150,9 +150,9 @@ public class AdController : Singleton<AdController>
 
     public void RequestRewarded()
     {
-        EventController.AdsRewardRequested?.Invoke();
         if (ad != null && !ad.IsRewardLoaded)
         {
+            EventController.AdsRewardRequested?.Invoke();
             AnalyticController.RequestAdReward();
 
             ad.RequestRewarded();

@@ -186,8 +186,7 @@ public class Player : Unit, IAnim
             RoomTower cache = null;
             _parentRoom = GameController.Instance.Root.LevelMap.visitTower.slots[checkArea.Item2];
             var currentRoom = transform.parent.GetComponent<RoomTower>();
-            if (currentRoom != null && GameController.Instance.Root.LevelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom() &&
-                !currentRoom.IsContaintItem())
+            if (currentRoom != null && GameController.Instance.Root.LevelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom())
             {
                 cache = currentRoom;
             }
