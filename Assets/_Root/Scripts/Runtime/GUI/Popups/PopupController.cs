@@ -13,23 +13,12 @@ public class PopupController : Singleton<PopupController>
     private Dictionary<Type, Popup> popupDict;
     private LinkedList<Popup> popups;
     private bool initialized;
-    private float canvasScalerMatchOrigin;
 
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        canvasScalerMatchOrigin = canvasScaler.matchWidthOrHeight;
+        canvasScaler.matchWidthOrHeight = Camera.main.aspect > .7f ? 1 : 0;
         Initialize();
-    }
-
-    public void SetCanvasScalerMatch(float match)
-    {
-        canvasScaler.matchWidthOrHeight = match;
-    }
-
-    public void ResetCanvasScalerMatch()
-    {
-        canvasScaler.matchWidthOrHeight = canvasScalerMatchOrigin;
     }
 
     public void Initialize()
