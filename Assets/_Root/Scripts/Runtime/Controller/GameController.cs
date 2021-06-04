@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
 
 public class GameController : Singleton<GameController>
 {
@@ -18,6 +19,7 @@ public class GameController : Singleton<GameController>
     [SerializeField] private float delayWinLose = 2;
     [SerializeField] private GameObject slicer;
     [SerializeField] private Image overlay;
+    [SerializeField] private List<GameObject> backgrounds;
 
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
@@ -74,12 +76,21 @@ public class GameController : Singleton<GameController>
 
     private void ResetFlagNextLevel() { }
 
+    private void LoadBackground()
+    {
+        backgrounds.ForEach(item => item.SetActive(false));
+        int random = UnityEngine.Random.Range(0, backgrounds.Count);
+        backgrounds[random].SetActive(true);
+    }
+
     public async void LoadLevel(int fakeIndex)
     {
         SoundController.Instance.PlayOnce(SoundType.EnemyStart);
         FadeOutOverlay();
         ZoomOutCamera();
         firePaper.gameObject.SetActive(false);
+
+        LoadBackground();
 
         async void LoadNextLevel(int fakeLevelIndex)
         {
