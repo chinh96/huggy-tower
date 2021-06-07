@@ -21,10 +21,10 @@ public class SkinPopup : Popup
         switch (eUnitType)
         {
             case EUnitType.Hero:
-                skinResources = Resource.Hero;
+                skinResources = ResourcesController.Hero;
                 break;
             case EUnitType.Princess:
-                skinResources = Resource.Princess;
+                skinResources = ResourcesController.Princess;
                 break;
         }
 

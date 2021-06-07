@@ -29,7 +29,7 @@ public class Castle : MonoBehaviour
 
         this.index = index;
         this.castlePopup = castlePopup;
-        this.castle = Resource.Universe.WorldCurrent.Castles[index];
+        this.castle = ResourcesController.Universe.WorldCurrent.Castles[index];
 
         Reset();
     }

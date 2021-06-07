@@ -18,7 +18,7 @@ public class World : MonoBehaviour
         int index = 0;
         foreach (Image castle in castles)
         {
-            CastleData castleCurrent = Resource.Universe.WorldCurrent.Castles[index].CastleCurrent;
+            CastleData castleCurrent = ResourcesController.Universe.WorldCurrent.Castles[index].CastleCurrent;
             if (castleCurrent != null)
             {
                 castle.sprite = castleCurrent.Sprite;

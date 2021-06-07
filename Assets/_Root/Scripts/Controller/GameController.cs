@@ -20,6 +20,7 @@ public class GameController : Singleton<GameController>
     [SerializeField] private GameObject slicer;
     [SerializeField] private Image overlay;
     [SerializeField] private List<GameObject> backgrounds;
+    [SerializeField] private List<MoveOutAnimation> moveOutAnimations;
 
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
@@ -59,6 +60,7 @@ public class GameController : Singleton<GameController>
 
     private void Start()
     {
+        MoveInAnim();
         SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
         CheckRadioCamera();
         LoadLevel(Data.CurrentLevel);
@@ -86,6 +88,9 @@ public class GameController : Singleton<GameController>
     public async void LoadLevel(int fakeIndex)
     {
         AdController.Instance.Request();
+
+        MoveInAnim();
+
         SoundController.Instance.PlayOnce(SoundType.EnemyStart);
 
         FadeOutOverlay();
@@ -266,6 +271,8 @@ public class GameController : Singleton<GameController>
     {
         AnalyticController.CompleteLevel();
 
+        MoveOutAnim();
+
         firePaper.gameObject.SetActive(true);
 
         Data.CurrentLevel++;
@@ -285,10 +292,15 @@ public class GameController : Singleton<GameController>
     {
         AnalyticController.FailLevel();
 
+        MoveOutAnim();
+
         GameState = EGameState.Lose;
         SoundController.Instance.PlayOnce(SoundType.Lose);
 
-        ShowPopupLose();
+        DOTween.Sequence().AppendInterval(delayWinLose / 2).AppendCallback(() =>
+        {
+            ShowPopupLose();
+        });
     }
 
     private void ShowPopupWin()
@@ -348,5 +360,15 @@ public class GameController : Singleton<GameController>
     public void OnClickCastleButton()
     {
         PopupController.Instance.Show<WorldPopup>();
+    }
+
+    public void MoveOutAnim()
+    {
+        moveOutAnimations.ForEach(item => item.Play());
+    }
+
+    public void MoveInAnim()
+    {
+        moveOutAnimations.ForEach(item => item.Reset());
     }
 }

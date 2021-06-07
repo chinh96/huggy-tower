@@ -18,7 +18,7 @@ public static class Data
 
     public static string CurrentSkinHero
     {
-        get => GetString(Constants.CURRENT_SKIN_HERO, Resource.Hero.SkinDefault.SkinName);
+        get => GetString(Constants.CURRENT_SKIN_HERO, ResourcesController.Hero.SkinDefault.SkinName);
         set
         {
             SetString(Constants.CURRENT_SKIN_HERO, value);
@@ -72,7 +72,7 @@ public static class Data
 
     public static int PercentProgressGift { get => GetInt(Constants.PERCENT_PROGRESS_GIFT, 0); set => SetInt(Constants.PERCENT_PROGRESS_GIFT, value); }
 
-    public static WorldType WorldCurrent { get => (WorldType)GetInt(Constants.WORLD_CURRENT, (int)(Resource.Universe.WorldDefault.WorldType)); set => SetInt(Constants.WORLD_CURRENT, (int)value); }
+    public static WorldType WorldCurrent { get => (WorldType)GetInt(Constants.WORLD_CURRENT, (int)(ResourcesController.Universe.WorldDefault.WorldType)); set => SetInt(Constants.WORLD_CURRENT, (int)value); }
 
     public static SkinData SkinGift;
 

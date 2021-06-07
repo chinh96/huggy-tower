@@ -24,19 +24,19 @@ public class ButtonNoti : MonoBehaviour
         switch (notiType)
         {
             case NotiType.Universe:
-                hasNoti = Resource.Universe.HasNotiUniverse;
+                hasNoti = ResourcesController.Universe.HasNotiUniverse;
                 break;
             case NotiType.World:
-                hasNoti = Resource.Universe.HasNotiWorld;
+                hasNoti = ResourcesController.Universe.HasNotiWorld;
                 break;
             case NotiType.Build:
-                hasNoti = Resource.Universe.HasNotiBuild;
+                hasNoti = ResourcesController.Universe.HasNotiBuild;
                 break;
             case NotiType.Skin:
-                hasNoti = Resource.Hero.HasNoti;
+                hasNoti = ResourcesController.Hero.HasNoti;
                 break;
             case NotiType.Daily:
-                hasNoti = Resource.DailyReward.HasNoti;
+                hasNoti = ResourcesController.DailyReward.HasNoti;
                 break;
         }
 

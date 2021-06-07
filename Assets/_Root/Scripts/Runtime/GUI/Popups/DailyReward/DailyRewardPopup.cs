@@ -24,14 +24,14 @@ public class DailyRewardPopup : Popup
     {
         int dayTotal = (int)(DateTime.Now - DateTime.Parse(Data.DateTimeStart)).TotalDays;
         int dayStart = 7 * (Data.DailyRewardCurrent / 7);
-        bool isDayLoop = dayStart >= Resource.DailyReward.DailyRewards.Count;
+        bool isDayLoop = dayStart >= ResourcesController.DailyReward.DailyRewards.Count;
         int dayOffset = 0;
 
         hasCoinCurrent = false;
         dailyRewardItems.ForEach(item =>
         {
             int day = dayStart + dayOffset;
-            int coin = isDayLoop ? Resource.DailyReward.DailyRewardsLoop[day % 7] : Resource.DailyReward.DailyRewards[day];
+            int coin = isDayLoop ? ResourcesController.DailyReward.DailyRewardsLoop[day % 7] : ResourcesController.DailyReward.DailyRewards[day];
 
             item.Init(day, coin, dayTotal, isDayLoop, this);
             item.Reset();

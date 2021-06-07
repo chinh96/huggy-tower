@@ -13,7 +13,7 @@ public class WorldCollectPopup : Popup
     {
         base.AfterInstantiate();
 
-        Resource.Universe.Worlds.ForEach(item =>
+        ResourcesController.Universe.Worlds.ForEach(item =>
         {
             WorldCollect world = Instantiate(worldCollect, content);
             world.Init(item, this);

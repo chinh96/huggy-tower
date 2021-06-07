@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Resource : Singleton<Resource>
+public class ResourcesController : Singleton<ResourcesController>
 {
     [SerializeField] private SkinResources HeroResources;
     [SerializeField] private SkinResources PrincessResources;
