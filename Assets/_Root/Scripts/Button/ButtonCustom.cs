@@ -8,13 +8,13 @@ public class ButtonCustom : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     [SerializeField] private Button.ButtonClickedEvent onClick;
 
     public bool canClick = true;
-    private bool isMoveEnter = true;
+    private bool isMoveEnter = false;
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if (canClick)
         {
-            transform.DOScale(.9f, .1f).SetEase(Ease.OutQuint);
+            transform.DOScale(.9f, .01f).SetEase(Ease.OutQuint);
         }
     }
 

@@ -21,7 +21,7 @@ public class SoundController : Singleton<SoundController>
 
         for (int i = 0; i < Enum.GetNames(typeof(SoundType)).Length; i++)
         {
-            SoundData soundData = SoundResources.Instance.SoundDatas.Find(item => item.SoundType == (SoundType)i);
+            SoundData soundData = Resource.Sound.SoundDatas.Find(item => item.SoundType == (SoundType)i);
             audioClips.Add(soundData.Clip);
         }
     }

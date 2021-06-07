@@ -7,9 +7,6 @@ using UnityEditor;
 [CreateAssetMenu(fileName = "SkinResources", menuName = "ScriptableObjects/SkinResources")]
 public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
 {
-    private static SkinResources instance;
-    public static SkinResources Instance => instance ? instance : instance = Resources.Load<SkinResources>("SkinResources");
-
     [SerializeField] private SkeletonDataAsset skeletonDataAsset;
     public SkeletonDataAsset SkeletonDataAsset => skeletonDataAsset;
 
@@ -19,6 +16,22 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
     public SkinData SkinDefault => SkinDatas.Find(item => item.SkinName == skinNameDefault);
     public List<SkinData> SkinsDailyReward => SkinDatas.FindAll(item => item.SkinType == SkinType.Daily);
     public List<SkinData> SkinsLocked => SkinDatas.FindAll(item => !item.IsUnlocked);
+    public List<SkinData> SkinsCoin => SkinDatas.FindAll(item => !item.IsUnlocked && item.SkinType == SkinType.Coin);
+    public bool HasNoti
+    {
+        get
+        {
+            foreach (var skin in SkinsCoin)
+            {
+                if (Data.CoinTotal >= skin.Coin)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
 }
 
 

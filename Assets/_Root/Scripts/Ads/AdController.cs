@@ -144,7 +144,14 @@ public class AdController : Singleton<AdController>
             action?.Invoke();
         }
 #else
-        Show();
+        if (Config.Instance.EnableTest)
+        {
+            action?.Invoke();
+        }
+        else
+        {
+            Show();
+        }
 #endif
     }
 
@@ -181,7 +188,14 @@ public class AdController : Singleton<AdController>
             action?.Invoke();
         }
 #else
-        Show();
+        if (Config.Instance.EnableTest)
+        {
+            action?.Invoke();
+        }
+        else
+        {
+            Show();
+        }
 #endif
     }
 

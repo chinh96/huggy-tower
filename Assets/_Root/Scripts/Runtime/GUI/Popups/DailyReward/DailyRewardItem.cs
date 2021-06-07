@@ -104,7 +104,7 @@ public class DailyRewardItem : MonoBehaviour
     {
         if (isSkin)
         {
-            skinData = ResourcesController.Instance.Hero.SkinsDailyReward[day / 7];
+            skinData = Resource.Hero.SkinsDailyReward[day / 7];
             hero.ChangeSkin(skinData.SkinName);
             hero.gameObject.SetActive(true);
         }

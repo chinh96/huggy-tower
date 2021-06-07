@@ -6,9 +6,6 @@ using System;
 [CreateAssetMenu(fileName = "SoundResources", menuName = "ScriptableObjects/SoundResources")]
 public class SoundResources : ScriptableObject
 {
-    private static SoundResources instance;
-    public static SoundResources Instance => instance ? instance : instance = Resources.Load<SoundResources>("SoundResources");
-
     public List<SoundData> SoundDatas;
 }
 

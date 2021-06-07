@@ -35,16 +35,6 @@ public class WorldPopup : Popup
         });
     }
 
-    public void OnClickBuildButton()
-    {
-        PopupController.Instance.Show<CastlePopup>(null, ShowAction.DoNothing);
-    }
-
-    public void OnClickWorldButton()
-    {
-        PopupController.Instance.Show<WorldCollectPopup>(null, ShowAction.DoNothing);
-    }
-
     public void Build(int castleIndex)
     {
         worldCurrent.Build(castleIndex);
@@ -55,6 +45,16 @@ public class WorldPopup : Popup
         base.BeforeShow();
 
         SoundController.Instance.PlayBackground(SoundType.BackgroundCastle);
+    }
+
+    public void OnClickBuildButton()
+    {
+        PopupController.Instance.Show<CastlePopup>(null, ShowAction.DoNothing);
+    }
+
+    public void OnClickWorldPopup()
+    {
+        PopupController.Instance.Show<WorldCollectPopup>(null, ShowAction.DoNothing);
     }
 
     public override void Close()

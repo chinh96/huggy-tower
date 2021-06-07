@@ -9,9 +9,8 @@ public class Config : ScriptableObject
     public int MaxLevelCanReach;
     public int MaxLevelWithOutTutorial;
     public List<int> LevelSkips;
-    public List<int> DailyRewards;
-    public List<int> DailyRewardsLoop;
     public int PercentProgressGiftBonused;
     public int CoinBonusPerLevel;
     public bool EnableAds;
+    public bool EnableTest;
 }

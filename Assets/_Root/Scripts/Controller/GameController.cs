@@ -344,4 +344,9 @@ public class GameController : Singleton<GameController>
             overlay.gameObject.SetActive(false);
         });
     }
+
+    public void OnClickCastleButton()
+    {
+        PopupController.Instance.Show<WorldPopup>();
+    }
 }
