@@ -208,10 +208,12 @@ public class Player : Unit, IAnim
                         fitter.enabled = true;
                     })
                     .OnComplete(() => Destroy(cache.gameObject));
+
                 var newRoom = Instantiate(GameController.Instance.RoomPrefab, GameController.Instance.Root.LevelMap.homeTower.transform, false);
                 newRoom.transform.localScale = Vector3.zero;
                 newRoom.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InQuad);
                 GameController.Instance.Root.LevelMap.homeTower.slots.Add(newRoom);
+                GameController.Instance.Root.LevelMap.homeTower.smoke.Play();
             }
 
             if (!FirstTurn) FirstTurn = true;
