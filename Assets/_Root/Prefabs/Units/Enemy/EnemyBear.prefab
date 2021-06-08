@@ -70,7 +70,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -7.4, y: 222.6}
+  m_AnchoredPosition: {x: -7.4, y: 463.8}
   m_SizeDelta: {x: 80, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5427172117926707288
@@ -235,9 +235,9 @@ GameObject:
   - component: {fileID: 7842486215880441491}
   - component: {fileID: 7842486215880441488}
   - component: {fileID: 4606286200692833404}
-  - component: {fileID: 7380863988736847374}
+  - component: {fileID: 6494169447449441732}
   m_Layer: 8
-  m_Name: EnemyDemon
+  m_Name: EnemyBear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: 327654a8cc10e1245bfda168f1342797, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: b4cc6db72934df043a9cd68aa6756192, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onAttack: OnBullet
   endAttack: EndAttack
---- !u!114 &7380863988736847374
+--- !u!114 &6494169447449441732
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -363,13 +363,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7842486215880441493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2af8c36c65fb8284593947cc79d2c3e4, type: 3}
+  m_Script: {fileID: 11500000, guid: ee04ecb96942ecb438ade9ea8a8fc308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
   txtDamage: {fileID: 235115582790132306}
   damage: 0
-  ColorBlood: {r: 0.8773585, g: 0.14370698, b: 0.086908154, a: 1}
+  ColorBlood: {r: 0.5566038, g: 0.2809274, b: 0.2809274, a: 1}
   skeleton: {fileID: 7842486215880441491}
   rigid: {fileID: 7842486215880441488}
   coll2D: {fileID: 7003458295348461456}
