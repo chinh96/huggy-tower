@@ -2,13 +2,17 @@ using System;
 using Spine.Unity;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Princess : Unit, IAnim
 {
     [SerializeField] private SkeletonGraphic skeleton;
     [SerializeField] private Rigidbody2D rigid2D;
     [SerializeField] private Collider2D coll2D;
+    [SerializeField] private Image lockObj;
+
     public override EUnitType Type { get; protected set; } = EUnitType.Princess;
+
     public override void OnBeingAttacked() { }
 
     public override void OnAttack(int damage, Action callback) { }
@@ -17,6 +21,9 @@ public class Princess : Unit, IAnim
 
     public override void LightReturn() { }
     public SkeletonGraphic Skeleton => skeleton;
+
+    public Image LockObj { get => lockObj; set => lockObj = value; }
+
     public void PlayIdle(bool isLoop) { skeleton.Play("idle", true); }
 
     public void PlayAttack() { }

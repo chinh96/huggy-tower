@@ -187,7 +187,7 @@ public class Player : Unit, IAnim
             RoomTower cache = null;
             _parentRoom = GameController.Instance.Root.LevelMap.visitTower.slots[checkArea.Item2];
             var currentRoom = transform.parent.GetComponent<RoomTower>();
-            if (currentRoom != null && GameController.Instance.Root.LevelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom() && !currentRoom.IsContaintItem())
+            if (currentRoom != null && GameController.Instance.Root.LevelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom() && !currentRoom.IsContaintItem() && !currentRoom.IsContaintPrincess())
             {
                 cache = currentRoom;
             }
@@ -368,7 +368,8 @@ public class Player : Unit, IAnim
 
                         void SavePrincess()
                         {
-                            if (!hasKey)
+                            Princess princess = _target as Princess;
+                            if (!hasKey && princess.LockObj != null)
                             {
                                 Turn = ETurn.Drag;
                                 PlayIdle(true);
@@ -379,7 +380,8 @@ public class Player : Unit, IAnim
                             PlayUseItem(ItemType.None);
                             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                             {
-                                (_target as Princess)?.PlayWin(true);
+                                princess.LockObj?.DOFade(0, .3f);
+                                princess.PlayWin(true);
                                 DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                 {
                                     GameController.Instance.OnWinLevel();
