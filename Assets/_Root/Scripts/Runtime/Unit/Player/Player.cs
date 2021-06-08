@@ -23,7 +23,7 @@ public class Player : Unit, IAnim
     [SerializeField, Range(0, 10)] private float moveSpeed = 1.5f;
     [SerializeField] private ETurn turn = ETurn.None;
 
-    public bool isUsingSword;
+    public ItemType EquipType;
 
     [SerializeField] private ParticleSystem effectIncreaseDamge;
     [SerializeField] private ParticleSystem effectBlood;
@@ -384,7 +384,7 @@ public class Player : Unit, IAnim
                     {
                         PLayMove(true);
                         float endValue = 0;
-                        switch (_itemTarget.ItemType)
+                        switch (_itemTarget.EquipType)
                         {
                             case ItemType.Sword:
                                 endValue = 25;
@@ -417,8 +417,8 @@ public class Player : Unit, IAnim
                 void UseItem(ELevelCondition condition = ELevelCondition.CollectChest)
                 {
                     Turn = ETurn.UsingItem;
-                    PlayUseItem(_itemTarget.ItemType);
-                    float timeDelay = _itemTarget.ItemType == ItemType.BrokenBrick ? .5f : 1.2f;
+                    PlayUseItem(_itemTarget.EquipType);
+                    float timeDelay = _itemTarget.EquipType == ItemType.BrokenBrick ? .5f : 1.2f;
                     DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
                         if (GameController.Instance.Root.LevelMap.condition == condition)
@@ -456,7 +456,7 @@ public class Player : Unit, IAnim
                         }
                     });
 
-                    timeDelay = _itemTarget.ItemType == ItemType.Sword ? 0.2f : .5f;
+                    timeDelay = _itemTarget.EquipType == ItemType.Sword ? 0.2f : .5f;
                     DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
                         _itemTarget.Collect(this);
@@ -636,7 +636,7 @@ public class Player : Unit, IAnim
 
     public void PlayAttack()
     {
-        if (isUsingSword)
+        if (EquipType == ItemType.Sword)
         {
             SoundType[] soundTypes = { SoundType.HeroCut, SoundType.HeroCut2, SoundType.HeroCut3 };
             SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
@@ -672,8 +672,15 @@ public class Player : Unit, IAnim
             SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
             SoundController.Instance.PlayOnce(soundType);
 
-            string[] attacks = { "Attack2", "AttackHit", "AttackHit2" };
-            skeleton.Play(attacks[UnityEngine.Random.Range(0, attacks.Length)], false);
+            if (EquipType == ItemType.Gloves)
+            {
+                skeleton.Play("AttackGlove", false);
+            }
+            else
+            {
+                string[] attacks = { "Attack2", "AttackHit", "AttackHit2" };
+                skeleton.Play(attacks[UnityEngine.Random.Range(0, attacks.Length)], false);
+            }
         }
 
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
@@ -684,7 +691,7 @@ public class Player : Unit, IAnim
 
     public void PLayMove(bool isLoop)
     {
-        if (isUsingSword)
+        if (EquipType == ItemType.Sword)
         {
             skeleton.Play("RunKiem", true);
         }
@@ -719,6 +726,7 @@ public class Player : Unit, IAnim
         switch (type)
         {
             case ItemType.Sword:
+            case ItemType.Gloves:
                 skeleton.Play("Pick", false);
                 break;
             case ItemType.BrokenBrick:
@@ -731,7 +739,7 @@ public class Player : Unit, IAnim
                 });
                 break;
             default:
-                if (isUsingSword)
+                if (EquipType == ItemType.Sword)
                 {
                     skeleton.Play("Open1", false);
                 }

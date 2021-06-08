@@ -13,5 +13,6 @@ public enum ItemType
     Chest,
     Sword,
     None,
-    Gem
+    Gem,
+    Gloves
 }

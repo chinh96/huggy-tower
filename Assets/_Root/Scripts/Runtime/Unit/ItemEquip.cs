@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using Spine.Unity;
 
-public class ItemSword : Item, IHasSkeletonDataAsset
+public class ItemEquip : Item, IHasSkeletonDataAsset
 {
     [SerializeField] private SkeletonDataAsset skeletonDataAsset;
     public SkeletonDataAsset SkeletonDataAsset => skeletonDataAsset;
@@ -24,7 +24,7 @@ public class ItemSword : Item, IHasSkeletonDataAsset
         if (player != null)
         {
             gameObject.SetActive(false);
-            player.isUsingSword = true;
+            player.EquipType = EquipType;
             player.IncreaseDamage(damage);
             player.ChangeSword(itemSwordSkin);
             SoundController.Instance.PlayOnce(SoundType.HeroPickSword);
@@ -33,12 +33,12 @@ public class ItemSword : Item, IHasSkeletonDataAsset
 }
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(ItemSword))]
+[CustomEditor(typeof(ItemEquip))]
 public class ItemSwordEditor : UnityEditor.Editor
 {
-    private ItemSword _item;
+    private ItemEquip _item;
 
-    private void OnEnable() { _item = (ItemSword)target; }
+    private void OnEnable() { _item = (ItemEquip)target; }
 
     public override void OnInspectorGUI()
     {
