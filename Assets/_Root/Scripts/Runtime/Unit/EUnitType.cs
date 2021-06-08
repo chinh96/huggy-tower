@@ -15,5 +15,6 @@ public enum ItemType
     None,
     Gem,
     Gloves,
-    Food
+    Food,
+    Shield
 }

@@ -38,7 +38,7 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
 
     private void ChangeSword(Player player)
     {
-        if (EquipType != ItemType.Food)
+        if (EquipType != ItemType.Food && EquipType != ItemType.Shield)
         {
             player.ChangeSword(itemSwordSkin);
         }
