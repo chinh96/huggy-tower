@@ -23,10 +23,6 @@ public class RoomTower : MonoBehaviour
         items = GetComponentsInChildren<Item>().ToList();
     }
 
-    /// <summary>
-    /// return true if enemy in room Cleared
-    /// </summary>
-    /// <returns></returns>
     public bool IsClearEnemyInRoom()
     {
         foreach (var unit in units)

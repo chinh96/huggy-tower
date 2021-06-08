@@ -187,7 +187,7 @@ public class Player : Unit, IAnim
             RoomTower cache = null;
             _parentRoom = GameController.Instance.Root.LevelMap.visitTower.slots[checkArea.Item2];
             var currentRoom = transform.parent.GetComponent<RoomTower>();
-            if (currentRoom != null && GameController.Instance.Root.LevelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom())
+            if (currentRoom != null && GameController.Instance.Root.LevelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom() && !currentRoom.IsContaintItem())
             {
                 cache = currentRoom;
             }
@@ -260,6 +260,20 @@ public class Player : Unit, IAnim
         if (_countdownAttack <= 0 && !GameController.Instance.IsOnboarding)
         {
             SearchingTarget();
+        }
+    }
+
+    private void AddJumpAnimation()
+    {
+        foreach (var slot in GameController.Instance.Root.LevelMap.visitTower.slots)
+        {
+            foreach (var item in slot.items)
+            {
+                if (item.EquipType == ItemType.Key)
+                {
+                    item.GetComponent<ItemEquip>().AddJumpAnimation();
+                }
+            }
         }
     }
 
@@ -354,7 +368,13 @@ public class Player : Unit, IAnim
 
                         void SavePrincess()
                         {
-                            if (!hasKey) return;
+                            if (!hasKey)
+                            {
+                                Turn = ETurn.Drag;
+                                PlayIdle(true);
+                                AddJumpAnimation();
+                                return;
+                            }
 
                             PlayUseItem(ItemType.None);
                             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
@@ -423,6 +443,7 @@ public class Player : Unit, IAnim
                     {
                         Turn = ETurn.Drag;
                         PlayIdle(true);
+                        AddJumpAnimation();
                         return;
                     }
 

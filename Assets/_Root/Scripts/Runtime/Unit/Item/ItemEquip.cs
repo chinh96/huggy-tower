@@ -17,12 +17,17 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
     public TextMeshProUGUI txtDamage;
     public int damage;
 
+    public void AddJumpAnimation()
+    {
+        render.gameObject.AddComponent<JumpAnimation>();
+    }
 
     public override void Collect(IUnit affectTarget)
     {
         var player = (Player)affectTarget;
         if (player != null)
         {
+            State = EUnitState.Invalid;
             gameObject.SetActive(false);
             player.EquipType = EquipType;
             IncreaseDamage(player);
