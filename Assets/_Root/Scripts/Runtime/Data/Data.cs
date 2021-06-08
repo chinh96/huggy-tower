@@ -77,4 +77,6 @@ public static class Data
     public static SkinData SkinGift;
 
     public static bool DoneOnboarding { get => GetBool(Constants.DONE_ONBOARDING, false); set => SetBool(Constants.DONE_ONBOARDING, value); }
+
+    public static bool IsJoinedFb { get => GetBool(Constants.IS_JOINED_FB, false); set => SetBool(Constants.IS_JOINED_FB, value); }
 }
