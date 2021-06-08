@@ -52,6 +52,7 @@ public class Player : Unit, IAnim
     private RoomTower _parentRoom;
     private bool _dragValidateRoomFlag;
     private string swordName = "";
+    private bool hasKey = false;
 
     private void Start()
     {
@@ -353,6 +354,8 @@ public class Player : Unit, IAnim
 
                         void SavePrincess()
                         {
+                            if (!hasKey) return;
+
                             PlayUseItem(ItemType.None);
                             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                             {
@@ -416,6 +419,13 @@ public class Player : Unit, IAnim
 
                 void UseItem(ELevelCondition condition = ELevelCondition.CollectChest)
                 {
+                    if (!hasKey && _itemTarget as ItemChest != null)
+                    {
+                        Turn = ETurn.Drag;
+                        PlayIdle(true);
+                        return;
+                    }
+
                     Turn = ETurn.UsingItem;
                     PlayUseItem(_itemTarget.EquipType);
                     float timeDelay = _itemTarget.EquipType == ItemType.BrokenBrick ? .5f : 1.2f;
@@ -739,6 +749,10 @@ public class Player : Unit, IAnim
                     effectHitWall.gameObject.SetActive(true);
                     effectHitWall.Play();
                 });
+                break;
+            case ItemType.Key:
+                hasKey = true;
+                skeleton.Play("Pick", false);
                 break;
             default:
                 if (EquipType == ItemType.Sword)

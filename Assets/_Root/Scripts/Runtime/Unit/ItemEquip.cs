@@ -33,29 +33,27 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
 
     private void IncreaseDamage(Player player)
     {
-        player.IncreaseDamage(GetDamage(player));
+        if (EquipType != ItemType.Key)
+        {
+            int damage = this.damage;
+
+            switch (EquipType)
+            {
+                case ItemType.Food:
+                    damage = player.Damage;
+                    break;
+            }
+
+            player.IncreaseDamage(damage);
+        }
     }
 
     private void ChangeSword(Player player)
     {
-        if (EquipType != ItemType.Food && EquipType != ItemType.Shield)
+        if (EquipType != ItemType.Food && EquipType != ItemType.Shield && EquipType != ItemType.Key)
         {
             player.ChangeSword(itemSwordSkin);
         }
-    }
-
-    private int GetDamage(Player player)
-    {
-        int damage = this.damage;
-
-        switch (EquipType)
-        {
-            case ItemType.Food:
-                damage = player.Damage;
-                break;
-        }
-
-        return damage;
     }
 }
 
@@ -71,7 +69,7 @@ public class ItemSwordEditor : UnityEditor.Editor
     {
         base.OnInspectorGUI();
 
-        if (_item.EquipType != ItemType.Food)
+        if (_item.EquipType != ItemType.Food && _item.EquipType != ItemType.Key)
         {
             _item.txtDamage.text = $"+{_item.damage}";
 

@@ -16,5 +16,6 @@ public enum ItemType
     Gem,
     Gloves,
     Food,
-    Shield
+    Shield,
+    Key
 }
