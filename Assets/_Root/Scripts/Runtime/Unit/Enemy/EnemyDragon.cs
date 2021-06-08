@@ -25,14 +25,8 @@ public class EnemyDragon : Unit, IAnim
 
     public override void OnBeingAttacked() { OnDead(); }
 
-    /// <summary>
-    /// call by event attack of anim attack
-    /// </summary>
     private void OnAttackByEvent() { _callbackAttackPlayer?.Invoke(); }
 
-    /// <summary>
-    /// call by event end attack of anim attack
-    /// </summary>
     private void OnEndAttackByEvent() { PlayIdle(true); }
 
     public override void DarknessRise() { }
