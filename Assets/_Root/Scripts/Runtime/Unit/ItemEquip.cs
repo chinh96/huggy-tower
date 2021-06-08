@@ -25,10 +25,37 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
         {
             gameObject.SetActive(false);
             player.EquipType = EquipType;
-            player.IncreaseDamage(damage);
-            player.ChangeSword(itemSwordSkin);
+            IncreaseDamage(player);
+            ChangeSword(player);
             SoundController.Instance.PlayOnce(SoundType.HeroPickSword);
         }
+    }
+
+    private void IncreaseDamage(Player player)
+    {
+        player.IncreaseDamage(GetDamage(player));
+    }
+
+    private void ChangeSword(Player player)
+    {
+        if (EquipType != ItemType.Food)
+        {
+            player.ChangeSword(itemSwordSkin);
+        }
+    }
+
+    private int GetDamage(Player player)
+    {
+        int damage = this.damage;
+
+        switch (EquipType)
+        {
+            case ItemType.Food:
+                damage = player.Damage;
+                break;
+        }
+
+        return damage;
     }
 }
 
@@ -44,10 +71,13 @@ public class ItemSwordEditor : UnityEditor.Editor
     {
         base.OnInspectorGUI();
 
-        _item.txtDamage.text = $"+{_item.damage}";
+        if (_item.EquipType != ItemType.Food)
+        {
+            _item.txtDamage.text = $"+{_item.damage}";
 
-        serializedObject.Update();
-        serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+            serializedObject.ApplyModifiedProperties();
+        }
     }
 }
 #endif

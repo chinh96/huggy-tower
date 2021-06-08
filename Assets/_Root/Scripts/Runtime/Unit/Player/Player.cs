@@ -727,6 +727,7 @@ public class Player : Unit, IAnim
         {
             case ItemType.Sword:
             case ItemType.Gloves:
+            case ItemType.Food:
                 skeleton.Play("Pick", false);
                 break;
             case ItemType.BrokenBrick:
