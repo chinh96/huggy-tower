@@ -10,6 +10,7 @@ public class WorldCollect : MonoBehaviour
     [SerializeField] private GameObject lockButton;
     [SerializeField] private TextMeshProUGUI level;
     [SerializeField] private Image background;
+    [SerializeField] private GameObject noti;
 
     private WorldResources worldResources;
     private WorldCollectPopup worldCollectPopup;
@@ -27,6 +28,7 @@ public class WorldCollect : MonoBehaviour
         if (Data.CurrentLevel >= worldResources.LevelUnlock)
         {
             visitButton.SetActive(true);
+            noti.SetActive(ResourcesController.Universe.IsNoti(worldResources));
         }
         else
         {

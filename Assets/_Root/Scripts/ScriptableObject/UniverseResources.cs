@@ -81,4 +81,20 @@ public class UniverseResources : ScriptableObject
             return false;
         }
     }
+
+    public bool IsNoti(WorldResources worldResources)
+    {
+        foreach (var castle in worldResources.Castles)
+        {
+            foreach (var data in castle.Castles)
+            {
+                if (!data.IsUnlocked && Data.CoinTotal >= data.Cost)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }
