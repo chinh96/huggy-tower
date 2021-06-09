@@ -48,12 +48,3 @@ public class ButtonNoti : MonoBehaviour
         EventController.CoinTotalChanged -= CheckNoti;
     }
 }
-
-public enum NotiType
-{
-    Universe,
-    World,
-    Build,
-    Skin,
-    Daily
-}

@@ -62,11 +62,3 @@ public class SkinData
         }
     }
 }
-
-public enum SkinType
-{
-    Coin,
-    Ads,
-    Daily,
-    Facebook
-}

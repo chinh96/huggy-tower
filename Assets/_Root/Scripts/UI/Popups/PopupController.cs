@@ -177,10 +177,3 @@ public class PopupController : Singleton<PopupController>
         }
     }
 }
-
-public enum ShowAction
-{
-    DoNothing,
-    DismissCurrent,
-    PauseCurrent
-}

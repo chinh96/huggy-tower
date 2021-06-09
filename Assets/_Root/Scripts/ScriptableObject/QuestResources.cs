@@ -30,15 +30,3 @@ public class QuestData
     public string quest;
     public Sprite sprite;
 }
-
-public enum ELevelCondition
-{
-    KillAll,
-    CollectChest,
-    SavePrincess,
-    CollectGold,
-    KillDemon,
-    KillDragon,
-    KillGhost,
-    KillWolf
-}

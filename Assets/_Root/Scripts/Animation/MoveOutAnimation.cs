@@ -56,11 +56,3 @@ public class MoveOutAnimation : MonoBehaviour
         transform.DOKill();
     }
 }
-
-public enum DirectionMoveOut
-{
-    TOP,
-    RIGHT,
-    BOTTOM,
-    LEFT
-}

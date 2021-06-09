@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class ShakeHammer : MonoBehaviour
+public class HammerAnimation : MonoBehaviour
 {
     [SerializeField] private float durationForward = 1f;
     [SerializeField] private float durationBackward = 1f;

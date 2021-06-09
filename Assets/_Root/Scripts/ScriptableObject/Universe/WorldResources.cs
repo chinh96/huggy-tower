@@ -11,13 +11,3 @@ public class WorldResources : ScriptableObject
     public bool IsUnlocked => Data.CurrentLevel >= LevelUnlock;
     public Sprite background;
 }
-
-public enum WorldType
-{
-    Desert,
-    Earth,
-    Iceland,
-    Inferno,
-    Jade,
-    Olympus
-}
