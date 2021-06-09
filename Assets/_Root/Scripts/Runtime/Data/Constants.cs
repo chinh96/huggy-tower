@@ -34,7 +34,7 @@ public class Constants
     public const string PERCENT_PROGRESS_GIFT = "PERCENT_PROGRESS_GIFT";
     public const string WORLD_CURRENT = "WORLD_CURRENT";
     public const string DONE_ONBOARDING = "DONE_ONBOARDING";
-    public const string IS_JOINED_FB = "IS_JOINED_FB";
+    public const string JOIN_FB_PROGRESS = "JOIN_FB_PROGRESS";
 
     // Scene
     public const string LOADING_SCENE = "LoadingScene";

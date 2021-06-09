@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using DG.Tweening;
 
 public class FacebookPopup : Popup
 {
-    [SerializeField] private GameObject background1;
-    [SerializeField] private GameObject background2;
+    [SerializeField] private List<GameObject> backgrounds;
 
     protected override void BeforeShow()
     {
@@ -22,33 +20,32 @@ public class FacebookPopup : Popup
         CheckBackground();
     }
 
-    private void CheckBackground()
-    {
-        if (Data.IsJoinedFb)
-        {
-            background2.SetActive(true);
-        }
-        else
-        {
-            background1.SetActive(true);
-        }
-    }
-
     private void HideAll()
     {
-        background1.SetActive(false);
-        background2.SetActive(false);
+        backgrounds.ForEach(item => item.SetActive(false));
+    }
+
+    private void CheckBackground()
+    {
+        backgrounds[Data.JoinFbProgress].SetActive(true);
     }
 
     public void OnClickFacebookButton()
     {
+        Data.JoinFbProgress++;
+
         DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
         {
-            Data.CoinTotal += 500;
-            Data.IsJoinedFb = true;
             Reset();
         });
 
         Application.OpenURL("https://www.facebook.com/groups/hero.tower.wars");
+    }
+
+    public void OnClickClaimButton()
+    {
+        Data.JoinFbProgress++;
+        Data.CoinTotal += 500;
+        Close();
     }
 }

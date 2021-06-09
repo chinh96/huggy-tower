@@ -78,5 +78,5 @@ public static class Data
 
     public static bool DoneOnboarding { get => GetBool(Constants.DONE_ONBOARDING, false); set => SetBool(Constants.DONE_ONBOARDING, value); }
 
-    public static bool IsJoinedFb { get => GetBool(Constants.IS_JOINED_FB, false); set => SetBool(Constants.IS_JOINED_FB, value); }
+    public static int JoinFbProgress { get => GetInt(Constants.JOIN_FB_PROGRESS, 0); set => SetInt(Constants.JOIN_FB_PROGRESS, value); }
 }
