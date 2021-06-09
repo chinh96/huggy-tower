@@ -341,9 +341,11 @@ public class Player : Unit, IAnim
                         if (_flagAttack)
                         {
                             PlayAttack();
+                            _target.OnAttack(damage, null);
                         }
                         else
                         {
+                            PlayAttack();
                             _target.OnAttack(damage, BeingAttackedCallback);
                         }
                     }
