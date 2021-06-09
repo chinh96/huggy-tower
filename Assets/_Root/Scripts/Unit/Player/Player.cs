@@ -673,14 +673,19 @@ public class Player : Unit, IAnim
     {
         if (EquipType == ItemType.Sword)
         {
-            SoundType[] soundTypes = { SoundType.HeroCut, SoundType.HeroCut2, SoundType.HeroCut3 };
-            SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
-            SoundController.Instance.PlayOnce(soundType);
-
             string[] attacks = { "Attack", "AttackSword", "AttackSword2" };
             string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
             skeleton.Play(attack, false);
-            float timeDelay = attack == "AttackSword" ? .8f : .5f;
+
+            SoundType[] soundTypes = { SoundType.HeroCut, SoundType.HeroCut2, SoundType.HeroCut3 };
+            SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
+            float timeDelay = attack == "AttackSword" ? .5f : 0;
+            DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
+            {
+                SoundController.Instance.PlayOnce(soundType);
+            });
+
+            timeDelay = attack == "AttackSword" ? .8f : .5f;
             if (!(_target as EnemyGhost))
             {
                 DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
@@ -771,6 +776,8 @@ public class Player : Unit, IAnim
                 skeleton.Play("HitWall", false);
                 DOTween.Sequence().AppendInterval(.4f).AppendCallback(() =>
                 {
+                    ParticleSystem effectHitWall = Instantiate(this.effectHitWall, transform.parent);
+                    effectHitWall.transform.position = this.effectHitWall.transform.position;
                     effectHitWall.gameObject.SetActive(true);
                     effectHitWall.Play();
                 });
