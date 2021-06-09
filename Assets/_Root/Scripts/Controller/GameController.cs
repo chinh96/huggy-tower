@@ -12,6 +12,7 @@ public class GameController : Singleton<GameController>
     [SerializeField] private LevelRoot root;
     [SerializeField] private RoomTower roomPrefab;
     [SerializeField] private TextMeshProUGUI txtQuest;
+    [SerializeField] private Image imgQuest;
     [SerializeField] private float zoomCameraDuration;
     [SerializeField] private float zoomOrthoSize;
     [SerializeField] private Vector2 zoomOffset;
@@ -184,24 +185,10 @@ public class GameController : Singleton<GameController>
 
     public void UpdateDislayCurrentLevel(int level, ELevelCondition condition)
     {
-        var str = "";
-        switch (condition)
-        {
-            case ELevelCondition.KillAll:
-                str = "kill all enemies";
-                break;
-            case ELevelCondition.CollectChest:
-                str = "open chest";
-                break;
-            case ELevelCondition.SavePrincess:
-                str = "save the princess";
-                break;
-            case ELevelCondition.CollectGold:
-                str = "collect golds";
-                break;
-        }
+        var data = ResourcesController.Quest.GetDataByCondition(condition);
 
-        txtQuest.text = $"Level {level + 1}: {str.ToUpper()}";
+        txtQuest.text = $"Level {level + 1}: {data.quest.ToUpper()}";
+        imgQuest.sprite = data.sprite;
     }
 
     private void InternalPlayLevel()

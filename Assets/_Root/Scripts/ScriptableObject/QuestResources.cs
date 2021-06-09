@@ -8,19 +8,37 @@ using UnityEditor;
 public class QuestResources : ScriptableObject
 {
     public List<QuestData> questDatas;
+
+    public QuestData GetDataByCondition(ELevelCondition condition)
+    {
+        foreach (var data in questDatas)
+        {
+            if (data.condition == condition)
+            {
+                return data;
+            }
+        }
+
+        return null;
+    }
 }
 
 [Serializable]
 public class QuestData
 {
-    ELevelCondition condition;
-    string quest;
+    public ELevelCondition condition;
+    public string quest;
+    public Sprite sprite;
 }
 
 public enum ELevelCondition
 {
-    KillAll = 0,
-    CollectChest = 1,
-    SavePrincess = 2,
-    CollectGold = 3,
+    KillAll,
+    CollectChest,
+    SavePrincess,
+    CollectGold,
+    KillDemon,
+    KillDragon,
+    KillGhost,
+    KillWolf
 }
