@@ -5,25 +5,31 @@ using System;
 
 public class ResourcesController : Singleton<ResourcesController>
 {
-    [SerializeField] private SkinResources HeroResources;
-    [SerializeField] private SkinResources PrincessResources;
-    [SerializeField] private SoundResources SoundResources;
-    [SerializeField] private UniverseResources UniverseResources;
-    [SerializeField] private DailyRewardResources DailyRewardResources;
+    [SerializeField] private SkinResources heroResources;
+    [SerializeField] private SkinResources princessResources;
+    [SerializeField] private SoundResources soundResources;
+    [SerializeField] private UniverseResources universeResources;
+    [SerializeField] private DailyRewardResources dailyRewardResources;
+    [SerializeField] private QuestResources questResources;
+    [SerializeField] private Config config;
 
     public static SkinResources Hero;
     public static SkinResources Princess;
     public static SoundResources Sound;
     public static UniverseResources Universe;
     public static DailyRewardResources DailyReward;
+    public static QuestResources Quest;
+    public static Config Config;
 
     private void OnEnable()
     {
-        Hero = HeroResources;
-        Princess = PrincessResources;
-        Sound = SoundResources;
-        Universe = UniverseResources;
-        DailyReward = DailyRewardResources;
+        Hero = heroResources;
+        Princess = princessResources;
+        Sound = soundResources;
+        Universe = universeResources;
+        DailyReward = dailyRewardResources;
+        Quest = questResources;
+        Config = config;
     }
 
     private void Start()

@@ -21,7 +21,7 @@ public class WinPopup : Popup
     {
         base.AfterShown();
 
-        Data.CoinTotal += Config.Instance.CoinBonusPerLevel;
+        Data.CoinTotal += ResourcesController.Config.CoinBonusPerLevel;
 
         progressGift.Move(() =>
         {
@@ -33,7 +33,7 @@ public class WinPopup : Popup
     {
         AdController.Instance.ShowRewardedAd(() =>
         {
-            Data.CoinTotal += Config.Instance.CoinBonusPerLevel * 5;
+            Data.CoinTotal += ResourcesController.Config.CoinBonusPerLevel * 5;
             claimX5Button.SetActive(false);
         });
     }

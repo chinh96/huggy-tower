@@ -20,14 +20,14 @@ public class DataBridge : Singleton<DataBridge>
     public void CheckCacheLevel()
     {
         bool flagOutLevel = false;
-        if (Data.CurrentLevel > Config.Instance.MaxLevelCanReach)
+        if (Data.CurrentLevel > ResourcesController.Config.MaxLevelCanReach)
         {
-            _cacheLevels = new int[Config.Instance.MaxLevelWithOutTutorial];
+            _cacheLevels = new int[ResourcesController.Config.MaxLevelWithOutTutorial];
 
-            for (int i = 0; i < Config.Instance.MaxLevelWithOutTutorial; i++)
+            for (int i = 0; i < ResourcesController.Config.MaxLevelWithOutTutorial; i++)
             {
                 _cacheLevels[i] = Data.GetCacheLevelIndex(i);
-                if (_cacheLevels[i] >= Config.Instance.MaxLevelCanReach) flagOutLevel = true;
+                if (_cacheLevels[i] >= ResourcesController.Config.MaxLevelCanReach) flagOutLevel = true;
             }
 
             if (flagOutLevel) MakeCacheLevel();
@@ -37,15 +37,15 @@ public class DataBridge : Singleton<DataBridge>
     public void MakeCacheLevel()
     {
         var tempList = new List<int>();
-        for (int i = 0; i < Config.Instance.MaxLevelCanReach; i++)
+        for (int i = 0; i < ResourcesController.Config.MaxLevelCanReach; i++)
         {
-            if (Config.Instance.LevelSkips.Contains(i)) continue;
+            if (ResourcesController.Config.LevelSkips.Contains(i)) continue;
             tempList.Add(i);
         }
 
         tempList.Shuffle();
 
-        _cacheLevels = new int[Config.Instance.MaxLevelWithOutTutorial];
+        _cacheLevels = new int[ResourcesController.Config.MaxLevelWithOutTutorial];
 
         for (int i = 0; i < tempList.Count; i++)
         {
@@ -56,10 +56,10 @@ public class DataBridge : Singleton<DataBridge>
 
     public async Task<(GameObject, int, int)> GetLevel(int levelIndex)
     {
-        if (levelIndex > Config.Instance.MaxLevelCanReach - 1)
+        if (levelIndex > ResourcesController.Config.MaxLevelCanReach - 1)
         {
-            var temp = (levelIndex - Config.Instance.MaxLevelCanReach) % (Config.Instance.MaxLevelWithOutTutorial);
-            if (Data.CountPlayLevel >= Config.Instance.MaxLevelWithOutTutorial)
+            var temp = (levelIndex - ResourcesController.Config.MaxLevelCanReach) % (ResourcesController.Config.MaxLevelWithOutTutorial);
+            if (Data.CountPlayLevel >= ResourcesController.Config.MaxLevelWithOutTutorial)
             {
                 MakeCacheLevel();
                 Data.CountPlayLevel = 0;
@@ -77,7 +77,7 @@ public class DataBridge : Singleton<DataBridge>
                         var flagLevel = false;
                         for (int i = 0; i < _cacheLevels.Length; i++)
                         {
-                            if (_cacheLevels[i] >= Config.Instance.MaxLevelCanReach)
+                            if (_cacheLevels[i] >= ResourcesController.Config.MaxLevelCanReach)
                             {
                                 flagLevel = true;
                                 break;

@@ -17,7 +17,7 @@ public class ProgressGift : MonoBehaviour
 
     public void Move(Action action)
     {
-        Data.PercentProgressGift += Config.Instance.PercentProgressGiftBonused;
+        Data.PercentProgressGift += ResourcesController.Config.PercentProgressGiftBonused;
         progress.DOFillAmount(Data.PercentProgressGift / 100f, duration).OnComplete(() =>
         {
             action?.Invoke();

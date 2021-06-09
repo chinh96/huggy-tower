@@ -135,7 +135,7 @@ public class AdController : Singleton<AdController>
             }
         }
 #if UNITY_EDITOR
-        if (Config.Instance.EnableAds)
+        if (ResourcesController.Config.EnableAds)
         {
             Show();
         }
@@ -144,7 +144,7 @@ public class AdController : Singleton<AdController>
             action?.Invoke();
         }
 #else
-        if (Config.Instance.EnableTest)
+        if (ResourcesController.Config.EnableTest)
         {
             action?.Invoke();
         }
@@ -179,7 +179,7 @@ public class AdController : Singleton<AdController>
             }
         }
 #if UNITY_EDITOR
-        if (Config.Instance.EnableAds)
+        if (ResourcesController.Config.EnableAds)
         {
             Show();
         }
@@ -188,7 +188,7 @@ public class AdController : Singleton<AdController>
             action?.Invoke();
         }
 #else
-        if (Config.Instance.EnableTest)
+        if (ResourcesController.Config.EnableTest)
         {
             action?.Invoke();
         }
