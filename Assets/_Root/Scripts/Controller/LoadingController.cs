@@ -4,6 +4,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.UI;
+using Facebook.Unity;
 
 public class LoadingController : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class LoadingController : MonoBehaviour
         {
             Data.DateTimeStart = DateTime.Now.ToString();
         }
+
+        FB.Init();
 
         Addressables.InitializeAsync();
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 using TMPro;
+using Facebook.Unity;
+using System;
 
 public class SkinItem : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class SkinItem : MonoBehaviour
     [SerializeField] private GameObject buttonDisableBuy;
     [SerializeField] private GameObject buttonAds;
     [SerializeField] private GameObject buttonDailyReward;
+    [SerializeField] private GameObject buttonFacebook;
     [SerializeField] private TextMeshProUGUI cost;
     [SerializeField] private TextMeshProUGUI costDisable;
 
@@ -54,6 +57,9 @@ public class SkinItem : MonoBehaviour
                 case SkinType.Daily:
                     buttonDailyReward.SetActive(true);
                     break;
+                case SkinType.Facebook:
+                    buttonFacebook.SetActive(true);
+                    break;
             }
         }
     }
@@ -64,6 +70,7 @@ public class SkinItem : MonoBehaviour
         buttonAds.SetActive(false);
         buttonDailyReward.SetActive(false);
         buttonDisableBuy.SetActive(false);
+        buttonFacebook.SetActive(false);
     }
 
     public void OnClickButtonBuy()
@@ -87,6 +94,27 @@ public class SkinItem : MonoBehaviour
     public void OnClickButtonDailyReward()
     {
         PopupController.Instance.Show<DailyRewardPopup>(null, ShowAction.DoNothing);
+    }
+
+    public void OnClickFacebookButton()
+    {
+        string uri = "https://play.google.com/store/apps/details?id=com.gamee.herotowerwar";
+#if UNITY_IOS
+        uri = "https://apps.apple.com/us/app/id1554977035";
+#endif
+        FB.FeedShare(
+            link: new Uri(uri),
+            callback: (IShareResult result) =>
+            {
+                if (!result.Cancelled && String.IsNullOrEmpty(result.Error))
+                {
+                    AnalyticController.UnlockSkinFacebook();
+                    Done();
+                }
+            },
+            linkName: "Hero Tower Wars",
+            linkCaption: "Join me now!"
+        );
     }
 
     private void Done()

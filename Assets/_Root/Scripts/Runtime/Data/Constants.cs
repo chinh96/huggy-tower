@@ -52,6 +52,7 @@ public class Constants
     public const string AD_INTERSTITIAL_REQUEST = "AD_INTERSTITIAL_REQUEST";
     public const string UNLOCK_SKIN_VIDEO = "UNLOCK_SKIN_VIDEO";
     public const string UNLOCK_SKIN_COINS = "UNLOCK_SKIN_COINS";
+    public const string UNLOCK_SKIN_FACEBOOK = "UNLOCK_SKIN_FACEBOOK";
     public const string UNLOCK_SKIN_DIAMONDS = "UNLOCK_SKIN_DIAMONDS";
     public const string BUILD_CASTLE = "BUILD_CASTLE";
     public const string SKIP_LEVEL = "SKIP_LEVEL";

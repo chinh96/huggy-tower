@@ -53,6 +53,11 @@ public static class AnalyticController
         LogEvent(Constants.UNLOCK_SKIN_COINS, new Parameter[] { });
     }
 
+    public static void UnlockSkinFacebook()
+    {
+        LogEvent(Constants.UNLOCK_SKIN_FACEBOOK, new Parameter[] { });
+    }
+
     public static void BuildCastle()
     {
         LogEvent(Constants.BUILD_CASTLE, new Parameter[] { });

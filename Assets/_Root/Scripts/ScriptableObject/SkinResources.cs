@@ -67,5 +67,6 @@ public enum SkinType
 {
     Coin,
     Ads,
-    Daily
+    Daily,
+    Facebook
 }
