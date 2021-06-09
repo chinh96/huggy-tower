@@ -12,7 +12,8 @@ public enum NotiType
     World,
     Build,
     Skin,
-    Daily
+    Daily,
+    Achievement
 }
 
 public enum EGameState
@@ -139,4 +140,16 @@ public enum WorldType
     Inferno,
     Jade,
     Olympus
+}
+
+public enum AchievementType
+{
+    NormalEnemy,
+    WolfEnemy,
+    DemonEnemy,
+    GhostEnemy,
+    DragonEnemy,
+    BearEnemy,
+    Princess,
+    Chest
 }

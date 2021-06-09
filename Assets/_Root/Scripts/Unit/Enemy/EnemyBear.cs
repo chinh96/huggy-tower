@@ -40,6 +40,7 @@ public class EnemyBear : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
+        ResourcesController.Achievement.IncreaseByType(AchievementType.BearEnemy);
     }
 
     public SkeletonGraphic Skeleton => skeleton;

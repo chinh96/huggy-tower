@@ -13,7 +13,7 @@ public class QuestResources : ScriptableObject
     {
         foreach (var data in questDatas)
         {
-            if (data.condition == condition)
+            if (data.Condition == condition)
             {
                 return data;
             }
@@ -26,7 +26,7 @@ public class QuestResources : ScriptableObject
 [Serializable]
 public class QuestData
 {
-    public ELevelCondition condition;
-    public string quest;
-    public Sprite sprite;
+    public ELevelCondition Condition;
+    public string Quest;
+    public Sprite Sprite;
 }

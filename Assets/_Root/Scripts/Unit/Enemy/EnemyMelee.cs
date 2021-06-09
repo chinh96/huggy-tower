@@ -41,6 +41,7 @@ public class EnemyMelee : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
+        ResourcesController.Achievement.IncreaseByType(AchievementType.NormalEnemy);
     }
 
     public SkeletonGraphic Skeleton => skeleton;

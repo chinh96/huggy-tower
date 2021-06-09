@@ -79,4 +79,8 @@ public static class Data
     public static bool DoneOnboarding { get => GetBool(Constants.DONE_ONBOARDING, false); set => SetBool(Constants.DONE_ONBOARDING, value); }
 
     public static int JoinFbProgress { get => GetInt(Constants.JOIN_FB_PROGRESS, 0); set => SetInt(Constants.JOIN_FB_PROGRESS, value); }
+
+    public static string AchievementId;
+    public static int AchievementNumberTarget { get => GetInt(Constants.ACHIEVEMENT_NUMBER_TARGET + AchievementId, 10); set => SetInt(Constants.ACHIEVEMENT_NUMBER_TARGET + AchievementId, value); }
+    public static int AchievementNumberCurrent { get => GetInt(Constants.ACHIEVEMENT_NUMBER_CURRENT + AchievementId, 0); set => SetInt(Constants.ACHIEVEMENT_NUMBER_CURRENT + AchievementId, value); }
 }

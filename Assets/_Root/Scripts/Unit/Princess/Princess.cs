@@ -40,6 +40,7 @@ public class Princess : Unit, IAnim
         {
             skeleton.Play("win 2", true);
         });
+        ResourcesController.Achievement.IncreaseByType(AchievementType.Princess);
     }
 
     public void PlayLose(bool isLoop) { }

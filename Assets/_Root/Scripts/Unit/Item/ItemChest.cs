@@ -20,5 +20,9 @@ public class ItemChest : Item, IAnim
 
     public void PlayLose(bool isLoop = false) { skeleton.Play("Fire", isLoop); }
 
-    public override void Collect(IUnit affectTarget) { PlayWin(); }
+    public override void Collect(IUnit affectTarget)
+    {
+        PlayWin();
+        ResourcesController.Achievement.IncreaseByType(AchievementType.Chest);
+    }
 }

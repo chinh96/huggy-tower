@@ -75,4 +75,9 @@ public class HomeController : Singleton<HomeController>
     {
         PopupController.Instance.Show<SkinPopup>();
     }
+
+    public void OnClickAchievementButton()
+    {
+        PopupController.Instance.Show<AchievementPopup>();
+    }
 }
