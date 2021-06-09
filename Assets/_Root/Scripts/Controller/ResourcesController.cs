@@ -11,7 +11,7 @@ public class ResourcesController : Singleton<ResourcesController>
     [SerializeField] private UniverseResources universeResources;
     [SerializeField] private DailyRewardResources dailyRewardResources;
     [SerializeField] private QuestResources questResources;
-    [SerializeField] private Config config;
+    [SerializeField] private ConfigResources config;
 
     public static SkinResources Hero;
     public static SkinResources Princess;
@@ -19,7 +19,7 @@ public class ResourcesController : Singleton<ResourcesController>
     public static UniverseResources Universe;
     public static DailyRewardResources DailyReward;
     public static QuestResources Quest;
-    public static Config Config;
+    public static ConfigResources Config;
 
     private void OnEnable()
     {

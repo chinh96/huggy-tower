@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Config : ScriptableObject
+[CreateAssetMenu(fileName = "ConfigResources", menuName = "ScriptableObjects/ConfigResources")]
+public class ConfigResources : ScriptableObject
 {
     public int MaxLevelCanReach;
     public int MaxLevelWithOutTutorial;
