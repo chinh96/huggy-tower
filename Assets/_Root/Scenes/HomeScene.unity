@@ -1074,7 +1074,6 @@ GameObject:
   - component: {fileID: 970626123}
   - component: {fileID: 970626122}
   - component: {fileID: 970626124}
-  - component: {fileID: 970626125}
   m_Layer: 5
   m_Name: FacebookButton
   m_TagString: Untagged
@@ -1154,9 +1153,9 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 970626125}
-        m_TargetAssemblyTypeName: ButtonFacebook, Assembly-CSharp
-        m_MethodName: OnClick
+      - m_Target: {fileID: 48153899}
+        m_TargetAssemblyTypeName: HomeController, Assembly-CSharp
+        m_MethodName: OnClickFacebookButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1167,18 +1166,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   canClick: 1
---- !u!114 &970626125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 970626120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92c33141a85e8a24fa5ca90bf9adead6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1177023679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1855,7 +1842,6 @@ GameObject:
   - component: {fileID: 1846211493}
   - component: {fileID: 1846211492}
   - component: {fileID: 1846211494}
-  - component: {fileID: 1846211495}
   m_Layer: 5
   m_Name: SettingsButton
   m_TagString: Untagged
@@ -1935,9 +1921,9 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1846211495}
-        m_TargetAssemblyTypeName: ButtonSetting, Assembly-CSharp
-        m_MethodName: OnClick
+      - m_Target: {fileID: 48153899}
+        m_TargetAssemblyTypeName: HomeController, Assembly-CSharp
+        m_MethodName: OnClickSettingButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1948,18 +1934,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   canClick: 1
---- !u!114 &1846211495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846211490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea41536c9ad608d458d5f2310876881a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1852269813
 GameObject:
   m_ObjectHideFlags: 0

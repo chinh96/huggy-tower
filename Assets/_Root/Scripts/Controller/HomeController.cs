@@ -80,4 +80,14 @@ public class HomeController : Singleton<HomeController>
     {
         PopupController.Instance.Show<AchievementPopup>();
     }
+
+    public void OnClickSettingButton()
+    {
+        PopupController.Instance.Show<SettingPopup>();
+    }
+
+    public void OnClickFacebookButton()
+    {
+        PopupController.Instance.Show<FacebookPopup>();
+    }
 }
