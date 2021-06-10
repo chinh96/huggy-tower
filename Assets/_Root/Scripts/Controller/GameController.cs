@@ -187,7 +187,7 @@ public class GameController : Singleton<GameController>
     {
         var data = ResourcesController.Quest.GetDataByCondition(condition);
 
-        txtQuest.text = $"Level {level + 1}: {data.Quest.ToUpper()}";
+        txtQuest.text = $"Level {level + 1}: {data.Quest}";
         imgQuest.sprite = data.Sprite;
     }
 
