@@ -131,6 +131,12 @@ public enum SoundType
     HeroCut3,
     HeroPushWall,
     BuildItemDone,
+    TowerLevelUp,
+    BearDie,
+    BearStart,
+    DragonDie,
+    DragonStart,
+    PickKey
 }
 
 public enum WorldType

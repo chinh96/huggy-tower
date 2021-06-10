@@ -15,7 +15,11 @@ public class EnemyDragon : Unit, IAnim
 
     private Action _callbackAttackPlayer;
 
-    private void Start() { attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent); }
+    private void Start()
+    {
+        attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
+        SoundController.Instance.PlayOnce(SoundType.DragonStart);
+    }
 
     public override void OnAttack(int damage, Action callback)
     {
@@ -54,9 +58,7 @@ public class EnemyDragon : Unit, IAnim
     {
         skeleton.Play("die", false);
 
-        SoundType[] soundTypes = { SoundType.EnemyDie, SoundType.EnemyDie2, SoundType.EnemyDie3 };
-        SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
-        SoundController.Instance.PlayOnce(soundType);
+        SoundController.Instance.PlayOnce(SoundType.DragonDie);
     }
 
     public void PlayWin(bool isLoop) { }

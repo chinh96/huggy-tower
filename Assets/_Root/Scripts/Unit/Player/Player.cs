@@ -198,6 +198,8 @@ public class Player : Unit, IAnim
 
             if (cache != null)
             {
+                SoundController.Instance.PlayOnce(SoundType.TowerLevelUp);
+
                 GameController.Instance.Root.LevelMap.visitTower.slots.Remove(cache);
                 var fitter = GameController.Instance.Root.LevelMap.visitTower.fitter;
                 cache.transform.DOScale(Vector3.zero, 0.5f)
@@ -780,6 +782,7 @@ public class Player : Unit, IAnim
             case ItemType.Key:
                 hasKey = true;
                 skeleton.Play("Pick", false);
+                SoundController.Instance.PlayOnce(SoundType.PickKey);
                 break;
             case ItemType.BrokenBrick:
                 SoundController.Instance.PlayOnce(SoundType.HeroPushWall);
