@@ -712,15 +712,20 @@ public class Player : Unit, IAnim
             SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
             SoundController.Instance.PlayOnce(soundType);
 
+            string[] attacks;
             if (EquipType == ItemType.Gloves)
             {
-                skeleton.Play("AttackGlove", false);
+                attacks = new string[] { "AttackGlove", "AttackGlove2" };
+            }
+            else if (EquipType == ItemType.Knife)
+            {
+                attacks = new string[] { "AttackKnife", "AttackKnife2" };
             }
             else
             {
-                string[] attacks = { "Attack2", "AttackHit", "AttackHit2" };
-                skeleton.Play(attacks[UnityEngine.Random.Range(0, attacks.Length)], false);
+                attacks = new string[] { "Attack2", "AttackHit", "AttackHit2" };
             }
+            skeleton.Play(attacks[UnityEngine.Random.Range(0, attacks.Length)], false);
         }
 
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
@@ -769,6 +774,11 @@ public class Player : Unit, IAnim
             case ItemType.Gloves:
             case ItemType.Food:
             case ItemType.Shield:
+            case ItemType.Knife:
+                skeleton.Play("Pick", false);
+                break;
+            case ItemType.Key:
+                hasKey = true;
                 skeleton.Play("Pick", false);
                 break;
             case ItemType.BrokenBrick:
@@ -781,10 +791,6 @@ public class Player : Unit, IAnim
                     effectHitWall.gameObject.SetActive(true);
                     effectHitWall.Play();
                 });
-                break;
-            case ItemType.Key:
-                hasKey = true;
-                skeleton.Play("Pick", false);
                 break;
             default:
                 if (EquipType == ItemType.Sword)
