@@ -29,7 +29,7 @@ public class AchievementItem : MonoBehaviour
         number.text = data.NumberCurrent + "/" + data.NumberTarget;
         title.text = data.Text.Replace("{}", data.NumberTarget.ToString());
         buttonActive.SetActive(data.NumberCurrent >= data.NumberTarget);
-        buttonActive.SetActive(data.NumberCurrent < data.NumberTarget);
+        buttonDeactive.SetActive(data.NumberCurrent < data.NumberTarget);
         bonus.text = data.NumberTarget.ToString();
         progress.fillAmount = (float)data.NumberCurrent / data.NumberTarget;
     }
