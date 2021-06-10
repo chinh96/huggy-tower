@@ -16,6 +16,7 @@ public class CoinGeneration : MonoBehaviour
     [SerializeField] private float durationTarget;
     [SerializeField] private Ease easeNear;
     [SerializeField] private Ease easeTarget;
+    [SerializeField] private float scale = 1;
     private int numberCoinMoveDone;
     private System.Action moveOneCoinDone;
     private System.Action moveAllCoinDone;
@@ -48,6 +49,7 @@ public class CoinGeneration : MonoBehaviour
         {
             await Task.Delay(Random.Range(0, delay));
             GameObject coin = Instantiate(coinPrefab, transform);
+            coin.transform.localScale = Vector3.one * scale;
             coin.transform.position = this.from.transform.position;
             MoveCoin(coin);
         }

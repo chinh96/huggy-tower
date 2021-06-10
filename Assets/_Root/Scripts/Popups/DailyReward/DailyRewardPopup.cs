@@ -9,6 +9,7 @@ public class DailyRewardPopup : Popup
     [SerializeField] private GameObject x5Button;
     [SerializeField] private TextMeshProUGUI x5Text;
     [SerializeField] private List<DailyRewardItem> dailyRewardItems;
+    [SerializeField] private CoinGeneration coinGeneration;
 
     private int coinCurrent;
     private bool hasCoinCurrent;
@@ -48,22 +49,37 @@ public class DailyRewardPopup : Popup
         this.coinCurrent = coinCurrent;
     }
 
-    public void OnClickClaim()
+    public void OnClickClaim(GameObject claimButton)
     {
-        Claim(1);
+        int coinTotal = Data.CoinTotal + coinCurrent;
+        coinGeneration.GenerateCoin(() =>
+        {
+            Data.CoinTotal++;
+        }, () =>
+        {
+            Data.CoinTotal = coinTotal;
+            Claim();
+        }, claimButton);
     }
 
     public void OnClickClaimAds()
     {
         AdController.Instance.ShowRewardedAd(() =>
         {
-            Claim(5);
+            int coinTotal = Data.CoinTotal + coinCurrent * 5;
+            coinGeneration.GenerateCoin(() =>
+            {
+                Data.CoinTotal++;
+            }, () =>
+            {
+                Data.CoinTotal = coinTotal;
+                Claim();
+            }, x5Button);
         });
     }
 
-    public void Claim(int multiplier)
+    public void Claim()
     {
-        Data.CoinTotal += coinCurrent * multiplier;
         Data.DailyRewardCurrent++;
         Reset();
     }

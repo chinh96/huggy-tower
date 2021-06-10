@@ -7,6 +7,7 @@ public class WinPopup : Popup
     [SerializeField] private ProgressGift progressGift;
     [SerializeField] private GameObject tapToContinueButton;
     [SerializeField] private GameObject claimX5Button;
+    [SerializeField] private CoinGeneration coinGeneration;
 
     protected override void BeforeShow()
     {
@@ -33,8 +34,16 @@ public class WinPopup : Popup
     {
         AdController.Instance.ShowRewardedAd(() =>
         {
-            Data.CoinTotal += ResourcesController.Config.CoinBonusPerLevel * 5;
             claimX5Button.SetActive(false);
+
+            int coinTotal = ResourcesController.Config.CoinBonusPerLevel * 5;
+            coinGeneration.GenerateCoin(() =>
+            {
+                Data.CoinTotal++;
+            }, () =>
+            {
+                Data.CoinTotal = coinTotal;
+            });
         });
     }
 

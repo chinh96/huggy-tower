@@ -138,7 +138,7 @@ public class DailyRewardItem : MonoBehaviour
             Data.CurrentSkinHero = skinData.SkinName;
             skinData.IsUnlocked = true;
         }
-        dailyRewardPopup.OnClickClaim();
+        dailyRewardPopup.OnClickClaim(claimButton);
     }
 
     private enum DailyRewardType

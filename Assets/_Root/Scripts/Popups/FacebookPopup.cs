@@ -6,6 +6,9 @@ using DG.Tweening;
 public class FacebookPopup : Popup
 {
     [SerializeField] private List<GameObject> backgrounds;
+    [SerializeField] private GameObject buttonClaim;
+    [SerializeField] private CoinGeneration coinGeneration;
+    [SerializeField] private GameObject coinTotal;
 
     protected override void BeforeShow()
     {
@@ -28,6 +31,7 @@ public class FacebookPopup : Popup
     private void CheckBackground()
     {
         backgrounds[Data.JoinFbProgress].SetActive(true);
+        coinTotal.SetActive(Data.JoinFbProgress < 2);
     }
 
     public void OnClickFacebookButton()
@@ -44,8 +48,17 @@ public class FacebookPopup : Popup
 
     public void OnClickClaimButton()
     {
-        Data.JoinFbProgress++;
-        Data.CoinTotal += 500;
-        Close();
+        buttonClaim.SetActive(false);
+
+        int coinTotal = Data.CoinTotal + 500;
+        coinGeneration.GenerateCoin(() =>
+        {
+            Data.CoinTotal++;
+        }, () =>
+        {
+            Data.CoinTotal = coinTotal;
+            Data.JoinFbProgress++;
+            Close();
+        });
     }
 }
