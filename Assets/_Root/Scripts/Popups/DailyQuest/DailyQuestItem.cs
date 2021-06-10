@@ -12,6 +12,8 @@ public class DailyQuestItem : MonoBehaviour
     [SerializeField] private GameObject button;
     [SerializeField] private GameObject buttonActive;
     [SerializeField] private GameObject buttonDeactive;
+    [SerializeField] private Image progress;
+    [SerializeField] private TextMeshProUGUI number;
 
     private DailyQuestData data;
     private DailyQuestPopup dailyQuestPopup;
@@ -30,6 +32,8 @@ public class DailyQuestItem : MonoBehaviour
         buttonActive.SetActive(data.IsUnlocked && !data.IsClaimed);
         buttonDeactive.SetActive(!data.IsUnlocked);
         button.SetActive(!data.IsClaimed);
+        progress.fillAmount = data.IsUnlocked ? 1 : 0;
+        number.text = data.IsUnlocked ? "1/1" : "0/1";
     }
 
     public void OnClickClaimButton()

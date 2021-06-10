@@ -18,4 +18,5 @@ public class QuestData
     public ELevelCondition Condition;
     public string Quest;
     public Sprite Sprite;
+    public Sprite SpriteSquare;
 }

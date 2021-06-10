@@ -43,7 +43,7 @@ public class DailyQuestData
     public ELevelCondition Condition;
     [GUID] public string Id;
     public int Bonus;
-    public Sprite Sprite => ResourcesController.Quest.GetQuestByCondition(Condition).Sprite;
+    public Sprite Sprite => ResourcesController.Quest.GetQuestByCondition(Condition).SpriteSquare;
     public string Title => ResourcesController.Quest.GetQuestByCondition(Condition).Quest;
     public bool IsUnlocked
     {
