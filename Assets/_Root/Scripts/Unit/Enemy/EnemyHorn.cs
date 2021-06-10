@@ -53,6 +53,7 @@ public class EnemyHorn : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
+        ResourcesController.Achievement.IncreaseByType(AchievementType.NormalEnemy);
     }
 
     public override void DarknessRise() { }

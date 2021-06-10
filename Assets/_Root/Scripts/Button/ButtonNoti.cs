@@ -38,6 +38,9 @@ public class ButtonNoti : MonoBehaviour
             case NotiType.Daily:
                 hasNoti = ResourcesController.DailyReward.HasNoti;
                 break;
+            case NotiType.Achievement:
+                hasNoti = ResourcesController.Achievement.HasNoti;
+                break;
         }
 
         noti.SetActive(hasNoti);

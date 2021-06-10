@@ -40,6 +40,7 @@ public class EnemyWolf : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
+        ResourcesController.Achievement.IncreaseByType(AchievementType.WolfEnemy);
     }
 
     public SkeletonGraphic Skeleton => skeleton;
