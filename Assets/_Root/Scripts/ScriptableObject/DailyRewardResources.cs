@@ -11,7 +11,5 @@ public class DailyRewardResources : ScriptableObject
 
     public List<int> DailyRewardsLoop;
 
-    public int TotalDays => (int)(DateTime.Now - DateTime.Parse(Data.DateTimeStart)).TotalDays;
-
-    public bool HasNoti => Data.DailyRewardCurrent > TotalDays;
+    public bool HasNoti => Data.DailyRewardCurrent > Data.TotalDays;
 }

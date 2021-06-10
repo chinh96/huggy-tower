@@ -7,20 +7,9 @@ using UnityEditor;
 [CreateAssetMenu(fileName = "QuestResources", menuName = "ScriptableObjects/QuestResources")]
 public class QuestResources : ScriptableObject
 {
-    public List<QuestData> questDatas;
+    public List<QuestData> QuestDatas;
 
-    public QuestData GetDataByCondition(ELevelCondition condition)
-    {
-        foreach (var data in questDatas)
-        {
-            if (data.Condition == condition)
-            {
-                return data;
-            }
-        }
-
-        return null;
-    }
+    public QuestData GetQuestByCondition(ELevelCondition condition) => QuestDatas.Find(item => item.Condition == condition);
 }
 
 [Serializable]

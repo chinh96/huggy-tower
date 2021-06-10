@@ -13,6 +13,7 @@ public class ResourcesController : Singleton<ResourcesController>
     [SerializeField] private QuestResources questResources;
     [SerializeField] private ConfigResources config;
     [SerializeField] private AchievementResources achievement;
+    [SerializeField] private DailyQuestResources dailyQuest;
 
     public static SkinResources Hero;
     public static SkinResources Princess;
@@ -22,6 +23,7 @@ public class ResourcesController : Singleton<ResourcesController>
     public static QuestResources Quest;
     public static ConfigResources Config;
     public static AchievementResources Achievement;
+    public static DailyQuestResources DailyQuest;
 
     private void OnEnable()
     {
@@ -33,6 +35,7 @@ public class ResourcesController : Singleton<ResourcesController>
         Quest = questResources;
         Config = config;
         Achievement = achievement;
+        DailyQuest = dailyQuest;
     }
 
     private void Start()

@@ -185,7 +185,7 @@ public class GameController : Singleton<GameController>
 
     public void UpdateDislayCurrentLevel(int level, ELevelCondition condition)
     {
-        var data = ResourcesController.Quest.GetDataByCondition(condition);
+        var data = ResourcesController.Quest.GetQuestByCondition(condition);
 
         txtQuest.text = $"Level {level + 1}: {data.Quest}";
         imgQuest.sprite = data.Sprite;
@@ -273,6 +273,13 @@ public class GameController : Singleton<GameController>
         {
             ShowPopupWin();
         });
+
+        CheckDailyQuest();
+    }
+
+    private void CheckDailyQuest()
+    {
+        ResourcesController.DailyQuest.UnlockByCondition(root.LevelMap.condition);
     }
 
     public void OnLoseLevel()

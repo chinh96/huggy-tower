@@ -90,4 +90,9 @@ public class HomeController : Singleton<HomeController>
     {
         PopupController.Instance.Show<FacebookPopup>();
     }
+
+    public void OnClickDailyQuestButton()
+    {
+        PopupController.Instance.Show<DailyQuestPopup>();
+    }
 }
