@@ -24,8 +24,20 @@ public class LevelRoot : MonoBehaviour
         Clear();
         if (levelMapPrefab != null)
         {
+#if UNITY_EDITOR
+            if (ResourcesController.Config.LevelDebug != null)
+            {
+                levelMap = Instantiate(ResourcesController.Config.LevelDebug, transform, false);
+            }
+            else
+            {
+                levelMap = Instantiate(levelMapPrefab, transform, false);
+                levelMap.transform.localPosition = Vector3.zero;
+            }
+#else
             levelMap = Instantiate(levelMapPrefab, transform, false);
             levelMap.transform.localPosition = Vector3.zero;
+#endif
             StartTimer();
         }
     }

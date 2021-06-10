@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ConfigResources", menuName = "ScriptableObjects/ConfigResources")]
 public class ConfigResources : ScriptableObject
 {
+    public LevelMap LevelDebug;
     public int MaxLevelCanReach;
     public int MaxLevelWithOutTutorial;
     public List<int> LevelSkips;
