@@ -779,11 +779,21 @@ public class Player : Unit, IAnim
         switch (type)
         {
             case ItemType.Sword:
-            case ItemType.Gloves:
-            case ItemType.Food:
-            case ItemType.Shield:
             case ItemType.Knife:
                 skeleton.Play("Pick", false);
+                SoundController.Instance.PlayOnce(SoundType.HeroPickSword);
+                break;
+            case ItemType.Gloves:
+                skeleton.Play("Pick", false);
+                SoundController.Instance.PlayOnce(SoundType.PickGloves);
+                break;
+            case ItemType.Food:
+                skeleton.Play("Pick", false);
+                SoundController.Instance.PlayOnce(SoundType.PickFood);
+                break;
+            case ItemType.Shield:
+                skeleton.Play("Pick", false);
+                SoundController.Instance.PlayOnce(SoundType.PickShield);
                 break;
             case ItemType.Key:
                 hasKey = true;

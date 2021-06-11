@@ -32,7 +32,6 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
             player.EquipType = EquipType;
             IncreaseDamage(player);
             ChangeSword(player);
-            SoundController.Instance.PlayOnce(SoundType.HeroPickSword);
         }
     }
 

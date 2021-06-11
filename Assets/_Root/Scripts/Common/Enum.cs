@@ -136,7 +136,10 @@ public enum SoundType
     BearStart,
     DragonDie,
     DragonStart,
-    PickKey
+    PickKey,
+    PickFood,
+    PickGloves,
+    PickShield
 }
 
 public enum WorldType
