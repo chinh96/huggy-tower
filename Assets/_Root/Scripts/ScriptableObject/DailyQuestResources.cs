@@ -33,6 +33,22 @@ public class DailyQuestResources : ScriptableObject
             item.IsClaimed = false;
         });
     }
+
+    public bool HasNoti
+    {
+        get
+        {
+            foreach (DailyQuestData dailyQuestData in DailyQuestDatasCurrent)
+            {
+                if (dailyQuestData.IsUnlocked && !dailyQuestData.IsClaimed)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
 }
 
 [Serializable]

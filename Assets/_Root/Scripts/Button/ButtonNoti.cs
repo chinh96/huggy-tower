@@ -41,6 +41,12 @@ public class ButtonNoti : MonoBehaviour
             case NotiType.Achievement:
                 hasNoti = ResourcesController.Achievement.HasNoti;
                 break;
+            case NotiType.DailyQuest:
+                hasNoti = ResourcesController.DailyQuest.HasNoti;
+                break;
+            case NotiType.Facebook:
+                hasNoti = Data.JoinFbProgress < 2;
+                break;
         }
 
         noti.SetActive(hasNoti);

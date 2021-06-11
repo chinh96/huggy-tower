@@ -56,8 +56,8 @@ public class FacebookPopup : Popup
             Data.CoinTotal++;
         }, () =>
         {
-            Data.CoinTotal = coinTotal;
             Data.JoinFbProgress++;
+            Data.CoinTotal = coinTotal;
             Close();
         });
     }

@@ -13,7 +13,9 @@ public enum NotiType
     Build,
     Skin,
     Daily,
-    Achievement
+    Achievement,
+    DailyQuest,
+    Facebook
 }
 
 public enum EGameState
