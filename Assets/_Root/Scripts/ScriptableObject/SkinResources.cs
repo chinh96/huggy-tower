@@ -32,6 +32,10 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
             return false;
         }
     }
+    public void Reset()
+    {
+        SkinDefault.IsUnlocked = true;
+    }
 }
 
 

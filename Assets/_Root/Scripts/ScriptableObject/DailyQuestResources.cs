@@ -25,9 +25,13 @@ public class DailyQuestResources : ScriptableObject
         return DailyQuestDatasCurrent.TrueForAll(item => item.IsUnlocked);
     }
 
-    private void Start()
+    public void Reset()
     {
-        DailyQuestItems[(Data.TotalDays - 1) % DailyQuestItems.Count].DailyQuestDatas.ForEach(item => item.IsUnlocked = false);
+        DailyQuestItems[(Data.TotalDays - 1) % DailyQuestItems.Count].DailyQuestDatas.ForEach(item =>
+        {
+            item.IsUnlocked = false;
+            item.IsClaimed = false;
+        });
     }
 }
 

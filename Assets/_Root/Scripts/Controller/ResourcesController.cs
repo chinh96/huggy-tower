@@ -41,7 +41,12 @@ public class ResourcesController : Singleton<ResourcesController>
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+        Reset();
+    }
 
-        Hero.SkinDefault.IsUnlocked = true;
+    private void Reset()
+    {
+        Hero.Reset();
+        DailyQuest.Reset();
     }
 }
