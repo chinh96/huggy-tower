@@ -68,6 +68,16 @@ public static class AnalyticController
         LogEvent(Constants.SKIP_LEVEL, new Parameter[] { });
     }
 
+    public static void ClickDailyquestButton()
+    {
+        LogEvent(Constants.CLICK_DAILY_QUEST_BUTTON, new Parameter[] { });
+    }
+
+    public static void ClaimDailyQuest()
+    {
+        LogEvent(Constants.CLAIM_DAILY_QUEST, new Parameter[] { });
+    }
+
     private static void LogEvent(string name, Parameter[] param)
     {
         FirebaseAnalytics.LogEvent(name, param);
