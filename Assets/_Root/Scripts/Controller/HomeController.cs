@@ -93,7 +93,7 @@ public class HomeController : Singleton<HomeController>
 
     public void OnClickDailyQuestButton()
     {
-        AnalyticController.ClickDailyRequestButton();
+        AnalyticController.ClickDailyQuestButton();
         PopupController.Instance.Show<DailyQuestPopup>();
     }
 }

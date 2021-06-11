@@ -68,7 +68,7 @@ public static class AnalyticController
         LogEvent(Constants.SKIP_LEVEL, new Parameter[] { });
     }
 
-    public static void ClickDailyquestButton()
+    public static void ClickDailyQuestButton()
     {
         LogEvent(Constants.CLICK_DAILY_QUEST_BUTTON, new Parameter[] { });
     }
