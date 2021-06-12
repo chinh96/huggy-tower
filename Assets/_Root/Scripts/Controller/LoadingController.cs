@@ -14,11 +14,6 @@ public class LoadingController : MonoBehaviour
 
     private void Start()
     {
-        if (Data.DateTimeStart == "")
-        {
-            Data.DateTimeStart = DateTime.Now.ToString();
-        }
-
         FB.Init();
 
         Addressables.InitializeAsync();

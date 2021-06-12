@@ -41,6 +41,12 @@ public class ResourcesController : Singleton<ResourcesController>
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+
+        if (Data.DateTimeStart == "")
+        {
+            Data.DateTimeStart = DateTime.Now.ToString();
+        }
+
         Reset();
     }
 

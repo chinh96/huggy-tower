@@ -23,7 +23,7 @@ public class DailyRewardPopup : Popup
 
     public void Reset()
     {
-        int dayTotal = (int)(DateTime.Now - DateTime.Parse(Data.DateTimeStart)).TotalDays;
+        int dayTotal = Data.TotalDays;
         int dayStart = 7 * (Data.DailyRewardCurrent / 7);
         bool isDayLoop = dayStart >= ResourcesController.DailyReward.DailyRewards.Count;
         int dayOffset = 0;
