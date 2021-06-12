@@ -632,7 +632,7 @@ public class Player : Unit, IAnim
         }
 
         StartDragTurn();
-        if (GameController.Instance.Root.LevelMap.visitTower.IsClearTower() && GameController.Instance.Root.LevelMap.condition == ELevelCondition.KillAll)
+        if (GameController.Instance.Root.LevelMap.visitTower.IsClearTower())
         {
             PlayWin(true);
             GameController.Instance.OnWinLevel();

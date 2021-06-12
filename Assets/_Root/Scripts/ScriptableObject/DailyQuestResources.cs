@@ -64,7 +64,6 @@ public class DailyQuestResources : ScriptableObject
         DailyQuestDayCurrent.DailyQuestDayItems.ForEach(item =>
         {
             item.dailyQuestData = DailyQuestDatas.Find(data => data.Type == item.Type);
-            Debug.Log(item.dailyQuestData);
         });
     }
 }
