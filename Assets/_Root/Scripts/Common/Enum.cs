@@ -175,5 +175,6 @@ public enum DailyQuestType
     DragonEnemy,
     BearEnemy,
     Princess,
-    Chest
+    Chest,
+    LevelPassed
 }

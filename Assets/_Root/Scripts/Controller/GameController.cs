@@ -258,6 +258,8 @@ public class GameController : Singleton<GameController>
     {
         AnalyticController.CompleteLevel();
 
+        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LevelPassed);
+
         MoveOutAnim();
 
         firePaper.gameObject.SetActive(true);
