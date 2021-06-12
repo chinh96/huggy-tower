@@ -33,6 +33,7 @@ public class Player : Unit, IAnim
     [SerializeField] private ParticleSystem effectPickSword;
     [SerializeField] private ParticleSystem effectHit;
     [SerializeField] private ParticleSystem effectFingerPress;
+    [SerializeField] private ParticleSystem effectShield;
 
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
     public bool FirstTurn { get; set; }
@@ -796,6 +797,11 @@ public class Player : Unit, IAnim
             case ItemType.Shield:
                 skeleton.Play("Pick", false);
                 SoundController.Instance.PlayOnce(SoundType.PickShield);
+                DOTween.Sequence().AppendInterval(.8f).AppendCallback(() =>
+                {
+                    effectShield.gameObject.SetActive(true);
+                    effectShield.Play();
+                });
                 break;
             case ItemType.Key:
                 hasKey = true;
