@@ -76,10 +76,10 @@ public class DailyQuestDayItem
     public DailyQuestType Type;
     [GUID] public string Id;
     public int NumberTarget;
+    public int Bonus;
     public Sprite Sprite => dailyQuestData.Sprite;
     public string Number => (NumberCurrent > NumberTarget ? NumberTarget : NumberCurrent) + "/" + NumberTarget;
     public string Title => dailyQuestData.Text.Replace("{}", NumberTarget.ToString());
-    public int Bonus => dailyQuestData.Bonus;
     public int NumberCurrent
     {
         get { Data.DailyQuestId = Id; return Data.DailyQuestNumberCurrent; }
@@ -102,5 +102,4 @@ public class DailyQuestData
     public DailyQuestType Type;
     public string Text;
     public Sprite Sprite;
-    public int Bonus;
 }
