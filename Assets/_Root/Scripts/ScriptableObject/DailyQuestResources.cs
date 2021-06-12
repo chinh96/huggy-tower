@@ -16,15 +16,15 @@ public class DailyQuestResources : ScriptableObject
     {
         var item = GetItemByType(type);
 
-        if (NotiQuestController.Instance != null && item != null)
+        if (item != null)
         {
             item.NumberCurrent += value;
-
-            if (item.HasNoti)
+            if (NotiQuestController.Instance != null && item.HasNoti)
             {
                 NotiQuestController.Instance.Show(item);
             }
         }
+
     }
 
     public DailyQuestDayItem GetItemByType(DailyQuestType type)
