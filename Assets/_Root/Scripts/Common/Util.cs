@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Spine;
@@ -135,5 +136,14 @@ public static partial class Util
         Vector2 localPosition = Vector2.zero;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, position, camera, out localPosition);
         return rectTransform.rect.Contains(localPosition);
+    }
+
+    public static string SecondsToTimeFormatBeforeNewDay()
+    {
+        DateTime now = DateTime.Now;
+        DateTime end = new DateTime(now.Year, now.Month, now.Day, 23, 59, 59);
+        TimeSpan distance = end - now;
+
+        return string.Format("{0:00}:{1:00}:{2:00}", distance.Hours, distance.Minutes, distance.Seconds);
     }
 }
