@@ -580,7 +580,7 @@ public class Player : Unit, IAnim
         }
     }
 
-    public void IncreaseDamage(int damage)
+    public bool IncreaseDamage(int damage)
     {
         var cacheDamage = Damage;
         if (damage > 0)
@@ -601,6 +601,8 @@ public class Player : Unit, IAnim
             PlayDead();
             GameController.Instance.OnLoseLevel();
         }
+
+        return Damage > 0;
     }
 
     public void ChangeSword(string swordName = "")
