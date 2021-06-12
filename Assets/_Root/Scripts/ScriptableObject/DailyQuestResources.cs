@@ -50,15 +50,20 @@ public class DailyQuestResources : ScriptableObject
 
     public void Reset()
     {
-        DailyQuestDays[(Data.TotalDays - 1) % DailyQuestDays.Count].DailyQuestDayItems.ForEach(item =>
+        int totalDays = Data.TotalDays;
+        if (totalDays > 0)
         {
-            item.NumberCurrent = 0;
-            item.IsClaimed = false;
-        });
+            DailyQuestDays[(Data.TotalDays - 1) % DailyQuestDays.Count].DailyQuestDayItems.ForEach(item =>
+            {
+                item.NumberCurrent = 0;
+                item.IsClaimed = false;
+            });
+        }
 
         DailyQuestDayCurrent.DailyQuestDayItems.ForEach(item =>
         {
             item.dailyQuestData = DailyQuestDatas.Find(data => data.Type == item.Type);
+            Debug.Log(item.dailyQuestData);
         });
     }
 }
