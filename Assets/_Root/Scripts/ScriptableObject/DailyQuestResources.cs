@@ -19,9 +19,10 @@ public class DailyQuestResources : ScriptableObject
         if (item != null)
         {
             item.NumberCurrent += value;
-            if (NotiQuestController.Instance != null && item.HasNoti)
+            if (NotiQuestController.Instance != null && item.HasNoti && !item.IsShownNoti)
             {
                 NotiQuestController.Instance.Show(item);
+                item.IsShownNoti = true;
             }
         }
 
@@ -99,6 +100,12 @@ public class DailyQuestDayItem
         set { Data.IdCheckUnlocked = Id + "Claimed"; Data.IsUnlocked = value; }
     }
     public bool HasNoti => IsUnlocked && !IsClaimed;
+    public bool IsShownNoti
+    {
+        get { Data.IdCheckUnlocked = Id + "ShownNoti"; return Data.IsUnlocked; }
+
+        set { Data.IdCheckUnlocked = Id + "ShownNoti"; Data.IsUnlocked = value; }
+    }
 }
 
 [Serializable]
