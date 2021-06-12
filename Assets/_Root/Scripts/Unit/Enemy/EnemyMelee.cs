@@ -48,7 +48,18 @@ public class EnemyMelee : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-    public void PlayAttack() { skeleton.Play(IsSword ? "AttackSword" : "Attack", false); SoundController.Instance.PlayOnce(SoundType.EnemyCut); }
+    public void PlayAttack()
+    {
+        skeleton.Play(IsSword ? "AttackSword" : "Attack", false);
+        if (IsSword)
+        {
+            SoundController.Instance.PlayOnce(SoundType.EnemyCut);
+        }
+        else
+        {
+            SoundController.Instance.PlayOnce(SoundType.EnemyShoot);
+        }
+    }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
