@@ -273,13 +273,6 @@ public class GameController : Singleton<GameController>
         {
             ShowPopupWin();
         });
-
-        CheckDailyQuest();
-    }
-
-    private void CheckDailyQuest()
-    {
-        ResourcesController.DailyQuest.IncreaseByCondition(root.LevelMap.condition);
     }
 
     public void OnLoseLevel()

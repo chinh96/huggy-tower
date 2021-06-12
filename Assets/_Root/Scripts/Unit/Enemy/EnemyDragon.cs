@@ -45,6 +45,7 @@ public class EnemyDragon : Unit, IAnim
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
         ResourcesController.Achievement.IncreaseByType(AchievementType.DragonEnemy);
+        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.DragonEnemy);
     }
 
     public SkeletonGraphic Skeleton => skeleton;

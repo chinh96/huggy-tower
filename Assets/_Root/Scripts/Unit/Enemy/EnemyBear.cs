@@ -45,6 +45,7 @@ public class EnemyBear : Unit, IAnim
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
         ResourcesController.Achievement.IncreaseByType(AchievementType.BearEnemy);
+        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.BearEnemy);
     }
 
     public SkeletonGraphic Skeleton => skeleton;

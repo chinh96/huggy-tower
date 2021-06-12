@@ -24,5 +24,6 @@ public class ItemChest : Item, IAnim
     {
         PlayWin();
         ResourcesController.Achievement.IncreaseByType(AchievementType.Chest);
+        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Chest);
     }
 }

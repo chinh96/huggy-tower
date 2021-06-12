@@ -17,7 +17,7 @@ public class DailyQuestPopup : Popup
         base.AfterInstantiate();
         int index = 0;
 
-        List<DailyQuestData> dailyQuestDatas = ResourcesController.DailyQuest.DailyQuestDatasCurrent;
+        List<DailyQuestData> dailyQuestDatas = ResourcesController.DailyQuest.DailyQuestDayCurrent.DailyQuestDatas;
         dailyQuestDatas.ForEach(dailyQuestData =>
         {
             DailyQuestItem item = Instantiate(dailyQuestItem, content);

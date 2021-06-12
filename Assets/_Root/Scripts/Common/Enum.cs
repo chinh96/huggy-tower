@@ -165,3 +165,15 @@ public enum AchievementType
     Princess,
     Chest
 }
+
+public enum DailyQuestType
+{
+    NormalEnemy,
+    WolfEnemy,
+    DemonEnemy,
+    GhostEnemy,
+    DragonEnemy,
+    BearEnemy,
+    Princess,
+    Chest
+}

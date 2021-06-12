@@ -33,7 +33,7 @@ public class DailyQuestItem : MonoBehaviour
         buttonDeactive.SetActive(!data.IsUnlocked);
         button.SetActive(!data.IsClaimed);
         progress.fillAmount = (float)data.NumberCurrent / data.NumberTarget;
-        number.text = (data.NumberCurrent > data.NumberTarget ? data.NumberTarget : data.NumberCurrent) + "/" + data.NumberTarget;
+        number.text = data.Number;
     }
 
     public void OnClickClaimButton()

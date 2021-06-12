@@ -41,6 +41,7 @@ public class EnemyDemon : Unit, IAnim
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
         ResourcesController.Achievement.IncreaseByType(AchievementType.DemonEnemy);
+        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.DemonEnemy);
     }
 
     public SkeletonGraphic Skeleton => skeleton;

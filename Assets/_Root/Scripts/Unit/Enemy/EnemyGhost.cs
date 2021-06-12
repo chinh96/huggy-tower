@@ -41,6 +41,7 @@ public class EnemyGhost : Unit, IAnim
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
         ResourcesController.Achievement.IncreaseByType(AchievementType.GhostEnemy);
+        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GhostEnemy);
     }
 
     public override void DarknessRise() { }

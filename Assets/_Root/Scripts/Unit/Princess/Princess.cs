@@ -41,6 +41,7 @@ public class Princess : Unit, IAnim
             skeleton.Play("win 2", true);
         });
         ResourcesController.Achievement.IncreaseByType(AchievementType.Princess);
+        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Princess);
     }
 
     public void PlayLose(bool isLoop) { }
