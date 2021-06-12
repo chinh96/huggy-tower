@@ -37,6 +37,7 @@ public class Constants
     public const string JOIN_FB_PROGRESS = "JOIN_FB_PROGRESS";
     public const string ACHIEVEMENT_NUMBER_TARGET = "ACHIEVEMENT_NUMBER_TARGET";
     public const string ACHIEVEMENT_NUMBER_CURRENT = "ACHIEVEMENT_NUMBER_CURRENT";
+    public const string DAILY_QUEST_NUMBER_CURRENT = "DAILY_QUEST_NUMBER_CURRENT";
 
     // Scene
     public const string LOADING_SCENE = "LoadingScene";

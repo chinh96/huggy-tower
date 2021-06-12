@@ -15,9 +15,14 @@ public class DailyQuestResources : ScriptableObject
         return DailyQuestDatasCurrent.Find(item => item.Condition == condition);
     }
 
-    public void UnlockByCondition(ELevelCondition condition)
+    public void IncreaseByCondition(ELevelCondition condition)
     {
-        GetDailyQuestByCondition(condition).IsUnlocked = true;
+        GetDailyQuestByCondition(condition).NumberCurrent++;
+    }
+
+    public bool IsUnlockedByCondition(ELevelCondition condition)
+    {
+        return GetDailyQuestByCondition(condition).IsUnlocked;
     }
 
     public bool IsUnlockAll()
@@ -29,7 +34,7 @@ public class DailyQuestResources : ScriptableObject
     {
         DailyQuestItems[(Data.TotalDays - 1) % DailyQuestItems.Count].DailyQuestDatas.ForEach(item =>
         {
-            item.IsUnlocked = false;
+            item.NumberCurrent = 0;
             item.IsClaimed = false;
         });
     }
@@ -63,22 +68,24 @@ public class DailyQuestData
     public ELevelCondition Condition;
     [GUID] public string Id;
     public int Bonus;
+    public int NumberTarget;
     public Sprite Sprite => ResourcesController.Quest.GetQuestByCondition(Condition).SpriteSquare;
     public string Title => ResourcesController.Quest.GetQuestByCondition(Condition).Quest;
-    public bool IsUnlocked
+    public int NumberCurrent
     {
         get
         {
-            Data.IdCheckUnlocked = Id;
-            return Data.IsUnlocked;
+            Data.DailyQuestId = Id;
+            return Data.DailyQuestNumberCurrent;
         }
 
         set
         {
-            Data.IdCheckUnlocked = Id;
-            Data.IsUnlocked = value;
+            Data.DailyQuestId = Id;
+            Data.DailyQuestNumberCurrent = value;
         }
     }
+    public bool IsUnlocked => NumberCurrent >= NumberTarget;
     public bool IsClaimed
     {
         get

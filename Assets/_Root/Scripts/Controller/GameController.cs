@@ -279,7 +279,7 @@ public class GameController : Singleton<GameController>
 
     private void CheckDailyQuest()
     {
-        ResourcesController.DailyQuest.UnlockByCondition(root.LevelMap.condition);
+        ResourcesController.DailyQuest.IncreaseByCondition(root.LevelMap.condition);
     }
 
     public void OnLoseLevel()
