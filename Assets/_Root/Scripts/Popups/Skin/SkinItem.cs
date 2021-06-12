@@ -79,6 +79,8 @@ public class SkinItem : MonoBehaviour
 
         Data.CoinTotal -= skinData.Coin;
         Done();
+
+        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.BuySkin);
     }
 
     public void OnClickButtonAds()

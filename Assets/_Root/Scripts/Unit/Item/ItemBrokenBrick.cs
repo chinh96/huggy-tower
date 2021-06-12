@@ -15,6 +15,7 @@ public class ItemBrokenBrick : Item
             if (player.IncreaseDamage(-damage))
             {
                 gameObject.SetActive(false);
+                ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.PushWall);
             }
             SoundController.Instance.PlayOnce(SoundType.BlockWallBreak);
         }

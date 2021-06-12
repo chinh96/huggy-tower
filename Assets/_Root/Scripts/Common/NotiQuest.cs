@@ -15,11 +15,11 @@ public class NotiQuest : MonoBehaviour
     [SerializeField] private float duration = .3f;
     [SerializeField] private float delay = 2;
 
-    public void Init(DailyQuestData data)
+    public void Init(DailyQuestDayItem item)
     {
-        image.sprite = data.Sprite;
-        title.text = data.Title;
-        number.text = data.Number;
+        image.sprite = item.Sprite;
+        title.text = item.Title;
+        number.text = item.Number;
     }
 
     public void MoveIn()

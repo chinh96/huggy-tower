@@ -15,32 +15,32 @@ public class DailyQuestItem : MonoBehaviour
     [SerializeField] private Image progress;
     [SerializeField] private TextMeshProUGUI number;
 
-    private DailyQuestData data;
+    private DailyQuestDayItem item;
     private DailyQuestPopup dailyQuestPopup;
 
-    public void Init(DailyQuestData data, DailyQuestPopup dailyQuestPopup)
+    public void Init(DailyQuestDayItem item, DailyQuestPopup dailyQuestPopup)
     {
-        this.data = data;
+        this.item = item;
         this.dailyQuestPopup = dailyQuestPopup;
     }
 
     public void Reset()
     {
-        image.sprite = data.Sprite;
-        title.text = data.Title;
-        bonus.text = data.Bonus.ToString();
-        buttonActive.SetActive(data.IsUnlocked && !data.IsClaimed);
-        buttonDeactive.SetActive(!data.IsUnlocked);
-        button.SetActive(!data.IsClaimed);
-        progress.fillAmount = (float)data.NumberCurrent / data.NumberTarget;
-        number.text = data.Number;
+        image.sprite = item.Sprite;
+        title.text = item.Title;
+        bonus.text = item.Bonus.ToString();
+        buttonActive.SetActive(item.IsUnlocked && !item.IsClaimed);
+        buttonDeactive.SetActive(!item.IsUnlocked);
+        button.SetActive(!item.IsClaimed);
+        progress.fillAmount = (float)item.NumberCurrent / item.NumberTarget;
+        number.text = item.Number;
     }
 
     public void OnClickClaimButton()
     {
         AnalyticController.ClaimDailyQuest();
-        dailyQuestPopup.GenerateCoin(buttonActive, data.Bonus);
-        data.IsClaimed = true;
+        dailyQuestPopup.GenerateCoin(buttonActive, item.Bonus);
+        item.IsClaimed = true;
         Reset();
     }
 }

@@ -6,11 +6,11 @@ public class NotiQuestController : Singleton<NotiQuestController>
 {
     [SerializeField] private NotiQuest notiQuest;
 
-    public void Show(DailyQuestData data)
+    public void Show(DailyQuestDayItem item)
     {
         NotiQuest notiQuest = Instantiate(this.notiQuest, this.notiQuest.transform.parent);
         notiQuest.transform.position = this.notiQuest.transform.position;
-        notiQuest.Init(data);
+        notiQuest.Init(item);
         notiQuest.MoveIn();
     }
 }

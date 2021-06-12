@@ -17,14 +17,14 @@ public class DailyQuestPopup : Popup
         base.AfterInstantiate();
         int index = 0;
 
-        List<DailyQuestData> dailyQuestDatas = ResourcesController.DailyQuest.DailyQuestDayCurrent.DailyQuestDatas;
-        dailyQuestDatas.ForEach(dailyQuestData =>
+        List<DailyQuestDayItem> dailyQuestDayItems = ResourcesController.DailyQuest.DailyQuestDayCurrent.DailyQuestDayItems;
+        dailyQuestDayItems.ForEach(dailyQuestDayItem =>
         {
             DailyQuestItem item = Instantiate(dailyQuestItem, content);
-            item.Init(dailyQuestData, this);
+            item.Init(dailyQuestDayItem, this);
             dailyQuestItems.Add(item);
 
-            if (index < dailyQuestDatas.Count - 1)
+            if (index < dailyQuestDayItems.Count - 1)
             {
                 Instantiate(dailyQuestDecor, content);
             }

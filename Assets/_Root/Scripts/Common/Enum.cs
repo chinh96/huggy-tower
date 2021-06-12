@@ -176,5 +176,18 @@ public enum DailyQuestType
     BearEnemy,
     Princess,
     Chest,
-    LevelPassed
+    LevelPassed,
+    LoginFacebook,
+    CompleteEarth,
+    CompleteDesert,
+    CompleteIceland,
+    CompleteInferno,
+    CompleteJade,
+    CompleteOlympus,
+    BuySkin,
+    GetShield,
+    GetFood,
+    GetSword,
+    GetGloves,
+    PushWall
 }

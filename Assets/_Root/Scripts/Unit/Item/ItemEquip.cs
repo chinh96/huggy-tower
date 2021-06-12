@@ -32,6 +32,7 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
             player.EquipType = EquipType;
             IncreaseDamage(player);
             ChangeSword(player);
+            CheckDailyQuest();
         }
     }
 
@@ -57,6 +58,25 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
         if (EquipType != ItemType.Food && EquipType != ItemType.Shield)
         {
             player.ChangeSword(itemSwordSkin);
+        }
+    }
+
+    private void CheckDailyQuest()
+    {
+        switch (EquipType)
+        {
+            case ItemType.Shield:
+                ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetShield);
+                break;
+            case ItemType.Food:
+                ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetFood);
+                break;
+            case ItemType.Sword:
+                ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetSword);
+                break;
+            case ItemType.Gloves:
+                ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetGloves);
+                break;
         }
     }
 }

@@ -38,6 +38,8 @@ public class FacebookPopup : Popup
     {
         Data.JoinFbProgress++;
 
+        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LoginFacebook);
+
         DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
         {
             Reset();

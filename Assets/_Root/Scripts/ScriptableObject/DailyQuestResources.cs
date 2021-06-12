@@ -6,33 +6,39 @@ using System;
 [CreateAssetMenu(fileName = "DailyQuestResources", menuName = "ScriptableObjects/DailyQuestResources")]
 public class DailyQuestResources : ScriptableObject
 {
+    public List<DailyQuestData> DailyQuestDatas;
+
     public List<DailyQuestDay> DailyQuestDays;
 
     public DailyQuestDay DailyQuestDayCurrent => DailyQuestDays[Data.TotalDays % DailyQuestDays.Count];
 
     public void IncreaseByType(DailyQuestType type, int value = 1)
     {
-        var data = GetDataByType(type);
-        data.NumberCurrent += value;
+        var item = GetItemByType(type);
 
-        if (data.HasNoti)
+        if (NotiQuestController.Instance != null && item != null)
         {
-            NotiQuestController.Instance.Show(data);
+            item.NumberCurrent += value;
+
+            if (item.HasNoti)
+            {
+                NotiQuestController.Instance.Show(item);
+            }
         }
     }
 
-    public DailyQuestData GetDataByType(DailyQuestType type)
+    public DailyQuestDayItem GetItemByType(DailyQuestType type)
     {
-        return DailyQuestDayCurrent.DailyQuestDatas.Find(item => item.Type == type);
+        return DailyQuestDayCurrent.DailyQuestDayItems.Find(item => item.Type == type);
     }
 
     public bool HasNoti
     {
         get
         {
-            foreach (var DailyQuest in DailyQuestDayCurrent.DailyQuestDatas)
+            foreach (var item in DailyQuestDayCurrent.DailyQuestDayItems)
             {
-                if (DailyQuest.HasNoti)
+                if (item.HasNoti)
                 {
                     return true;
                 }
@@ -44,10 +50,15 @@ public class DailyQuestResources : ScriptableObject
 
     public void Reset()
     {
-        DailyQuestDays[(Data.TotalDays - 1) % DailyQuestDays.Count].DailyQuestDatas.ForEach(item =>
+        DailyQuestDays[(Data.TotalDays - 1) % DailyQuestDays.Count].DailyQuestDayItems.ForEach(item =>
         {
             item.NumberCurrent = 0;
             item.IsClaimed = false;
+        });
+
+        DailyQuestDayCurrent.DailyQuestDayItems.ForEach(item =>
+        {
+            item.dailyQuestData = DailyQuestDatas.Find(data => data.Type == item.Type);
         });
     }
 }
@@ -55,20 +66,20 @@ public class DailyQuestResources : ScriptableObject
 [Serializable]
 public class DailyQuestDay
 {
-    public List<DailyQuestData> DailyQuestDatas;
+    public List<DailyQuestDayItem> DailyQuestDayItems;
 }
 
 [Serializable]
-public class DailyQuestData
+public class DailyQuestDayItem
 {
+    [NonSerialized] public DailyQuestData dailyQuestData;
     public DailyQuestType Type;
     [GUID] public string Id;
-    public string Text;
-    public Sprite Sprite;
     public int NumberTarget;
-    public int Bonus;
+    public Sprite Sprite => dailyQuestData.Sprite;
     public string Number => (NumberCurrent > NumberTarget ? NumberTarget : NumberCurrent) + "/" + NumberTarget;
-    public string Title => Text.Replace("{}", NumberTarget.ToString());
+    public string Title => dailyQuestData.Text.Replace("{}", NumberTarget.ToString());
+    public int Bonus => dailyQuestData.Bonus;
     public int NumberCurrent
     {
         get { Data.DailyQuestId = Id; return Data.DailyQuestNumberCurrent; }
@@ -83,4 +94,13 @@ public class DailyQuestData
         set { Data.IdCheckUnlocked = Id + "Claimed"; Data.IsUnlocked = value; }
     }
     public bool HasNoti => IsUnlocked && !IsClaimed;
+}
+
+[Serializable]
+public class DailyQuestData
+{
+    public DailyQuestType Type;
+    public string Text;
+    public Sprite Sprite;
+    public int Bonus;
 }

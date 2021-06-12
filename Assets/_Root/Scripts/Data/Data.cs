@@ -12,7 +12,43 @@ public static class Data
     private static string GetString(string key, string defaultValue) => PlayerPrefs.GetString(key, defaultValue);
     private static void SetString(string id, string value) => PlayerPrefs.SetString(id, value);
 
-    public static int CurrentLevel { get => GetInt(Constants.CURRENT_LEVEL, 0); set => SetInt(Constants.CURRENT_LEVEL, value); }
+    public static int CurrentLevel
+    {
+        get => GetInt(Constants.CURRENT_LEVEL, 0);
+        set
+        {
+            foreach (var world in ResourcesController.Universe.Worlds)
+            {
+                if (value >= world.LevelUnlock)
+                {
+                    switch (world.WorldType)
+                    {
+                        case WorldType.Earth:
+                            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteEarth);
+                            break;
+                        case WorldType.Desert:
+                            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteDesert);
+                            break;
+                        case WorldType.Iceland:
+                            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteIceland);
+                            break;
+                        case WorldType.Inferno:
+                            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteInferno);
+                            break;
+                        case WorldType.Jade:
+                            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteJade);
+                            break;
+                        case WorldType.Olympus:
+                            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteOlympus);
+                            break;
+                    }
+
+                    break;
+                }
+            }
+            SetInt(Constants.CURRENT_LEVEL, value);
+        }
+    }
 
     public static int MaxLevel { get => GetInt(Constants.MAX_LEVEL, 0); set => SetInt(Constants.MAX_LEVEL, value); }
 
