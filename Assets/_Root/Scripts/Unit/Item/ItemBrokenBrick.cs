@@ -12,8 +12,10 @@ public class ItemBrokenBrick : Item
         var player = (Player)affectTarget;
         if (player != null)
         {
-            player.IncreaseDamage(-damage);
-            gameObject.SetActive(false);
+            if (player.IncreaseDamage(-damage))
+            {
+                gameObject.SetActive(false);
+            }
             SoundController.Instance.PlayOnce(SoundType.BlockWallBreak);
         }
     }
