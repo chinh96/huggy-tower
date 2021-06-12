@@ -14,6 +14,7 @@ public class ItemBrokenBrick : Item
         {
             if (player.IncreaseDamage(-damage))
             {
+                State = EUnitState.Invalid;
                 gameObject.SetActive(false);
                 ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.PushWall);
             }
