@@ -100,10 +100,13 @@ public static partial class Util
         skeletonGraphic.Skeleton.SetSlotsToSetupPose();
     }
 
-    public static void ChangeSword(this SkeletonGraphic skeletonGraphic, string swordName)
+    public static void ChangeSword(this SkeletonGraphic skeletonGraphic, List<string> swordNames)
     {
         Skin skin = new Skin("skin");
-        skin.AddSkin(skeletonGraphic.Skeleton.Data.FindSkin(swordName));
+        swordNames.ForEach(swordName =>
+        {
+            skin.AddSkin(skeletonGraphic.Skeleton.Data.FindSkin(swordName));
+        });
         skin.AddSkin(skeletonGraphic.Skeleton.Data.FindSkin(Data.CurrentSkinHero));
         skeletonGraphic.Skeleton.SetSkin(skin);
         skeletonGraphic.Skeleton.SetSlotsToSetupPose();

@@ -52,7 +52,7 @@ public class Player : Unit, IAnim
     private bool _isMouseUpDragDetected;
     private RoomTower _parentRoom;
     private bool _dragValidateRoomFlag;
-    private string swordName = "";
+    private List<string> swordNames = new List<string>();
     private bool hasKey = false;
 
     private void Start()
@@ -610,12 +610,12 @@ public class Player : Unit, IAnim
     {
         if (swordName != "")
         {
-            this.swordName = swordName;
+            swordNames.Add(swordName);
         }
 
-        if (this.swordName != "")
+        if (swordNames.Count > 0)
         {
-            Skeleton.ChangeSword(this.swordName);
+            Skeleton.ChangeSword(swordNames);
         }
     }
 

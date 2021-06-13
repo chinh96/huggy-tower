@@ -29,7 +29,10 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
         {
             State = EUnitState.Invalid;
             gameObject.SetActive(false);
-            player.EquipType = EquipType;
+            if (EquipType != ItemType.Key)
+            {
+                player.EquipType = EquipType;
+            }
             IncreaseDamage(player);
             ChangeSword(player);
             CheckDailyQuest();
