@@ -6,6 +6,7 @@ using TMPro;
 public class CountdownBeforeNewDay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI countdownText;
+    [SerializeField] private string pattern;
 
     private void Start()
     {
@@ -14,6 +15,6 @@ public class CountdownBeforeNewDay : MonoBehaviour
 
     private void Countdown()
     {
-        countdownText.text = Util.SecondsToTimeFormatBeforeNewDay();
+        countdownText.text = pattern.Replace("{}", Util.SecondsToTimeFormatBeforeNewDay());
     }
 }
