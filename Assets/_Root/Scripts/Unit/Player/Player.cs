@@ -632,11 +632,30 @@ public class Player : Unit, IAnim
         }
 
         StartDragTurn();
-        if (GameController.Instance.Root.LevelMap.visitTower.IsClearTower())
+        if (GameController.Instance.Root.LevelMap.visitTower.IsClearTower() && IsWinCondition(GameController.Instance.Root.LevelMap.condition))
         {
             PlayWin(true);
             GameController.Instance.OnWinLevel();
         }
+    }
+
+    private bool IsWinCondition(ELevelCondition condition)
+    {
+        bool isWin = false;
+
+        switch (condition)
+        {
+            case ELevelCondition.KillAll:
+            case ELevelCondition.KillBear:
+            case ELevelCondition.KillDemon:
+            case ELevelCondition.KillDragon:
+            case ELevelCondition.KillGhost:
+            case ELevelCondition.KillWolf:
+                isWin = true;
+                break;
+        }
+
+        return isWin;
     }
 
     private void BeingAttackedCallback()

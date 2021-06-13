@@ -66,7 +66,7 @@ public class DailyRewardPopup : Popup
     {
         AdController.Instance.ShowRewardedAd(() =>
         {
-            int coinTotal = Data.CoinTotal + coinCurrent * 5;
+            int coinTotal = Data.CoinTotal + coinCurrent * 2;
             coinGeneration.GenerateCoin(() =>
             {
                 Data.CoinTotal++;
@@ -91,6 +91,6 @@ public class DailyRewardPopup : Popup
 
     public void SetX5Text(int coin)
     {
-        x5Text.text = (coin * 5).ToString();
+        x5Text.text = (coin * 2).ToString();
     }
 }
