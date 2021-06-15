@@ -52,6 +52,9 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
             switch (EquipType)
             {
                 case ItemType.Food:
+                    damage = player.Damage / 2;
+                    break;
+                case ItemType.HolyWater:
                     damage = player.Damage;
                     break;
             }
@@ -62,7 +65,7 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
 
     private void ChangeSword(Player player)
     {
-        if (EquipType != ItemType.Food && EquipType != ItemType.Shield)
+        if (EquipType != ItemType.Food && EquipType != ItemType.Shield && EquipType != ItemType.HolyWater)
         {
             player.ChangeSword(itemSwordSkin);
         }
@@ -84,6 +87,9 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
             case ItemType.Gloves:
                 ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetGloves);
                 break;
+            case ItemType.HolyWater:
+                ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetHolyWater);
+                break;
         }
     }
 }
@@ -100,7 +106,7 @@ public class ItemSwordEditor : UnityEditor.Editor
     {
         base.OnInspectorGUI();
 
-        if (_item.EquipType != ItemType.Food && _item.EquipType != ItemType.Key)
+        if (_item.EquipType != ItemType.Food && _item.EquipType != ItemType.Key && _item.EquipType != ItemType.HolyWater)
         {
             _item.txtDamage.text = $"+{_item.damage}";
 

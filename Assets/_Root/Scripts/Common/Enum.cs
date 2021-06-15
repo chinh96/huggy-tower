@@ -60,7 +60,8 @@ public enum ItemType
     Shield,
     Key,
     Knife,
-    Trap
+    Trap,
+    HolyWater
 }
 
 public enum ETurn
@@ -190,5 +191,6 @@ public enum DailyQuestType
     GetFood,
     GetSword,
     GetGloves,
-    PushWall
+    PushWall,
+    GetHolyWater
 }
