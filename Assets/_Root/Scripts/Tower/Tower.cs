@@ -25,7 +25,6 @@ public class Tower : MonoBehaviour
         foreach (var slot in slots)
         {
             flag = slot.IsClearEnemyInRoom();
-            Debug.Log("flag " + flag);
             if (!flag)
             {
                 break;

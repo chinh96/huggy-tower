@@ -59,7 +59,8 @@ public enum ItemType
     Food,
     Shield,
     Key,
-    Knife
+    Knife,
+    Trap
 }
 
 public enum ETurn

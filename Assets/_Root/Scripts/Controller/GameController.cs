@@ -256,7 +256,6 @@ public class GameController : Singleton<GameController>
 
     public void OnWinLevel()
     {
-        Debug.Log(1);
         AnalyticController.CompleteLevel();
 
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LevelPassed);

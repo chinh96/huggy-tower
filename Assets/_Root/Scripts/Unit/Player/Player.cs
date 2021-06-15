@@ -838,6 +838,9 @@ public class Player : Unit, IAnim
                     effectHitWall.Play();
                 });
                 break;
+            case ItemType.Trap:
+                skeleton.Play("DieFire", false);
+                break;
             default:
                 if (EquipType == ItemType.Sword)
                 {
