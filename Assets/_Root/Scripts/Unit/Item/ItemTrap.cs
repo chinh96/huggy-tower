@@ -7,6 +7,7 @@ using DG.Tweening;
 public class ItemTrap : Item
 {
     [SerializeField] private SkeletonGraphic skeleton;
+    [SerializeField] private ParticleSystem particle;
     public TextMeshProUGUI txtDamage;
     public int damage;
 
@@ -18,21 +19,26 @@ public class ItemTrap : Item
             switch (EquipType)
             {
                 case ItemType.BrokenBrick:
-                    DecreaseDamage(player);
+                    DecreaseDamage(player, damage);
                     SoundController.Instance.PlayOnce(SoundType.BlockWallBreak);
                     break;
                 case ItemType.Trap:
                     skeleton.Play("Attack", false);
                     DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                     {
-                        DecreaseDamage(player);
+                        DecreaseDamage(player, damage);
                     });
+                    break;
+                case ItemType.Bomb:
+                    ParticleSystem particleSystem = Instantiate(particle, transform.parent);
+                    particleSystem.transform.position = transform.position;
+                    DecreaseDamage(player, player.Damage / 2);
                     break;
             }
         }
     }
 
-    private void DecreaseDamage(Player player)
+    private void DecreaseDamage(Player player, int damage)
     {
         if (player.IncreaseDamage(-damage))
         {

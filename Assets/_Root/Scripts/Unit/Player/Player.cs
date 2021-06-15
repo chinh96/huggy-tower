@@ -841,6 +841,9 @@ public class Player : Unit, IAnim
             case ItemType.Trap:
                 skeleton.Play("DieFire", false);
                 break;
+            case ItemType.Bomb:
+                skeleton.Play("DieFire", false);
+                break;
             default:
                 if (EquipType == ItemType.Sword)
                 {

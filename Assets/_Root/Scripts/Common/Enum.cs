@@ -61,7 +61,8 @@ public enum ItemType
     Key,
     Knife,
     Trap,
-    HolyWater
+    HolyWater,
+    Bomb
 }
 
 public enum ETurn
