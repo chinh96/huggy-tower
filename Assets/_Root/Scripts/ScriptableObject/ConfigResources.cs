@@ -12,4 +12,5 @@ public class ConfigResources : ScriptableObject
     public int CoinBonusPerLevel;
     public bool EnableAds;
     public bool EnableTest;
+    public int LevelShowRate;
 }

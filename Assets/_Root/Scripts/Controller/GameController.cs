@@ -274,6 +274,10 @@ public class GameController : Singleton<GameController>
         DOTween.Sequence().AppendInterval(delayWinLose).AppendCallback(() =>
         {
             ShowPopupWin();
+            if (Data.CurrentLevel == ResourcesController.Config.LevelShowRate)
+            {
+                PopupController.Instance.Show<RatingPopup>();
+            }
         });
     }
 
