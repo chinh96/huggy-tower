@@ -69,7 +69,7 @@ public class RatingController : Singleton<RatingController>
 #elif UNITY_IOS
         if (!Device.RequestStoreReview())
         {
-            Application.OpenURL("itms-apps://itunes.apple.com/app/id1554977035");
+            Application.OpenURL("itms-apps://itunes.apple.com/app/id1570840391");
         }
 #endif
     }
