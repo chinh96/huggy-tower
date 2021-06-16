@@ -87,7 +87,13 @@ public enum ELevelCondition
     KillDragon,
     KillGhost,
     KillWolf,
-    KillBear
+    KillBear,
+    KillBone,
+    KillYeti,
+    KillPoliceStick,
+    KillSpider,
+    KillDragonGold,
+    KillFire
 }
 
 public enum SkinType

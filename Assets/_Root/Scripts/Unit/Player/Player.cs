@@ -651,6 +651,12 @@ public class Player : Unit, IAnim
             case ELevelCondition.KillDragon:
             case ELevelCondition.KillGhost:
             case ELevelCondition.KillWolf:
+            case ELevelCondition.KillBone:
+            case ELevelCondition.KillYeti:
+            case ELevelCondition.KillPoliceStick:
+            case ELevelCondition.KillSpider:
+            case ELevelCondition.KillDragonGold:
+            case ELevelCondition.KillFire:
                 isWin = true;
                 break;
         }
