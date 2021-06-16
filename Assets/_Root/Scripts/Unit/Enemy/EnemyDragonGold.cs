@@ -47,14 +47,14 @@ public class EnemyDragonGold : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle2", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack2", false); SoundController.Instance.PlayOnce(SoundType.EnemyBite); }
+    public void PlayAttack() { skeleton.Play("Attack2", false); SoundController.Instance.PlayOnce(SoundType.DragonGoldAttack); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
     public void PlayDead()
     {
         skeleton.Play("Die2", false);
-        SoundController.Instance.PlayOnce(SoundType.EnemyDogDie);
+        SoundController.Instance.PlayOnce(SoundType.DragonGoldDie);
     }
 
     public void PlayWin(bool isLoop) { }

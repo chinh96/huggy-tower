@@ -145,7 +145,17 @@ public enum SoundType
     PickKey,
     PickFood,
     PickGloves,
-    PickShield
+    PickShield,
+    DragonGoldDie,
+    DragonGoldAttack,
+    FireDie,
+    FireAttack,
+    PoliceStickDie,
+    PoliceStickAttack,
+    SpiderDie,
+    SpiderAttack,
+    YetiDie,
+    YetiAttack
 }
 
 public enum WorldType

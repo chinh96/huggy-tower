@@ -51,7 +51,7 @@ public class EnemyYeti : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.DemonAttack); }
+    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.YetiAttack); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
@@ -59,7 +59,7 @@ public class EnemyYeti : Unit, IAnim
     {
         skeleton.Play("Die", false);
 
-        SoundController.Instance.PlayOnce(SoundType.BearDie);
+        SoundController.Instance.PlayOnce(SoundType.YetiDie);
     }
 
     public void PlayWin(bool isLoop) { }

@@ -51,7 +51,7 @@ public class EnemyPoliceStick : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle2", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack2", false); SoundController.Instance.PlayOnce(SoundType.DemonAttack); }
+    public void PlayAttack() { skeleton.Play("Attack2", false); SoundController.Instance.PlayOnce(SoundType.PoliceStickAttack); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
@@ -59,7 +59,7 @@ public class EnemyPoliceStick : Unit, IAnim
     {
         skeleton.Play("Die2", false);
 
-        SoundController.Instance.PlayOnce(SoundType.BearDie);
+        SoundController.Instance.PlayOnce(SoundType.PoliceStickDie);
     }
 
     public void PlayWin(bool isLoop) { }
