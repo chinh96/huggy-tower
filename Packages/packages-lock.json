@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "24d32d8441eb27da88e462a44935ab78e9172dbb"
     },
+    "com.google.android.appbundle": {
+      "version": "https://github.com/Gamee-Studio/android-app-bundle.git?path=Assets/_Root#1.4.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "0f274a20cd63cdf6190aa6850e890d2a19607c49"
+    },
     "com.google.external-dependency-manager": {
       "version": "https://github.com/Gamee-Studio/external-dependency-manager.git?path=Assets/_Root#1.2.161-pre1",
       "depth": 0,
@@ -40,6 +47,34 @@
         "com.google.firebase.app": "7.0.1"
       },
       "hash": "f45c46602db5738af72f0601927fa9b86755804a"
+    },
+    "com.google.play.common": {
+      "version": "https://github.com/Gamee-Studio/google-play-common.git?path=Assets/_Root#1.4.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.android.appbundle": "1.4.0"
+      },
+      "hash": "c863153c5cb24e73f9514f157e6588e3304a54e9"
+    },
+    "com.google.play.core": {
+      "version": "https://github.com/Gamee-Studio/google-play-core.git?path=Assets/_Root#1.4.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.android.appbundle": "1.4.0"
+      },
+      "hash": "169abb8166a6196467e2060a85901e9fce05a4e1"
+    },
+    "com.google.play.review": {
+      "version": "https://github.com/Gamee-Studio/in-app-review.git?path=Assets/_Root#1.4.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.google.play.common": "1.4.0",
+        "com.google.play.core": "1.4.0"
+      },
+      "hash": "db911d7d37ba7c974182053aabaacae6f41297a5"
     },
     "com.lance.local-notification": {
       "version": "https://github.com/yenmoc/local-notification.git?path=Assets/_Root",

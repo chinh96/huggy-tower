@@ -26,9 +26,6 @@ apply plugin: 'com.android.library'
 **APPLY_PLUGINS**
 
 dependencies {
-    configurations.all {
-        exclude group: 'com.android.billingclient', module: 'billing'
-    }
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 // Android Resolver Dependencies Start
     implementation 'com.google.android.gms:play-services-ads:20.0.0' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7

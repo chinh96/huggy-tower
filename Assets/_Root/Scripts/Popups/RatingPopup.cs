@@ -1,6 +1,6 @@
 ﻿public class RatingPopup : Popup
 {
-    public void LinkToStore()
+    public void OnClickOKButton()
     {
         RatingController.Instance.LinkToStore();
         Close();

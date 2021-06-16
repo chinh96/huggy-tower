@@ -276,7 +276,7 @@ public class GameController : Singleton<GameController>
             ShowPopupWin();
             if (Data.CurrentLevel == ResourcesController.Config.LevelShowRate)
             {
-                PopupController.Instance.Show<RatingPopup>();
+                PopupController.Instance.Show<RatingPopup>(null, ShowAction.DoNothing);
             }
         });
     }
