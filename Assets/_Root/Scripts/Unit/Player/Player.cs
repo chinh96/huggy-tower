@@ -839,10 +839,16 @@ public class Player : Unit, IAnim
                 });
                 break;
             case ItemType.Trap:
-                skeleton.Play("DieFire", false);
+                skeleton.Play("Die2", false);
                 break;
             case ItemType.Bomb:
                 skeleton.Play("DieFire", false);
+                break;
+            case ItemType.Bow:
+                DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                {
+                    skeleton.Play("Die2", false);
+                });
                 break;
             default:
                 if (EquipType == ItemType.Sword)

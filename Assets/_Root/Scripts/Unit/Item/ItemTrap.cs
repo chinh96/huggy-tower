@@ -34,6 +34,13 @@ public class ItemTrap : Item
                     particleSystem.transform.position = transform.position;
                     DecreaseDamage(player, player.Damage / 2);
                     break;
+                case ItemType.Bow:
+                    skeleton.Play("animation", false);
+                    DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                    {
+                        DecreaseDamage(player, damage);
+                    });
+                    break;
             }
         }
     }
@@ -43,7 +50,14 @@ public class ItemTrap : Item
         if (player.IncreaseDamage(-damage))
         {
             State = EUnitState.Invalid;
-            gameObject.SetActive(false);
+
+            switch (EquipType)
+            {
+                case ItemType.BrokenBrick:
+                case ItemType.Bomb:
+                    gameObject.SetActive(false);
+                    break;
+            }
 
             switch (EquipType)
             {
@@ -51,6 +65,8 @@ public class ItemTrap : Item
                     ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.PushWall);
                     break;
             }
+
+            txtDamage.gameObject.SetActive(false);
         }
     }
 }
