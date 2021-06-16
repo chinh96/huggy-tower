@@ -44,7 +44,6 @@ public class EnemyDragon : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.Achievement.IncreaseByType(AchievementType.DragonEnemy);
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.DragonEnemy);
     }
 

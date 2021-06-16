@@ -40,7 +40,6 @@ public class EnemyGhost : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.Achievement.IncreaseByType(AchievementType.GhostEnemy);
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GhostEnemy);
     }
 

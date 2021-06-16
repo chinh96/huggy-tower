@@ -204,5 +204,10 @@ public enum DailyQuestType
     GetSword,
     GetGloves,
     PushWall,
-    GetHolyWater
+    GetHolyWater,
+    DragonGold,
+    Fire,
+    PoliceStick,
+    Spider,
+    Yeti
 }

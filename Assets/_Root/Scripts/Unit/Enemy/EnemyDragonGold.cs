@@ -40,8 +40,7 @@ public class EnemyDragonGold : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.Achievement.IncreaseByType(AchievementType.WolfEnemy);
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.WolfEnemy);
+        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.DragonGold);
     }
 
     public SkeletonGraphic Skeleton => skeleton;
