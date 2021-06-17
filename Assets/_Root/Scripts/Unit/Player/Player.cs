@@ -199,25 +199,9 @@ public class Player : Unit, IAnim
 
             if (cache != null)
             {
-                SoundController.Instance.PlayOnce(SoundType.TowerLevelUp);
+                GameController.Instance.Root.LevelMap.visitTower.RemoveSlot(cache);
 
-                GameController.Instance.Root.LevelMap.visitTower.slots.Remove(cache);
-                var fitter = GameController.Instance.Root.LevelMap.visitTower.fitter;
-                cache.transform.DOScale(Vector3.zero, 0.5f)
-                    .SetEase(Ease.OutQuad)
-                    .OnUpdate(() =>
-                    {
-                        fitter.enabled = false;
-                        // ReSharper disable once Unity.InefficientPropertyAccess
-                        fitter.enabled = true;
-                    })
-                    .OnComplete(() => Destroy(cache.gameObject));
-
-                var newRoom = Instantiate(GameController.Instance.RoomPrefab, GameController.Instance.Root.LevelMap.homeTower.transform, false);
-                newRoom.transform.localScale = Vector3.zero;
-                newRoom.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InQuad);
-                GameController.Instance.Root.LevelMap.homeTower.slots.Add(newRoom);
-                GameController.Instance.Root.LevelMap.homeTower.smoke.Play();
+                GameController.Instance.Root.LevelMap.homeTower.AddSlot();
             }
 
             if (!FirstTurn) FirstTurn = true;
@@ -235,7 +219,6 @@ public class Player : Unit, IAnim
             ResetPlayerState();
             OnDeSelected();
             leanSelectableByFinger.Deselect();
-            // display effect
         }
     }
 
@@ -494,7 +477,16 @@ public class Player : Unit, IAnim
                         }
                     });
 
-                    timeDelay = _itemTarget.EquipType == ItemType.Sword ? 0.2f : .5f;
+                    timeDelay = .5f;
+                    switch (_itemTarget.EquipType)
+                    {
+                        case ItemType.Sword:
+                            timeDelay = .2f;
+                            break;
+                        case ItemType.Bow:
+                            timeDelay = 0;
+                            break;
+                    }
                     DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
                         _itemTarget.Collect(this);

@@ -283,16 +283,19 @@ public class GameController : Singleton<GameController>
 
     public void OnLoseLevel()
     {
-        AnalyticController.FailLevel();
-
-        MoveOutAnim();
-
-        GameState = EGameState.Lose;
-        SoundController.Instance.PlayOnce(SoundType.Lose);
-
-        DOTween.Sequence().AppendInterval(delayWinLose / 2).AppendCallback(() =>
+        root.LevelMap.homeTower.RemoveAll(() =>
         {
-            ShowPopupLose();
+            AnalyticController.FailLevel();
+
+            MoveOutAnim();
+
+            GameState = EGameState.Lose;
+            SoundController.Instance.PlayOnce(SoundType.Lose);
+
+            DOTween.Sequence().AppendInterval(delayWinLose / 2).AppendCallback(() =>
+            {
+                ShowPopupLose();
+            });
         });
     }
 
