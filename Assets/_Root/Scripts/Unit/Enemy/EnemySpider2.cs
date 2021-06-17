@@ -4,19 +4,16 @@ using Spine.Unity;
 using UnityEditor;
 #endif
 using UnityEngine;
-using DG.Tweening;
 
-public class EnemySpider : Unit, IAnim
+public class EnemySpider2 : Unit, IAnim
 {
     public SkeletonGraphic skeleton;
     public Rigidbody2D rigid;
     public Collider2D coll2D;
     public SpineAttackHandle attackHandle;
     public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
-    public ParticleSystem particle;
 
     private Action _callbackAttackPlayer;
-    private Sequence sequence;
 
     private void Start()
     {
@@ -48,27 +45,18 @@ public class EnemySpider : Unit, IAnim
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Spider);
-        sequence.Kill();
     }
 
     public SkeletonGraphic Skeleton => skeleton;
-    public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
+    public void PlayIdle(bool isLoop) { skeleton.Play("Idle2", true); }
 
-    public void PlayAttack()
-    {
-        skeleton.Play("Attack", false);
-        SoundController.Instance.PlayOnce(SoundType.SpiderAttack);
-        sequence = DOTween.Sequence().AppendInterval(.7f).AppendCallback(() =>
-        {
-            particle.Play();
-        });
-    }
+    public void PlayAttack() { skeleton.Play("Attack2", false); SoundController.Instance.PlayOnce(SoundType.SpiderAttack); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
     public void PlayDead()
     {
-        skeleton.Play("Die", false);
+        skeleton.Play("Die2", false);
 
         SoundController.Instance.PlayOnce(SoundType.SpiderDie);
     }
@@ -79,12 +67,12 @@ public class EnemySpider : Unit, IAnim
 }
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(EnemySpider))]
-public class EnemySpiderEditor : UnityEditor.Editor
+[CustomEditor(typeof(EnemySpider2))]
+public class EnemySpider2Editor : UnityEditor.Editor
 {
-    private EnemySpider _enemy;
+    private EnemySpider2 _enemy;
 
-    private void OnEnable() { _enemy = (EnemySpider)target; }
+    private void OnEnable() { _enemy = (EnemySpider2)target; }
 
     public override void OnInspectorGUI()
     {

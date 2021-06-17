@@ -730,7 +730,6 @@ public class Player : Unit, IAnim
         }
         else
         {
-
             string[] attacks;
             if (EquipType == ItemType.Gloves)
             {
