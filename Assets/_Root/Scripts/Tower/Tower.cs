@@ -19,10 +19,13 @@ public class Tower : MonoBehaviour
     {
         slots = GetComponentsInChildren<RoomTower>().ToList();
 
-        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+        if (this as VisitTower)
         {
-            NumberedUnits();
-        });
+            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+            {
+                NumberedUnits();
+            });
+        }
     }
 
     private void NumberedUnits()

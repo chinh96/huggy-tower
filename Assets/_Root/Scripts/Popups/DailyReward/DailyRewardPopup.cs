@@ -49,17 +49,25 @@ public class DailyRewardPopup : Popup
         this.coinCurrent = coinCurrent;
     }
 
-    public void OnClickClaim(GameObject claimButton)
+    public void OnClickClaim(GameObject claimButton, bool isSkin)
     {
-        int coinTotal = Data.CoinTotal + coinCurrent;
-        coinGeneration.GenerateCoin(() =>
+        if (isSkin)
         {
-            Data.CoinTotal++;
-        }, () =>
-        {
-            Data.CoinTotal = coinTotal;
             Claim();
-        }, claimButton);
+            Data.CoinTotal = Data.CoinTotal;
+        }
+        else
+        {
+            int coinTotal = Data.CoinTotal + coinCurrent;
+            coinGeneration.GenerateCoin(() =>
+            {
+                Data.CoinTotal++;
+            }, () =>
+            {
+                Claim();
+                Data.CoinTotal = coinTotal;
+            }, claimButton);
+        }
     }
 
     public void OnClickClaimAds()
@@ -72,8 +80,8 @@ public class DailyRewardPopup : Popup
                 Data.CoinTotal++;
             }, () =>
             {
-                Data.CoinTotal = coinTotal;
                 Claim();
+                Data.CoinTotal = coinTotal;
             }, x5Button);
         });
     }

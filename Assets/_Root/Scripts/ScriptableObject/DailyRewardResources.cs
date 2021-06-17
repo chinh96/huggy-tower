@@ -11,5 +11,5 @@ public class DailyRewardResources : ScriptableObject
 
     public List<int> DailyRewardsLoop;
 
-    public bool HasNoti => Data.DailyRewardCurrent > Data.TotalDays;
+    public bool HasNoti => Data.DailyRewardCurrent <= Data.TotalDays;
 }
