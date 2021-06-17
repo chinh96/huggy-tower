@@ -11,6 +11,8 @@ public class Tower : MonoBehaviour
     public ContentSizeFitter fitter;
     public List<RoomTower> slots;
     public ParticleSystem smoke;
+    public Image homeTower;
+    public Image homeTowerFlag;
 
     private void Start() { slots = GetComponentsInChildren<RoomTower>().ToList(); }
 
@@ -89,5 +91,18 @@ public class Tower : MonoBehaviour
         {
             action?.Invoke();
         }
+    }
+
+    public void ChangeToHomTower()
+    {
+        float duration = 2;
+        homeTower.rectTransform.sizeDelta = GetComponent<RectTransform>().sizeDelta;
+        homeTower.DOColor(new Color(1, 1, 1, 1), duration);
+        homeTowerFlag.DOColor(new Color(1, 1, 1, 1), duration);
+
+        slots.ForEach(slot =>
+        {
+            slot.transform.Find("Slot1").GetComponent<Image>().DOColor(new Color(1, 1, 1, 1), duration);
+        });
     }
 }

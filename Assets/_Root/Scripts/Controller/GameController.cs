@@ -258,6 +258,8 @@ public class GameController : Singleton<GameController>
     {
         AnalyticController.CompleteLevel();
 
+        root.LevelMap.visitTower.ChangeToHomTower();
+
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LevelPassed);
 
         MoveOutAnim();
