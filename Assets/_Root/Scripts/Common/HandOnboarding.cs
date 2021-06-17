@@ -130,10 +130,10 @@ public class HandOnboarding : MonoBehaviour, IHasSkeletonDataAsset, IPointerDown
                 DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                 {
                     TextBackgroundEnemy.SetActive(true);
-                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
                     {
                         Text2.SetActive(true);
-                        DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
+                        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                         {
                             OKButton.SetActive(true);
                         });
