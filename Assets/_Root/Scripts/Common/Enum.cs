@@ -161,7 +161,11 @@ public enum SoundType
     SpiderDie,
     SpiderAttack,
     YetiDie,
-    YetiAttack
+    YetiAttack,
+    Knife,
+    Bomb,
+    Trap,
+    Bow
 }
 
 public enum WorldType

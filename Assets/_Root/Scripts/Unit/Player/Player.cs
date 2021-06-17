@@ -749,9 +749,7 @@ public class Player : Unit, IAnim
             }
             else if (EquipType == ItemType.Knife)
             {
-                SoundType[] soundTypes = { SoundType.HeroCut, SoundType.HeroCut2, SoundType.HeroCut3 };
-                SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
-                SoundController.Instance.PlayOnce(soundType);
+                SoundController.Instance.PlayOnce(SoundType.Knife);
                 attacks = new string[] { "AttackKnife", "AttackKnife2" };
             }
             else

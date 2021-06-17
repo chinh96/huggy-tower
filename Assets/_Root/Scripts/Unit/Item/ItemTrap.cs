@@ -28,11 +28,13 @@ public class ItemTrap : Item
                     {
                         DecreaseDamage(player, damage);
                     });
+                    SoundController.Instance.PlayOnce(SoundType.Trap);
                     break;
                 case ItemType.Bomb:
                     ParticleSystem particleSystem = Instantiate(particle, transform.parent);
                     particleSystem.transform.position = transform.position;
                     DecreaseDamage(player, player.Damage / 2);
+                    SoundController.Instance.PlayOnce(SoundType.Bomb);
                     break;
                 case ItemType.Bow:
                     skeleton.Play("animation", false);
@@ -40,6 +42,7 @@ public class ItemTrap : Item
                     {
                         DecreaseDamage(player, damage);
                     });
+                    SoundController.Instance.PlayOnce(SoundType.Bow);
                     break;
             }
         }
