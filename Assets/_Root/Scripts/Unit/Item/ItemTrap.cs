@@ -38,7 +38,7 @@ public class ItemTrap : Item
                     break;
                 case ItemType.Bow:
                     skeleton.Play("animation", false);
-                    DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                     {
                         DecreaseDamage(player, damage);
                     });
@@ -86,10 +86,13 @@ public class ItemBrokenBrickEditor : UnityEditor.Editor
     {
         base.OnInspectorGUI();
 
-        _item.txtDamage.text = $"-{_item.damage}";
+        if (_item.EquipType != ItemType.Bomb)
+        {
+            _item.txtDamage.text = $"-{_item.damage}";
 
-        serializedObject.Update();
-        serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+            serializedObject.ApplyModifiedProperties();
+        }
     }
 }
 #endif
