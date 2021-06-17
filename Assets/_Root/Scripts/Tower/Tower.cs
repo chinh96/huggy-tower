@@ -11,6 +11,7 @@ public class Tower : MonoBehaviour
     public ContentSizeFitter fitter;
     public List<RoomTower> slots;
     public ParticleSystem smoke;
+    public ParticleSystem explosion;
     public Image homeTower;
     public Image homeTowerFlag;
 
@@ -84,7 +85,7 @@ public class Tower : MonoBehaviour
     {
         if (slots.Count > 0)
         {
-            smoke.Play();
+            explosion.Play();
             RemoveSlot(slots[slots.Count - 1], () => RemoveAll(action), .3f);
         }
         else

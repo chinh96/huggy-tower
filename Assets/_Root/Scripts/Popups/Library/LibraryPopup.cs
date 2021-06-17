@@ -59,8 +59,11 @@ public class LibraryPopup : Popup
 
         libraryDataCurrent = ResourcesController.Library.LibraryDatas[indexActive];
 
-        skeletonGraphic.skeletonDataAsset = libraryDataCurrent.skeletonDataAsset;
+        skeletonGraphic.skeletonDataAsset = libraryDataCurrent.SkeletonDataAsset;
+        skeletonGraphic.initialFlipX = libraryDataCurrent.IsFlipX;
         skeletonGraphic.Initialize(true);
+        // skeletonGraphic.initialSkinName = libraryDataCurrent.LibraryAnimation.Idle;
+        // skeletonGraphic.Initialize(true);
         name.text = libraryDataCurrent.Name;
         description.text = libraryDataCurrent.Description;
     }
