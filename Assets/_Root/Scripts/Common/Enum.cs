@@ -63,7 +63,8 @@ public enum ItemType
     Trap,
     HolyWater,
     Bomb,
-    Bow
+    Bow,
+    Axe
 }
 
 public enum ETurn

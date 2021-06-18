@@ -797,6 +797,7 @@ public class Player : Unit, IAnim
         {
             case ItemType.Sword:
             case ItemType.Knife:
+            case ItemType.Axe:
                 skeleton.Play("Pick", false);
                 SoundController.Instance.PlayOnce(SoundType.HeroPickSword);
                 break;
