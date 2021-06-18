@@ -32,7 +32,13 @@ public class EnemySpider : Unit, IAnim
 
     public override void OnBeingAttacked() { OnDead(); }
 
-    private void OnAttackByEvent() { _callbackAttackPlayer?.Invoke(); }
+    private void OnAttackByEvent()
+    {
+        DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+        {
+            _callbackAttackPlayer?.Invoke();
+        });
+    }
 
     private void OnEndAttackByEvent() { PlayIdle(true); }
 
@@ -58,7 +64,7 @@ public class EnemySpider : Unit, IAnim
     {
         skeleton.Play("Attack", false);
         SoundController.Instance.PlayOnce(SoundType.SpiderAttack);
-        sequence = DOTween.Sequence().AppendInterval(.7f).AppendCallback(() =>
+        sequence = DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
         {
             particle.Play();
         });
