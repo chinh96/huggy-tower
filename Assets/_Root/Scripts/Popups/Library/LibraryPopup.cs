@@ -60,7 +60,7 @@ public class LibraryPopup : Popup
 
         libraryDataCurrent = ResourcesController.Library.LibraryDatas[indexActive];
 
-        skeletonGraphic.transform.localPosition = new Vector3(libraryDataCurrent.PositionX, skeletonGraphic.transform.localPosition.y, skeletonGraphic.transform.localPosition.z);
+        skeletonGraphic.transform.localPosition = libraryDataCurrent.Offset;
         skeletonGraphic.transform.localScale = libraryDataCurrent.Scale;
         skeletonGraphic.skeletonDataAsset = libraryDataCurrent.SkeletonDataAsset;
         skeletonGraphic.initialFlipX = libraryDataCurrent.IsFlipX;
