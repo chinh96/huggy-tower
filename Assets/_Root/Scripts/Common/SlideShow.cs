@@ -9,8 +9,10 @@ public class SlideShow : MonoBehaviour
     [SerializeField] private RectTransform content;
     [SerializeField] private float duration;
     [SerializeField] private bool vertical;
+    [SerializeField] private GameObject previousButton;
+    [SerializeField] private GameObject nextButton;
 
-    private int max = 0;
+    private int max = 1;
     private int current = 0;
 
     private void Start()
@@ -26,6 +28,8 @@ public class SlideShow : MonoBehaviour
                 max = (int)(content.rect.width / viewport.rect.width);
             }
         });
+
+        CheckButton();
     }
 
     public void OnClickPrevious()
@@ -43,6 +47,8 @@ public class SlideShow : MonoBehaviour
                 current--;
             }
         }
+
+        CheckButton();
     }
 
     public void OnClickNext()
@@ -60,5 +66,13 @@ public class SlideShow : MonoBehaviour
                 current++;
             }
         }
+
+        CheckButton();
+    }
+
+    public void CheckButton()
+    {
+        previousButton.SetActive(current > 0);
+        nextButton.SetActive(current < max);
     }
 }
