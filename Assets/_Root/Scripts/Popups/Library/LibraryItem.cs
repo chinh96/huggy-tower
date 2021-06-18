@@ -51,16 +51,15 @@ public class LibraryItem : MonoBehaviour
 
     public void SetLocked()
     {
-        SetNormal();
-        // active.SetActive(false);
-        // locked.SetActive(true);
+        active.SetActive(false);
+        locked.SetActive(true);
     }
 
     public void OnClick()
     {
-        libraryPopup.Reset(index);
-        // if (libraryData.IsUnlocked)
-        // {
-        // }
+        if (libraryData.IsUnlocked)
+        {
+            libraryPopup.Reset(index);
+        }
     }
 }
