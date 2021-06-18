@@ -8,6 +8,7 @@ public class HomeController : Singleton<HomeController>
 {
     [SerializeField] private GameObject removeAdsButton;
     [SerializeField] private Image overlay;
+    [SerializeField] private CanvasScaler canvasScaler;
 
     protected override void Awake()
     {
@@ -30,6 +31,7 @@ public class HomeController : Singleton<HomeController>
 
     private void Start()
     {
+        canvasScaler.matchWidthOrHeight = Camera.main.aspect > .7f ? 1 : 0;
         AdController.Instance.ShowBanner();
         SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
         FadeOutOverlay();
