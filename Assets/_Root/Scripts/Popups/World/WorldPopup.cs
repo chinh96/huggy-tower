@@ -61,6 +61,13 @@ public class WorldPopup : Popup
     {
         base.Close();
 
-        SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
+        if (GameController.Instance != null)
+        {
+            SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
+        }
+        else
+        {
+            SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
+        }
     }
 }
