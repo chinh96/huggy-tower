@@ -10,6 +10,7 @@ public class Princess : Unit, IAnim
     [SerializeField] private Rigidbody2D rigid2D;
     [SerializeField] private Collider2D coll2D;
     [SerializeField] private Image lockObj;
+    [SerializeField] private Image lockObj2;
 
     public override EUnitType Type { get; protected set; } = EUnitType.Princess;
 
@@ -23,6 +24,7 @@ public class Princess : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
 
     public Image LockObj { get => lockObj; set => lockObj = value; }
+    public Image LockObj2 { get => lockObj2; set => lockObj2 = value; }
 
     public void PlayIdle(bool isLoop) { skeleton.Play("idle", true); }
 

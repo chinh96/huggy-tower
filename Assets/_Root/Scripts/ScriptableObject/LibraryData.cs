@@ -14,12 +14,14 @@ public class LibraryData : ScriptableObject, IHasSkeletonDataAsset
     public string Description;
     public bool IsUnlocked => Data.CurrentLevel >= LevelUnlock;
     public SkeletonDataAsset SkeletonDataAsset => SkeDataAsset;
-    public LibraryAnimation LibraryAnimation;
+    public LibrarySkeletonData LibraryAnimation;
     public bool IsFlipX;
+    public Vector3 Scale = Vector3.one * 1.5f;
 }
 
 [Serializable]
-public class LibraryAnimation
+public class LibrarySkeletonData
 {
     [SpineAnimation] public string Idle;
+    [SpineSkin] public string SkinName;
 }

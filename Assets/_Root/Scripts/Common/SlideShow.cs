@@ -19,7 +19,7 @@ public class SlideShow : MonoBehaviour
         {
             if (vertical)
             {
-                max = (int)(content.rect.height / viewport.rect.height) - 1;
+                max = (int)(content.rect.height / viewport.rect.height);
             }
             else
             {

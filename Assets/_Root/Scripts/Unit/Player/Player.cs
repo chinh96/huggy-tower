@@ -368,6 +368,7 @@ public class Player : Unit, IAnim
                             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                             {
                                 princess.LockObj?.DOFade(0, .3f);
+                                princess.LockObj2?.DOFade(0, .3f);
                                 princess.PlayWin(true);
                                 DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                 {

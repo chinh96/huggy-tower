@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 using TMPro;
+using DG.Tweening;
 
 public class LibraryPopup : Popup
 {
@@ -59,11 +60,13 @@ public class LibraryPopup : Popup
 
         libraryDataCurrent = ResourcesController.Library.LibraryDatas[indexActive];
 
+        skeletonGraphic.transform.localScale = libraryDataCurrent.Scale;
         skeletonGraphic.skeletonDataAsset = libraryDataCurrent.SkeletonDataAsset;
         skeletonGraphic.initialFlipX = libraryDataCurrent.IsFlipX;
+        skeletonGraphic.initialSkinName = libraryDataCurrent.LibraryAnimation.SkinName;
         skeletonGraphic.Initialize(true);
-        // skeletonGraphic.initialSkinName = libraryDataCurrent.LibraryAnimation.Idle;
-        // skeletonGraphic.Initialize(true);
+        skeletonGraphic.Play(libraryDataCurrent.LibraryAnimation.Idle, true);
+
         name.text = libraryDataCurrent.Name;
         description.text = libraryDataCurrent.Description;
     }
