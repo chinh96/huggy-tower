@@ -5,6 +5,8 @@ public class LevelRoot : MonoBehaviour
     [SerializeField] private int levelIndex;
     [SerializeField] private LevelMap levelMapPrefab;
     [SerializeField] private LevelMap levelMap;
+    [SerializeField] private FighterOverlay fighterOverlay;
+
     private int times = 0;
     private int totalTimesPlay = 0;
     private int totalLevelWin = 0;
@@ -38,6 +40,7 @@ public class LevelRoot : MonoBehaviour
             levelMap = Instantiate(levelMapPrefab, transform, false);
             levelMap.transform.localPosition = Vector3.zero;
 #endif
+            Instantiate(fighterOverlay, levelMap.transform);
             StartTimer();
         }
     }
