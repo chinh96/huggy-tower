@@ -33,6 +33,8 @@ public class Player : Unit, IAnim
     [SerializeField] private ParticleSystem effectPickSword;
     [SerializeField] private ParticleSystem effectHit;
     [SerializeField] private ParticleSystem effectFingerPress;
+    [SerializeField] private ParticleSystem effectThunder1;
+    [SerializeField] private ParticleSystem effectThunder2;
 
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
     public bool FirstTurn { get; set; }
@@ -743,6 +745,13 @@ public class Player : Unit, IAnim
                 SoundController.Instance.PlayOnce(SoundType.Knife);
                 attacks = new string[] { "AttackKnife", "AttackKnife2" };
             }
+            else if (EquipType == ItemType.Axe)
+            {
+                SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
+                SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
+                SoundController.Instance.PlayOnce(soundType);
+                attacks = new string[] { "AttackAxe" };
+            }
             else
             {
                 SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
@@ -750,7 +759,28 @@ public class Player : Unit, IAnim
                 SoundController.Instance.PlayOnce(soundType);
                 attacks = new string[] { "Attack2", "AttackHit", "AttackHit2" };
             }
-            skeleton.Play(attacks[UnityEngine.Random.Range(0, attacks.Length)], false);
+            string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
+            skeleton.Play(attack, false);
+
+            if (EquipType == ItemType.Axe)
+            {
+                float delay = .7f;
+                ParticleSystem particlePrefab = effectThunder1;
+                Vector3 offset = Vector3.zero;
+
+                if (attack == "AttackAxe2")
+                {
+                    delay = .3f;
+                    particlePrefab = effectThunder2;
+                    offset = new Vector3(0, .5f, 0);
+                }
+
+                DOTween.Sequence().AppendInterval(delay).AppendCallback(() =>
+                {
+                    ParticleSystem particle = Instantiate(particlePrefab);
+                    particle.transform.position = _target.transform.position + offset;
+                });
+            }
         }
 
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
