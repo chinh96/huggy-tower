@@ -185,7 +185,6 @@ public class GameController : Singleton<GameController>
 
     public void UpdateDislayCurrentLevel(int level, ELevelCondition condition)
     {
-        Debug.Log(level);
         var data = ResourcesController.Quest.GetQuestByCondition(condition);
 
         txtQuest.text = $"Level {level + 1}: {data.Quest}";

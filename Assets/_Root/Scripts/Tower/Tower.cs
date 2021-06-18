@@ -56,8 +56,7 @@ public class Tower : MonoBehaviour
     public void RemoveSlot(RoomTower roomTower, Action action = null, float duration = .5f)
     {
         slots.Remove(roomTower);
-        var fitter = GameController.Instance.Root.LevelMap.visitTower.fitter;
-        roomTower.transform.DOScale(Vector3.zero, duration).SetEase(Ease.OutQuad).OnUpdate(() =>
+        roomTower.transform.DOScale(Vector3.zero, duration).SetEase(Ease.Linear).OnUpdate(() =>
         {
             fitter.enabled = false;
             fitter.enabled = true;
@@ -85,8 +84,8 @@ public class Tower : MonoBehaviour
     {
         if (slots.Count > 0)
         {
-            explosion.Play();
-            RemoveSlot(slots[slots.Count - 1], () => RemoveAll(action), .3f);
+            PlayExplosion();
+            RemoveSlot(slots[slots.Count - 1], () => RemoveAll(action), .4f);
         }
         else
         {
@@ -105,5 +104,11 @@ public class Tower : MonoBehaviour
         {
             slot.transform.Find("Slot1").GetComponent<Image>().DOColor(new Color(1, 1, 1, 1), duration);
         });
+    }
+
+    public void PlayExplosion()
+    {
+        explosion.Stop();
+        explosion.Play();
     }
 }
