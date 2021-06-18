@@ -17,6 +17,7 @@ public class LibraryData : ScriptableObject, IHasSkeletonDataAsset
     public LibrarySkeletonData LibraryAnimation;
     public bool IsFlipX;
     public Vector3 Scale = Vector3.one * 1.5f;
+    public float PositionX = -200;
 }
 
 [Serializable]
