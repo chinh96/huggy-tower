@@ -37,6 +37,7 @@ public class HomeController : Singleton<HomeController>
 
     public void TapToStart()
     {
+        SoundController.Instance.PlayOnce(SoundType.ButtonStart);
         overlay.gameObject.SetActive(true);
         FadeInOverlay(() =>
         {

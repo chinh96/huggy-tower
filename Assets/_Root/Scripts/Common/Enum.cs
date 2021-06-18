@@ -166,7 +166,8 @@ public enum SoundType
     Knife,
     Bomb,
     Trap,
-    Bow
+    Bow,
+    ButtonStart
 }
 
 public enum WorldType
