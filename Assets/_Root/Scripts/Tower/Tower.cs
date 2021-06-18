@@ -15,7 +15,28 @@ public class Tower : MonoBehaviour
     public Image homeTower;
     public Image homeTowerFlag;
 
-    private void Start() { slots = GetComponentsInChildren<RoomTower>().ToList(); }
+    private void Start()
+    {
+        slots = GetComponentsInChildren<RoomTower>().ToList();
+
+        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+        {
+            NumberedUnits();
+        });
+    }
+
+    private void NumberedUnits()
+    {
+        int index = 0;
+        slots.ForEach(item =>
+        {
+            item.units.ForEach(unit =>
+            {
+                unit.GetComponent<Canvas>().sortingOrder = index + 5;
+                index++;
+            });
+        });
+    }
 
     public void RefreshRoom()
     {
