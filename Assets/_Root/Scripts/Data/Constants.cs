@@ -14,6 +14,7 @@ public class Constants
     public const string ONLY_ADMOB = "ONLY_ADMOB";
     public const string ONLY_ADMOB_ANDROID = "ONLY_ADMOB_ANDROID";
     public const string ONLY_ADMOB_IOS = "ONLY_ADMOB_IOS";
+    public const string ENABLE_FB_LOGIN_IOS = "ENABLE_FB_LOGIN_IOS";
 
     // Data
     public const string CURRENT_LEVEL = "CURRENT_LEVEL";

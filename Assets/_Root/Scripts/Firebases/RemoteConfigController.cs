@@ -12,6 +12,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
     [NonSerialized] public string CurrentVersion = "";
     [NonSerialized] public string UpdateDescription = "";
     [NonSerialized] public bool OnlyAdmob = true;
+    [NonSerialized] public bool EnableFbLogin = false;
 
     private void Start()
     {
@@ -50,6 +51,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         defaults.Add(Constants.ONLY_ADMOB, true);
         defaults.Add(Constants.ONLY_ADMOB_ANDROID, true);
         defaults.Add(Constants.ONLY_ADMOB_IOS, true);
+        defaults.Add(Constants.ENABLE_FB_LOGIN_IOS, false);
 
         Firebase.RemoteConfig.FirebaseRemoteConfig.SetDefaults(defaults);
     }
@@ -102,10 +104,12 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         OnlyAdmob = bool.Parse(GetConfig(Constants.ONLY_ADMOB_ANDROID));
         CurrentVersion = GetConfig(Constants.CURRENT_VERSION_ANDROID);
         UpdateDescription = GetConfig(Constants.ANDROID_UPDATE_DESCRIPTION);
+        EnableFbLogin = true;
 #elif UNITY_IOS
         OnlyAdmob = bool.Parse(GetConfig(Constants.ONLY_ADMOB_IOS));
         CurrentVersion = GetConfig(Constants.CURRENT_VERSION_IOS);
         UpdateDescription = GetConfig(Constants.IOS_UPDATE_DESCRIPTION);
+        EnableFbLogin = GetConfig(Constants.ENABLE_FB_LOGIN_IOS);
 #endif
         AdController.Instance.Init();
     }

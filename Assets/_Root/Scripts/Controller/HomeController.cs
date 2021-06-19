@@ -6,6 +6,7 @@ using System;
 
 public class HomeController : Singleton<HomeController>
 {
+    [SerializeField] private GameObject fbLoginButton;
     [SerializeField] private GameObject removeAdsButton;
     [SerializeField] private Image overlay;
     [SerializeField] private CanvasScaler canvasScaler;
@@ -14,18 +15,19 @@ public class HomeController : Singleton<HomeController>
     {
         base.Awake();
 
-        CheckRemoveAds();
+        CheckButton();
         overlay.DOFade(1, 0);
     }
 
     public void OnPurchaseSuccessRemoveAds()
     {
         Data.IsRemovedAds = true;
-        CheckRemoveAds();
+        CheckButton();
     }
 
-    public void CheckRemoveAds()
+    public void CheckButton()
     {
+        fbLoginButton.SetActive(RemoteConfigController.Instance.EnableFbLogin);
         removeAdsButton.SetActive(!Data.IsRemovedAds);
     }
 
