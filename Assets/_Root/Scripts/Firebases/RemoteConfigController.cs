@@ -109,7 +109,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         OnlyAdmob = bool.Parse(GetConfig(Constants.ONLY_ADMOB_IOS));
         CurrentVersion = GetConfig(Constants.CURRENT_VERSION_IOS);
         UpdateDescription = GetConfig(Constants.IOS_UPDATE_DESCRIPTION);
-        EnableFbLogin = GetConfig(Constants.ENABLE_FB_LOGIN_IOS);
+        EnableFbLogin = bool.Parse(GetConfig(Constants.ENABLE_FB_LOGIN_IOS));
 #endif
         AdController.Instance.Init();
     }
