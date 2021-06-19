@@ -40,7 +40,7 @@ public class LevelRoot : MonoBehaviour
             levelMap = Instantiate(levelMapPrefab, transform, false);
             levelMap.transform.localPosition = Vector3.zero;
 #endif
-            Instantiate(fighterOverlay, levelMap.transform);
+            // Instantiate(fighterOverlay, levelMap.transform);
             StartTimer();
         }
     }
