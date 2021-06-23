@@ -39,6 +39,7 @@ public class Constants
     public const string ACHIEVEMENT_NUMBER_TARGET = "ACHIEVEMENT_NUMBER_TARGET";
     public const string ACHIEVEMENT_NUMBER_CURRENT = "ACHIEVEMENT_NUMBER_CURRENT";
     public const string DAILY_QUEST_NUMBER_CURRENT = "DAILY_QUEST_NUMBER_CURRENT";
+    public const string PLAYER_ID = "PLAYER_ID";
 
     // Scene
     public const string LOADING_SCENE = "LoadingScene";

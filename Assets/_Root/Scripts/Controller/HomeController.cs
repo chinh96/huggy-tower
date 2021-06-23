@@ -106,4 +106,9 @@ public class HomeController : Singleton<HomeController>
     {
         PopupController.Instance.Show<LibraryPopup>();
     }
+
+    public void OnClickLeaderboardButton()
+    {
+        LeaderboardController.Instance.Show();
+    }
 }

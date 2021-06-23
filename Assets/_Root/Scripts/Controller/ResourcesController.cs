@@ -15,6 +15,7 @@ public class ResourcesController : Singleton<ResourcesController>
     [SerializeField] private AchievementResources achievement;
     [SerializeField] private DailyQuestResources dailyQuest;
     [SerializeField] private LibraryResources library;
+    [SerializeField] private CountryResources country;
 
     public static SkinResources Hero;
     public static SkinResources Princess;
@@ -26,6 +27,7 @@ public class ResourcesController : Singleton<ResourcesController>
     public static AchievementResources Achievement;
     public static DailyQuestResources DailyQuest;
     public static LibraryResources Library;
+    public static CountryResources Country;
 
     private void OnEnable()
     {
@@ -39,6 +41,7 @@ public class ResourcesController : Singleton<ResourcesController>
         Achievement = achievement;
         DailyQuest = dailyQuest;
         Library = library;
+        Country = country;
     }
 
     private void Start()
