@@ -10,6 +10,7 @@ public class ButtonNoti : MonoBehaviour
     private void Start()
     {
         EventController.CoinTotalChanged += CheckNoti;
+        EventController.LoginLeaderBoard += CheckNoti;
     }
 
     private void OnEnable()
@@ -46,6 +47,9 @@ public class ButtonNoti : MonoBehaviour
                 break;
             case NotiType.Facebook:
                 hasNoti = Data.JoinFbProgress < 2;
+                break;
+            case NotiType.Leaderboard:
+                hasNoti = Data.PlayerId == "";
                 break;
         }
 

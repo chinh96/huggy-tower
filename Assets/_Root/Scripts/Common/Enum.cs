@@ -15,7 +15,8 @@ public enum NotiType
     Daily,
     Achievement,
     DailyQuest,
-    Facebook
+    Facebook,
+    Leaderboard
 }
 
 public enum EGameState

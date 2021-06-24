@@ -12,7 +12,15 @@ public static class Data
     private static string GetString(string key, string defaultValue) => PlayerPrefs.GetString(key, defaultValue);
     private static void SetString(string id, string value) => PlayerPrefs.SetString(id, value);
 
-    public static string PlayerId { get => GetString(Constants.PLAYER_ID, ""); set => SetString(Constants.PLAYER_ID, value); }
+    public static string PlayerId
+    {
+        get => GetString(Constants.PLAYER_ID, "");
+        set
+        {
+            SetString(Constants.PLAYER_ID, value);
+            EventController.LoginLeaderBoard();
+        }
+    }
 
     public static int CurrentLevel
     {

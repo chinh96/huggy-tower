@@ -14,4 +14,5 @@ public static class EventController
     public static Action CurrentLevelChanged;
     public static Action AdsRewardLoaded;
     public static Action AdsRewardRequested;
+    public static Action LoginLeaderBoard;
 }
