@@ -11,6 +11,7 @@ public class LeaderboardLoginPopup : Popup
     [SerializeField] private LeaderboardCountryItem countryItemPrefab;
     [SerializeField] private GameObject countryBox;
     [SerializeField] private GameObject btnDisable;
+    [SerializeField] private GameObject connecting;
 
     private bool countryBoxStatus;
     private CountryData countryCurrent;
@@ -29,8 +30,6 @@ public class LeaderboardLoginPopup : Popup
 
         FetchCountryCurrent();
         countryItemCurrent.Init(countryCurrent);
-
-        btnDisable.SetActive(false);
     }
 
     private void FetchCountryCurrent()
@@ -52,7 +51,9 @@ public class LeaderboardLoginPopup : Popup
         base.BeforeShow();
 
         countryBoxStatus = false;
-        countryBox.SetActive(countryBoxStatus);
+        countryBox.SetActive(false);
+        btnDisable.SetActive(false);
+        connecting.SetActive(false);
     }
 
     public void ToggleCountryBox()
@@ -70,6 +71,7 @@ public class LeaderboardLoginPopup : Popup
         else
         {
             btnDisable.SetActive(true);
+            connecting.SetActive(true);
             LeaderboardController.Instance.Login(
                 inputName.text,
                 countryCurrent.Code,
@@ -77,6 +79,7 @@ public class LeaderboardLoginPopup : Popup
                 () =>
                 {
                     btnDisable.SetActive(false);
+                    connecting.SetActive(false);
                     ShowWarning("The name you choose already exists!");
                 }
             );
