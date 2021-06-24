@@ -33,6 +33,10 @@ public class HomeController : Singleton<HomeController>
 
     private void Start()
     {
+        if (Data.PlayerId != "")
+        {
+            LeaderboardController.Instance.Reset();
+        }
         canvasScaler.matchWidthOrHeight = Camera.main.aspect > .7f ? 1 : 0;
         AdController.Instance.ShowBanner();
         SoundController.Instance.PlayBackground(SoundType.BackgroundHome);

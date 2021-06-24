@@ -12,6 +12,9 @@ public class LeaderboardItem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI level;
     [SerializeField] private GameObject backgroundNormal;
     [SerializeField] private GameObject backgroundCurrent;
+    [SerializeField] private GameObject backgroundRank1;
+    [SerializeField] private GameObject backgroundRank2;
+    [SerializeField] private GameObject backgroundRank3;
     [SerializeField] private GameObject rank1;
     [SerializeField] private GameObject rank2;
     [SerializeField] private GameObject rank3;
@@ -24,6 +27,10 @@ public class LeaderboardItem : MonoBehaviour
         level.text = userInfo.Stat.ToString();
 
         backgroundCurrent.SetActive(userInfo.PlayerId == Data.PlayerId);
+        backgroundRank1.SetActive(userInfo.Index == 1);
+        backgroundRank2.SetActive(userInfo.Index == 2);
+        backgroundRank3.SetActive(userInfo.Index == 3);
+
         rank1.SetActive(userInfo.Index == 1);
         rank2.SetActive(userInfo.Index == 2);
         rank3.SetActive(userInfo.Index == 3);

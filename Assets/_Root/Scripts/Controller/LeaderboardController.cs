@@ -32,18 +32,27 @@ public class LeaderboardController : Singleton<LeaderboardController>
         }
         else
         {
-            Playfab.Login(result =>
+            Playfab.Login();
+        }
+    }
+
+    public void Reset()
+    {
+        startPosition = -1;
+        userInfosAllTab.Clear();
+        userInfosWorldTab.Clear();
+        userInfosCountryTab.Clear();
+        UpdateScore(() =>
+        {
+            Playfab.GetPlayerProfile(result =>
             {
-                Playfab.GetPlayerProfile(result =>
+                GetMoreLeaderboard(() =>
                 {
-                    GetMoreLeaderboard(() =>
-                    {
-                        GetUserInfoByDisplayName(result.PlayerProfile.DisplayName);
-                        GetUserInfo();
-                    });
+                    GetUserInfoByDisplayName(result.PlayerProfile.DisplayName);
+                    GetUserInfo();
                 });
             });
-        }
+        });
     }
 
     public void Login(string userName, string countryCode, Action callbackResult, Action callbackError)
