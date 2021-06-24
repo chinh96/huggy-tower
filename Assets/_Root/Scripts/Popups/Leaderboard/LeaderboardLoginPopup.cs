@@ -65,7 +65,7 @@ public class LeaderboardLoginPopup : Popup
     {
         if (inputName.text == "")
         {
-            ShowWarning("Can't be empty!");
+            ShowWarning("Name can't be empty!");
         }
         else
         {
@@ -77,7 +77,7 @@ public class LeaderboardLoginPopup : Popup
                 () =>
                 {
                     btnDisable.SetActive(false);
-                    ShowWarning("Already exists!");
+                    ShowWarning("The name you choose already exists!");
                 }
             );
         }

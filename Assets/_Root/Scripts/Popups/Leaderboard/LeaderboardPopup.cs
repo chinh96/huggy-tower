@@ -19,22 +19,24 @@ public class LeaderboardPopup : Popup
     {
         base.BeforeShow();
 
-        ResetText();
         ResetContent();
-    }
-
-    private void ResetText()
-    {
-        name.text = LeaderboardController.Instance.UserInfoCurrent.Name;
-        rank.text = LeaderboardController.Instance.UserInfoCurrent.Rank;
     }
 
     private void ResetContent()
     {
         page = 0;
-        LeaderboardController.Instance.GetUserInfoCurrent();
-        ResetText();
+
+        LeaderboardController.Instance.GetUserInfo();
+        name.text = LeaderboardController.Instance.UserInfoCurrent.Name;
+        rank.text = LeaderboardController.Instance.UserInfoCurrent.Rank;
+
         FillData();
+    }
+
+    private void ResetButton()
+    {
+        previousButton.SetActive(page > 0);
+        nextButton.SetActive((page + 1) * 10 < LeaderboardController.Instance.UserInfos.Count);
     }
 
     private void FillData()
@@ -94,11 +96,5 @@ public class LeaderboardPopup : Popup
     {
         page++;
         FillData();
-    }
-
-    private void ResetButton()
-    {
-        previousButton.SetActive(page > 0);
-        nextButton.SetActive((page + 1) * 10 < LeaderboardController.Instance.UserInfos.Count);
     }
 }

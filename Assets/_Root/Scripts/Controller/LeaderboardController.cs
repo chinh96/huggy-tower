@@ -23,28 +23,6 @@ public class LeaderboardController : Singleton<LeaderboardController>
         FetchInfo();
     }
 
-    public void GetUserInfoCurrent(string displayName = "")
-    {
-        if (displayName != "")
-        {
-            string[] split = displayName.Split('|');
-            UserInfoCurrent.Name = split[0];
-            UserInfoCurrent.CountryCode = split[1];
-        }
-
-        var index = UserInfos.FindIndex(userInfo => userInfo.PlayerId == Data.PlayerId);
-        if (index == -1)
-        {
-            UserInfoCurrent.Stat = Data.CurrentLevel;
-            UserInfoCurrent.Position = 101;
-        }
-        else
-        {
-            UserInfoCurrent.Stat = UserInfos[index].Stat;
-            UserInfoCurrent.Position = index + 1;
-        }
-    }
-
     private void FetchInfo()
     {
         if (Data.PlayerId == "")
@@ -58,7 +36,11 @@ public class LeaderboardController : Singleton<LeaderboardController>
             {
                 Playfab.GetPlayerProfile(result =>
                 {
-                    GetMoreLeaderboard(() => GetUserInfoCurrent(result.PlayerProfile.DisplayName));
+                    GetMoreLeaderboard(() =>
+                    {
+                        GetUserInfoByDisplayName(result.PlayerProfile.DisplayName);
+                        GetUserInfo();
+                    });
                 });
             });
         }
@@ -83,7 +65,8 @@ public class LeaderboardController : Singleton<LeaderboardController>
                                     {
                                         GetMoreLeaderboard(() =>
                                         {
-                                            GetUserInfoCurrent(result.PlayerProfile.DisplayName);
+                                            GetUserInfoByDisplayName(result.PlayerProfile.DisplayName);
+                                            GetUserInfo();
                                             callbackResult();
                                             Show();
                                         });
@@ -91,14 +74,51 @@ public class LeaderboardController : Singleton<LeaderboardController>
                                 }
                             );
                         });
+                    },
+                    (error) =>
+                    {
+                        callbackError();
                     }
                 );
-            },
-            (error) =>
-            {
-                callbackError();
             }
         );
+    }
+
+    public void GetUserInfo()
+    {
+        GetUserInfoTab();
+        GetUserInfoCurrent();
+    }
+
+    public void GetUserInfoTab()
+    {
+        userInfosWorldTab = userInfosAllTab;
+        userInfosCountryTab = userInfosAllTab.FindAll(userInfo => userInfo.CountryCode == UserInfoCurrent.CountryCode);
+
+        int index = 1;
+        userInfosCountryTab.ForEach(userInfo => { userInfo.Position = index; index++; });
+    }
+
+    public void GetUserInfoCurrent()
+    {
+        int index = UserInfos.FindIndex(userInfo => userInfo.PlayerId == Data.PlayerId);
+        if (index == -1)
+        {
+            UserInfoCurrent.Stat = Data.CurrentLevel;
+            UserInfoCurrent.Position = 101;
+        }
+        else
+        {
+            UserInfoCurrent.Stat = UserInfos[index].Stat;
+            UserInfoCurrent.Position = index + 1;
+        }
+    }
+
+    public void GetUserInfoByDisplayName(string displayName)
+    {
+        string[] split = displayName.Split('|');
+        UserInfoCurrent.Name = split[0];
+        UserInfoCurrent.CountryCode = split[1];
     }
 
     public void Show()
@@ -134,12 +154,6 @@ public class LeaderboardController : Singleton<LeaderboardController>
                     });
                 });
 
-                userInfosWorldTab = userInfosAllTab;
-                userInfosCountryTab = userInfosAllTab.FindAll(userInfo => userInfo.CountryCode == UserInfoCurrent.CountryCode);
-
-                int index = 1;
-                userInfosCountryTab.ForEach(userInfo => { userInfo.Position = index; index++; });
-
                 action?.Invoke();
             }
         );
@@ -162,6 +176,6 @@ public class LeaderboardUserInfo
     public int Stat;
     public string CountryCode;
     public int Position;
-    public string Rank => Position > 100 ? $"{textTab}: +100" : $"{textTab}: {Position}";
+    public string Rank => Position > Playfab.MaxResultsCount ? $"{textTab}: +{Playfab.MaxResultsCount}" : $"{textTab}: {Position}";
     private string textTab => LeaderboardController.Instance.IsWorldTab ? "World rank" : "Country rank";
 }

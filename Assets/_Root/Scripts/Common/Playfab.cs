@@ -9,14 +9,14 @@ public static class Playfab
     private static string nameTable = "HERO_TOWER_WAR";
     private static string titleId = "4D244";
 
-    public static int MaxResultsCount = 10;
+    public static int MaxResultsCount = 100;
 
     public static void Login(Action<LoginResult> callbackResult = null, Action<PlayFabError> callbackError = null)
     {
         if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId)) PlayFabSettings.staticSettings.TitleId = titleId;
 
         PlayFabClientAPI.LoginWithCustomID(
-            new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier + "22", TitleId = titleId, CreateAccount = true },
+            new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, TitleId = titleId, CreateAccount = true },
             callbackResult,
             callbackError
         );
