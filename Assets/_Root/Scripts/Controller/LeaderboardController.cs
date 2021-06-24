@@ -93,25 +93,17 @@ public class LeaderboardController : Singleton<LeaderboardController>
     public void GetUserInfoTab()
     {
         userInfosWorldTab = userInfosAllTab;
-        userInfosCountryTab = userInfosAllTab.FindAll(userInfo => userInfo.CountryCode == UserInfoCurrent.CountryCode);
-
         int index = 1;
-        userInfosCountryTab.ForEach(userInfo => { userInfo.Position = index; index++; });
+        userInfosWorldTab.ForEach(userInfo => { userInfo.IndexWorld = index; index++; });
+
+        userInfosCountryTab = userInfosAllTab.FindAll(userInfo => userInfo.CountryCode == UserInfoCurrent.CountryCode);
+        index = 1;
+        userInfosCountryTab.ForEach(userInfo => { userInfo.IndexCountry = index; index++; });
     }
 
     public void GetUserInfoCurrent()
     {
-        int index = UserInfos.FindIndex(userInfo => userInfo.PlayerId == Data.PlayerId);
-        if (index == -1)
-        {
-            UserInfoCurrent.Stat = Data.CurrentLevel;
-            UserInfoCurrent.Position = 101;
-        }
-        else
-        {
-            UserInfoCurrent.Stat = UserInfos[index].Stat;
-            UserInfoCurrent.Position = index + 1;
-        }
+        UserInfoCurrent = UserInfos.Find(userInfo => userInfo.PlayerId == Data.PlayerId);
     }
 
     public void GetUserInfoByDisplayName(string displayName)
@@ -149,8 +141,7 @@ public class LeaderboardController : Singleton<LeaderboardController>
                         Name = split[0],
                         CountryCode = split[1],
                         PlayerId = entry.Profile.PlayerId,
-                        Stat = entry.StatValue + 1,
-                        Position = entry.Position + 1
+                        Stat = entry.StatValue + 1
                     });
                 });
 
@@ -175,7 +166,9 @@ public class LeaderboardUserInfo
     public string Name;
     public int Stat;
     public string CountryCode;
-    public int Position;
-    public string Rank => Position > Playfab.MaxResultsCount ? $"{textTab}: +{Playfab.MaxResultsCount}" : $"{textTab}: {Position}";
+    public int IndexWorld;
+    public int IndexCountry;
+    public int Index => LeaderboardController.Instance.IsWorldTab ? IndexWorld : IndexCountry;
+    public string Rank => Index > Playfab.MaxResultsCount ? $"{textTab}: +{Playfab.MaxResultsCount}" : $"{textTab}: {Index}";
     private string textTab => LeaderboardController.Instance.IsWorldTab ? "World rank" : "Country rank";
 }

@@ -70,20 +70,26 @@ public class LeaderboardPopup : Popup
 
     public void OnClickWorldTab()
     {
-        LeaderboardController.Instance.IsWorldTab = true;
-        worldTab.SetActive(true);
-        countryTab.SetActive(false);
+        if (!LeaderboardController.Instance.IsWorldTab)
+        {
+            LeaderboardController.Instance.IsWorldTab = true;
+            worldTab.SetActive(true);
+            countryTab.SetActive(false);
 
-        ResetContent();
+            ResetContent();
+        }
     }
 
     public void OnClickCountryTab()
     {
-        LeaderboardController.Instance.IsWorldTab = false;
-        worldTab.SetActive(false);
-        countryTab.SetActive(true);
+        if (LeaderboardController.Instance.IsWorldTab)
+        {
+            LeaderboardController.Instance.IsWorldTab = false;
+            worldTab.SetActive(false);
+            countryTab.SetActive(true);
 
-        ResetContent();
+            ResetContent();
+        }
     }
 
     public void OnClickPreviousButton()
