@@ -7,6 +7,7 @@ using System;
 [CreateAssetMenu(fileName = "LibraryData", menuName = "ScriptableObjects/LibraryData")]
 public class LibraryData : ScriptableObject, IHasSkeletonDataAsset
 {
+    public Sprite Image;
     public SkeletonDataAsset SkeDataAsset;
     public string Name;
     public int LevelUnlock;
