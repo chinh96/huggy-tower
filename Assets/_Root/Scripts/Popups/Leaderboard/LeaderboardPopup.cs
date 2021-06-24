@@ -5,6 +5,8 @@ using TMPro;
 
 public class LeaderboardPopup : Popup
 {
+    [SerializeField] private GameObject bg1;
+    [SerializeField] private GameObject bg2;
     [SerializeField] private LeaderboardTab worldTab;
     [SerializeField] private LeaderboardTab countryTab;
     [SerializeField] private TextMeshProUGUI name;
@@ -12,6 +14,8 @@ public class LeaderboardPopup : Popup
     [SerializeField] private GameObject previousButton;
     [SerializeField] private GameObject nextButton;
     [SerializeField] private List<LeaderboardItem> leaderboardItems;
+    [SerializeField] private GameObject loading;
+    [SerializeField] private GameObject content;
 
     private int page = 0;
 
@@ -19,7 +23,24 @@ public class LeaderboardPopup : Popup
     {
         base.BeforeShow();
 
-        ResetContent();
+        if (Util.NotInternet)
+        {
+            bg1.SetActive(false);
+            bg2.SetActive(true);
+        }
+        else
+        {
+            bg1.SetActive(true);
+            bg2.SetActive(false);
+            loading.SetActive(true);
+            content.SetActive(false);
+            LeaderboardController.Instance.Reset(() =>
+            {
+                loading.SetActive(false);
+                content.SetActive(true);
+                ResetContent();
+            });
+        }
     }
 
     private void ResetContent()

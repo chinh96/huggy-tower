@@ -10,8 +10,6 @@ public class LeaderboardController : Singleton<LeaderboardController>
     [NonSerialized] public LeaderboardUserInfo UserInfoCurrent = new LeaderboardUserInfo();
     [NonSerialized] public bool IsWorldTab = true;
 
-    private bool connecting;
-    private bool logged;
     private int startPosition = -1;
     private List<LeaderboardUserInfo> userInfosAllTab = new List<LeaderboardUserInfo>();
     private List<LeaderboardUserInfo> userInfosWorldTab = new List<LeaderboardUserInfo>();
@@ -22,71 +20,56 @@ public class LeaderboardController : Singleton<LeaderboardController>
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-
-        FetchInfo();
     }
 
-    private void FetchInfo()
-    {
-        if (Data.PlayerId == "")
-        {
-            string code = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-            CountryData countryData = ResourcesController.Country.GetDataByCode(code);
-        }
-        else
-        {
-            LoginFirst();
-        }
-    }
-
-    public void LoginFirst(Action action = null)
-    {
-        if (Util.NotInternet)
-        {
-            return;
-        }
-
-        Playfab.Login(result =>
-        {
-            logged = true;
-            Playfab.GetPlayerProfile(result =>
-            {
-                GetMoreLeaderboard(() =>
-                {
-                    GetUserInfoByDisplayName(result.PlayerProfile.DisplayName);
-                    GetUserInfo();
-                    action?.Invoke();
-                });
-            });
-        });
-    }
-
-    public void Reset()
+    public void Reset(Action action = null)
     {
         startPosition = -1;
         userInfosAllTab.Clear();
         userInfosWorldTab.Clear();
         userInfosCountryTab.Clear();
 
-        if (logged)
+        if (UserInfoCurrent.Name == "")
         {
-            GetMoreLeaderboard(() =>
-            {
-                GetUserInfo();
-            });
+            LoginFirst(action);
         }
         else
         {
-            LoginFirst();
+            UpdateScore(() =>
+            {
+                GetMoreLeaderboard(() =>
+                {
+                    GetUserInfo();
+                    action?.Invoke();
+                });
+            });
         }
     }
 
-    public void Login(string userName, string countryCode, Action callbackResult, Action callbackError)
+    public void LoginFirst(Action action = null)
+    {
+        Playfab.Login(result =>
+        {
+            Playfab.GetPlayerProfile(result =>
+            {
+                UpdateScore(() =>
+                {
+                    GetMoreLeaderboard(() =>
+                    {
+                        GetUserInfoByDisplayName(result.PlayerProfile.DisplayName);
+                        GetUserInfo();
+                        action?.Invoke();
+                    });
+                });
+            });
+        });
+    }
+
+    public void Login(string userName, string countryCode, Action callbackResult = null, Action callbackError = null, Action callbackErrorNetwork = null)
     {
         Playfab.Login(
             (result) =>
             {
-                logged = true;
                 Playfab.UpdateDisplayName(
                     userName + "|" + countryCode,
                     (result) =>
@@ -103,7 +86,7 @@ public class LeaderboardController : Singleton<LeaderboardController>
                                         {
                                             GetUserInfoByDisplayName(result.PlayerProfile.DisplayName);
                                             GetUserInfo();
-                                            callbackResult();
+                                            callbackResult?.Invoke();
                                             Show();
                                         });
                                     });
@@ -113,9 +96,13 @@ public class LeaderboardController : Singleton<LeaderboardController>
                     },
                     (error) =>
                     {
-                        callbackError();
+                        callbackError?.Invoke();
                     }
                 );
+            },
+            (error) =>
+            {
+                callbackErrorNetwork?.Invoke();
             }
         );
     }
@@ -139,7 +126,11 @@ public class LeaderboardController : Singleton<LeaderboardController>
 
     public void GetUserInfoCurrent()
     {
-        UserInfoCurrent = UserInfos.Find(userInfo => userInfo.PlayerId == Data.PlayerId);
+        var userInfo = UserInfos.Find(userInfo => userInfo.PlayerId == Data.PlayerId);
+        if (userInfo != null)
+        {
+            UserInfoCurrent = userInfo;
+        }
     }
 
     public void GetUserInfoByDisplayName(string displayName)
@@ -151,35 +142,13 @@ public class LeaderboardController : Singleton<LeaderboardController>
 
     public void Show()
     {
-        if (Util.NotInternet)
+        if (Data.PlayerId == "")
         {
-            PopupController.Instance.Show<LeaderboardNetwork>();
+            PopupController.Instance.Show<LeaderboardLoginPopup>();
         }
         else
         {
-            if (Data.PlayerId == "")
-            {
-                PopupController.Instance.Show<LeaderboardLoginPopup>();
-            }
-            else if (logged)
-            {
-                PopupController.Instance.Show<LeaderboardPopup>();
-            }
-            else
-            {
-                PopupController.Instance.Show<LeaderboardNetwork>();
-
-                if (!connecting)
-                {
-                    LoginFirst(() =>
-                    {
-                        connecting = false;
-                        PopupController.Instance.Show<LeaderboardPopup>();
-                    });
-                }
-
-                connecting = true;
-            }
+            PopupController.Instance.Show<LeaderboardPopup>();
         }
     }
 
@@ -221,7 +190,7 @@ public class LeaderboardUserInfo
 {
     public Sprite Sprite;
     public string PlayerId;
-    public string Name;
+    public string Name = "";
     public int Stat;
     public string CountryCode;
     public int IndexWorld;

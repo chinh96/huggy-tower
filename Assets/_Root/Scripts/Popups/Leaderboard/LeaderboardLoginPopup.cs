@@ -78,9 +78,11 @@ public class LeaderboardLoginPopup : Popup
                 () => Close(),
                 () =>
                 {
-                    btnDisable.SetActive(false);
-                    connecting.SetActive(false);
                     ShowWarning("The name you choose already exists!");
+                },
+                () =>
+                {
+                    ShowWarning("Check your network connection again!");
                 }
             );
         }
@@ -88,6 +90,8 @@ public class LeaderboardLoginPopup : Popup
 
     private void ShowWarning(string text)
     {
+        btnDisable.SetActive(false);
+        connecting.SetActive(false);
         textWarning.text = text;
         textWarning.gameObject.SetActive(true);
     }
