@@ -15,48 +15,83 @@ public static class Playfab
     {
         if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId)) PlayFabSettings.staticSettings.TitleId = titleId;
 
-        PlayFabClientAPI.LoginWithCustomID(
-            new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, TitleId = titleId, CreateAccount = true },
-            callbackResult,
-            callbackError
-        );
+        try
+        {
+            PlayFabClientAPI.LoginWithCustomID(
+                new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, TitleId = titleId, CreateAccount = true },
+                callbackResult,
+                callbackError
+            );
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     public static void UpdateDisplayName(string displayName, Action<UpdateUserTitleDisplayNameResult> callbackResult = null, Action<PlayFabError> callbackError = null)
     {
-        PlayFabClientAPI.UpdateUserTitleDisplayName(
-            new UpdateUserTitleDisplayNameRequest { DisplayName = displayName },
-            callbackResult,
-            callbackError
-        );
+        try
+        {
+            PlayFabClientAPI.UpdateUserTitleDisplayName(
+                new UpdateUserTitleDisplayNameRequest { DisplayName = displayName },
+                callbackResult,
+                callbackError
+            );
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     public static void UpdateScore(int score, Action<UpdatePlayerStatisticsResult> callbackResult = null, Action<PlayFabError> callbackError = null)
     {
-        PlayFabClientAPI.UpdatePlayerStatistics(
-            new UpdatePlayerStatisticsRequest { Statistics = new List<StatisticUpdate> { new StatisticUpdate { StatisticName = nameTable, Value = score } } },
-            callbackResult,
-            callbackError
-        );
+        try
+        {
+            PlayFabClientAPI.UpdatePlayerStatistics(
+                new UpdatePlayerStatisticsRequest { Statistics = new List<StatisticUpdate> { new StatisticUpdate { StatisticName = nameTable, Value = score } } },
+                callbackResult,
+                callbackError
+            );
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     public static void GetPlayerProfile(Action<GetPlayerProfileResult> callbackResult = null, Action<PlayFabError> callbackError = null)
     {
-        PlayFabClientAPI.GetPlayerProfile(new GetPlayerProfileRequest(), callbackResult, callbackError);
+        try
+        {
+            PlayFabClientAPI.GetPlayerProfile(new GetPlayerProfileRequest(), callbackResult, callbackError);
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     public static void GetLeaderboard(int startPosition, Action<GetLeaderboardResult> callbackResult = null, Action<PlayFabError> callbackError = null)
     {
-        PlayFabClientAPI.GetLeaderboard(
-            new GetLeaderboardRequest
-            {
-                StatisticName = nameTable,
-                StartPosition = startPosition,
-                MaxResultsCount = MaxResultsCount,
-                ProfileConstraints = new PlayerProfileViewConstraints() { ShowDisplayName = true, ShowLocations = true }
-            },
-            callbackResult,
-            callbackError
-        );
+        try
+        {
+            PlayFabClientAPI.GetLeaderboard(
+                new GetLeaderboardRequest
+                {
+                    StatisticName = nameTable,
+                    StartPosition = startPosition,
+                    MaxResultsCount = MaxResultsCount,
+                    ProfileConstraints = new PlayerProfileViewConstraints() { ShowDisplayName = true, ShowLocations = true }
+                },
+                callbackResult,
+                callbackError
+            );
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 }
