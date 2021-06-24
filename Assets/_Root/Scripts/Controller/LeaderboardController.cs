@@ -10,10 +10,13 @@ public class LeaderboardController : Singleton<LeaderboardController>
     [NonSerialized] public LeaderboardUserInfo UserInfoCurrent = new LeaderboardUserInfo();
     [NonSerialized] public bool IsWorldTab = true;
 
+    private bool connecting;
+    private bool logged;
     private int startPosition = -1;
     private List<LeaderboardUserInfo> userInfosAllTab = new List<LeaderboardUserInfo>();
     private List<LeaderboardUserInfo> userInfosWorldTab = new List<LeaderboardUserInfo>();
     private List<LeaderboardUserInfo> userInfosCountryTab = new List<LeaderboardUserInfo>();
+
     public List<LeaderboardUserInfo> UserInfos => IsWorldTab ? userInfosWorldTab : userInfosCountryTab;
 
     private void Start()
@@ -32,8 +35,30 @@ public class LeaderboardController : Singleton<LeaderboardController>
         }
         else
         {
-            Playfab.Login();
+            LoginFirst();
         }
+    }
+
+    public void LoginFirst(Action action = null)
+    {
+        if (Util.NotInternet)
+        {
+            return;
+        }
+
+        Playfab.Login(result =>
+        {
+            logged = true;
+            Playfab.GetPlayerProfile(result =>
+            {
+                GetMoreLeaderboard(() =>
+                {
+                    GetUserInfoByDisplayName(result.PlayerProfile.DisplayName);
+                    GetUserInfo();
+                    action?.Invoke();
+                });
+            });
+        });
     }
 
     public void Reset()
@@ -42,17 +67,18 @@ public class LeaderboardController : Singleton<LeaderboardController>
         userInfosAllTab.Clear();
         userInfosWorldTab.Clear();
         userInfosCountryTab.Clear();
-        UpdateScore(() =>
+
+        if (logged)
         {
-            Playfab.GetPlayerProfile(result =>
+            GetMoreLeaderboard(() =>
             {
-                GetMoreLeaderboard(() =>
-                {
-                    GetUserInfoByDisplayName(result.PlayerProfile.DisplayName);
-                    GetUserInfo();
-                });
+                GetUserInfo();
             });
-        });
+        }
+        else
+        {
+            LoginFirst();
+        }
     }
 
     public void Login(string userName, string countryCode, Action callbackResult, Action callbackError)
@@ -60,6 +86,7 @@ public class LeaderboardController : Singleton<LeaderboardController>
         Playfab.Login(
             (result) =>
             {
+                logged = true;
                 Playfab.UpdateDisplayName(
                     userName + "|" + countryCode,
                     (result) =>
@@ -124,13 +151,35 @@ public class LeaderboardController : Singleton<LeaderboardController>
 
     public void Show()
     {
-        if (Data.PlayerId == "")
+        if (Util.NotInternet)
         {
-            PopupController.Instance.Show<LeaderboardLoginPopup>();
+            PopupController.Instance.Show<LeaderboardNetwork>();
         }
         else
         {
-            PopupController.Instance.Show<LeaderboardPopup>();
+            if (Data.PlayerId == "")
+            {
+                PopupController.Instance.Show<LeaderboardLoginPopup>();
+            }
+            else if (logged)
+            {
+                PopupController.Instance.Show<LeaderboardPopup>();
+            }
+            else
+            {
+                PopupController.Instance.Show<LeaderboardNetwork>();
+
+                if (!connecting)
+                {
+                    LoginFirst(() =>
+                    {
+                        connecting = false;
+                        PopupController.Instance.Show<LeaderboardPopup>();
+                    });
+                }
+
+                connecting = true;
+            }
         }
     }
 

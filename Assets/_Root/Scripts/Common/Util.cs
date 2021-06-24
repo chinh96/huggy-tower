@@ -149,4 +149,6 @@ public static partial class Util
 
         return string.Format("{0:00}:{1:00}:{2:00}", distance.Hours, distance.Minutes, distance.Seconds);
     }
+
+    public static bool NotInternet => Application.internetReachability == NetworkReachability.NotReachable;
 }
