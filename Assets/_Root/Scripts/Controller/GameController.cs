@@ -352,6 +352,7 @@ public class GameController : Singleton<GameController>
         overlay.DOFade(0, 1f).SetEase(Ease.InCubic).OnComplete(() =>
         {
             overlay.gameObject.SetActive(false);
+            NotiQuestController.Instance.Show();
         });
     }
 

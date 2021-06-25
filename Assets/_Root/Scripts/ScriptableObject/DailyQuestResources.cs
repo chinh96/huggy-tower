@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,8 +22,15 @@ public class DailyQuestResources : ScriptableObject
             item.NumberCurrent += value;
             if (NotiQuestController.Instance != null && item.HasNoti && !item.IsShownNoti)
             {
-                NotiQuestController.Instance.Show(item);
-                item.IsShownNoti = true;
+                NotiQuestController.Instance.Save(item);
+
+                DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
+                {
+                    if (GameController.Instance.GameState == EGameState.Playing)
+                    {
+                        NotiQuestController.Instance.Show();
+                    }
+                });
             }
         }
 
