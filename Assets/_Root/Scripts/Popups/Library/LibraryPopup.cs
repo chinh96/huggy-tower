@@ -4,6 +4,7 @@ using UnityEngine;
 using Spine.Unity;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class LibraryPopup : Popup
 {
@@ -12,6 +13,7 @@ public class LibraryPopup : Popup
     [SerializeField] private SkeletonGraphic skeletonGraphic;
     [SerializeField] private TextMeshProUGUI name;
     [SerializeField] private TextMeshProUGUI description;
+    [SerializeField] private Image image;
 
     private List<LibraryItem> libraryItems = new List<LibraryItem>();
     private LibraryData libraryDataCurrent;
@@ -60,13 +62,25 @@ public class LibraryPopup : Popup
 
         libraryDataCurrent = ResourcesController.Library.LibraryDatas[indexActive];
 
-        skeletonGraphic.transform.localPosition = libraryDataCurrent.Offset;
-        skeletonGraphic.transform.localScale = libraryDataCurrent.Scale;
-        skeletonGraphic.skeletonDataAsset = libraryDataCurrent.SkeletonDataAsset;
-        skeletonGraphic.initialFlipX = libraryDataCurrent.IsFlipX;
-        skeletonGraphic.initialSkinName = libraryDataCurrent.LibraryAnimation.SkinName;
-        skeletonGraphic.Initialize(true);
-        skeletonGraphic.Play(libraryDataCurrent.LibraryAnimation.Idle, true);
+        if (libraryDataCurrent.Image == null)
+        {
+            image.gameObject.SetActive(false);
+            skeletonGraphic.gameObject.SetActive(true);
+            skeletonGraphic.transform.localPosition = libraryDataCurrent.Offset;
+            skeletonGraphic.transform.localScale = libraryDataCurrent.Scale;
+            skeletonGraphic.skeletonDataAsset = libraryDataCurrent.SkeletonDataAsset;
+            skeletonGraphic.initialFlipX = libraryDataCurrent.IsFlipX;
+            skeletonGraphic.initialSkinName = libraryDataCurrent.LibraryAnimation.SkinName;
+            skeletonGraphic.Initialize(true);
+            skeletonGraphic.Play(libraryDataCurrent.LibraryAnimation.Idle, true);
+        }
+        else
+        {
+            skeletonGraphic.gameObject.SetActive(false);
+            image.gameObject.SetActive(true);
+            image.sprite = libraryDataCurrent.Image;
+            image.SetNativeSize();
+        }
 
         name.text = libraryDataCurrent.Name;
         description.text = libraryDataCurrent.Description;

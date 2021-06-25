@@ -60,5 +60,6 @@ public class ResourcesController : Singleton<ResourcesController>
     {
         Hero.Reset();
         DailyQuest.Reset();
+        Library.Reset();
     }
 }
