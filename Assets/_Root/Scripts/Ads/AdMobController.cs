@@ -52,6 +52,7 @@ public class AdMobController : MonoBehaviour, IAd
     public void RequestBanner()
     {
         bannerView = new BannerView(bannerId, AdSize.Banner, AdPosition.Bottom);
+        bannerView.OnPaidEvent += (sender, args) => HandleAdPaidEvent(sender, args, bannerId);
         bannerView.LoadAd(GetAdRequest());
     }
 
@@ -70,6 +71,7 @@ public class AdMobController : MonoBehaviour, IAd
         interstitial = new InterstitialAd(interstitialId);
         interstitial.OnAdClosed += (sender, args) => OnInterClosed();
         interstitial.OnAdLoaded += (sender, args) => OnInterLoaded();
+        interstitial.OnPaidEvent += (sender, args) => HandleAdPaidEvent(sender, args, interstitialId);
         interstitial.LoadAd(GetAdRequest());
     }
 
@@ -83,7 +85,7 @@ public class AdMobController : MonoBehaviour, IAd
         rewardedAd = new RewardedAd(rewardedId);
         rewardedAd.OnAdClosed += (sender, args) => OnRewardClosed();
         rewardedAd.OnAdLoaded += (sender, args) => OnRewardLoaded();
-        rewardedAd.OnPaidEvent += HandleAdPaidEventReward;
+        rewardedAd.OnPaidEvent += (sender, args) => HandleAdPaidEvent(sender, args, rewardedId);
         rewardedAd.OnUserEarnedReward += (sender, args) => OnRewardEarned();
         rewardedAd.LoadAd(GetAdRequest());
     }
@@ -93,14 +95,14 @@ public class AdMobController : MonoBehaviour, IAd
         rewardedAd.Show();
     }
 
-    private void HandleAdPaidEventReward(object sender, AdValueEventArgs e)
+    private void HandleAdPaidEvent(object sender, AdValueEventArgs e, string id)
     {
         var adValue = e.AdValue;
         Firebase.Analytics.Parameter[] LTVParameters =
         {
             new Firebase.Analytics.Parameter("valuemicros", adValue.Value),
             new Firebase.Analytics.Parameter("currency", adValue.CurrencyCode), new Firebase.Analytics.Parameter("precision", (int) adValue.Precision),
-            new Firebase.Analytics.Parameter("adunitid", rewardedId), new Firebase.Analytics.Parameter("network", "admob")
+            new Firebase.Analytics.Parameter("adunitid", id), new Firebase.Analytics.Parameter("network", "admob")
         };
         Firebase.Analytics.FirebaseAnalytics.LogEvent("paid_ad_impression", LTVParameters);
     }
