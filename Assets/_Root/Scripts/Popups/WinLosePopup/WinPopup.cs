@@ -56,4 +56,13 @@ public class WinPopup : Popup
     {
         GameController.Instance.OnBackToHome();
     }
+
+    public void OnClickCrossAdsFishPin()
+    {
+#if UNITY_ANDROID
+        Application.OpenURL("market://details?id=com.gamee.fishpin");
+#else
+        Application.OpenURL("itms-apps://itunes.apple.com/app/id1562329957");
+#endif
+    }
 }
