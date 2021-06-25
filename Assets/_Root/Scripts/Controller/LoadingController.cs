@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.UI;
-// using Facebook.Unity;
+using Facebook.Unity;
 
 public class LoadingController : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class LoadingController : MonoBehaviour
 
     private void Start()
     {
-        // FB.Init();
+        FB.Init();
 
         Addressables.InitializeAsync();
 
