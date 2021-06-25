@@ -83,6 +83,7 @@ public class AdMobController : MonoBehaviour, IAd
         rewardedAd = new RewardedAd(rewardedId);
         rewardedAd.OnAdClosed += (sender, args) => OnRewardClosed();
         rewardedAd.OnAdLoaded += (sender, args) => OnRewardLoaded();
+        rewardedAd.OnPaidEvent += HandleAdPaidEventReward;
         rewardedAd.OnUserEarnedReward += (sender, args) => OnRewardEarned();
         rewardedAd.LoadAd(GetAdRequest());
     }
@@ -90,5 +91,17 @@ public class AdMobController : MonoBehaviour, IAd
     public void ShowRewardedAd()
     {
         rewardedAd.Show();
+    }
+
+    private void HandleAdPaidEventReward(object sender, AdValueEventArgs e)
+    {
+        var adValue = e.AdValue;
+        Firebase.Analytics.Parameter[] LTVParameters =
+        {
+            new Firebase.Analytics.Parameter("valuemicros", adValue.Value),
+            new Firebase.Analytics.Parameter("currency", adValue.CurrencyCode), new Firebase.Analytics.Parameter("precision", (int) adValue.Precision),
+            new Firebase.Analytics.Parameter("adunitid", rewardedId), new Firebase.Analytics.Parameter("network", "admob")
+        };
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("paid_ad_impression", LTVParameters);
     }
 }
