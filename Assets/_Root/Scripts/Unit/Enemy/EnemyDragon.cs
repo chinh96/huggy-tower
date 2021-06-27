@@ -4,6 +4,7 @@ using Spine.Unity;
 using UnityEditor;
 #endif
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyDragon : Unit, IAnim
 {
@@ -12,6 +13,7 @@ public class EnemyDragon : Unit, IAnim
     public Collider2D coll2D;
     public SpineAttackHandle attackHandle;
     public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
+    public ParticleSystem fire;
 
     private Action _callbackAttackPlayer;
 
@@ -50,7 +52,20 @@ public class EnemyDragon : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("idle", true); }
 
-    public void PlayAttack() { skeleton.Play("attack", false); SoundController.Instance.PlayOnce(SoundType.DemonAttack); }
+    public void PlayAttack()
+    {
+        skeleton.Play("attack", false);
+        SoundController.Instance.PlayOnce(SoundType.DemonAttack);
+
+        DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+        {
+            fire.gameObject.SetActive(true);
+            fire.transform.DOMove(GameController.Instance.Player.transform.position + new Vector3(0, 1, 0), .3f).OnComplete(() =>
+            {
+                Destroy(fire.gameObject);
+            });
+        });
+    }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 

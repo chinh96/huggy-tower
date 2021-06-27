@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using Spine.Unity;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -13,6 +14,7 @@ public class EnemyDragonGold : Unit, IAnim
     public Collider2D coll2D;
     public SpineAttackHandle attackHandle;
     public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
+    public ParticleSystem fire;
     private Action _callbackAttackPlayer;
 
     private void Start() { attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent); }
@@ -46,7 +48,20 @@ public class EnemyDragonGold : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle2", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack2", false); SoundController.Instance.PlayOnce(SoundType.DragonGoldAttack); }
+    public void PlayAttack()
+    {
+        skeleton.Play("Attack2", false);
+        SoundController.Instance.PlayOnce(SoundType.DragonGoldAttack);
+
+        DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
+        {
+            fire.gameObject.SetActive(true);
+            fire.transform.DOMove(GameController.Instance.Player.transform.position + new Vector3(0, 1, 0), .2f).OnComplete(() =>
+            {
+                Destroy(fire.gameObject);
+            });
+        });
+    }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
