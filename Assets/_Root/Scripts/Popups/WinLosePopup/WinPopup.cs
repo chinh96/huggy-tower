@@ -36,7 +36,7 @@ public class WinPopup : Popup
         {
             claimX5Button.SetActive(false);
 
-            int coinTotal = ResourcesController.Config.CoinBonusPerLevel * 5;
+            int coinTotal = Data.CoinTotal + ResourcesController.Config.CoinBonusPerLevel * 5;
             coinGeneration.GenerateCoin(() =>
             {
                 Data.CoinTotal++;

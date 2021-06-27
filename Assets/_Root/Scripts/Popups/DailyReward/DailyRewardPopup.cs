@@ -18,6 +18,8 @@ public class DailyRewardPopup : Popup
     {
         base.BeforeShow();
 
+        Data.DailyRewardCurrent = Data.DailyRewardCurrent < Data.TotalDays ? Data.TotalDays : Data.DailyRewardCurrent;
+
         Reset();
     }
 
