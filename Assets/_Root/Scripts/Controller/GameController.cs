@@ -22,6 +22,7 @@ public class GameController : Singleton<GameController>
     [SerializeField] private Image overlay;
     [SerializeField] private List<GameObject> backgrounds;
     [SerializeField] private List<MoveOutAnimation> moveOutAnimations;
+    [SerializeField] private FighterOverlay fighterOverlay;
 
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
@@ -36,7 +37,8 @@ public class GameController : Singleton<GameController>
     public LevelRoot Root => root;
     public EGameState GameState { get; set; }
     public RoomTower RoomPrefab => roomPrefab;
-    public bool IsOnboarding;
+
+    [NonSerialized] public bool IsOnboarding;
 
     protected override void Awake()
     {
@@ -369,5 +371,10 @@ public class GameController : Singleton<GameController>
     public void MoveInAnim()
     {
         moveOutAnimations.ForEach(item => item.Reset());
+    }
+
+    public void ShowFighterOverlay()
+    {
+        Instantiate(fighterOverlay, Root.transform.parent);
     }
 }

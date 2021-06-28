@@ -23,6 +23,12 @@ public class LeaderboardPopup : Popup
     {
         base.BeforeShow();
 
+        LeaderboardController.Instance.IsWorldTab = true;
+        Reset();
+    }
+
+    private void Reset()
+    {
         if (Util.NotInternet)
         {
             bg1.SetActive(false);
@@ -47,7 +53,7 @@ public class LeaderboardPopup : Popup
     {
         page = 0;
 
-        LeaderboardController.Instance.GetUserInfo();
+        LeaderboardController.Instance.GetUserInfoCurrent();
         name.text = LeaderboardController.Instance.UserInfoCurrent.Name;
         rank.text = LeaderboardController.Instance.UserInfoCurrent.Rank;
 
@@ -97,7 +103,7 @@ public class LeaderboardPopup : Popup
             worldTab.SetActive(true);
             countryTab.SetActive(false);
 
-            ResetContent();
+            Reset();
         }
     }
 
@@ -109,7 +115,7 @@ public class LeaderboardPopup : Popup
             worldTab.SetActive(false);
             countryTab.SetActive(true);
 
-            ResetContent();
+            Reset();
         }
     }
 

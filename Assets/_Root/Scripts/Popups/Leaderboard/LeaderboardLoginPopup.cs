@@ -1,10 +1,12 @@
 using UnityEngine;
 using TMPro;
 using System.Globalization;
+using UnityEngine.UI;
 
 public class LeaderboardLoginPopup : Popup
 {
-    [SerializeField] private TMP_InputField inputName;
+    // [SerializeField] private TMP_InputField inputName;
+    [SerializeField] private InputField inputName;
     [SerializeField] private TextMeshProUGUI textWarning;
     [SerializeField] private Transform content;
     [SerializeField] private LeaderboardCountryItem countryItemCurrent;

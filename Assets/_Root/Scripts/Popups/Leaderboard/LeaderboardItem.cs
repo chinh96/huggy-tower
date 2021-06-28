@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class LeaderboardItem : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI index;
-    [SerializeField] private TextMeshProUGUI name;
+    // [SerializeField] private TextMeshProUGUI name;
+    [SerializeField] private Text name;
     [SerializeField] private Image flag;
     [SerializeField] private TextMeshProUGUI level;
     [SerializeField] private GameObject backgroundNormal;

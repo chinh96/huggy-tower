@@ -6,17 +6,16 @@ using UnityEngine;
 
 public static class Playfab
 {
-    private static string nameTable = "HERO_TOWER_WAR";
-    private static string titleId = "4D244";
+    public static string TitleId = "4D244";
 
     public static int MaxResultsCount = 100;
 
     public static void Login(Action<LoginResult> callbackResult = null, Action<PlayFabError> callbackError = null)
     {
-        if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId)) PlayFabSettings.staticSettings.TitleId = titleId;
+        if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId)) PlayFabSettings.staticSettings.TitleId = TitleId;
 
         PlayFabClientAPI.LoginWithCustomID(
-            new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, TitleId = titleId, CreateAccount = true },
+            new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, TitleId = TitleId, CreateAccount = true },
             callbackResult,
             callbackError
         );
@@ -31,7 +30,7 @@ public static class Playfab
         );
     }
 
-    public static void UpdateScore(int score, Action<UpdatePlayerStatisticsResult> callbackResult = null, Action<PlayFabError> callbackError = null)
+    public static void UpdateScore(int score, string nameTable, Action<UpdatePlayerStatisticsResult> callbackResult = null, Action<PlayFabError> callbackError = null)
     {
         PlayFabClientAPI.UpdatePlayerStatistics(
             new UpdatePlayerStatisticsRequest { Statistics = new List<StatisticUpdate> { new StatisticUpdate { StatisticName = nameTable, Value = score } } },
@@ -45,7 +44,7 @@ public static class Playfab
         PlayFabClientAPI.GetPlayerProfile(new GetPlayerProfileRequest(), callbackResult, callbackError);
     }
 
-    public static void GetLeaderboard(int startPosition, Action<GetLeaderboardResult> callbackResult = null, Action<PlayFabError> callbackError = null)
+    public static void GetLeaderboard(string nameTable, int startPosition, Action<GetLeaderboardResult> callbackResult = null, Action<PlayFabError> callbackError = null)
     {
         PlayFabClientAPI.GetLeaderboard(
             new GetLeaderboardRequest

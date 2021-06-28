@@ -26,7 +26,10 @@ public class LevelMap : MonoBehaviour
             Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, slot.transform.position.y - 5, Camera.main.transform.position.z);
             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
             {
-                Camera.main.transform.DOMoveY(0, DurationMoveCamera).SetEase(Ease.Linear);
+                Camera.main.transform.DOMoveY(0, DurationMoveCamera).SetEase(Ease.Linear).OnComplete(() =>
+                {
+                    GameController.Instance.ShowFighterOverlay();
+                });
             });
         }
     }

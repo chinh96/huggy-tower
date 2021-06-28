@@ -9,13 +9,9 @@ public class LeaderboardController : Singleton<LeaderboardController>
 {
     [NonSerialized] public LeaderboardUserInfo UserInfoCurrent = new LeaderboardUserInfo();
     [NonSerialized] public bool IsWorldTab = true;
+    [NonSerialized] public List<LeaderboardUserInfo> UserInfos = new List<LeaderboardUserInfo>();
 
     private int startPosition = -1;
-    private List<LeaderboardUserInfo> userInfosAllTab = new List<LeaderboardUserInfo>();
-    private List<LeaderboardUserInfo> userInfosWorldTab = new List<LeaderboardUserInfo>();
-    private List<LeaderboardUserInfo> userInfosCountryTab = new List<LeaderboardUserInfo>();
-
-    public List<LeaderboardUserInfo> UserInfos => IsWorldTab ? userInfosWorldTab : userInfosCountryTab;
 
     private void Start()
     {
@@ -25,9 +21,7 @@ public class LeaderboardController : Singleton<LeaderboardController>
     public void Reset(Action action = null)
     {
         startPosition = -1;
-        userInfosAllTab.Clear();
-        userInfosWorldTab.Clear();
-        userInfosCountryTab.Clear();
+        UserInfos.Clear();
 
         if (UserInfoCurrent.Name == "")
         {
@@ -39,7 +33,6 @@ public class LeaderboardController : Singleton<LeaderboardController>
             {
                 GetMoreLeaderboard(() =>
                 {
-                    GetUserInfo();
                     action?.Invoke();
                 });
             });
@@ -52,12 +45,15 @@ public class LeaderboardController : Singleton<LeaderboardController>
         {
             Playfab.GetPlayerProfile(result =>
             {
+                string[] split = result.PlayerProfile.DisplayName.Split('|');
+                UserInfoCurrent.Name = split[0];
+                UserInfoCurrent.CountryCode = split[1];
+
                 UpdateScore(() =>
                 {
                     GetMoreLeaderboard(() =>
                     {
-                        GetUserInfoByDisplayName(result.PlayerProfile.DisplayName);
-                        GetUserInfo();
+                        GetUserInfoCurrent();
                         action?.Invoke();
                     });
                 });
@@ -74,6 +70,9 @@ public class LeaderboardController : Singleton<LeaderboardController>
                     userName + "|" + countryCode,
                     (result) =>
                     {
+                        UserInfoCurrent.Name = userName;
+                        UserInfoCurrent.CountryCode = countryCode;
+
                         UpdateScore(() =>
                         {
                             Playfab.GetPlayerProfile(
@@ -84,8 +83,7 @@ public class LeaderboardController : Singleton<LeaderboardController>
                                     {
                                         GetMoreLeaderboard(() =>
                                         {
-                                            GetUserInfoByDisplayName(result.PlayerProfile.DisplayName);
-                                            GetUserInfo();
+                                            GetUserInfoCurrent();
                                             callbackResult?.Invoke();
                                             Show();
                                         });
@@ -107,29 +105,16 @@ public class LeaderboardController : Singleton<LeaderboardController>
         );
     }
 
-    public void GetUserInfo()
-    {
-        GetUserInfoTab();
-        GetUserInfoCurrent();
-    }
-
-    public void GetUserInfoTab()
-    {
-        userInfosWorldTab = userInfosAllTab;
-        int index = 1;
-        userInfosWorldTab.ForEach(userInfo => { userInfo.IndexWorld = index; index++; });
-
-        userInfosCountryTab = userInfosAllTab.FindAll(userInfo => userInfo.CountryCode == UserInfoCurrent.CountryCode);
-        index = 1;
-        userInfosCountryTab.ForEach(userInfo => { userInfo.IndexCountry = index; index++; });
-    }
-
     public void GetUserInfoCurrent()
     {
         var userInfo = UserInfos.Find(userInfo => userInfo.PlayerId == Data.PlayerId);
-        if (userInfo != null)
+        if (userInfo == null)
         {
-            UserInfoCurrent = userInfo;
+            UserInfoCurrent.Index = Playfab.MaxResultsCount + 1;
+        }
+        else
+        {
+            UserInfoCurrent.Index = userInfo.Index;
         }
     }
 
@@ -156,21 +141,25 @@ public class LeaderboardController : Singleton<LeaderboardController>
     {
         startPosition++;
         Playfab.GetLeaderboard(
+            IsWorldTab ? "HERO_TOWER_WAR" : UserInfoCurrent.CountryCode,
             startPosition * Playfab.MaxResultsCount,
             result =>
             {
-                result.Leaderboard.ForEach(entry =>
-                {
-                    string[] split = entry.DisplayName.Split('|');
-                    userInfosAllTab.Add(new LeaderboardUserInfo
+                result.Leaderboard.ForEach(
+                    entry =>
                     {
-                        Sprite = ResourcesController.Country.GetDataByCode(split[1]).Sprite,
-                        Name = split[0],
-                        CountryCode = split[1],
-                        PlayerId = entry.Profile.PlayerId,
-                        Stat = entry.StatValue + 1
-                    });
-                });
+                        string[] split = entry.DisplayName.Split('|');
+                        this.UserInfos.Add(new LeaderboardUserInfo
+                        {
+                            Sprite = ResourcesController.Country.GetDataByCode(split[1]).Sprite,
+                            Name = split[0],
+                            CountryCode = split[1],
+                            PlayerId = entry.Profile.PlayerId,
+                            Stat = entry.StatValue + 1,
+                            Index = entry.Position + 1
+                        });
+                    }
+                );
 
                 action?.Invoke();
             }
@@ -181,6 +170,12 @@ public class LeaderboardController : Singleton<LeaderboardController>
     {
         Playfab.UpdateScore(
             Data.CurrentLevel,
+            "HERO_TOWER_WAR"
+        );
+
+        Playfab.UpdateScore(
+            Data.CurrentLevel,
+            UserInfoCurrent.CountryCode,
             result => action?.Invoke()
         );
     }
@@ -193,9 +188,7 @@ public class LeaderboardUserInfo
     public string Name = "";
     public int Stat;
     public string CountryCode;
-    public int IndexWorld;
-    public int IndexCountry;
-    public int Index => LeaderboardController.Instance.IsWorldTab ? IndexWorld : IndexCountry;
+    public int Index;
     public string Rank => Index > Playfab.MaxResultsCount ? $"{textTab}: +{Playfab.MaxResultsCount}" : $"{textTab}: {Index}";
     private string textTab => LeaderboardController.Instance.IsWorldTab ? "World rank" : "Country rank";
 }
