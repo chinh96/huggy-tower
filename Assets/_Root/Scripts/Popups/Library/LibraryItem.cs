@@ -55,11 +55,14 @@ public class LibraryItem : MonoBehaviour
         locked.SetActive(true);
     }
 
-    public void OnClick()
+    public void OnClickUnlock()
     {
-        if (libraryData.IsUnlocked)
-        {
-            libraryPopup.Reset(index);
-        }
+        libraryPopup.Reset(index);
+    }
+
+    public void OnClickLocked()
+    {
+        Data.LibraryItemInfo = libraryData;
+        PopupController.Instance.Show<LibraryItemInfoPopup>(null, ShowAction.DoNothing);
     }
 }

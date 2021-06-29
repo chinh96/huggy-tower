@@ -19,6 +19,9 @@ public class LibraryData : ScriptableObject, IHasSkeletonDataAsset
     public bool IsFlipX;
     public Vector3 Scale = Vector3.one * 1.5f;
     public Vector3 Offset = new Vector3(-175, 200, 0);
+    public bool IsFlipX2;
+    public Vector3 Scale2 = Vector3.one * 1.5f;
+    public Vector3 Offset2 = new Vector3(0, 0, 0);
 }
 
 [Serializable]

@@ -134,4 +134,6 @@ public static class Data
 
     public static string DailyQuestId;
     public static int DailyQuestNumberCurrent { get => GetInt(Constants.DAILY_QUEST_NUMBER_CURRENT + DailyQuestId, 0); set => SetInt(Constants.DAILY_QUEST_NUMBER_CURRENT + DailyQuestId, value); }
+
+    public static LibraryData LibraryItemInfo;
 }
