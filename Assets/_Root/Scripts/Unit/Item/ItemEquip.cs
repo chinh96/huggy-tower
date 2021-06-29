@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEditor;
 using UnityEngine.UI;
-
+using DG.Tweening;
 using UnityEngine;
 using Spine.Unity;
 
@@ -16,6 +16,14 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
     public Collider2D coll2D;
     public TextMeshProUGUI txtDamage;
     public int damage;
+
+    private void Awake()
+    {
+        if (txtDamage != null && damage > 0)
+        {
+            txtDamage.DOCounter(damage, damage, 0);
+        }
+    }
 
     public void AddJumpAnimation()
     {

@@ -1,12 +1,21 @@
 using System;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 public abstract class Unit : MonoBehaviour, IUnit, IAttack
 {
     [SerializeField] protected EUnitState state;
     [SerializeField] protected TextMeshProUGUI txtDamage;
     [SerializeField] protected int damage;
+
+    private void Awake()
+    {
+        if (txtDamage != null && damage > 0)
+        {
+            txtDamage.DOCounter(damage, damage, 0);
+        }
+    }
 
     public GameObject ThisGameObject => gameObject;
 

@@ -558,27 +558,27 @@ public class Player : Unit, IAnim
     {
         if (_target != null)
         {
+            var _cacheTarget = _target;
             var cacheDamage = Damage;
             if (_flagAttack)
             {
-                Damage += _target.Damage;
+                _cacheTarget.OnBeingAttacked();
+
+                Damage += _cacheTarget.Damage;
                 if (damage > 0)
                 {
                     effectIncreaseDamge.gameObject.SetActive(true);
                     effectIncreaseDamge.Play();
+
+                    _cacheTarget.TxtDamage.gameObject.SetActive(true);
+                    _cacheTarget.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
+                    {
+                        TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
+                        TxtDamage.DOCounter(cacheDamage, Damage, 0);
+                        _cacheTarget.TxtDamage.gameObject.SetActive(false);
+                    });
                 }
-
-                _target.OnBeingAttacked();
             }
-
-            // TxtDamage.DOCounter(cacheDamage, Damage, 0.5f).OnComplete(() => TxtDamage.text = Damage.ToString());
-            _target.TxtDamage.gameObject.SetActive(true);
-            _target.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
-            {
-                TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
-                TxtDamage.text = Damage.ToString();
-                Destroy(_target.TxtDamage.gameObject);
-            });
         }
     }
 
@@ -593,7 +593,7 @@ public class Player : Unit, IAnim
         }
 
         Damage += damage;
-        TxtDamage.DOCounter(cacheDamage, Damage, 0.5f).OnComplete(() => TxtDamage.text = Damage.ToString());
+        TxtDamage.DOCounter(cacheDamage, Damage, 0.5f);
 
         if (Damage <= 0)
         {

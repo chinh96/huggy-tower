@@ -11,6 +11,14 @@ public class ItemTrap : Item
     public TextMeshProUGUI txtDamage;
     public int damage;
 
+    private void Awake()
+    {
+        if (txtDamage != null && damage > 0)
+        {
+            txtDamage.DOCounter(damage, damage, 0);
+        }
+    }
+
     public override void Collect(IUnit affectTarget)
     {
         var player = (Player)affectTarget;
