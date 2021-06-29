@@ -571,7 +571,14 @@ public class Player : Unit, IAnim
                 _target.OnBeingAttacked();
             }
 
-            TxtDamage.DOCounter(cacheDamage, Damage, 0.5f).OnComplete(() => TxtDamage.text = Damage.ToString());
+            // TxtDamage.DOCounter(cacheDamage, Damage, 0.5f).OnComplete(() => TxtDamage.text = Damage.ToString());
+            _target.TxtDamage.gameObject.SetActive(true);
+            _target.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
+            {
+                TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
+                TxtDamage.text = Damage.ToString();
+                Destroy(_target.TxtDamage.gameObject);
+            });
         }
     }
 
