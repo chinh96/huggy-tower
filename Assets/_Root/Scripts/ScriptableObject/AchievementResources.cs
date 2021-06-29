@@ -43,16 +43,11 @@ public class AchievementData
     [GUID] public string Id;
     public string Text;
     public Sprite Sprite;
+    public int NumberTarget;
     public int NumberCurrent
     {
         get { Data.AchievementId = Id; return Data.AchievementNumberCurrent; }
 
         set { Data.AchievementId = Id; Data.AchievementNumberCurrent = value; }
-    }
-    public int NumberTarget
-    {
-        get { Data.AchievementId = Id; return Data.AchievementNumberTarget; }
-
-        set { Data.AchievementId = Id; Data.AchievementNumberTarget = value; }
     }
 }

@@ -42,6 +42,7 @@ public class EnemyMelee : Unit, IAnim
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.NormalEnemy);
+        ResourcesController.Achievement.IncreaseByType(AchievementType.NormalEnemy);
     }
 
     public SkeletonGraphic Skeleton => skeleton;
