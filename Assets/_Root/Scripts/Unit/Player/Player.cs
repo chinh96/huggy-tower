@@ -737,7 +737,10 @@ public class Player : Unit, IAnim
             {
                 SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
                 SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
-                SoundController.Instance.PlayOnce(soundType);
+                DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                {
+                    SoundController.Instance.PlayOnce(soundType);
+                });
                 attacks = new string[] { "AttackGlove", "AttackGlove2" };
             }
             else if (EquipType == ItemType.Knife)
@@ -757,7 +760,7 @@ public class Player : Unit, IAnim
                 SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
                 SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
                 SoundController.Instance.PlayOnce(soundType);
-                attacks = new string[] { "Attack2", "AttackHit", "AttackHit2" };
+                attacks = new string[] { "AttackHit", "AttackHit2" };
             }
             string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
             skeleton.Play(attack, false);
