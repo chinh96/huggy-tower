@@ -13,6 +13,8 @@ public class AchievementItem : MonoBehaviour
     [SerializeField] private GameObject buttonDeactive;
     [SerializeField] private TextMeshProUGUI bonus;
     [SerializeField] private Image progress;
+    [SerializeField] private GameObject button;
+    [SerializeField] private GameObject done;
 
     private AchievementData data;
 
@@ -32,12 +34,14 @@ public class AchievementItem : MonoBehaviour
         buttonDeactive.SetActive(data.NumberCurrent < data.NumberTarget);
         bonus.text = data.NumberTarget.ToString();
         progress.fillAmount = (float)data.NumberCurrent / data.NumberTarget;
+        button.SetActive(data.NumberCurrent < data.NumberTarget);
+        done.SetActive(data.NumberCurrent >= data.NumberTarget);
     }
 
     public void OnClickClaimButton()
     {
         Data.CoinTotal += data.NumberTarget;
-        data.NumberTarget += 10;
+        // data.NumberTarget += 10;
         Reset();
     }
 }

@@ -41,6 +41,7 @@ public class EnemyWolf : Unit, IAnim
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.WolfEnemy);
+        ResourcesController.Achievement.IncreaseByType(AchievementType.WolfEnemy);
     }
 
     public SkeletonGraphic Skeleton => skeleton;
