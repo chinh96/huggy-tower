@@ -17,16 +17,21 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
     public TextMeshProUGUI txtDamage;
     public int damage;
 
+    private WavyAnimation wavyAnimation;
+
     private void Awake()
     {
         if (txtDamage != null && damage > 0)
         {
             txtDamage.DOCounter(damage, damage, 0);
         }
+
+        wavyAnimation = render.gameObject.AddComponent<WavyAnimation>();
     }
 
     public void AddJumpAnimation()
     {
+        Destroy(wavyAnimation);
         render.gameObject.AddComponent<JumpAnimation>();
     }
 
