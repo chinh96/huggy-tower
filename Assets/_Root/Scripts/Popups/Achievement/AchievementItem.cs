@@ -41,7 +41,6 @@ public class AchievementItem : MonoBehaviour
     public void OnClickClaimButton()
     {
         Data.CoinTotal += data.NumberTarget;
-        // data.NumberTarget += 10;
         Reset();
     }
 }

@@ -39,6 +39,7 @@ public class GameController : Singleton<GameController>
     public RoomTower RoomPrefab => roomPrefab;
 
     [NonSerialized] public bool IsOnboarding;
+    [NonSerialized] public bool IsJapanBackground;
 
     protected override void Awake()
     {
@@ -86,6 +87,7 @@ public class GameController : Singleton<GameController>
         backgrounds.ForEach(item => item.SetActive(false));
         int random = UnityEngine.Random.Range(0, backgrounds.Count);
         backgrounds[random].SetActive(true);
+        IsJapanBackground = backgrounds[random].name == "Jav";
     }
 
     public async void LoadLevel(int fakeIndex)

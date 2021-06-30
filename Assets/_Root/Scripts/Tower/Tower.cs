@@ -14,6 +14,13 @@ public class Tower : MonoBehaviour
     public ParticleSystem explosion;
     public Image homeTower;
     public Image homeTowerFlag;
+    public Sprite towerJapan;
+    public Image tower;
+    public VerticalLayoutGroup verticalLayoutGroup;
+    public GameObject flag;
+    public List<GameObject> flagJapans;
+    public Image HomeTowerJapan;
+    public List<Image> HomeTowerJapanFlags;
 
     private void Start()
     {
@@ -30,6 +37,11 @@ public class Tower : MonoBehaviour
             {
                 GameController.Instance.Root.LevelMap.MoveCamera(slots[0]);
             });
+        }
+
+        if (GameController.Instance.IsJapanBackground)
+        {
+            ChangeToJapanTower();
         }
     }
 
@@ -125,9 +137,23 @@ public class Tower : MonoBehaviour
     public void ChangeToHomTower()
     {
         float duration = 2;
-        homeTower.rectTransform.sizeDelta = GetComponent<RectTransform>().sizeDelta;
-        homeTower.DOColor(new Color(1, 1, 1, 1), duration);
-        homeTowerFlag.DOColor(new Color(1, 1, 1, 1), duration);
+
+        if (GameController.Instance.IsJapanBackground)
+        {
+            HomeTowerJapan.rectTransform.sizeDelta = GetComponent<RectTransform>().sizeDelta;
+            HomeTowerJapan.DOColor(new Color(1, 1, 1, 1), duration);
+
+            HomeTowerJapanFlags.ForEach(homeTowerFlag =>
+            {
+                homeTowerFlag.DOColor(new Color(1, 1, 1, 1), duration);
+            });
+        }
+        else
+        {
+            homeTower.rectTransform.sizeDelta = GetComponent<RectTransform>().sizeDelta;
+            homeTower.DOColor(new Color(1, 1, 1, 1), duration);
+            homeTowerFlag.DOColor(new Color(1, 1, 1, 1), duration);
+        }
 
         slots.ForEach(slot =>
         {
@@ -139,5 +165,17 @@ public class Tower : MonoBehaviour
     {
         explosion.Stop();
         explosion.Play();
+    }
+
+    public virtual void ChangeToJapanTower()
+    {
+        tower.sprite = towerJapan;
+        verticalLayoutGroup.padding.left = -10;
+        verticalLayoutGroup.padding.top = 270;
+        flag.SetActive(false);
+        flagJapans.ForEach(flagJapan =>
+        {
+            flagJapan.SetActive(true);
+        });
     }
 }

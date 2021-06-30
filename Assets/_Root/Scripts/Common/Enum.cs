@@ -191,7 +191,10 @@ public enum AchievementType
     DragonEnemy,
     BearEnemy,
     Princess,
-    Chest
+    Chest,
+    CompleteMapWorld,
+    BuySkins,
+    PlayToLevel
 }
 
 public enum DailyQuestType
