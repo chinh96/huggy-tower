@@ -26,7 +26,10 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
             txtDamage.DOCounter(damage, damage, 0);
         }
 
-        wavyAnimation = render.gameObject.AddComponent<WavyAnimation>();
+        DOTween.Sequence().AppendInterval(Random.Range(0, .5f)).AppendCallback(() =>
+        {
+            wavyAnimation = render.gameObject.AddComponent<WavyAnimation>();
+        });
     }
 
     public void AddJumpAnimation()

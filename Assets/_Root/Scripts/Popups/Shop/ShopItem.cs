@@ -53,7 +53,7 @@ public class ShopItem : MonoBehaviour
                 Data.CoinTotal += 50000;
                 break;
             case ShopItemType.Gold2:
-                Data.CoinTotal += 100000;
+                Data.CoinTotal += 150000;
                 break;
             case ShopItemType.Gold3:
                 Data.CoinTotal += 500000;

@@ -16,6 +16,8 @@ public class SkinItem : MonoBehaviour
     [SerializeField] private GameObject buttonFacebook;
     [SerializeField] private TextMeshProUGUI cost;
     [SerializeField] private TextMeshProUGUI costDisable;
+    [SerializeField] private GameObject dockActive;
+    [SerializeField] private GameObject usedLabel;
 
     private SkinData skinData;
     private SkinPopup skinPopup;
@@ -24,8 +26,6 @@ public class SkinItem : MonoBehaviour
     {
         this.skinData = skinData;
         this.skinPopup = skinPopup;
-
-        Reset();
     }
 
     public void Reset()
@@ -35,7 +35,7 @@ public class SkinItem : MonoBehaviour
         cost.text = skinData.Coin.ToString();
         costDisable.text = skinData.Coin.ToString();
 
-        HideAllButton();
+        HideAll();
 
         if (!skinData.IsUnlocked && !Data.IsUnlockAllSkins)
         {
@@ -62,15 +62,39 @@ public class SkinItem : MonoBehaviour
                     break;
             }
         }
+
+        CheckCurrent();
     }
 
-    private void HideAllButton()
+    private void CheckCurrent()
+    {
+        string currentSkinName = "";
+        switch (skinPopup.EUnitType)
+        {
+            case EUnitType.Hero:
+                currentSkinName = Data.CurrentSkinHero;
+                break;
+            case EUnitType.Princess:
+                currentSkinName = Data.CurrentSkinPrincess;
+                break;
+        }
+
+        if (skinData.SkinName == currentSkinName)
+        {
+            SetActiveDock(true);
+            SetActiveUsedLabel(true);
+        }
+    }
+
+    private void HideAll()
     {
         buttonBuy.SetActive(false);
         buttonAds.SetActive(false);
         buttonDailyReward.SetActive(false);
         buttonDisableBuy.SetActive(false);
         buttonFacebook.SetActive(false);
+        usedLabel.SetActive(false);
+        dockActive.SetActive(false);
     }
 
     public void OnClickButtonBuy()
@@ -126,6 +150,8 @@ public class SkinItem : MonoBehaviour
         skinData.IsUnlocked = true;
 
         skinPopup.Reset();
+
+        usedLabel.SetActive(true);
     }
 
     private void SetSkin()
@@ -146,8 +172,22 @@ public class SkinItem : MonoBehaviour
         if (skinData.IsUnlocked || Data.IsUnlockAllSkins)
         {
             SetSkin();
+            skinPopup.ResetUsedLabel();
+            SetActiveUsedLabel(true);
         }
 
         skinPopup.ChangeCharacterSkin(skinData.SkinName);
+        skinPopup.ResetDock();
+        SetActiveDock(true);
+    }
+
+    public void SetActiveDock(bool active)
+    {
+        dockActive.SetActive(active);
+    }
+
+    public void SetActiveUsedLabel(bool active)
+    {
+        usedLabel.SetActive(active);
     }
 }

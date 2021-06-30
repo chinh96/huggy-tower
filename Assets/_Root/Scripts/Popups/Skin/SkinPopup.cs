@@ -85,4 +85,14 @@ public class SkinPopup : Popup
     {
         character.ChangeSkin(skinName);
     }
+
+    public void ResetDock()
+    {
+        skinRows.ForEach(skinRow => skinRow.ResetDock());
+    }
+
+    public void ResetUsedLabel()
+    {
+        skinRows.ForEach(skinRow => skinRow.ResetUsedLabel());
+    }
 }

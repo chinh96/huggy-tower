@@ -30,4 +30,14 @@ public class SkinRow : MonoBehaviour
     {
         skinItems.ForEach(item => item.Reset());
     }
+
+    public void ResetDock()
+    {
+        skinItems.ForEach(item => item.SetActiveDock(false));
+    }
+
+    public void ResetUsedLabel()
+    {
+        skinItems.ForEach(item => item.SetActiveUsedLabel(false));
+    }
 }
