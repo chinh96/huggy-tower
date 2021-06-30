@@ -15,7 +15,7 @@ public class ItemTrap : Item
     {
         if (txtDamage != null && damage > 0)
         {
-            txtDamage.DOCounter(damage, damage, 0);
+            txtDamage.DOCounter(-damage, -damage, 0);
         }
     }
 
