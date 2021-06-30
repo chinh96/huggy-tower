@@ -18,6 +18,7 @@ public class SkinItem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI costDisable;
     [SerializeField] private GameObject dockActive;
     [SerializeField] private GameObject usedLabel;
+    [SerializeField] private GameObject fx;
 
     private SkinData skinData;
     private SkinPopup skinPopup;
@@ -83,6 +84,7 @@ public class SkinItem : MonoBehaviour
         {
             SetActiveDock(true);
             SetActiveUsedLabel(true);
+            SetActiveFX(true);
         }
     }
 
@@ -95,6 +97,7 @@ public class SkinItem : MonoBehaviour
         buttonFacebook.SetActive(false);
         usedLabel.SetActive(false);
         dockActive.SetActive(false);
+        fx.SetActive(false);
     }
 
     public void OnClickButtonBuy()
@@ -177,8 +180,12 @@ public class SkinItem : MonoBehaviour
         }
 
         skinPopup.ChangeCharacterSkin(skinData.SkinName);
+
         skinPopup.ResetDock();
         SetActiveDock(true);
+
+        skinPopup.ResetFx();
+        SetActiveFX(true);
     }
 
     public void SetActiveDock(bool active)
@@ -189,5 +196,10 @@ public class SkinItem : MonoBehaviour
     public void SetActiveUsedLabel(bool active)
     {
         usedLabel.SetActive(active);
+    }
+
+    public void SetActiveFX(bool active)
+    {
+        fx.SetActive(active);
     }
 }

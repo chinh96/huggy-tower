@@ -95,4 +95,9 @@ public class SkinPopup : Popup
     {
         skinRows.ForEach(skinRow => skinRow.ResetUsedLabel());
     }
+
+    public void ResetFx()
+    {
+        skinRows.ForEach(skinRow => skinRow.ResetFx());
+    }
 }

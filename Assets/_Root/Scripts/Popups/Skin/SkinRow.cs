@@ -40,4 +40,9 @@ public class SkinRow : MonoBehaviour
     {
         skinItems.ForEach(item => item.SetActiveUsedLabel(false));
     }
+
+    public void ResetFx()
+    {
+        skinItems.ForEach(item => item.SetActiveFX(false));
+    }
 }
