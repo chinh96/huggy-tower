@@ -64,4 +64,7 @@ public class Constants
     public const string SKIP_LEVEL = "SKIP_LEVEL";
     public const string CLICK_DAILY_QUEST_BUTTON = "CLICK_DAILY_QUEST_BUTTON";
     public const string CLAIM_DAILY_QUEST = "CLAIM_DAILY_QUEST";
+    public const string START_LEVEL_1_FUNNEL = "START_LEVEL_1_FUNNEL";
+    public const string COMPLETE_LEVEL_1_FUNNEL = "COMPLETE_LEVEL_1_FUNNEL";
+    public const string START_LEVEL_8_FUNNEL = "START_LEVEL_8_FUNNEL";
 }

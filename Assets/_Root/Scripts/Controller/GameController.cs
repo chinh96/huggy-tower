@@ -185,6 +185,14 @@ public class GameController : Singleton<GameController>
         InternalPlayLevel();
         SavePreviousLevel(levelInstall);
         AnalyticController.StartLevel();
+        if (Data.CurrentLevel == 0)
+        {
+            AnalyticController.StartLevel1Funnel();
+        }
+        if (Data.CurrentLevel == 7)
+        {
+            AnalyticController.StartLevel8Funnel();
+        }
     }
 
     public void UpdateDislayCurrentLevel(int level, ELevelCondition condition)
@@ -261,6 +269,11 @@ public class GameController : Singleton<GameController>
     public void OnWinLevel()
     {
         AnalyticController.CompleteLevel();
+
+        if (Data.CurrentLevel == 0)
+        {
+            AnalyticController.CompleteLevel1Funnel();
+        }
 
         root.LevelMap.visitTower.ChangeToHomTower();
 

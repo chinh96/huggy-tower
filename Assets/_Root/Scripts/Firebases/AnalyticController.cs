@@ -78,6 +78,21 @@ public static class AnalyticController
         LogEvent(Constants.CLAIM_DAILY_QUEST, new Parameter[] { });
     }
 
+    public static void StartLevel1Funnel()
+    {
+        LogEvent(Constants.START_LEVEL_1_FUNNEL, new Parameter[] { });
+    }
+
+    public static void CompleteLevel1Funnel()
+    {
+        LogEvent(Constants.COMPLETE_LEVEL_1_FUNNEL, new Parameter[] { });
+    }
+
+    public static void StartLevel8Funnel()
+    {
+        LogEvent(Constants.START_LEVEL_8_FUNNEL, new Parameter[] { });
+    }
+
     private static void LogEvent(string name, Parameter[] param)
     {
         FirebaseAnalytics.LogEvent(name, param);
