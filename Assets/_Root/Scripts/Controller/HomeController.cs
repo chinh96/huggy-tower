@@ -37,6 +37,7 @@ public class HomeController : Singleton<HomeController>
         AdController.Instance.ShowBanner();
         SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
         FadeOutOverlay();
+        CheckNewUpdatePopup();
     }
 
     public void TapToStart()
@@ -110,5 +111,16 @@ public class HomeController : Singleton<HomeController>
     public void OnClickLeaderboardButton()
     {
         LeaderboardController.Instance.Show();
+    }
+
+    public void CheckNewUpdatePopup()
+    {
+        if (RemoteConfigController.Instance.HasNewUpdate && !Data.DontShowUpdateAgain)
+        {
+            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+            {
+                PopupController.Instance.Show<NewUpdatePopup>();
+            });
+        }
     }
 }

@@ -136,4 +136,6 @@ public static class Data
     public static int DailyQuestNumberCurrent { get => GetInt(Constants.DAILY_QUEST_NUMBER_CURRENT + DailyQuestId, 0); set => SetInt(Constants.DAILY_QUEST_NUMBER_CURRENT + DailyQuestId, value); }
 
     public static LibraryData LibraryItemInfo;
+
+    public static bool DontShowUpdateAgain { get => GetBool(Constants.DONT_SHOW_UPDATE_AGAIN, false); set => SetBool(Constants.DONT_SHOW_UPDATE_AGAIN, value); }
 }

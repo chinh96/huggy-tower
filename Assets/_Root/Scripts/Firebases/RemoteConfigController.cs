@@ -9,10 +9,12 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
     [NonSerialized] public int FirstOpenCountLevelWinTurnOnAds = 2;
     [NonSerialized] public int InterstitalTimeLevelCompleted = 30;
     [NonSerialized] public int CountLevelWinShowAds = 2;
-    [NonSerialized] public string CurrentVersion = "";
-    [NonSerialized] public string UpdateDescription = "";
+    [NonSerialized] public string CurrentVersion = "0";
+    [NonSerialized] public string UpdateDescription = "0";
     [NonSerialized] public bool OnlyAdmob = true;
     [NonSerialized] public bool EnableFbLogin = false;
+
+    public bool HasNewUpdate => float.Parse(Application.version) < float.Parse(CurrentVersion);
 
     private void Start()
     {
@@ -44,8 +46,8 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         defaults.Add(Constants.FIRST_OPEN_COUNT_LEVEL_WIN_TURN_ON_ADS, 2);
         defaults.Add(Constants.INTERSTITIAL_TIME_LEVEL_COMPLETED, 30);
         defaults.Add(Constants.COUNT_LEVEL_WIN_SHOW_ADS, 2);
-        defaults.Add(Constants.CURRENT_VERSION_ANDROID, "");
-        defaults.Add(Constants.CURRENT_VERSION_IOS, "");
+        defaults.Add(Constants.CURRENT_VERSION_ANDROID, "0");
+        defaults.Add(Constants.CURRENT_VERSION_IOS, "0");
         defaults.Add(Constants.IOS_UPDATE_DESCRIPTION, "");
         defaults.Add(Constants.ANDROID_UPDATE_DESCRIPTION, "");
         defaults.Add(Constants.ONLY_ADMOB, true);
