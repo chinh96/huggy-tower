@@ -103,7 +103,8 @@ public enum SkinType
     Coin,
     Ads,
     Daily,
-    Facebook
+    Facebook,
+    Achievement
 }
 
 public enum SoundType
@@ -192,9 +193,14 @@ public enum AchievementType
     BearEnemy,
     Princess,
     Chest,
-    CompleteMapWorld,
     BuySkins,
-    PlayToLevel
+    PlayToLevel,
+    CompleteEarth,
+    CompleteDesert,
+    CompleteIceland,
+    CompleteInferno,
+    CompleteJade,
+    CompleteOlympus,
 }
 
 public enum DailyQuestType

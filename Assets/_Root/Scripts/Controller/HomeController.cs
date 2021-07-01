@@ -99,8 +99,7 @@ public class HomeController : Singleton<HomeController>
 
     public void OnClickDailyQuestButton()
     {
-        AnalyticController.ClickDailyQuestButton();
-        PopupController.Instance.Show<DailyQuestPopup>();
+        PopupController.Instance.Show<AchievementDailyQuestPopup>();
     }
 
     public void OnClickLibraryButton()

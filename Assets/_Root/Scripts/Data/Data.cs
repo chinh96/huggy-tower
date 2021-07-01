@@ -35,21 +35,27 @@ public static class Data
                     {
                         case WorldType.Earth:
                             ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteEarth);
+                            ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteEarth);
                             break;
                         case WorldType.Desert:
                             ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteDesert);
+                            ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteDesert);
                             break;
                         case WorldType.Iceland:
                             ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteIceland);
+                            ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteIceland);
                             break;
                         case WorldType.Inferno:
                             ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteInferno);
+                            ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteInferno);
                             break;
                         case WorldType.Jade:
                             ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteJade);
+                            ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteJade);
                             break;
                         case WorldType.Olympus:
                             ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteOlympus);
+                            ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteOlympus);
                             break;
                     }
 

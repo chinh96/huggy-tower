@@ -1,14 +1,29 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class AchievementPopup : Popup
 {
     [SerializeField] private Transform content;
     [SerializeField] private AchievementItem achievementItem;
-    [SerializeField] private GameObject decor;
+    [SerializeField] private CoinGeneration coinGeneration;
+    [SerializeField] private Image progress;
+    [SerializeField] private TextMeshProUGUI text;
 
     private List<AchievementItem> achievementItems = new List<AchievementItem>();
+
+    public void Init()
+    {
+        AfterInstantiate();
+    }
+
+    public void Show()
+    {
+        BeforeShow();
+    }
 
     protected override void AfterInstantiate()
     {
@@ -18,10 +33,6 @@ public class AchievementPopup : Popup
         ResourcesController.Achievement.AchievementDatas.ForEach(data =>
         {
             achievementItems.Add(Instantiate(achievementItem, content));
-            if (index < ResourcesController.Achievement.AchievementDatas.Count - 1)
-            {
-                Instantiate(decor, content);
-            }
             index++;
         });
     }
@@ -33,8 +44,43 @@ public class AchievementPopup : Popup
         int index = 0;
         achievementItems.ForEach(item =>
         {
-            item.Init(ResourcesController.Achievement.AchievementDatas[index]);
+            item.Init(ResourcesController.Achievement.AchievementDatas[index], this);
             index++;
         });
+    }
+
+    public void GenerateCoin(GameObject from, int bonus)
+    {
+        int coinTotal = Data.CoinTotal + bonus;
+
+        coinGeneration.GenerateCoin(() =>
+        {
+            Data.CoinTotal++;
+        }, () =>
+        {
+            Data.CoinTotal = coinTotal;
+            UpdateProgress(true);
+        }, from);
+    }
+
+    public void UpdateProgress(bool hasAnimation = false)
+    {
+        int total = ResourcesController.Achievement.AchievementDatas.Count;
+        int number = ResourcesController.Achievement.GetDatasIsClaimed().Count;
+        text.text = $"Complete {number}/{total}";
+        if (hasAnimation)
+        {
+            progress.DOFillAmount((float)number / total, .3f).OnComplete(() =>
+            {
+                if (number == total)
+                {
+                    PopupController.Instance.Show<AchievementGiftPopup>();
+                }
+            });
+        }
+        else
+        {
+            progress.fillAmount = (float)number / total;
+        }
     }
 }

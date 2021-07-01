@@ -7,10 +7,19 @@ public class DailyQuestPopup : Popup
 {
     [SerializeField] private Transform content;
     [SerializeField] private DailyQuestItem dailyQuestItem;
-    [SerializeField] private GameObject dailyQuestDecor;
     [SerializeField] private CoinGeneration coinGeneration;
 
     private List<DailyQuestItem> dailyQuestItems = new List<DailyQuestItem>();
+
+    public void Init()
+    {
+        AfterInstantiate();
+    }
+
+    public void Show()
+    {
+        BeforeShow();
+    }
 
     protected override void AfterInstantiate()
     {
@@ -23,11 +32,6 @@ public class DailyQuestPopup : Popup
             DailyQuestItem item = Instantiate(dailyQuestItem, content);
             item.Init(dailyQuestDayItem, this);
             dailyQuestItems.Add(item);
-
-            if (index < dailyQuestDayItems.Count - 1)
-            {
-                Instantiate(dailyQuestDecor, content);
-            }
             index++;
         });
     }

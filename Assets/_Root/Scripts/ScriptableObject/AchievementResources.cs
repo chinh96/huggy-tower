@@ -19,6 +19,11 @@ public class AchievementResources : ScriptableObject
         return AchievementDatas.Find(item => item.Type == type);
     }
 
+    public List<AchievementData> GetDatasIsClaimed()
+    {
+        return AchievementDatas.FindAll(item => item.IsClaimed);
+    }
+
     public bool HasNoti
     {
         get
@@ -44,10 +49,17 @@ public class AchievementData
     public string Text;
     public Sprite Sprite;
     public int NumberTarget;
+    public int Bonus;
     public int NumberCurrent
     {
         get { Data.AchievementId = Id; return Data.AchievementNumberCurrent; }
 
         set { Data.AchievementId = Id; Data.AchievementNumberCurrent = value; }
+    }
+    public bool IsClaimed
+    {
+        get { Data.IdCheckUnlocked = Id + "Claimed"; return Data.IsUnlocked; }
+
+        set { Data.IdCheckUnlocked = Id + "Claimed"; Data.IsUnlocked = value; }
     }
 }

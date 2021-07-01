@@ -15,6 +15,7 @@ public class DailyQuestItem : MonoBehaviour
     [SerializeField] private Image progress;
     [SerializeField] private TextMeshProUGUI number;
     [SerializeField] private GameObject done;
+    [SerializeField] private GameObject backgroundActive;
 
     private DailyQuestDayItem item;
     private DailyQuestPopup dailyQuestPopup;
@@ -36,6 +37,7 @@ public class DailyQuestItem : MonoBehaviour
         done.SetActive(item.IsClaimed);
         progress.fillAmount = (float)item.NumberCurrent / item.NumberTarget;
         number.text = item.Number;
+        backgroundActive.SetActive(item.IsUnlocked);
     }
 
     public void OnClickClaimButton()

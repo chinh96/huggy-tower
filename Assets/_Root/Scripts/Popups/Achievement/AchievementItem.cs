@@ -15,12 +15,15 @@ public class AchievementItem : MonoBehaviour
     [SerializeField] private Image progress;
     [SerializeField] private GameObject button;
     [SerializeField] private GameObject done;
+    [SerializeField] private GameObject backgroundActive;
 
     private AchievementData data;
+    private AchievementPopup achievementPopup;
 
-    public void Init(AchievementData data)
+    public void Init(AchievementData data, AchievementPopup achievementPopup)
     {
         this.data = data;
+        this.achievementPopup = achievementPopup;
 
         Reset();
     }
@@ -32,15 +35,17 @@ public class AchievementItem : MonoBehaviour
         title.text = data.Text.Replace("{}", data.NumberTarget.ToString());
         buttonActive.SetActive(data.NumberCurrent >= data.NumberTarget);
         buttonDeactive.SetActive(data.NumberCurrent < data.NumberTarget);
-        bonus.text = data.NumberTarget.ToString();
+        bonus.text = data.Bonus.ToString();
         progress.fillAmount = (float)data.NumberCurrent / data.NumberTarget;
-        button.SetActive(data.NumberCurrent < data.NumberTarget);
-        done.SetActive(data.NumberCurrent >= data.NumberTarget);
+        button.SetActive(!data.IsClaimed);
+        done.SetActive(data.IsClaimed);
+        backgroundActive.SetActive(data.NumberCurrent >= data.NumberTarget);
     }
 
     public void OnClickClaimButton()
     {
-        Data.CoinTotal += data.NumberTarget;
+        achievementPopup.GenerateCoin(buttonActive, data.Bonus);
+        data.IsClaimed = true;
         Reset();
     }
 }
