@@ -62,6 +62,9 @@ public static class Data
                     break;
                 }
             }
+
+            ResourcesController.Achievement.IncreaseByTypePlayToLevel(value);
+
             SetInt(Constants.CURRENT_LEVEL, value);
         }
     }

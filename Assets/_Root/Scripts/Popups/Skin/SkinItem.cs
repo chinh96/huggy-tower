@@ -108,6 +108,7 @@ public class SkinItem : MonoBehaviour
         Done();
 
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.BuySkin);
+        ResourcesController.Achievement.IncreaseByType(AchievementType.BuySkin);
     }
 
     public void OnClickButtonAds()

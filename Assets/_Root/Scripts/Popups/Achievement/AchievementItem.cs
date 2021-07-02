@@ -31,8 +31,8 @@ public class AchievementItem : MonoBehaviour
     public void Reset()
     {
         image.sprite = data.Sprite;
-        number.text = data.NumberCurrent + "/" + data.NumberTarget;
-        title.text = data.Text.Replace("{}", data.NumberTarget.ToString());
+        number.text = data.Number;
+        title.text = data.Title;
         buttonActive.SetActive(data.NumberCurrent >= data.NumberTarget);
         buttonDeactive.SetActive(data.NumberCurrent < data.NumberTarget);
         bonus.text = data.Bonus.ToString();

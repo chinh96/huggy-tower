@@ -8,6 +8,17 @@ public class AchievementResources : ScriptableObject
 {
     public List<AchievementData> AchievementDatas;
 
+    public void IncreaseByTypePlayToLevel(int currentLevel, int value = 1)
+    {
+        var data = GetDataByType(AchievementType.PlayToLevel);
+        var splits = data.Text.Split(' ');
+        int level = int.Parse(splits[splits.Length - 1]);
+        if (currentLevel >= level)
+        {
+            data.NumberCurrent += value;
+        }
+    }
+
     public void IncreaseByType(AchievementType type, int value = 1)
     {
         var data = GetDataByType(type);
@@ -50,6 +61,8 @@ public class AchievementData
     public Sprite Sprite;
     public int NumberTarget;
     public int Bonus;
+    public string Number => (NumberCurrent < NumberTarget ? NumberCurrent : NumberTarget) + "/" + NumberTarget;
+    public string Title => Text.Replace("{}", NumberTarget.ToString());
     public int NumberCurrent
     {
         get { Data.AchievementId = Id; return Data.AchievementNumberCurrent; }

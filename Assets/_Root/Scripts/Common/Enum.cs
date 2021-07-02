@@ -193,7 +193,7 @@ public enum AchievementType
     BearEnemy,
     Princess,
     Chest,
-    BuySkins,
+    BuySkin,
     PlayToLevel,
     CompleteEarth,
     CompleteDesert,

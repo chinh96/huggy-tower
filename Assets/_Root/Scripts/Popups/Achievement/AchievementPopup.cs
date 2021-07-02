@@ -68,9 +68,11 @@ public class AchievementPopup : Popup
         int total = ResourcesController.Achievement.AchievementDatas.Count;
         int number = ResourcesController.Achievement.GetDatasIsClaimed().Count;
         text.text = $"Complete {number}/{total}";
+
+        float endValue = (float)number / total;
         if (hasAnimation)
         {
-            progress.DOFillAmount((float)number / total, .3f).OnComplete(() =>
+            progress.DOFillAmount(endValue, .3f).OnComplete(() =>
             {
                 if (number == total)
                 {
@@ -80,7 +82,7 @@ public class AchievementPopup : Popup
         }
         else
         {
-            progress.fillAmount = (float)number / total;
+            progress.fillAmount = endValue;
         }
     }
 }
