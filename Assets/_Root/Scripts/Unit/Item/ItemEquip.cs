@@ -135,7 +135,7 @@ public class ItemSwordEditor : UnityEditor.Editor
 
         if (_item.EquipType != ItemType.Food && _item.EquipType != ItemType.Key && _item.EquipType != ItemType.HolyWater)
         {
-            _item.txtDamage.text = $"+{_item.damage}";
+            _item.txtDamage.text = $"{_item.damage}";
 
             serializedObject.Update();
             serializedObject.ApplyModifiedProperties();
