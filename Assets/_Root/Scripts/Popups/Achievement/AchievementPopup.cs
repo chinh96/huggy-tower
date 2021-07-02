@@ -77,6 +77,7 @@ public class AchievementPopup : Popup
                 if (number == total)
                 {
                     PopupController.Instance.Show<AchievementGiftPopup>(null, ShowAction.DoNothing);
+                    Close();
                 }
             });
         }

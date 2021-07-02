@@ -93,6 +93,16 @@ public static class AnalyticController
         LogEvent(Constants.START_LEVEL_8_FUNNEL, new Parameter[] { });
     }
 
+    public static void ClickRankButton()
+    {
+        LogEvent(Constants.CLICK_RANK_BUTTON, new Parameter[] { });
+    }
+
+    public static void ClickDailyReward()
+    {
+        LogEvent(Constants.CLICK_DAILY_REWARD, new Parameter[] { });
+    }
+
     private static void LogEvent(string name, Parameter[] param)
     {
         FirebaseAnalytics.LogEvent(name, param);

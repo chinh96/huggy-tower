@@ -69,6 +69,7 @@ public class HomeController : Singleton<HomeController>
 
     public void OnClickDailyButton()
     {
+        AnalyticController.ClickDailyReward();
         PopupController.Instance.Show<DailyRewardPopup>();
     }
 
@@ -109,6 +110,7 @@ public class HomeController : Singleton<HomeController>
 
     public void OnClickLeaderboardButton()
     {
+        AnalyticController.ClickRankButton();
         LeaderboardController.Instance.Show();
     }
 

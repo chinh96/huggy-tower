@@ -67,4 +67,6 @@ public class Constants
     public const string START_LEVEL_1_FUNNEL = "START_LEVEL_1_FUNNEL";
     public const string COMPLETE_LEVEL_1_FUNNEL = "COMPLETE_LEVEL_1_FUNNEL";
     public const string START_LEVEL_8_FUNNEL = "START_LEVEL_8_FUNNEL";
+    public const string CLICK_RANK_BUTTON = "CLICK_RANK_BUTTON";
+    public const string CLICK_DAILY_REWARD = "CLICK_DAILY_REWARD";
 }
