@@ -702,21 +702,9 @@ public class Player : Unit, IAnim
 
     public void PlayAttack()
     {
-        if (EquipType == ItemType.Sword)
+        void PlayBloodEnemy(string attack = "")
         {
-            string[] attacks = { "Attack", "AttackSword", "AttackSword2" };
-            string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
-            skeleton.Play(attack, false);
-
-            SoundType[] soundTypes = { SoundType.HeroCut, SoundType.HeroCut2, SoundType.HeroCut3 };
-            SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
-            float timeDelay = attack == "AttackSword" ? .5f : 0;
-            DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
-            {
-                SoundController.Instance.PlayOnce(soundType);
-            });
-
-            timeDelay = attack == "AttackSword" ? .8f : .5f;
+            float timeDelay = attack == "AttackSword" ? .8f : .5f;
             if (!(_target as EnemyGhost))
             {
                 DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
@@ -737,58 +725,90 @@ public class Player : Unit, IAnim
                 });
             }
         }
-        else
+        switch (EquipType)
         {
-            string[] attacks;
-            if (EquipType == ItemType.Gloves)
-            {
-                DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+            case ItemType.Sword:
+            case ItemType.SwordJapan:
                 {
-                    SoundController.Instance.PlayOnce(SoundType.Gloves);
-                });
-                attacks = new string[] { "AttackGlove2" };
-            }
-            else if (EquipType == ItemType.Knife)
-            {
-                SoundController.Instance.PlayOnce(SoundType.Knife);
-                attacks = new string[] { "AttackKnife", "AttackKnife2" };
-            }
-            else if (EquipType == ItemType.Axe)
-            {
-                SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
-                SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
-                SoundController.Instance.PlayOnce(soundType);
-                attacks = new string[] { "AttackAxe" };
-            }
-            else
-            {
-                SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
-                SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
-                SoundController.Instance.PlayOnce(soundType);
-                attacks = new string[] { "AttackHit", "AttackHit2" };
-            }
-            string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
-            skeleton.Play(attack, false);
+                    string[] attacks = { "Attack", "AttackSword", "AttackSword2" };
+                    string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
+                    skeleton.Play(attack, false);
 
-            if (EquipType == ItemType.Axe)
-            {
-                float delay = .7f;
-                ParticleSystem particlePrefab = effectThunder1;
-                Vector3 offset = Vector3.zero;
+                    SoundType[] soundTypes = { SoundType.HeroCut, SoundType.HeroCut2, SoundType.HeroCut3 };
+                    SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
+                    float timeDelay = attack == "AttackSword" ? .5f : 0;
+                    DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
+                    {
+                        SoundController.Instance.PlayOnce(soundType);
+                    });
 
-                if (attack == "AttackAxe2")
-                {
-                    delay = .3f;
-                    particlePrefab = effectThunder2;
-                    offset = new Vector3(0, .5f, 0);
+                    PlayBloodEnemy(attack);
+                    break;
                 }
-
-                DOTween.Sequence().AppendInterval(delay).AppendCallback(() =>
+            case ItemType.Shuriken:
+                skeleton.Play("Shuriken", false);
+                SoundController.Instance.PlayOnce(SoundType.Knife);
+                PlayBloodEnemy();
+                break;
+            default:
                 {
-                    ParticleSystem particle = Instantiate(particlePrefab);
-                    particle.transform.position = _target.transform.position + offset;
-                });
-            }
+                    string[] attacks;
+                    switch (EquipType)
+                    {
+                        case ItemType.Gloves:
+                            DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                            {
+                                SoundController.Instance.PlayOnce(SoundType.Gloves);
+                            });
+                            attacks = new string[] { "AttackGlove2" };
+                            break;
+                        case ItemType.Knife:
+                            SoundController.Instance.PlayOnce(SoundType.Knife);
+                            attacks = new string[] { "AttackKnife", "AttackKnife2" };
+                            break;
+                        case ItemType.Axe:
+                            {
+                                SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
+                                SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
+                                SoundController.Instance.PlayOnce(soundType);
+                                attacks = new string[] { "AttackAxe" };
+                                break;
+                            }
+                        default:
+                            {
+                                SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
+                                SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
+                                SoundController.Instance.PlayOnce(soundType);
+                                attacks = new string[] { "AttackHit", "AttackHit2" };
+                                break;
+                            }
+                    }
+
+                    string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
+                    skeleton.Play(attack, false);
+
+                    if (EquipType == ItemType.Axe)
+                    {
+                        float delay = .7f;
+                        ParticleSystem particlePrefab = effectThunder1;
+                        Vector3 offset = Vector3.zero;
+
+                        if (attack == "AttackAxe2")
+                        {
+                            delay = .3f;
+                            particlePrefab = effectThunder2;
+                            offset = new Vector3(0, .5f, 0);
+                        }
+
+                        DOTween.Sequence().AppendInterval(delay).AppendCallback(() =>
+                        {
+                            ParticleSystem particle = Instantiate(particlePrefab);
+                            particle.transform.position = _target.transform.position + offset;
+                        });
+                    }
+
+                    break;
+                }
         }
 
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
@@ -836,6 +856,8 @@ public class Player : Unit, IAnim
             case ItemType.Sword:
             case ItemType.Knife:
             case ItemType.Axe:
+            case ItemType.Shuriken:
+            case ItemType.SwordJapan:
                 skeleton.Play("Pick", false);
                 SoundController.Instance.PlayOnce(SoundType.HeroPickSword);
                 break;
