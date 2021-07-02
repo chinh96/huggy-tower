@@ -75,6 +75,7 @@ public class RoomTower : MonoBehaviour
 
         foreach (var item in items)
         {
+            if (item.EquipType == ItemType.Lock && item.State == EUnitState.Invalid) return false;
             if (item.State != EUnitState.Invalid) flag = true;
         }
 

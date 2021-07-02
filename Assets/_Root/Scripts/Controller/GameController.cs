@@ -27,6 +27,9 @@ public class GameController : Singleton<GameController>
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
 
+    private ItemLock itemLock;
+    public ItemLock ItemLock => itemLock ? itemLock : itemLock = FindObjectOfType<ItemLock>();
+
     private Vector3 zoomCameraPositionOrigin;
     private float zoomOrthoSizeOrigin;
     private bool _isReplay;

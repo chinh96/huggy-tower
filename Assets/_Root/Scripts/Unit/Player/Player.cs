@@ -855,6 +855,11 @@ public class Player : Unit, IAnim
                 hasKey = true;
                 skeleton.Play("Pick", false);
                 SoundController.Instance.PlayOnce(SoundType.PickKey);
+                var itemLock = GameController.Instance.ItemLock;
+                if (itemLock != null)
+                {
+                    itemLock.PlayWin();
+                }
                 break;
             case ItemType.BrokenBrick:
                 SoundController.Instance.PlayOnce(SoundType.HeroPushWall);

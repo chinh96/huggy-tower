@@ -82,6 +82,11 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
 
     private void ChangeSword(Player player)
     {
+        if (EquipType == ItemType.Key && GameController.Instance.ItemLock != null)
+        {
+            return;
+        }
+
         if (EquipType != ItemType.Food && EquipType != ItemType.HolyWater)
         {
             player.ChangeSword(itemSwordSkin);
