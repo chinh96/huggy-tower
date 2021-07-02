@@ -51,6 +51,8 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
                 case ItemType.Gloves:
                 case ItemType.Knife:
                 case ItemType.Axe:
+                case ItemType.SwordJapan:
+                case ItemType.Shuriken:
                     player.EquipType = EquipType;
                     break;
             }
