@@ -22,7 +22,10 @@ public class AchievementResources : ScriptableObject
     public void IncreaseByType(AchievementType type, int value = 1)
     {
         var data = GetDataByType(type);
-        data.NumberCurrent += value;
+        if (data != null)
+        {
+            data.NumberCurrent += value;
+        }
     }
 
     public AchievementData GetDataByType(AchievementType type)

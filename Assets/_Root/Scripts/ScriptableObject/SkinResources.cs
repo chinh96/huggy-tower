@@ -18,6 +18,8 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
     public List<SkinData> SkinsLocked => SkinDatas.FindAll(item => !item.IsUnlocked);
     public List<SkinData> SkinsCoin => SkinDatas.FindAll(item => !item.IsUnlocked && item.SkinType == SkinType.Coin);
     public SkinData SkinAchievement => SkinDatas.Find(item => item.SkinType == SkinType.Achievement);
+    public SkinData SkinGiftcode => SkinDatas.Find(item => item.SkinType == SkinType.Giftcode);
+
     public bool HasNoti
     {
         get
@@ -51,6 +53,8 @@ public class SkinData
     public SkinType SkinType;
 
     public int Coin;
+
+    public string Giftcode;
 
     public bool IsUnlocked
     {

@@ -14,6 +14,8 @@ public class SkinItem : MonoBehaviour
     [SerializeField] private GameObject buttonAds;
     [SerializeField] private GameObject buttonDailyReward;
     [SerializeField] private GameObject buttonFacebook;
+    [SerializeField] private GameObject buttonAchievement;
+    [SerializeField] private GameObject buttonGiftcode;
     [SerializeField] private TextMeshProUGUI cost;
     [SerializeField] private TextMeshProUGUI costDisable;
     [SerializeField] private GameObject dockActive;
@@ -61,6 +63,12 @@ public class SkinItem : MonoBehaviour
                 case SkinType.Facebook:
                     buttonFacebook.SetActive(true);
                     break;
+                case SkinType.Achievement:
+                    buttonAchievement.SetActive(true);
+                    break;
+                case SkinType.Giftcode:
+                    buttonGiftcode.SetActive(true);
+                    break;
             }
         }
 
@@ -95,6 +103,8 @@ public class SkinItem : MonoBehaviour
         buttonDailyReward.SetActive(false);
         buttonDisableBuy.SetActive(false);
         buttonFacebook.SetActive(false);
+        buttonAchievement.SetActive(false);
+        buttonGiftcode.SetActive(false);
         usedLabel.SetActive(false);
         dockActive.SetActive(false);
         fx.SetActive(false);
@@ -124,6 +134,18 @@ public class SkinItem : MonoBehaviour
     public void OnClickButtonDailyReward()
     {
         PopupController.Instance.Show<DailyRewardPopup>(null, ShowAction.DoNothing);
+    }
+
+
+    public void OnClickButtonAchievement()
+    {
+        PopupController.Instance.Show<AchievementDailyQuestPopup>(null, ShowAction.DoNothing);
+    }
+
+
+    public void OnClickButtonGiftcode()
+    {
+        PopupController.Instance.Show<GiftcodePopup>(null, ShowAction.DoNothing);
     }
 
     public void OnClickFacebookButton()

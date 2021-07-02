@@ -104,7 +104,8 @@ public enum SkinType
     Ads,
     Daily,
     Facebook,
-    Achievement
+    Achievement,
+    Giftcode
 }
 
 public enum SoundType
