@@ -5,8 +5,10 @@ using DG.Tweening;
 public class ItemLock : Item, IAnim
 {
     [SerializeField] private SkeletonGraphic skeleton;
+    [SerializeField] private GameObject lockPosition;
 
     public SkeletonGraphic Skeleton => skeleton;
+    public GameObject LockPosition => lockPosition;
 
     private void Start()
     {

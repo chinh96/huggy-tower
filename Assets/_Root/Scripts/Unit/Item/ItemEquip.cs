@@ -44,7 +44,10 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
         if (player != null)
         {
             State = EUnitState.Invalid;
-            gameObject.SetActive(false);
+            if (EquipType != ItemType.Key)
+            {
+                gameObject.SetActive(false);
+            }
             switch (EquipType)
             {
                 case ItemType.Sword:
