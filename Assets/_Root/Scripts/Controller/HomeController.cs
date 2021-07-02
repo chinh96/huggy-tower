@@ -100,6 +100,11 @@ public class HomeController : Singleton<HomeController>
 
     public void OnClickDailyQuestButton()
     {
+        PopupController.Instance.Show<DailyQuestPopup>();
+    }
+
+    public void OnClickAchievementDailyQuestButton()
+    {
         PopupController.Instance.Show<AchievementDailyQuestPopup>();
     }
 

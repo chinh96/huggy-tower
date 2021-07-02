@@ -24,7 +24,7 @@ public static class Data
 
     public static int CurrentLevel
     {
-        get => GetInt(Constants.CURRENT_LEVEL, 500);
+        get => GetInt(Constants.CURRENT_LEVEL, 0);
         set
         {
             foreach (var world in ResourcesController.Universe.Worlds)

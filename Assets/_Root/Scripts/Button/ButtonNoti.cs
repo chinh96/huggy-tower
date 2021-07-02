@@ -51,6 +51,9 @@ public class ButtonNoti : MonoBehaviour
             case NotiType.Leaderboard:
                 hasNoti = Data.PlayerId == "";
                 break;
+            case NotiType.AchievementDailyQuest:
+                hasNoti = ResourcesController.Achievement.HasNoti || ResourcesController.DailyQuest.HasNoti;
+                break;
         }
 
         noti.SetActive(hasNoti);
