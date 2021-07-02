@@ -11,11 +11,9 @@ public class AchievementResources : ScriptableObject
     public void IncreaseByTypePlayToLevel(int currentLevel, int value = 1)
     {
         var data = GetDataByType(AchievementType.PlayToLevel);
-        var splits = data.Title.Split(' ');
-        var level = int.Parse(splits[splits.Length - 1]);
-        if (currentLevel >= level)
+        if (currentLevel >= data.NumberTarget)
         {
-            data.NumberCurrent += value;
+            data.NumberCurrent = data.NumberTarget + value;
         }
     }
 

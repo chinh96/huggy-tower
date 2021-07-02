@@ -65,7 +65,8 @@ public enum ItemType
     HolyWater,
     Bomb,
     Bow,
-    Axe
+    Axe,
+    Lock
 }
 
 public enum ETurn

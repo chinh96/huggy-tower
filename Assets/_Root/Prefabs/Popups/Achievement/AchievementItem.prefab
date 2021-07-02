@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3740123922413228912}
-  - component: {fileID: 5304119124993035615}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -40,34 +39,6 @@ RectTransform:
   m_AnchoredPosition: {x: 250, y: -37}
   m_SizeDelta: {x: 235, y: 83}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5304119124993035615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 620710501736052270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dfcf405286e2c74fa0638d8bb9a6e76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1261825480751034319}
-        m_TargetAssemblyTypeName: AchievementItem, Assembly-CSharp
-        m_MethodName: OnClickClaimButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  canClick: 1
 --- !u!1 &3320132927214312839
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,7 +914,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1175,6 +1146,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3740123922413228912}
     m_Modifications:
+    - target: {fileID: 1475043254085880392, guid: a48129ac42cfef94f8abd5346e2eb43c, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1475043254085880394, guid: a48129ac42cfef94f8abd5346e2eb43c, type: 3}
       propertyPath: m_Name
       value: Coin
