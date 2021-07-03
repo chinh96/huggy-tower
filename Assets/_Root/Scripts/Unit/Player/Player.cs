@@ -878,21 +878,22 @@ public class Player : Unit, IAnim
                 skeleton.Play("Pick", false);
                 SoundController.Instance.PlayOnce(SoundType.PickKey);
 
+                var _cacheItemTarget = _itemTarget;
                 var itemLock = GameController.Instance.ItemLock;
                 if (itemLock == null)
                 {
                     DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                     {
-                        _itemTarget.gameObject.SetActive(false);
+                        _cacheItemTarget.gameObject.SetActive(false);
                     });
                 }
                 else
                 {
                     DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                     {
-                        _itemTarget.transform.DOMove(itemLock.LockPosition.transform.position, 1).OnComplete(() =>
+                        _cacheItemTarget.transform.DOMove(itemLock.LockPosition.transform.position, 1).OnComplete(() =>
                         {
-                            _itemTarget.gameObject.SetActive(false);
+                            _cacheItemTarget.gameObject.SetActive(false);
                             itemLock.PlayWin();
                         });
                     });
