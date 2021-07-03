@@ -877,18 +877,26 @@ public class Player : Unit, IAnim
                 hasKey = true;
                 skeleton.Play("Pick", false);
                 SoundController.Instance.PlayOnce(SoundType.PickKey);
-                DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+
+                var itemLock = GameController.Instance.ItemLock;
+                if (itemLock == null)
                 {
-                    var itemLock = GameController.Instance.ItemLock;
-                    if (itemLock != null)
+                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    {
+                        _itemTarget.gameObject.SetActive(false);
+                    });
+                }
+                else
+                {
+                    DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                     {
                         _itemTarget.transform.DOMove(itemLock.LockPosition.transform.position, 1).OnComplete(() =>
                         {
                             _itemTarget.gameObject.SetActive(false);
                             itemLock.PlayWin();
                         });
-                    }
-                });
+                    });
+                }
                 break;
             case ItemType.BrokenBrick:
                 SoundController.Instance.PlayOnce(SoundType.HeroPushWall);

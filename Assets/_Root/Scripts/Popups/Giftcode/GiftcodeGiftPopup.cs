@@ -21,6 +21,7 @@ public class GiftcodeGiftPopup : Popup
     {
         Data.CurrentSkinHero = skinData.SkinName;
         skinData.IsUnlocked = true;
+        EventController.SkinPopupReseted?.Invoke();
         Close();
     }
 }
