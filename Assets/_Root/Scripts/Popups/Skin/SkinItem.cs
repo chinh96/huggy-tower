@@ -223,6 +223,6 @@ public class SkinItem : MonoBehaviour
 
     public void SetActiveFX(bool active)
     {
-        fx.SetActive(active);
+        fx.SetActive(false);
     }
 }

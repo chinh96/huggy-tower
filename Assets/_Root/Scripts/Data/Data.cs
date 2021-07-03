@@ -63,7 +63,7 @@ public static class Data
                 }
             }
 
-            ResourcesController.Achievement.IncreaseByTypePlayToLevel(value);
+            ResourcesController.Achievement.IncreaseByType(AchievementType.PlayToLevel);
 
             SetInt(Constants.CURRENT_LEVEL, value);
         }

@@ -40,6 +40,6 @@ public class GiftcodePopup : Popup
     public void OnChangeInput()
     {
         input.text = input.text.ToUpper();
-        useButtonDeactive.SetActive(input.text.Length != 16);
+        useButtonDeactive.SetActive(input.text.Length != 12);
     }
 }

@@ -8,21 +8,20 @@ public class AchievementResources : ScriptableObject
 {
     public List<AchievementData> AchievementDatas;
 
-    public void IncreaseByTypePlayToLevel(int currentLevel, int value = 1)
-    {
-        var data = GetDataByType(AchievementType.PlayToLevel);
-        if (currentLevel >= data.NumberTarget)
-        {
-            data.NumberCurrent = data.NumberTarget + value;
-        }
-    }
-
     public void IncreaseByType(AchievementType type, int value = 1)
     {
         var data = GetDataByType(type);
         if (data != null)
         {
-            data.NumberCurrent += value;
+            switch (type)
+            {
+                case AchievementType.PlayToLevel:
+                    data.NumberCurrent = Data.CurrentLevel;
+                    break;
+                default:
+                    data.NumberCurrent += value;
+                    break;
+            }
         }
     }
 
