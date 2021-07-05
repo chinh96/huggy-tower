@@ -1,16 +1,16 @@
 <dependencies>
-<unityversion>4.3.11.2</unityversion>
+<unityversion>4.3.13</unityversion>
   <androidPackages>
-    <androidPackage spec="com.ironsource.adapters:inmobiadapter:4.3.8">
+    <androidPackage spec="com.ironsource.adapters:inmobiadapter:4.3.10">
       <repositories>
-        <repository>https://dl.bintray.com/ironsource-mobile/android-adapters/</repository>
+          <repository>https://android-sdk.is.com/</repository>
       </repositories>
     </androidPackage>
   </androidPackages>
   <androidPackages>
-    <androidPackage spec="com.inmobi.monetization:inmobi-ads:9.1.0">
+    <androidPackage spec="com.inmobi.monetization:inmobi-ads:9.1.9">
       <repositories>
-        <repository>https://jcenter.bintray.com/</repository>
+        <repository>https://maven.google.com/</repository>
       </repositories>
     </androidPackage>
   </androidPackages>
@@ -22,13 +22,6 @@
     </androidPackage>
   </androidPackages>
   <androidPackages>
-    <androidPackage spec="com.android.support:customtabs:28.0.0">
-      <repositories>
-        <repository>https://maven.google.com/</repository>
-      </repositories>
-    </androidPackage>
-  </androidPackages>
-  <androidPackages>
     <androidPackage spec="com.android.support:support-v4:28.0.0">
       <repositories>
         <repository>https://maven.google.com/</repository>
@@ -36,7 +29,21 @@
     </androidPackage>
   </androidPackages>
   <androidPackages>
-    <androidPackage spec="com.android.support:recyclerview-v7:28.0.0">
+    <androidPackage spec="androidx.recyclerview:recyclerview:1.1.0">
+      <repositories>
+        <repository>https://maven.google.com/</repository>
+      </repositories>
+    </androidPackage>
+  </androidPackages>
+  <androidPackages>
+    <androidPackage spec="androidx.browser:browser:1.3.0">
+      <repositories>
+        <repository>https://maven.google.com/</repository>
+      </repositories>
+    </androidPackage>
+  </androidPackages>
+  <androidPackages>
+    <androidPackage spec="com.google.android.gms:play-services-ads-identifier:17.0.0">
       <repositories>
         <repository>https://maven.google.com/</repository>
       </repositories>
@@ -44,7 +51,7 @@
   </androidPackages>
 
   <iosPods>
-    <iosPod name="IronSourceInMobiAdapter" version="4.3.8.2">
+    <iosPod name="IronSourceInMobiAdapter" version="4.3.10.0">
       <sources>
         <source>https://github.com/CocoaPods/Specs</source>
       </sources>
