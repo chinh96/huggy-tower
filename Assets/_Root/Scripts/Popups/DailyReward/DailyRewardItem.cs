@@ -23,6 +23,7 @@ public class DailyRewardItem : MonoBehaviour
     [SerializeField] private Sprite spriteSkinClaimed;
     [SerializeField] private Sprite spriteSkinCurrent;
     [SerializeField] private Sprite spriteSkinNotClaimed;
+    [SerializeField] private TextMeshProUGUI skinName;
 
     private int day;
     private int coin;
@@ -33,7 +34,7 @@ public class DailyRewardItem : MonoBehaviour
     private DailyRewardType dailyRewardType = DailyRewardType.NotClaimed;
 
     private bool isDay7 => day % 7 == 6;
-    private bool isSkin => !isDayLoop && isDay7;
+    private bool isSkin => !isDayLoop && ResourcesController.DailyReward.DailyRewardsSkin.Contains(day);
 
     public void Init(int day, int coin, int dayTotal, bool isDayLoop, DailyRewardPopup dailyRewardPopup)
     {
@@ -61,6 +62,7 @@ public class DailyRewardItem : MonoBehaviour
         coinIcon.SetActive(false);
         coinText.gameObject.SetActive(false);
         hero.gameObject.SetActive(false);
+        skinName.gameObject.SetActive(false);
     }
 
     private void Check()
@@ -104,9 +106,14 @@ public class DailyRewardItem : MonoBehaviour
     {
         if (isSkin)
         {
-            skinData = ResourcesController.Hero.SkinsDailyReward[day / 7];
+            int index = ResourcesController.DailyReward.DailyRewardsSkin.IndexOf(day);
+            skinData = ResourcesController.Hero.SkinsDailyReward[index];
+
             hero.ChangeSkin(skinData.SkinName);
             hero.gameObject.SetActive(true);
+
+            skinName.text = skinData.Name;
+            skinName.gameObject.SetActive(true);
         }
         else
         {

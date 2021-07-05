@@ -29,8 +29,10 @@ public class ResourcesController : Singleton<ResourcesController>
     public static LibraryResources Library;
     public static CountryResources Country;
 
-    private void OnEnable()
+    protected override void Awake()
     {
+        base.Awake();
+
         Hero = heroResources;
         Princess = princessResources;
         Sound = soundResources;

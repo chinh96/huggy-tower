@@ -50,6 +50,8 @@ public class SkinData
 
     [GUID] public string Id;
 
+    public string Name;
+
     public SkinType SkinType;
 
     public int Coin;

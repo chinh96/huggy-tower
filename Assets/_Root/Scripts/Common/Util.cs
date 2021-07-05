@@ -141,11 +141,16 @@ public static partial class Util
         return rectTransform.rect.Contains(localPosition);
     }
 
-    public static string SecondsToTimeFormatBeforeNewDay()
+    public static TimeSpan TimeBeforeNewDay()
     {
         DateTime now = DateTime.Now;
         DateTime end = new DateTime(now.Year, now.Month, now.Day, 23, 59, 59);
-        TimeSpan distance = end - now;
+        return end - now;
+    }
+
+    public static string SecondsToTimeFormatBeforeNewDay()
+    {
+        TimeSpan distance = TimeBeforeNewDay();
 
         return string.Format("{0:00}:{1:00}:{2:00}", distance.Hours, distance.Minutes, distance.Seconds);
     }

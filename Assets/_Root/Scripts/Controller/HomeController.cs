@@ -39,6 +39,8 @@ public class HomeController : Singleton<HomeController>
         FadeOutOverlay();
         CheckNewUpdatePopup();
         ResourcesController.Achievement.IncreaseByType(AchievementType.PlayToLevel);
+        NotificationController.Instance.CheckDailyQuestRepeat();
+        NotificationController.Instance.CheckDailyRewardRepeat();
     }
 
     public void TapToStart()

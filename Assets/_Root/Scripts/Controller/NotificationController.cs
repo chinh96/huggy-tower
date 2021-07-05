@@ -7,56 +7,39 @@ using Unity.Notifications.Android;
 using Unity.Notifications.iOS;
 #endif
 using UnityEngine;
+using Lance.Common.LocalNotification;
 
-public class NotificationController : MonoBehaviour
+public class NotificationController : Singleton<NotificationController>
 {
+    [SerializeField] private NotificationConsole notificationConsole;
+
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
     }
-    //     public string Id;
-    //     public string Name;
-    //     public string Description;
-    //     public string Title;
-    //     public string Text;
-    //     public int Days;
 
-    //     private void Start()
-    //     {
-    // #if UNITY_ANDROID
-    //         var channel = new AndroidNotificationChannel()
-    //         {
-    //             Id = this.Id,
-    //             Name = Name,
-    //             Importance = Importance.Default,
-    //             Description = Description,
-    //         };
-    //         AndroidNotificationCenter.RegisterNotificationChannel(channel);
+    public void CheckDailyQuestRepeat()
+    {
+        int timeSchedule = (int)Util.TimeBeforeNewDay().TotalSeconds;
+        notificationConsole.UpdateDeliveryTimeBy("daily_quest_repeat", timeSchedule);
+    }
 
-    //         var notification = new AndroidNotification();
-    //         notification.Title = Title;
-    //         notification.Text = Text;
-    //         notification.FireTime = System.DateTime.Now.AddDays(Days);
-    //         AndroidNotificationCenter.SendNotification(notification, Id);
-    // #elif UNITY_IOS
-    //         var timeTrigger = new iOSNotificationTimeIntervalTrigger()
-    //         {
-    //             TimeInterval = new TimeSpan(Days, 0, 0, 0, 0),
-    //             Repeats = false
-    //         };
+    public void CheckDailyRewardRepeat()
+    {
+        int timeSchedule = -1;
+        int totalDays = Data.TotalDays;
+        List<int> dailyRewardsSkin = ResourcesController.DailyReward.DailyRewardsSkin;
+        for (int i = dailyRewardsSkin.Count - 1; i >= 0; i--)
+        {
+            if (totalDays <= dailyRewardsSkin[i])
+            {
+                timeSchedule = (int)Util.TimeBeforeNewDay().TotalSeconds + (dailyRewardsSkin[i] - totalDays) * 1440;
+            }
+        }
 
-    //         var notification = new iOSNotification()
-    //         {
-    //             Identifier = Id,
-    //             Title = Title,
-    //             Body = Text,
-    //             Subtitle = "",
-    //             ShowInForeground = true,
-    //             ForegroundPresentationOption = (PresentationOption.Alert | PresentationOption.Sound),
-    //             Trigger = timeTrigger,
-    //         };
-
-    //         iOSNotificationCenter.ScheduleNotification(notification);
-    // #endif
-    // }
+        if (timeSchedule > -1)
+        {
+            notificationConsole.UpdateDeliveryTimeBy("daily_reward_repeat", timeSchedule);
+        }
+    }
 }
