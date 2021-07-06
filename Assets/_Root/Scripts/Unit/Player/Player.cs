@@ -564,7 +564,14 @@ public class Player : Unit, IAnim
             {
                 _cacheTarget.OnBeingAttacked();
 
-                Damage += _cacheTarget.Damage;
+                if (_cacheTarget as EnemyGoblin)
+                {
+                    Damage -= _cacheTarget.Damage;
+                }
+                else
+                {
+                    Damage += _cacheTarget.Damage;
+                }
                 if (damage > 0)
                 {
                     effectIncreaseDamge.gameObject.SetActive(true);
@@ -771,7 +778,7 @@ public class Player : Unit, IAnim
                                 SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
                                 SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
                                 SoundController.Instance.PlayOnce(soundType);
-                                attacks = new string[] { "AttackAxe" };
+                                attacks = new string[] { "AttackAxe", "AttackAxe2" };
                                 break;
                             }
                         default:
