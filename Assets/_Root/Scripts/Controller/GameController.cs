@@ -71,6 +71,7 @@ public class GameController : Singleton<GameController>
         SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
         CheckRadioCamera();
         LoadLevel(Data.CurrentLevel);
+        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LogIntoTheGame);
     }
 
     private void CheckRadioCamera()

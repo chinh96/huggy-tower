@@ -60,6 +60,7 @@ public class FacebookPopup : Popup
         {
             Data.JoinFbProgress++;
             Data.CoinTotal = coinTotal;
+            ResourcesController.Achievement.IncreaseByType(AchievementType.JoinGroupFacebookSuccessfully);
             Close();
         });
     }

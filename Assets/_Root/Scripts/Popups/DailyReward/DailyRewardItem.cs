@@ -147,6 +147,7 @@ public class DailyRewardItem : MonoBehaviour
             EventController.SkinPopupReseted?.Invoke();
         }
         dailyRewardPopup.OnClickClaim(claimButton, isSkin);
+        ResourcesController.Achievement.IncreaseByType(AchievementType.ClaimDailyReward);
     }
 
     private enum DailyRewardType

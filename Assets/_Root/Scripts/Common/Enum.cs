@@ -206,6 +206,8 @@ public enum AchievementType
     CompleteInferno,
     CompleteJade,
     CompleteOlympus,
+    JoinGroupFacebookSuccessfully,
+    ClaimDailyReward
 }
 
 public enum DailyQuestType
@@ -237,5 +239,7 @@ public enum DailyQuestType
     Fire,
     PoliceStick,
     Spider,
-    Yeti
+    Yeti,
+    LogIntoTheGame,
+    WatchVideoReward
 }
