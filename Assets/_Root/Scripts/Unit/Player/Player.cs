@@ -35,6 +35,7 @@ public class Player : Unit, IAnim
     [SerializeField] private ParticleSystem effectFingerPress;
     [SerializeField] private ParticleSystem effectThunder1;
     [SerializeField] private ParticleSystem effectThunder2;
+    [SerializeField] private GameObject shuriken;
 
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
     public bool FirstTurn { get; set; }
@@ -755,6 +756,13 @@ public class Player : Unit, IAnim
             case ItemType.Shuriken:
                 skeleton.Play("Shuriken", false);
                 SoundController.Instance.PlayOnce(SoundType.Knife);
+                DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                {
+                    GameObject shuriken1 = Instantiate(shuriken, transform.parent);
+                    shuriken1.transform.position = transform.position + new Vector3(1, 1, 0);
+                    Vector3 endValue = shuriken1.transform.position + new Vector3(5, 0, 0);
+                    shuriken1.transform.DOMove(endValue, 1f).OnComplete(() => Destroy(shuriken1));
+                });
                 PlayBloodEnemy();
                 break;
             default:
