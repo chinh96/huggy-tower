@@ -14,6 +14,7 @@ public class LibraryPopup : Popup
     [SerializeField] private TextMeshProUGUI name;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private Image image;
+    [SerializeField] private GameObject LibraryItemComingSoon;
 
     private List<LibraryItem> libraryItems = new List<LibraryItem>();
     private LibraryData libraryDataCurrent;
@@ -27,6 +28,8 @@ public class LibraryPopup : Popup
         {
             libraryItems.Add(Instantiate(libraryItem, content));
         });
+
+        Instantiate(LibraryItemComingSoon, content);
     }
 
     protected override void BeforeShow()
