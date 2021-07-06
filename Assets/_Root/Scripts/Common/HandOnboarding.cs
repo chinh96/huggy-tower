@@ -145,8 +145,12 @@ public class HandOnboarding : MonoBehaviour, IHasSkeletonDataAsset, IPointerDown
 
     public void OnClickOKButton()
     {
+        Destroy(gameObject);
+    }
+
+    private void OnDisable()
+    {
         Data.DoneOnboarding = true;
         GameController.Instance.IsOnboarding = false;
-        Destroy(gameObject);
     }
 }
