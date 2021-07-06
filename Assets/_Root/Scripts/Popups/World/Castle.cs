@@ -22,14 +22,16 @@ public class Castle : MonoBehaviour
     private CastleResources castle;
     private CastlePopup castlePopup;
     private CastleData castleData;
+    private WorldResources worldCurrent;
 
-    public void Init(int index, CastlePopup castlePopup)
+    public void Init(int index, CastlePopup castlePopup, WorldResources worldCurrent)
     {
         HideAll();
 
         this.index = index;
         this.castlePopup = castlePopup;
-        this.castle = ResourcesController.Universe.WorldCurrent.Castles[index];
+        this.castle = worldCurrent.Castles[index];
+        this.worldCurrent = worldCurrent;
 
         Reset();
     }
@@ -116,5 +118,41 @@ public class Castle : MonoBehaviour
         castle.BuildOrUpgrade();
         EventController.CastleBuilded(index);
         Reset();
+
+        CheckAchievementDailyQuest();
+    }
+
+    public void CheckAchievementDailyQuest()
+    {
+        if (worldCurrent.IsComplete)
+        {
+            switch (worldCurrent.WorldType)
+            {
+                case WorldType.Earth:
+                    ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteEarth);
+                    ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteEarth);
+                    break;
+                case WorldType.Desert:
+                    ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteDesert);
+                    ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteDesert);
+                    break;
+                case WorldType.Iceland:
+                    ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteIceland);
+                    ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteIceland);
+                    break;
+                case WorldType.Inferno:
+                    ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteInferno);
+                    ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteInferno);
+                    break;
+                case WorldType.Jade:
+                    ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteJade);
+                    ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteJade);
+                    break;
+                case WorldType.Olympus:
+                    ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteOlympus);
+                    ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteOlympus);
+                    break;
+            }
+        }
     }
 }

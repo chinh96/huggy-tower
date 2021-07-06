@@ -27,8 +27,6 @@ public static class Data
         get => GetInt(Constants.CURRENT_LEVEL, 0);
         set
         {
-            ResourcesController.Universe.CheckAchievementDailyQuest(value);
-
             ResourcesController.Achievement.IncreaseByType(AchievementType.PlayToLevel);
 
             SetInt(Constants.CURRENT_LEVEL, value);

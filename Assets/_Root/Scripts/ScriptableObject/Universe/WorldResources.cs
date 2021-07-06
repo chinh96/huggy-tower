@@ -10,4 +10,5 @@ public class WorldResources : ScriptableObject
     public List<CastleResources> Castles;
     public bool IsUnlocked => Data.CurrentLevel >= LevelUnlock;
     public Sprite background;
+    public bool IsComplete => Castles.TrueForAll(item => item.IsComplete);
 }

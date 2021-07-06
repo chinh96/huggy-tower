@@ -35,6 +35,8 @@ public class CastleResources : ScriptableObject
             }
         }
     }
+
+    public bool IsComplete => Castles.TrueForAll(item => item.IsUnlocked);
 }
 
 [Serializable]
