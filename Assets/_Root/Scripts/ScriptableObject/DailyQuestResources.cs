@@ -19,7 +19,14 @@ public class DailyQuestResources : ScriptableObject
 
         if (item != null)
         {
-            item.NumberCurrent += value;
+            if (item.NumberTemp == 0)
+            {
+                item.NumberTemp = item.NumberCurrent + value;
+            }
+            else
+            {
+                item.NumberTemp += value;
+            }
             if (NotiQuestController.Instance != null && item.HasNoti && !item.IsShownNoti)
             {
                 NotiQuestController.Instance.Save(item);
@@ -33,7 +40,27 @@ public class DailyQuestResources : ScriptableObject
                 });
             }
         }
+    }
 
+    public void ResetNumberTemp()
+    {
+        DailyQuestDayCurrent.DailyQuestDayItems.ForEach(data =>
+        {
+            data.NumberTemp = 0;
+        });
+    }
+
+    public void UpdateNumberCurrent()
+    {
+        DailyQuestDayCurrent.DailyQuestDayItems.ForEach(data =>
+        {
+            if (data.NumberTemp > 0)
+            {
+                data.NumberCurrent = data.NumberTemp;
+            }
+        });
+
+        ResetNumberTemp();
     }
 
     public DailyQuestDayItem GetItemByType(DailyQuestType type)
@@ -93,6 +120,7 @@ public class DailyQuestDayItem
     public Sprite Sprite => dailyQuestData.Sprite;
     public string Number => (NumberCurrent > NumberTarget ? NumberTarget : NumberCurrent) + "/" + NumberTarget;
     public string Title => dailyQuestData.Text.Replace("{}", NumberTarget.ToString());
+    public int NumberTemp;
     public int NumberCurrent
     {
         get { Data.DailyQuestId = Id; return Data.DailyQuestNumberCurrent; }

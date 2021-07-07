@@ -29,6 +29,9 @@ public static class Data
         {
             ResourcesController.Achievement.IncreaseByType(AchievementType.PlayToLevel);
 
+            ResourcesController.Achievement.UpdateNumberCurrent();
+            ResourcesController.DailyQuest.UpdateNumberCurrent();
+
             SetInt(Constants.CURRENT_LEVEL, value);
         }
     }

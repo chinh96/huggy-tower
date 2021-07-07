@@ -17,13 +17,41 @@ public class AchievementResources : ScriptableObject
             switch (type)
             {
                 case AchievementType.PlayToLevel:
-                    data.NumberCurrent = Data.CurrentLevel;
+                    data.NumberTemp = Data.CurrentLevel;
                     break;
                 default:
-                    data.NumberCurrent += value;
+                    if (data.NumberTemp == 0)
+                    {
+                        data.NumberTemp = data.NumberCurrent + value;
+                    }
+                    else
+                    {
+                        data.NumberTemp += value;
+                    }
                     break;
             }
         }
+    }
+
+    public void ResetNumberTemp()
+    {
+        AchievementDatas.ForEach(data =>
+        {
+            data.NumberTemp = 0;
+        });
+    }
+
+    public void UpdateNumberCurrent()
+    {
+        AchievementDatas.ForEach(data =>
+        {
+            if (data.NumberTemp > 0)
+            {
+                data.NumberCurrent = data.NumberTemp;
+            }
+        });
+
+        ResetNumberTemp();
     }
 
     public AchievementData GetDataByType(AchievementType type)
@@ -64,6 +92,7 @@ public class AchievementData
     public int Bonus;
     public string Number => (NumberCurrent < NumberTarget ? NumberCurrent : NumberTarget) + "/" + NumberTarget;
     public string Title => Text.Replace("{}", NumberTarget.ToString());
+    public int NumberTemp;
     public int NumberCurrent
     {
         get { Data.AchievementId = Id; return Data.AchievementNumberCurrent; }

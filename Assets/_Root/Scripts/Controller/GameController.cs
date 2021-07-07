@@ -238,6 +238,9 @@ public class GameController : Singleton<GameController>
 
     public void OnReplayLevel()
     {
+        ResourcesController.Achievement.ResetNumberTemp();
+        ResourcesController.DailyQuest.ResetNumberTemp();
+
         PopupController.Instance.DismissAll();
         FadeInOverlay(() =>
         {
