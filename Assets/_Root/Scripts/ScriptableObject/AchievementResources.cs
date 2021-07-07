@@ -7,6 +7,7 @@ using System;
 public class AchievementResources : ScriptableObject
 {
     public List<AchievementData> AchievementDatas;
+    public List<int> AchievementTargets;
 
     public void IncreaseByType(AchievementType type, int value = 1)
     {
