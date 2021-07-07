@@ -574,19 +574,24 @@ public class Player : Unit, IAnim
                 {
                     Damage += _cacheTarget.Damage;
                 }
-                if (damage > 0)
-                {
-                    effectIncreaseDamge.gameObject.SetActive(true);
-                    effectIncreaseDamge.Play();
 
-                    _cacheTarget.TxtDamage.gameObject.SetActive(true);
-                    _cacheTarget.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
-                    {
-                        TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
-                        TxtDamage.DOCounter(cacheDamage, Damage, 0);
-                        _cacheTarget.TxtDamage.gameObject.SetActive(false);
-                    });
-                }
+                effectIncreaseDamge.gameObject.SetActive(true);
+                effectIncreaseDamge.Play();
+
+                _cacheTarget.TxtDamage.gameObject.SetActive(true);
+                _cacheTarget.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
+                {
+                    TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
+                    TxtDamage.DOCounter(cacheDamage, Damage, 0);
+                    _cacheTarget.TxtDamage.gameObject.SetActive(false);
+                });
+            }
+
+            if (_target as EnemyGoblin)
+            {
+                effectBomb.gameObject.SetActive(true);
+                effectBomb.Play();
+                SoundController.Instance.PlayOnce(SoundType.BombGoblin);
             }
         }
     }
@@ -855,12 +860,6 @@ public class Player : Unit, IAnim
     {
         SoundController.Instance.PlayOnce(SoundType.HeroDie);
         skeleton.Play("Die", false);
-
-        if (_target as EnemyGoblin)
-        {
-            effectBomb.gameObject.SetActive(true);
-            effectBomb.Play();
-        }
     }
 
     public void PlayWin(bool isLoop)

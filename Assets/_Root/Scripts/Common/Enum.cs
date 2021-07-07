@@ -179,7 +179,8 @@ public enum SoundType
     Axe1,
     Axe2,
     EnemyGoblinDie,
-    PrincessStart
+    PrincessStart,
+    BombGoblin
 }
 
 public enum WorldType
