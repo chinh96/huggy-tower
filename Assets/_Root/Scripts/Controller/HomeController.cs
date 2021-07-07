@@ -41,6 +41,8 @@ public class HomeController : Singleton<HomeController>
 
         NotificationController.Instance.CheckDailyQuestRepeat();
         NotificationController.Instance.CheckDailyRewardRepeat();
+
+        ResourcesController.Achievement.IncreaseByType(AchievementType.PlayToLevel);
     }
 
     public void TapToStart()

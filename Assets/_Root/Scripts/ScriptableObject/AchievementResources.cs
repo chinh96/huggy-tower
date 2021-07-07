@@ -7,7 +7,7 @@ using System;
 public class AchievementResources : ScriptableObject
 {
     public List<AchievementData> AchievementDatas;
-    public List<int> AchievementTargets;
+    public List<AchievementTargetData> AchievementTargetDatas;
 
     public void IncreaseByType(AchievementType type, int value = 1)
     {
@@ -70,6 +70,19 @@ public class AchievementData
 
         set { Data.AchievementId = Id; Data.AchievementNumberCurrent = value; }
     }
+    public bool IsClaimed
+    {
+        get { Data.IdCheckUnlocked = Id + "Claimed"; return Data.IsUnlocked; }
+
+        set { Data.IdCheckUnlocked = Id + "Claimed"; Data.IsUnlocked = value; }
+    }
+}
+
+[Serializable]
+public class AchievementTargetData
+{
+    public int Number;
+    [GUID] public string Id;
     public bool IsClaimed
     {
         get { Data.IdCheckUnlocked = Id + "Claimed"; return Data.IsUnlocked; }

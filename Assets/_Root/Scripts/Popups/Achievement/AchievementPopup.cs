@@ -74,9 +74,10 @@ public class AchievementPopup : Popup
         {
             progress.DOFillAmount(endValue, .3f).OnComplete(() =>
             {
-                if (number == total)
+                var index = ResourcesController.Achievement.AchievementTargetDatas.FindIndex(item => item.Number == number);
+                if (index >= 0 && !ResourcesController.Achievement.AchievementTargetDatas[index].IsClaimed)
                 {
-                    PopupController.Instance.Show<AchievementGiftPopup>(null, ShowAction.DoNothing);
+                    PopupController.Instance.Show<AchievementGiftPopup>(index, ShowAction.DoNothing);
                     Close();
                 }
             });
