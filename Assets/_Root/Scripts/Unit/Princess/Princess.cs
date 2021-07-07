@@ -12,6 +12,11 @@ public class Princess : Unit, IAnim
     [SerializeField] private Image lockObj;
     [SerializeField] private Image lockObj2;
 
+    private void Start()
+    {
+        SoundController.Instance.PlayOnce(SoundType.PrincessStart);
+    }
+
     public override EUnitType Type { get; protected set; } = EUnitType.Princess;
 
     public override void OnBeingAttacked() { }

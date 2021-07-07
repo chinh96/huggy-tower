@@ -175,7 +175,11 @@ public enum SoundType
     Trap,
     Bow,
     ButtonStart,
-    Gloves
+    Gloves,
+    Axe1,
+    Axe2,
+    EnemyGoblinDie,
+    PrincessStart
 }
 
 public enum WorldType

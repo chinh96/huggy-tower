@@ -13,7 +13,14 @@ public abstract class Unit : MonoBehaviour, IUnit, IAttack
     {
         if (txtDamage != null && damage > 0)
         {
-            txtDamage.DOCounter(damage, damage, 0);
+            if (this as EnemyGoblin)
+            {
+                txtDamage.DOCounter(-damage, -damage, 0);
+            }
+            else
+            {
+                txtDamage.DOCounter(damage, damage, 0);
+            }
         }
     }
 

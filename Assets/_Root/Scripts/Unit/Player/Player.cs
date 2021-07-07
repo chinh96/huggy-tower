@@ -35,6 +35,7 @@ public class Player : Unit, IAnim
     [SerializeField] private ParticleSystem effectFingerPress;
     [SerializeField] private ParticleSystem effectThunder1;
     [SerializeField] private ParticleSystem effectThunder2;
+    [SerializeField] private ParticleSystem effectBomb;
     [SerializeField] private GameObject shuriken;
 
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
@@ -791,9 +792,6 @@ public class Player : Unit, IAnim
                             }
                         default:
                             {
-                                SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
-                                SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
-                                SoundController.Instance.PlayOnce(soundType);
                                 attacks = new string[] { "AttackHit", "AttackHit2" };
                                 break;
                             }
@@ -819,6 +817,15 @@ public class Player : Unit, IAnim
                         {
                             ParticleSystem particle = Instantiate(particlePrefab);
                             particle.transform.position = _target.transform.position + offset;
+
+                            if (attack == "AttackAxe")
+                            {
+                                SoundController.Instance.PlayOnce(SoundType.Axe1);
+                            }
+                            else
+                            {
+                                SoundController.Instance.PlayOnce(SoundType.Axe2);
+                            }
                         });
                     }
 
@@ -848,6 +855,12 @@ public class Player : Unit, IAnim
     {
         SoundController.Instance.PlayOnce(SoundType.HeroDie);
         skeleton.Play("Die", false);
+
+        if (_target as EnemyGoblin)
+        {
+            effectBomb.gameObject.SetActive(true);
+            effectBomb.Play();
+        }
     }
 
     public void PlayWin(bool isLoop)

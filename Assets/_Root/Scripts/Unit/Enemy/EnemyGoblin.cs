@@ -59,7 +59,7 @@ public class EnemyGoblin : Unit, IAnim
     {
         skeleton.Play("Die", false);
 
-        SoundController.Instance.PlayOnce(SoundType.BearDie);
+        SoundController.Instance.PlayOnce(SoundType.EnemyGoblinDie);
     }
 
     public void PlayWin(bool isLoop) { }
