@@ -17,6 +17,7 @@ public class RatingController : Singleton<RatingController>
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
 #if !UNITY_EDITOR
         reviewManager = new ReviewManager();
 #endif

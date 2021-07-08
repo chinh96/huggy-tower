@@ -27,41 +27,7 @@ public static class Data
         get => GetInt(Constants.CURRENT_LEVEL, 0);
         set
         {
-            foreach (var world in ResourcesController.Universe.Worlds)
-            {
-                if (value >= world.LevelUnlock)
-                {
-                    switch (world.WorldType)
-                    {
-                        case WorldType.Earth:
-                            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteEarth);
-                            ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteEarth);
-                            break;
-                        case WorldType.Desert:
-                            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteDesert);
-                            ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteDesert);
-                            break;
-                        case WorldType.Iceland:
-                            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteIceland);
-                            ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteIceland);
-                            break;
-                        case WorldType.Inferno:
-                            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteInferno);
-                            ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteInferno);
-                            break;
-                        case WorldType.Jade:
-                            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteJade);
-                            ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteJade);
-                            break;
-                        case WorldType.Olympus:
-                            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteOlympus);
-                            ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteOlympus);
-                            break;
-                    }
-
-                    break;
-                }
-            }
+            ResourcesController.Universe.CheckAchievementDailyQuest(value);
 
             ResourcesController.Achievement.IncreaseByType(AchievementType.PlayToLevel);
 
