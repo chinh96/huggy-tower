@@ -20,13 +20,20 @@ public class AchievementResources : ScriptableObject
                     data.NumberTemp = Data.CurrentLevel;
                     break;
                 default:
-                    if (data.NumberTemp == 0)
+                    if (GameController.Instance == null)
                     {
-                        data.NumberTemp = data.NumberCurrent + value;
+                        data.NumberCurrent += value;
                     }
                     else
                     {
-                        data.NumberTemp += value;
+                        if (data.NumberTemp == 0)
+                        {
+                            data.NumberTemp = data.NumberCurrent + value;
+                        }
+                        else
+                        {
+                            data.NumberTemp += value;
+                        }
                     }
                     break;
             }

@@ -19,14 +19,22 @@ public class DailyQuestResources : ScriptableObject
 
         if (item != null)
         {
-            if (item.NumberTemp == 0)
+            if (GameController.Instance == null)
             {
-                item.NumberTemp = item.NumberCurrent + value;
+                item.NumberCurrent += value;
             }
             else
             {
-                item.NumberTemp += value;
+                if (item.NumberTemp == 0)
+                {
+                    item.NumberTemp = item.NumberCurrent + value;
+                }
+                else
+                {
+                    item.NumberTemp += value;
+                }
             }
+
             if (NotiQuestController.Instance != null && item.HasNoti && !item.IsShownNoti)
             {
                 NotiQuestController.Instance.Save(item);
