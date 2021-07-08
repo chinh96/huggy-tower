@@ -192,10 +192,19 @@ public class GameController : Singleton<GameController>
         if (Data.CurrentLevel == 0)
         {
             AnalyticController.StartLevel1Funnel();
+            AnalyticController.Level1StartFunnel();
         }
-        if (Data.CurrentLevel == 7)
+        else if (Data.CurrentLevel == 7)
         {
             AnalyticController.StartLevel8Funnel();
+        }
+        else if (Data.CurrentLevel == 9)
+        {
+            AnalyticController.Level10StartFunnel();
+        }
+        else if (Data.CurrentLevel == 19)
+        {
+            AnalyticController.Level20StartFunnel();
         }
     }
 
@@ -280,6 +289,11 @@ public class GameController : Singleton<GameController>
         if (Data.CurrentLevel == 0)
         {
             AnalyticController.CompleteLevel1Funnel();
+            AnalyticController.Level1CompleteFunnel();
+        }
+        else if (Data.CurrentLevel == 9)
+        {
+            AnalyticController.Level10CompleteFunnel();
         }
 
         root.LevelMap.visitTower.ChangeToHomTower();

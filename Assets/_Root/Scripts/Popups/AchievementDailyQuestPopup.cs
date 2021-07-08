@@ -21,6 +21,9 @@ public class AchievementDailyQuestPopup : Popup
     {
         base.BeforeShow();
 
+        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.BuySkin);
+        ResourcesController.Achievement.IncreaseByType(AchievementType.BuySkin);
+
         achievementPopup.Show();
         dailyQuestPopup.Show();
         achievementPopup.UpdateProgress();

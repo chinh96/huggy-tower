@@ -79,10 +79,13 @@ public class Castle : MonoBehaviour
 
         if (done)
         {
-            right.SetActive(false);
             doneIcon.SetActive(true);
             to.gameObject.SetActive(true);
             to.sprite = castle.Castles[castle.Castles.Count - 1].Sprite;
+        }
+        else
+        {
+            right.SetActive(true);
         }
 
         from.SetNativeSize();
@@ -104,6 +107,7 @@ public class Castle : MonoBehaviour
         buildButton.SetActive(false);
         upgradeButton.SetActive(false);
         disableButton.SetActive(false);
+        right.SetActive(false);
         doneIcon.SetActive(false);
         starActives.ForEach(item => item.SetActive(false));
         arrow.SetActive(false);

@@ -103,6 +103,41 @@ public static class AnalyticController
         LogEvent(Constants.CLICK_DAILY_REWARD, new Parameter[] { });
     }
 
+    public static void Level1StartFunnel()
+    {
+        LogEvent(Constants.LEVEL_1_START_FUNNEL, new Parameter[] { });
+    }
+
+    public static void Level1CompleteFunnel()
+    {
+        LogEvent(Constants.LEVEL_1_COMPLETE_FUNNEL, new Parameter[] { });
+    }
+
+    public static void BuildFirstKingdomItem()
+    {
+        LogEvent(Constants.BUILD_FIRST_KINGDOM_ITEM, new Parameter[] { });
+    }
+
+    public static void Level10StartFunnel()
+    {
+        LogEvent(Constants.LEVEL_10_START_FUNNEL, new Parameter[] { });
+    }
+
+    public static void Level10CompleteFunnel()
+    {
+        LogEvent(Constants.LEVEL_10_COMPLETE_FUNNEL, new Parameter[] { });
+    }
+
+    public static void ClaimFirstDailyQuest()
+    {
+        LogEvent(Constants.CLAIM_FIRST_DAILY_QUEST, new Parameter[] { });
+    }
+
+    public static void Level20StartFunnel()
+    {
+        LogEvent(Constants.LEVEL_20_START_FUNNEL, new Parameter[] { });
+    }
+
     private static void LogEvent(string name, Parameter[] param)
     {
         FirebaseAnalytics.LogEvent(name, param);

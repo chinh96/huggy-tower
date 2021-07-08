@@ -43,6 +43,11 @@ public class DailyQuestItem : MonoBehaviour
     public void OnClickClaimButton()
     {
         AnalyticController.ClaimDailyQuest();
+        if (!Data.IsClaimFirstDailyQuest)
+        {
+            Data.IsClaimFirstDailyQuest = true;
+            AnalyticController.ClaimFirstDailyQuest();
+        }
         dailyQuestPopup.GenerateCoin(buttonActive, item.Bonus);
         item.IsClaimed = true;
         Reset();

@@ -13,40 +13,62 @@ public class DailyQuestResources : ScriptableObject
 
     public DailyQuestDay DailyQuestDayCurrent => DailyQuestDays[Data.TotalDays % DailyQuestDays.Count];
 
+    private void Start()
+    {
+        ResetNumberTemp();
+    }
+
     public void IncreaseByType(DailyQuestType type, int value = 1)
     {
         var item = GetItemByType(type);
 
         if (item != null)
         {
-            if (GameController.Instance == null)
-            {
-                item.NumberCurrent += value;
-            }
-            else
-            {
-                if (item.NumberTemp == 0)
+            CheckNumber(type, value, item);
+            CheckNotiQuest(item);
+        }
+    }
+
+    private void CheckNumber(DailyQuestType type, int value, DailyQuestDayItem item)
+    {
+        switch (type)
+        {
+            case DailyQuestType.BuySkin:
+                item.NumberCurrent = ResourcesController.Hero.SkinsIsUnlocked.Count;
+                break;
+            default:
+                if (GameController.Instance == null)
                 {
-                    item.NumberTemp = item.NumberCurrent + value;
+                    item.NumberCurrent += value;
                 }
                 else
                 {
-                    item.NumberTemp += value;
-                }
-            }
-
-            if (NotiQuestController.Instance != null && item.HasNoti && !item.IsShownNoti)
-            {
-                NotiQuestController.Instance.Save(item);
-
-                DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
-                {
-                    if (GameController.Instance.GameState == EGameState.Playing)
+                    if (item.NumberTemp == 0)
                     {
-                        NotiQuestController.Instance.Show();
+                        item.NumberTemp = item.NumberCurrent + value;
                     }
-                });
-            }
+                    else
+                    {
+                        item.NumberTemp += value;
+                    }
+                }
+                break;
+        }
+    }
+
+    private void CheckNotiQuest(DailyQuestDayItem item)
+    {
+        if (NotiQuestController.Instance != null && item.HasNoti && !item.IsShownNoti)
+        {
+            NotiQuestController.Instance.Save(item);
+
+            DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
+            {
+                if (GameController.Instance.GameState == EGameState.Playing)
+                {
+                    NotiQuestController.Instance.Show();
+                }
+            });
         }
     }
 

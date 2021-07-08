@@ -114,4 +114,8 @@ public static class Data
     public static LibraryData LibraryItemInfo;
 
     public static bool DontShowUpdateAgain { get => GetBool(Constants.DONT_SHOW_UPDATE_AGAIN, false); set => SetBool(Constants.DONT_SHOW_UPDATE_AGAIN, value); }
+
+    public static bool IsBuildFirstKingdomItem { get => GetBool(Constants.BUILD_FIRST_KINGDOM_ITEM, false); set => SetBool(Constants.BUILD_FIRST_KINGDOM_ITEM, value); }
+
+    public static bool IsClaimFirstDailyQuest { get => GetBool(Constants.CLAIM_FIRST_DAILY_QUEST, false); set => SetBool(Constants.CLAIM_FIRST_DAILY_QUEST, value); }
 }

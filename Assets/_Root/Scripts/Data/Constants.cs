@@ -69,4 +69,11 @@ public class Constants
     public const string START_LEVEL_8_FUNNEL = "START_LEVEL_8_FUNNEL";
     public const string CLICK_RANK_BUTTON = "CLICK_RANK_BUTTON";
     public const string CLICK_DAILY_REWARD = "CLICK_DAILY_REWARD";
+    public const string LEVEL_1_START_FUNNEL = "LEVEL_1_START_FUNNEL";
+    public const string LEVEL_1_COMPLETE_FUNNEL = "LEVEL_1_COMPLETE_FUNNEL";
+    public const string BUILD_FIRST_KINGDOM_ITEM = "BUILD_FIRST_KINGDOM_ITEM";
+    public const string LEVEL_10_START_FUNNEL = "LEVEL_10_START_FUNNEL";
+    public const string LEVEL_10_COMPLETE_FUNNEL = "LEVEL_10_COMPLETE_FUNNEL";
+    public const string CLAIM_FIRST_DAILY_QUEST = "CLAIM_FIRST_DAILY_QUEST";
+    public const string LEVEL_20_START_FUNNEL = "LEVEL_20_START_FUNNEL";
 }

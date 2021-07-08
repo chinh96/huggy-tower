@@ -9,34 +9,47 @@ public class AchievementResources : ScriptableObject
     public List<AchievementData> AchievementDatas;
     public List<AchievementTargetData> AchievementTargetDatas;
 
+    private void Start()
+    {
+        ResetNumberTemp();
+    }
+
     public void IncreaseByType(AchievementType type, int value = 1)
     {
         var data = GetDataByType(type);
         if (data != null)
         {
-            switch (type)
-            {
-                case AchievementType.PlayToLevel:
-                    data.NumberTemp = Data.CurrentLevel;
-                    break;
-                default:
-                    if (GameController.Instance == null)
+            CheckNumber(type, value, data);
+        }
+    }
+
+    private void CheckNumber(AchievementType type, int value, AchievementData data)
+    {
+        switch (type)
+        {
+            case AchievementType.PlayToLevel:
+                data.NumberCurrent = Data.CurrentLevel;
+                break;
+            case AchievementType.BuySkin:
+                data.NumberCurrent = ResourcesController.Hero.SkinsIsUnlocked.Count;
+                break;
+            default:
+                if (GameController.Instance == null)
+                {
+                    data.NumberCurrent += value;
+                }
+                else
+                {
+                    if (data.NumberTemp == 0)
                     {
-                        data.NumberCurrent += value;
+                        data.NumberTemp = data.NumberCurrent + value;
                     }
                     else
                     {
-                        if (data.NumberTemp == 0)
-                        {
-                            data.NumberTemp = data.NumberCurrent + value;
-                        }
-                        else
-                        {
-                            data.NumberTemp += value;
-                        }
+                        data.NumberTemp += value;
                     }
-                    break;
-            }
+                }
+                break;
         }
     }
 
