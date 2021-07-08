@@ -40,6 +40,8 @@ public class FacebookPopup : Popup
     {
         if (!isClaming)
         {
+            isClaming = true;
+
             Data.JoinFbProgress++;
 
             ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LoginFacebook);
@@ -58,6 +60,8 @@ public class FacebookPopup : Popup
     {
         if (!isClaming)
         {
+            isClaming = true;
+
             buttonClaim.SetActive(false);
 
             int coinTotal = Data.CoinTotal + 500;
