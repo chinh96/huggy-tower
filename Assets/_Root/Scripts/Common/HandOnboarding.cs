@@ -151,6 +151,6 @@ public class HandOnboarding : MonoBehaviour, IHasSkeletonDataAsset, IPointerDown
     private void OnDisable()
     {
         Data.DoneOnboarding = true;
-        GameController.Instance.IsOnboarding = false;
+        sequence.Kill();
     }
 }

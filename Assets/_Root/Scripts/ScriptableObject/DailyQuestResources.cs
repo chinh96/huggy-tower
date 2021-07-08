@@ -33,24 +33,27 @@ public class DailyQuestResources : ScriptableObject
     {
         switch (type)
         {
+            case DailyQuestType.CompleteEarth:
+            case DailyQuestType.CompleteDesert:
+            case DailyQuestType.CompleteIceland:
+            case DailyQuestType.CompleteInferno:
+            case DailyQuestType.CompleteJade:
+            case DailyQuestType.CompleteOlympus:
+            case DailyQuestType.LogIntoTheGame:
+            case DailyQuestType.WatchVideoReward:
+                item.NumberCurrent += value;
+                break;
             case DailyQuestType.BuySkin:
                 item.NumberCurrent = ResourcesController.Hero.SkinsIsUnlocked.Count;
                 break;
             default:
-                if (GameController.Instance == null)
+                if (item.NumberTemp == 0)
                 {
-                    item.NumberCurrent += value;
+                    item.NumberTemp = item.NumberCurrent + value;
                 }
                 else
                 {
-                    if (item.NumberTemp == 0)
-                    {
-                        item.NumberTemp = item.NumberCurrent + value;
-                    }
-                    else
-                    {
-                        item.NumberTemp += value;
-                    }
+                    item.NumberTemp += value;
                 }
                 break;
         }
