@@ -10,6 +10,8 @@ public class FacebookPopup : Popup
     [SerializeField] private CoinGeneration coinGeneration;
     [SerializeField] private GameObject coinTotal;
 
+    private bool isClaming;
+
     protected override void BeforeShow()
     {
         base.BeforeShow();
@@ -36,32 +38,40 @@ public class FacebookPopup : Popup
 
     public void OnClickFacebookButton()
     {
-        Data.JoinFbProgress++;
-
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LoginFacebook);
-
-        DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+        if (!isClaming)
         {
-            Reset();
-        });
+            Data.JoinFbProgress++;
 
-        Application.OpenURL("https://www.facebook.com/groups/hero.tower.wars");
+            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LoginFacebook);
+
+            DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+            {
+                Reset();
+                isClaming = false;
+            });
+
+            Application.OpenURL("https://www.facebook.com/groups/hero.tower.wars");
+        }
     }
 
     public void OnClickClaimButton()
     {
-        buttonClaim.SetActive(false);
+        if (!isClaming)
+        {
+            buttonClaim.SetActive(false);
 
-        int coinTotal = Data.CoinTotal + 500;
-        coinGeneration.GenerateCoin(() =>
-        {
-            Data.CoinTotal++;
-        }, () =>
-        {
-            Data.JoinFbProgress++;
-            Data.CoinTotal = coinTotal;
-            ResourcesController.Achievement.IncreaseByType(AchievementType.JoinGroupFacebookSuccessfully);
-            Close();
-        });
+            int coinTotal = Data.CoinTotal + 500;
+            coinGeneration.GenerateCoin(() =>
+            {
+                Data.CoinTotal++;
+            }, () =>
+            {
+                Data.JoinFbProgress++;
+                Data.CoinTotal = coinTotal;
+                ResourcesController.Achievement.IncreaseByType(AchievementType.JoinGroupFacebookSuccessfully);
+                Close();
+                isClaming = false;
+            });
+        }
     }
 }

@@ -23,7 +23,7 @@ public class ProgressGift : MonoBehaviour
             action?.Invoke();
             if (Data.PercentProgressGift >= 100)
             {
-                List<SkinData> skinsLocked = ResourcesController.Hero.SkinsLocked;
+                List<SkinData> skinsLocked = ResourcesController.Hero.SkinsCoin;
                 if (skinsLocked.Count > 0)
                 {
                     Data.SkinGift = skinsLocked[UnityEngine.Random.Range(0, skinsLocked.Count)];

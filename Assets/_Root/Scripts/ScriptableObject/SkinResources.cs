@@ -15,7 +15,6 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
 
     public SkinData SkinDefault => SkinDatas.Find(item => item.SkinName == skinNameDefault);
     public List<SkinData> SkinsDailyReward => SkinDatas.FindAll(item => item.SkinType == SkinType.Daily);
-    public List<SkinData> SkinsLocked => SkinDatas.FindAll(item => !item.IsUnlocked);
     public List<SkinData> SkinsCoin => SkinDatas.FindAll(item => !item.IsUnlocked && item.SkinType == SkinType.Coin);
     public List<SkinData> SkinAchievements => SkinDatas.FindAll(item => item.SkinType == SkinType.Achievement);
     public SkinData SkinGiftcode => SkinDatas.Find(item => item.SkinType == SkinType.Giftcode);
