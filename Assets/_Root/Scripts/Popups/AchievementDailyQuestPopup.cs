@@ -13,7 +13,7 @@ public class AchievementDailyQuestPopup : Popup
     {
         base.AfterInstantiate();
 
-        achievementPopup.Init();
+        achievementPopup.Init(this);
         dailyQuestPopup.Init();
     }
 

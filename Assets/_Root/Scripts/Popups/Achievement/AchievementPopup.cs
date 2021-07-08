@@ -12,12 +12,16 @@ public class AchievementPopup : Popup
     [SerializeField] private CoinGeneration coinGeneration;
     [SerializeField] private Image progress;
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private List<GameObject> heroes;
+    [SerializeField] private List<GameObject> doneIcons;
 
     private List<AchievementItem> achievementItems = new List<AchievementItem>();
+    private AchievementDailyQuestPopup achievementDailyQuestPopup;
 
-    public void Init()
+    public void Init(AchievementDailyQuestPopup achievementDailyQuestPopup)
     {
         AfterInstantiate();
+        this.achievementDailyQuestPopup = achievementDailyQuestPopup;
     }
 
     public void Show()
@@ -78,7 +82,7 @@ public class AchievementPopup : Popup
                 if (index >= 0 && !ResourcesController.Achievement.AchievementTargetDatas[index].IsClaimed)
                 {
                     PopupController.Instance.Show<AchievementGiftPopup>(index, ShowAction.DoNothing);
-                    Close();
+                    achievementDailyQuestPopup.Close();
                 }
             });
         }
@@ -86,5 +90,13 @@ public class AchievementPopup : Popup
         {
             progress.fillAmount = endValue;
         }
+
+        int index = 0;
+        ResourcesController.Achievement.AchievementTargetDatas.ForEach(item =>
+        {
+            heroes[index].SetActive(!item.IsClaimed);
+            doneIcons[index].SetActive(item.IsClaimed);
+            index++;
+        });
     }
 }
