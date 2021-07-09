@@ -28,6 +28,7 @@ public class ShopPopup : Popup
         AdController.Instance.ShowRewardedAd(() =>
         {
             Data.CoinTotal += 500;
+            EventController.SkinPopupReseted();
         });
     }
 }
