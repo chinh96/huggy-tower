@@ -103,11 +103,11 @@ public static partial class Util
         {
             if (skinName == "Hero21")
             {
-                skeletonGraphic.Play("Idle2", true);
+                skeletonGraphic.AnimationState.SetAnimation(0, "Idle2", true).MixDuration = 0;
             }
             else
             {
-                skeletonGraphic.Play("Idle", true);
+                skeletonGraphic.AnimationState.SetAnimation(0, "Idle", true).MixDuration = 0;
             }
         }
     }
