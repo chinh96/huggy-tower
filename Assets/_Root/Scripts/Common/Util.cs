@@ -98,6 +98,18 @@ public static partial class Util
     {
         skeletonGraphic.Skeleton.SetSkin(skinName);
         skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+
+        if (GameController.Instance == null)
+        {
+            if (skinName == "Hero21")
+            {
+                skeletonGraphic.Play("Idle2", true);
+            }
+            else
+            {
+                skeletonGraphic.Play("Idle", true);
+            }
+        }
     }
 
     public static void ChangeSword(this SkeletonGraphic skeletonGraphic, List<string> swordNames)

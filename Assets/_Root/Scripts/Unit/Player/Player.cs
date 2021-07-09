@@ -8,8 +8,11 @@ using Lean.Touch;
 using UnityEngine;
 using Spine.Unity;
 
-public class Player : Unit, IAnim
+public class Player : Unit, IAnim, IHasSkeletonDataAsset
 {
+    [SerializeField] private SkeletonDataAsset skeletonDataAsset;
+    public SkeletonDataAsset SkeletonDataAsset => skeletonDataAsset;
+
     [SerializeField] private SkeletonGraphic skeleton;
     [SerializeField] private Rigidbody2D rigid2D;
     [SerializeField] private Collider2D coll2D;
@@ -22,6 +25,7 @@ public class Player : Unit, IAnim
     [SerializeField] private float countdownAttack = 1.25f;
     [SerializeField, Range(0, 10)] private float moveSpeed = 1.5f;
     [SerializeField] private ETurn turn = ETurn.None;
+    [SerializeField, SpineSkin] private string skinLess;
 
     public ItemType EquipType;
 
@@ -715,7 +719,14 @@ public class Player : Unit, IAnim
     {
         if (GameController.Instance.GameState != EGameState.Lose)
         {
-            skeleton.Play("Idle", true);
+            if (Data.CurrentSkinHero == skinLess)
+            {
+                skeleton.Play("Idle", true);
+            }
+            else
+            {
+                skeleton.Play("Idle", true);
+            }
         }
     }
 
@@ -876,7 +887,14 @@ public class Player : Unit, IAnim
 
     public void GiveFlower()
     {
-        skeleton.Play("Sit", true);
+        if (Data.CurrentSkinHero == skinLess)
+        {
+            skeleton.Play("Sit2", true);
+        }
+        else
+        {
+            skeleton.Play("Sit", true);
+        }
     }
 
     public void PlayLose(bool isLoop) { skeleton.Play("Die", true); }
