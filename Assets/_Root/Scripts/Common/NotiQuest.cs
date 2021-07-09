@@ -44,5 +44,6 @@ public class NotiQuest : MonoBehaviour
     public void OnClick()
     {
         PopupController.Instance.Show<AchievementDailyQuestPopup>();
+        MoveOut();
     }
 }
