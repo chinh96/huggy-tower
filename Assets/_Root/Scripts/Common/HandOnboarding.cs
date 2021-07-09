@@ -6,7 +6,7 @@ using Spine.Unity;
 using Spine;
 using UnityEngine.EventSystems;
 
-public class HandOnboarding : MonoBehaviour, IHasSkeletonDataAsset, IPointerDownHandler, IPointerUpHandler
+public class HandOnboarding : Singleton<HandOnboarding>, IHasSkeletonDataAsset
 {
     [SerializeField] private SkeletonDataAsset skeletonDataAsset;
     public SkeletonDataAsset SkeletonDataAsset => skeletonDataAsset;
@@ -30,8 +30,10 @@ public class HandOnboarding : MonoBehaviour, IHasSkeletonDataAsset, IPointerDown
     private Vector2 sizeDelta;
     private Sequence sequence;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         if (Data.DoneOnboarding)
         {
             Destroy(gameObject);
@@ -88,25 +90,7 @@ public class HandOnboarding : MonoBehaviour, IHasSkeletonDataAsset, IPointerDown
         BeforeMove();
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        isMouseDowned = StartObject.Contains(Input.mousePosition, Camera.main);
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        isMouseUped = EndObject.Contains(Input.mousePosition, Camera.main);
-        if (isMouseDowned && isMouseUped)
-        {
-            ShowRound2();
-        }
-        else
-        {
-            isMouseDowned = false;
-        }
-    }
-
-    private void ShowRound2()
+    public void ShowRound2()
     {
         sequence.Kill();
         HandObject.transform.DOKill();
@@ -145,12 +129,13 @@ public class HandOnboarding : MonoBehaviour, IHasSkeletonDataAsset, IPointerDown
 
     public void OnClickOKButton()
     {
+        Data.DoneOnboarding = true;
+        GameController.Instance.IsOnboarding = false;
         Destroy(gameObject);
     }
 
     private void OnDisable()
     {
-        Data.DoneOnboarding = true;
         sequence.Kill();
     }
 }
