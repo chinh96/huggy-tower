@@ -378,20 +378,35 @@ public class GameController : Singleton<GameController>
 
     private void FadeInOverlay(Action action = null)
     {
-        overlay.gameObject.SetActive(true);
-        overlay.DOFade(1, .3f).SetEase(Ease.InCubic).OnComplete(() =>
+        if (ResourcesController.Config.EnableTest)
         {
             action?.Invoke();
-        });
+        }
+        else
+        {
+            overlay.gameObject.SetActive(true);
+            overlay.DOFade(1, .3f).SetEase(Ease.InCubic).OnComplete(() =>
+            {
+                action?.Invoke();
+            });
+        }
     }
 
     private void FadeOutOverlay()
     {
-        overlay.DOFade(0, 1f).SetEase(Ease.InCubic).OnComplete(() =>
+        if (ResourcesController.Config.EnableTest)
         {
             overlay.gameObject.SetActive(false);
             NotiQuestController.Instance.Show();
-        });
+        }
+        else
+        {
+            overlay.DOFade(0, 1f).SetEase(Ease.InCubic).OnComplete(() =>
+            {
+                overlay.gameObject.SetActive(false);
+                NotiQuestController.Instance.Show();
+            });
+        }
     }
 
     public void OnClickCastleButton()
