@@ -156,11 +156,6 @@ public class Player : Unit, IAnim
             return;
         }
 
-        if (HandOnboarding.Instance != null)
-        {
-            HandOnboarding.Instance.ShowRound2();
-        }
-
         effectFingerPress.gameObject.SetActive(true);
         effectFingerPress.Play();
         SoundController.Instance.PlayOnce(SoundType.HeroDrag);
@@ -220,6 +215,11 @@ public class Player : Unit, IAnim
             leanSelectableByFinger.Deselect();
 
             _isMouseUpDragDetected = true;
+
+            if (HandOnboarding.Instance != null)
+            {
+                HandOnboarding.Instance.ShowRound2();
+            }
         }
         else
         {
