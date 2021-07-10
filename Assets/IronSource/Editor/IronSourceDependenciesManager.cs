@@ -16,7 +16,7 @@ public class IronSourceDependenciesManager : EditorWindow
     private const string sdk = "sdk";
     private const string errorMessage = "SDK and adapters data are not available right now. Try again soon.";
     private const int Width = 760;
-    private const int Height = 600;
+    private const int Height = 760;
     private const string Android = "Android";
     private const string iOS = "iOS";
     private readonly SortedSet<providerInfo> providersSet = new SortedSet<providerInfo>(new ProviderInfoComparor());
@@ -403,7 +403,7 @@ public class IronSourceDependenciesManager : EditorWindow
             DrawProviderItem(provider);
             GUILayout.Space(2);
         }
-
+        GUILayout.Space(30);
         if (!string.IsNullOrEmpty(messageData))
         {
             using (new EditorGUILayout.VerticalScope("box", GUILayout.ExpandHeight(true)))
