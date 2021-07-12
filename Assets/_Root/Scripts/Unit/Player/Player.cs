@@ -658,8 +658,15 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         StartDragTurn();
         if (GameController.Instance.Root.LevelMap.visitTower.IsClearTower() && IsWinCondition(GameController.Instance.Root.LevelMap.condition))
         {
-            PlayWin(true);
-            GameController.Instance.OnWinLevel();
+            if (GameController.Instance.Root.LevelMap.IncreaseIndexVisitTower())
+            {
+                GameController.Instance.Root.LevelMap.MoveCameraHorizontal();
+            }
+            else
+            {
+                PlayWin(true);
+                GameController.Instance.OnWinLevel();
+            }
         }
     }
 

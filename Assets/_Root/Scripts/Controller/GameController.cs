@@ -104,6 +104,7 @@ public class GameController : Singleton<GameController>
 
         FadeOutOverlay();
         ZoomOutCamera();
+        Camera.main.transform.position = Vector3.zero;
 
         firePaper.gameObject.SetActive(false);
 

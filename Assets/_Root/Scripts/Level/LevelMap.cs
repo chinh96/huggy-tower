@@ -7,23 +7,38 @@ public class LevelMap : MonoBehaviour
 {
     public ELevelCondition condition;
     public HomeTower homeTower;
-    public VisitTower visitTower;
+    public VisitTower visitTower => visitTowers[indexVisitTower];
     public int CurrentRealLevelIndex { get; private set; }
     public int CurrentFakeLevelIndex { get; private set; }
     public List<IUnit> Units { get; private set; }
     public float DurationMoveCamera;
 
+    private VisitTower[] visitTowers;
+    private int indexVisitTower;
+
     private void Start()
     {
         homeTower = GetComponentInChildren<HomeTower>();
-        visitTower = GetComponentInChildren<VisitTower>();
+        visitTowers = GetComponentsInChildren<VisitTower>();
     }
 
-    public void MoveCamera(RoomTower slot)
+    public bool IncreaseIndexVisitTower()
+    {
+        if (indexVisitTower + 1 < visitTowers.Length)
+        {
+            visitTower.ChangeToHomTower();
+            indexVisitTower++;
+            return true;
+        }
+
+        return false;
+    }
+
+    public void MoveCameraVertical(RoomTower slot)
     {
         if (DurationMoveCamera > 0)
         {
-            Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, slot.transform.position.y - 5, Camera.main.transform.position.z);
+            Camera.main.transform.position = Camera.main.transform.position + new Vector3(0, slot.transform.position.y - 5, 0);
             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
             {
                 Camera.main.transform.DOMoveY(0, DurationMoveCamera).SetEase(Ease.Linear).OnComplete(() =>
@@ -32,6 +47,12 @@ public class LevelMap : MonoBehaviour
                 });
             });
         }
+    }
+
+    public void MoveCameraHorizontal()
+    {
+        float endValue = (visitTowers[indexVisitTower].transform.position.x + visitTowers[indexVisitTower - 1].transform.position.x) / 2;
+        Camera.main.transform.DOMoveX(endValue, 2).SetEase(Ease.Linear);
     }
 
     public void SetLevelLoaded(int realLevelIndex, int fakeLevelIndex)
