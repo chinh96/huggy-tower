@@ -795,8 +795,17 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         switch (EquipType)
         {
-            case ItemType.Sword:
             case ItemType.SwordJapan:
+                {
+                    skeleton.Play("AttackKiemJapan", false);
+                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    {
+                        SoundController.Instance.PlayOnce(SoundType.HeroCut3);
+                        PlayBloodEnemy();
+                    });
+                    break;
+                }
+            case ItemType.Sword:
                 {
                     string[] attacks = { "Attack", "AttackSword", "AttackSword2" };
                     string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
