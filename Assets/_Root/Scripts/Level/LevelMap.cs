@@ -12,6 +12,7 @@ public class LevelMap : MonoBehaviour
     public int CurrentFakeLevelIndex { get; private set; }
     public List<IUnit> Units { get; private set; }
     public float DurationMoveCamera;
+    public bool hasNewVisitTower => indexVisitTower + 1 < visitTowers.Length;
 
     private VisitTower[] visitTowers;
     private int indexVisitTower;
@@ -22,16 +23,11 @@ public class LevelMap : MonoBehaviour
         visitTowers = GetComponentsInChildren<VisitTower>();
     }
 
-    public bool IncreaseIndexVisitTower()
+    public void ChangeToNewVisitTower()
     {
-        if (indexVisitTower + 1 < visitTowers.Length)
-        {
-            visitTower.ChangeToHomTower();
-            indexVisitTower++;
-            return true;
-        }
-
-        return false;
+        visitTower.ChangeToHomTower();
+        indexVisitTower++;
+        MoveCameraHorizontal();
     }
 
     public void MoveCameraVertical(RoomTower slot)
