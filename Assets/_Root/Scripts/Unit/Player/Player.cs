@@ -62,6 +62,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     private List<string> swordNames = new List<string>();
     private bool hasKey = false;
     private LevelMap levelMap => GameController.Instance.Root.LevelMap;
+    private bool hasBloodEnemy;
 
     private void Start()
     {
@@ -339,11 +340,13 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         _flagAttack = damage > _target.Damage;
                         if (_flagAttack)
                         {
+                            hasBloodEnemy = true;
                             PlayAttack();
                             _target.OnAttack(damage, null);
                         }
                         else
                         {
+                            hasBloodEnemy = false;
                             PlayAttack();
                             _target.OnAttack(damage, BeingAttackedCallback);
                         }
@@ -681,13 +684,13 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         }
 
         StartDragTurn();
-        if (levelMap.visitTower.IsClearTower() && IsWinCondition(levelMap.condition))
+        if (levelMap.visitTower.IsClearTower())
         {
             if (levelMap.hasNewVisitTower)
             {
                 levelMap.ChangeToNewVisitTower();
             }
-            else
+            else if (IsWinCondition(levelMap.condition))
             {
                 PlayWin(true);
                 GameController.Instance.OnWinLevel();
@@ -762,31 +765,34 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         }
     }
 
+    private void PlayBloodEnemy(string attack = "")
+    {
+        if (!hasBloodEnemy) return;
+
+        float timeDelay = attack == "AttackSword" ? .8f : .5f;
+        if (!(_target as EnemyGhost))
+        {
+            DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
+            {
+                var main = effectBlood.main;
+                main.startColor = _target.ColorBlood;
+
+                main = effectBlood2.main;
+                main.startColor = _target.ColorBlood;
+
+                main = effectBlood3.main;
+                main.startColor = _target.ColorBlood;
+
+                effectBlood.transform.position = _target.transform.position;
+                effectBlood.transform.localPosition += new Vector3(0, 40, 0);
+                effectBlood.gameObject.SetActive(true);
+                effectBlood.Play();
+            });
+        }
+    }
+
     public void PlayAttack()
     {
-        void PlayBloodEnemy(string attack = "")
-        {
-            float timeDelay = attack == "AttackSword" ? .8f : .5f;
-            if (!(_target as EnemyGhost))
-            {
-                DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
-                {
-                    var main = effectBlood.main;
-                    main.startColor = _target.ColorBlood;
-
-                    main = effectBlood2.main;
-                    main.startColor = _target.ColorBlood;
-
-                    main = effectBlood3.main;
-                    main.startColor = _target.ColorBlood;
-
-                    effectBlood.transform.position = _target.transform.position;
-                    effectBlood.transform.localPosition += new Vector3(0, 40, 0);
-                    effectBlood.gameObject.SetActive(true);
-                    effectBlood.Play();
-                });
-            }
-        }
         switch (EquipType)
         {
             case ItemType.Sword:
