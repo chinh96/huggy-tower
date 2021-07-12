@@ -485,8 +485,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                     }
                                     else
                                     {
-                                        StartSearchingTurn();
-                                        PlayIdle(true);
+                                        StartSerching();
                                     }
                                     break;
                                 default:
@@ -500,14 +499,19 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         }
                         else
                         {
-                            StartSearchingTurn();
-                            PlayIdle(true);
-                            if (levelMap.visitTower.IsClearTower() && levelMap.hasNewVisitTower)
-                            {
-                                levelMap.ChangeToNewVisitTower();
-                            }
+                            StartSerching();
                         }
                     });
+
+                    void StartSerching()
+                    {
+                        StartSearchingTurn();
+                        PlayIdle(true);
+                        if (levelMap.visitTower.IsClearTower() && levelMap.hasNewVisitTower)
+                        {
+                            levelMap.ChangeToNewVisitTower();
+                        }
+                    }
 
                     timeDelay = .5f;
                     switch (_itemTarget.EquipType)
