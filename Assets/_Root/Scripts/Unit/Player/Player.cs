@@ -598,8 +598,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
             if (_target as EnemyGoblin)
             {
-                effectBomb.gameObject.SetActive(true);
-                effectBomb.Play();
+                ParticleSystem bomb = Instantiate(effectBomb, transform.parent);
+                bomb.transform.position = transform.position;
+                bomb.gameObject.SetActive(true);
+                bomb.Play();
                 SoundController.Instance.PlayOnce(SoundType.BombGoblin);
             }
         }
@@ -828,33 +830,41 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
                     skeleton.Play(attack, false);
 
-                    if (EquipType == ItemType.Axe)
+                    switch (EquipType)
                     {
-                        float delay = .7f;
-                        ParticleSystem particlePrefab = effectThunder1;
-                        Vector3 offset = Vector3.zero;
-
-                        if (attack == "AttackAxe2")
-                        {
-                            delay = .3f;
-                            particlePrefab = effectThunder2;
-                            offset = new Vector3(0, .5f, 0);
-                        }
-
-                        DOTween.Sequence().AppendInterval(delay).AppendCallback(() =>
-                        {
-                            ParticleSystem particle = Instantiate(particlePrefab);
-                            particle.transform.position = _target.transform.position + offset;
-
-                            if (attack == "AttackAxe")
+                        case ItemType.Axe:
                             {
-                                SoundController.Instance.PlayOnce(SoundType.Axe1);
+                                float delay = .7f;
+                                ParticleSystem particlePrefab = effectThunder1;
+                                Vector3 offset = Vector3.zero;
+
+                                if (attack == "AttackAxe2")
+                                {
+                                    delay = .3f;
+                                    particlePrefab = effectThunder2;
+                                    offset = new Vector3(0, .5f, 0);
+                                }
+
+                                DOTween.Sequence().AppendInterval(delay).AppendCallback(() =>
+                                {
+                                    ParticleSystem particle = Instantiate(particlePrefab);
+                                    particle.transform.position = _target.transform.position + offset;
+
+                                    if (attack == "AttackAxe")
+                                    {
+                                        SoundController.Instance.PlayOnce(SoundType.Axe1);
+                                    }
+                                    else
+                                    {
+                                        SoundController.Instance.PlayOnce(SoundType.Axe2);
+                                    }
+                                });
+                                break;
                             }
-                            else
-                            {
-                                SoundController.Instance.PlayOnce(SoundType.Axe2);
-                            }
-                        });
+
+                        case ItemType.Knife:
+                            PlayBloodEnemy(attack);
+                            break;
                     }
 
                     break;
