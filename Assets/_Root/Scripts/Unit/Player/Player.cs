@@ -242,7 +242,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         _countdownAttack = countdownAttack;
     }
 
-    private void StartSearchingTurn() { Turn = ETurn.Searching; }
+    public void StartSearchingTurn() { Turn = ETurn.Searching; }
 
     public void StartMoveToItemTurn() { Turn = ETurn.MoveToItem; }
 
@@ -442,6 +442,12 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                 void UseItem(ELevelCondition condition = ELevelCondition.CollectChest)
                 {
+                    if (_itemTarget as ItemTeleport != null)
+                    {
+                        _itemTarget.Collect(this);
+                        return;
+                    }
+
                     if (!hasKey && _itemTarget as ItemChest != null)
                     {
                         Turn = ETurn.Drag;
