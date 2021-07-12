@@ -36,6 +36,7 @@ public class Tower : MonoBehaviour
             DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
             {
                 GameController.Instance.Root.LevelMap.MoveCameraVertical(slots[0]);
+                GameController.Instance.Root.LevelMap.MoveCameraHorizontal();
             });
         }
 

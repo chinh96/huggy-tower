@@ -27,14 +27,14 @@ public class LevelMap : MonoBehaviour
     {
         visitTower.ChangeToHomTower();
         indexVisitTower++;
-        MoveCameraHorizontal();
+        MoveToNewVisitTower();
     }
 
     public void MoveCameraVertical(RoomTower slot)
     {
         if (DurationMoveCamera > 0)
         {
-            Camera.main.transform.position = Camera.main.transform.position + new Vector3(0, slot.transform.position.y - 5, 0);
+            Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, slot.transform.position.y - 5, Camera.main.transform.position.z);
             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
             {
                 Camera.main.transform.DOMoveY(0, DurationMoveCamera).SetEase(Ease.Linear).OnComplete(() =>
@@ -46,6 +46,16 @@ public class LevelMap : MonoBehaviour
     }
 
     public void MoveCameraHorizontal()
+    {
+        if (hasNewVisitTower)
+        {
+            float endValue = (visitTowers[indexVisitTower].transform.position.x + visitTowers[indexVisitTower + 1].transform.position.x) / 2;
+            Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, Camera.main.transform.position.z);
+            Camera.main.transform.DOMoveX(0, 2).SetEase(Ease.Linear);
+        }
+    }
+
+    public void MoveToNewVisitTower()
     {
         float endValue = (visitTowers[indexVisitTower].transform.position.x + visitTowers[indexVisitTower - 1].transform.position.x) / 2;
         Camera.main.transform.DOMoveX(endValue, 2).SetEase(Ease.Linear);
