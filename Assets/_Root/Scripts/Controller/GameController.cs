@@ -38,6 +38,7 @@ public class GameController : Singleton<GameController>
     private bool _isReplay;
     private bool isSlice;
     private bool isZoomIn;
+    private Vector3 positionCameraOrigin;
 
     public LeanGameObjectPool poolArrow;
     public LevelRoot Root => root;
@@ -78,6 +79,7 @@ public class GameController : Singleton<GameController>
         MoveInAnim();
         SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
         CheckRadioCamera();
+        positionCameraOrigin = Camera.main.transform.position;
         LoadLevel(Data.CurrentLevel);
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LogIntoTheGame);
     }
@@ -112,7 +114,6 @@ public class GameController : Singleton<GameController>
 
         FadeOutOverlay();
         ZoomOutCamera();
-        Camera.main.transform.position = Vector3.zero;
 
         firePaper.gameObject.SetActive(false);
 
@@ -251,6 +252,7 @@ public class GameController : Singleton<GameController>
             AdController.Instance.ShowInterstitial(() =>
             {
                 Instance.root.Clear();
+                Camera.main.transform.position = positionCameraOrigin;
                 Instance.LoadLevel(Data.CurrentLevel);
             });
         });
@@ -266,7 +268,7 @@ public class GameController : Singleton<GameController>
         {
             DOTween.KillAll();
             _isReplay = true;
-
+            Camera.main.transform.position = positionCameraOrigin;
             Instance.LoadLevel(Data.CurrentLevel);
         });
     }
