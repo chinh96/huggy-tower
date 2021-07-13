@@ -918,6 +918,9 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             }
                         default:
                             {
+                                SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
+                                SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
+                                SoundController.Instance.PlayOnce(soundType);
                                 attacks = new string[] { "AttackHit", "AttackHit2" };
                                 if (hasBloodEnemy)
                                 {
