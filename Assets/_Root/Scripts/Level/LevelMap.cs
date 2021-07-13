@@ -34,12 +34,17 @@ public class LevelMap : MonoBehaviour
     {
         if (DurationMoveCamera > 0)
         {
+            GameController.Instance.SetEnableLeanTouch(false);
             Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, slot.transform.position.y - 5, Camera.main.transform.position.z);
             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
             {
                 Camera.main.transform.DOMoveY(0, DurationMoveCamera).SetEase(Ease.Linear).OnComplete(() =>
                 {
                     GameController.Instance.ShowFighterOverlay();
+                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    {
+                        GameController.Instance.SetEnableLeanTouch(true);
+                    });
                 });
             });
         }
@@ -49,9 +54,13 @@ public class LevelMap : MonoBehaviour
     {
         if (hasNewVisitTower)
         {
+            GameController.Instance.SetEnableLeanTouch(false);
             float endValue = (visitTowers[indexVisitTower].transform.position.x + visitTowers[indexVisitTower + 1].transform.position.x) / 2;
             Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, Camera.main.transform.position.z);
-            Camera.main.transform.DOMoveX(0, 2).SetEase(Ease.Linear);
+            Camera.main.transform.DOMoveX(0, 1).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                GameController.Instance.SetEnableLeanTouch(true);
+            });
         }
     }
 

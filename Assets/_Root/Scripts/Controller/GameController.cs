@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
+using Lean.Touch;
 
 public class GameController : Singleton<GameController>
 {
@@ -24,6 +25,7 @@ public class GameController : Singleton<GameController>
     [SerializeField] private List<MoveOutAnimation> moveOutAnimations;
     [SerializeField] private FighterOverlay fighterOverlay;
     [SerializeField] private GameObject opacity;
+    [SerializeField] private LeanTouch LeanTouch;
 
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
@@ -44,6 +46,11 @@ public class GameController : Singleton<GameController>
 
     [NonSerialized] public bool IsOnboarding;
     [NonSerialized] public bool IsJapanBackground;
+
+    public void SetEnableLeanTouch(bool enable)
+    {
+        LeanTouch.enabled = enable;
+    }
 
     protected override void Awake()
     {
