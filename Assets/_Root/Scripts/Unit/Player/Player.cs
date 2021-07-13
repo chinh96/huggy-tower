@@ -370,6 +370,16 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                         PlayAttack();
                                     });
                                 });
+
+                                var cacheDamage = Damage;
+                                Damage -= _target.Damage;
+                                _target.TxtDamage.gameObject.SetActive(true);
+                                _target.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
+                                {
+                                    TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
+                                    TxtDamage.DOCounter(cacheDamage, Damage, 0);
+                                    _target.TxtDamage.gameObject.SetActive(false);
+                                });
                             }
                             else
                             {
@@ -635,23 +645,23 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                 if (_cacheTarget as EnemyGoblin || _cacheTarget as EnemyKappa)
                 {
-                    Damage -= _cacheTarget.Damage;
+                    // Damage -= _cacheTarget.Damage;
                 }
                 else
                 {
                     Damage += _cacheTarget.Damage;
+                    effectIncreaseDamge.gameObject.SetActive(true);
+                    effectIncreaseDamge.Play();
+
+                    _cacheTarget.TxtDamage.gameObject.SetActive(true);
+                    _cacheTarget.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
+                    {
+                        TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
+                        TxtDamage.DOCounter(cacheDamage, Damage, 0);
+                        _cacheTarget.TxtDamage.gameObject.SetActive(false);
+                    });
                 }
 
-                effectIncreaseDamge.gameObject.SetActive(true);
-                effectIncreaseDamge.Play();
-
-                _cacheTarget.TxtDamage.gameObject.SetActive(true);
-                _cacheTarget.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
-                {
-                    TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
-                    TxtDamage.DOCounter(cacheDamage, Damage, 0);
-                    _cacheTarget.TxtDamage.gameObject.SetActive(false);
-                });
             }
         }
     }
