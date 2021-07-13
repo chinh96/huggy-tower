@@ -36,6 +36,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private ParticleSystem effectHitWall;
     [SerializeField] private ParticleSystem effectPickSword;
     [SerializeField] private ParticleSystem effectHit;
+    [SerializeField] private ParticleSystem effectHitKappa;
     [SerializeField] private ParticleSystem effectFingerPress;
     [SerializeField] private ParticleSystem effectThunder1;
     [SerializeField] private ParticleSystem effectThunder2;
@@ -727,8 +728,17 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     private void BeingAttackedCallback()
     {
-        effectHit.gameObject.SetActive(true);
-        effectHit.Play();
+        if (_target as EnemyKappa)
+        {
+            effectHitKappa.gameObject.SetActive(true);
+            effectHitKappa.Play();
+        }
+        else
+        {
+            effectHit.gameObject.SetActive(true);
+            effectHit.Play();
+        }
+
         var cacheDamage = damage;
         damage = 0;
         TxtDamage.DOCounter(cacheDamage, damage, 0.5f).OnComplete(() => TxtDamage.text = damage.ToString());
