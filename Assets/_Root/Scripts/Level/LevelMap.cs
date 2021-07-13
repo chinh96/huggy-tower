@@ -38,7 +38,7 @@ public class LevelMap : MonoBehaviour
             Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, slot.transform.position.y - 5, Camera.main.transform.position.z);
             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
             {
-                Camera.main.transform.DOMoveY(0, DurationMoveCamera).SetEase(Ease.Linear).OnComplete(() =>
+                Camera.main.transform.DOMoveY(GameController.Instance.positionCameraOrigin.y, DurationMoveCamera).SetEase(Ease.Linear).OnComplete(() =>
                 {
                     GameController.Instance.ShowFighterOverlay();
                     DOTween.Sequence().AppendInterval(2).AppendCallback(() =>
@@ -57,7 +57,7 @@ public class LevelMap : MonoBehaviour
             GameController.Instance.SetEnableLeanTouch(false);
             float endValue = (visitTowers[indexVisitTower].transform.position.x + visitTowers[indexVisitTower + 1].transform.position.x) / 2;
             Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, Camera.main.transform.position.z);
-            Camera.main.transform.DOMoveX(0, 1).SetEase(Ease.Linear).OnComplete(() =>
+            Camera.main.transform.DOMoveX(GameController.Instance.positionCameraOrigin.x, 1).SetEase(Ease.Linear).OnComplete(() =>
             {
                 GameController.Instance.SetEnableLeanTouch(true);
             });

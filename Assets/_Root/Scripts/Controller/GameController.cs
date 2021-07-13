@@ -38,7 +38,6 @@ public class GameController : Singleton<GameController>
     private bool _isReplay;
     private bool isSlice;
     private bool isZoomIn;
-    private Vector3 positionCameraOrigin;
 
     public LeanGameObjectPool poolArrow;
     public LevelRoot Root => root;
@@ -47,6 +46,7 @@ public class GameController : Singleton<GameController>
 
     [NonSerialized] public bool IsOnboarding;
     [NonSerialized] public bool IsJapanBackground;
+    [NonSerialized] public Vector3 positionCameraOrigin;
 
     public void SetEnableLeanTouch(bool enable)
     {
@@ -106,6 +106,7 @@ public class GameController : Singleton<GameController>
 
     public async void LoadLevel(int fakeIndex)
     {
+        AdController.Instance.JustShowReward = false;
         AdController.Instance.Request();
 
         MoveInAnim();
