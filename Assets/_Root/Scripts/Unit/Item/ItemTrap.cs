@@ -34,6 +34,7 @@ public class ItemTrap : Item
                     skeleton.Play("Attack", false);
                     DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                     {
+                        Destroy(gameObject);
                         DecreaseDamage(player, damage);
                     });
                     SoundController.Instance.PlayOnce(SoundType.Trap);

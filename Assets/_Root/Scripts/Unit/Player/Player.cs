@@ -40,6 +40,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private ParticleSystem effectThunder1;
     [SerializeField] private ParticleSystem effectThunder2;
     [SerializeField] private ParticleSystem effectBomb;
+    [SerializeField] private ParticleSystem effectTornado;
+    [SerializeField] private ParticleSystem effectHitEnemy;
     [SerializeField] private GameObject shuriken;
 
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
@@ -798,10 +800,26 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.SwordJapan:
                 {
                     skeleton.Play("AttackKiemJapan", false);
+
                     DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                     {
                         SoundController.Instance.PlayOnce(SoundType.HeroCut3);
                         PlayBloodEnemy();
+
+                        if (hasBloodEnemy)
+                        {
+                            DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                            {
+                                ParticleSystem tornado = Instantiate(effectTornado, transform.parent);
+                                tornado.gameObject.SetActive(true);
+                                tornado.Play();
+                                tornado.transform.position = transform.position;
+                                tornado.transform.DOMoveX(_target.transform.position.x, 1).OnComplete(() =>
+                                {
+                                    Destroy(tornado.gameObject);
+                                });
+                            });
+                        }
                     });
                     break;
                 }
@@ -861,6 +879,16 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         default:
                             {
                                 attacks = new string[] { "AttackHit", "AttackHit2" };
+                                if (hasBloodEnemy)
+                                {
+                                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                                    {
+                                        ParticleSystem hitEnemy = Instantiate(effectHitEnemy, transform.parent);
+                                        hitEnemy.transform.position = _target.transform.position + new Vector3(0, 1, 0);
+                                        hitEnemy.gameObject.SetActive(true);
+                                        hitEnemy.Play();
+                                    });
+                                }
                                 break;
                             }
                     }
@@ -1016,7 +1044,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 });
                 break;
             case ItemType.Trap:
-                skeleton.Play("Die2", false);
+                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                {
+                    skeleton.Play("Die2", false);
+                });
                 break;
             case ItemType.Bomb:
                 skeleton.Play("DieFire", false);
