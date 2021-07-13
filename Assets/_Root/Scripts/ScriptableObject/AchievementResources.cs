@@ -102,6 +102,34 @@ public class AchievementResources : ScriptableObject
             return false;
         }
     }
+
+    public void CheckCompleteCastle()
+    {
+        if (ResourcesController.Universe.WorldCurrent.IsComplete)
+        {
+            switch (ResourcesController.Universe.WorldCurrent.WorldType)
+            {
+                case WorldType.Earth:
+                    IncreaseByType(AchievementType.CompleteEarth);
+                    break;
+                case WorldType.Desert:
+                    IncreaseByType(AchievementType.CompleteDesert);
+                    break;
+                case WorldType.Iceland:
+                    IncreaseByType(AchievementType.CompleteIceland);
+                    break;
+                case WorldType.Inferno:
+                    IncreaseByType(AchievementType.CompleteInferno);
+                    break;
+                case WorldType.Jade:
+                    IncreaseByType(AchievementType.CompleteJade);
+                    break;
+                case WorldType.Olympus:
+                    IncreaseByType(AchievementType.CompleteOlympus);
+                    break;
+            }
+        }
+    }
 }
 
 [Serializable]

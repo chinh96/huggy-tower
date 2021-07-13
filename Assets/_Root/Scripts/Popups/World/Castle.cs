@@ -123,40 +123,7 @@ public class Castle : MonoBehaviour
         EventController.CastleBuilded(index);
         Reset();
 
-        CheckAchievementDailyQuest();
-    }
-
-    public void CheckAchievementDailyQuest()
-    {
-        if (worldCurrent.IsComplete)
-        {
-            switch (worldCurrent.WorldType)
-            {
-                case WorldType.Earth:
-                    ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteEarth);
-                    ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteEarth);
-                    break;
-                case WorldType.Desert:
-                    ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteDesert);
-                    ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteDesert);
-                    break;
-                case WorldType.Iceland:
-                    ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteIceland);
-                    ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteIceland);
-                    break;
-                case WorldType.Inferno:
-                    ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteInferno);
-                    ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteInferno);
-                    break;
-                case WorldType.Jade:
-                    ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteJade);
-                    ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteJade);
-                    break;
-                case WorldType.Olympus:
-                    ResourcesController.Achievement.IncreaseByType(AchievementType.CompleteOlympus);
-                    ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.CompleteOlympus);
-                    break;
-            }
-        }
+        ResourcesController.Achievement.CheckCompleteCastle();
+        ResourcesController.DailyQuest.CheckCompleteCastle();
     }
 }
