@@ -344,8 +344,37 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         if (_flagAttack)
                         {
                             hasBloodEnemy = true;
-                            PlayAttack();
                             _target.OnAttack(damage, null);
+                            if (_target as EnemyGoblin || _target as EnemyKappa)
+                            {
+                                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                                {
+                                    if (_target as EnemyKappa)
+                                    {
+                                        effectHitKappa.gameObject.SetActive(true);
+                                        effectHitKappa.Play();
+                                    }
+                                    else
+                                    {
+                                        ParticleSystem bomb = Instantiate(effectBomb, transform.parent);
+                                        bomb.transform.position = transform.position;
+                                        bomb.gameObject.SetActive(true);
+                                        bomb.Play();
+                                        SoundController.Instance.PlayOnce(SoundType.BombGoblin);
+                                    }
+
+                                    skeleton.Play("Die2", false);
+                                    SoundController.Instance.PlayOnce(SoundType.GoblinKappaAttack);
+                                    DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
+                                    {
+                                        PlayAttack();
+                                    });
+                                });
+                            }
+                            else
+                            {
+                                PlayAttack();
+                            }
                         }
                         else
                         {
@@ -623,15 +652,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     TxtDamage.DOCounter(cacheDamage, Damage, 0);
                     _cacheTarget.TxtDamage.gameObject.SetActive(false);
                 });
-            }
-
-            if (_target as EnemyGoblin)
-            {
-                ParticleSystem bomb = Instantiate(effectBomb, transform.parent);
-                bomb.transform.position = transform.position;
-                bomb.gameObject.SetActive(true);
-                bomb.Play();
-                SoundController.Instance.PlayOnce(SoundType.BombGoblin);
             }
         }
     }

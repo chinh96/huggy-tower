@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using Spine.Unity;
 #if UNITY_EDITOR
@@ -60,6 +61,11 @@ public class EnemyGoblin : Unit, IAnim
         skeleton.Play("Die", false);
 
         SoundController.Instance.PlayOnce(SoundType.EnemyGoblinDie);
+
+        DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+        {
+            gameObject.SetActive(false);
+        });
     }
 
     public void PlayWin(bool isLoop) { }
