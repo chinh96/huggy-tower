@@ -40,6 +40,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private ParticleSystem effectThunder1;
     [SerializeField] private ParticleSystem effectThunder2;
     [SerializeField] private ParticleSystem effectBomb;
+    [SerializeField] private ParticleSystem effectTornado;
     [SerializeField] private GameObject shuriken;
 
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
@@ -798,10 +799,20 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.SwordJapan:
                 {
                     skeleton.Play("AttackKiemJapan", false);
+
                     DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                     {
                         SoundController.Instance.PlayOnce(SoundType.HeroCut3);
                         PlayBloodEnemy();
+
+                        ParticleSystem tornado = Instantiate(effectTornado, transform.parent);
+                        tornado.gameObject.SetActive(true);
+                        tornado.Play();
+                        tornado.transform.position = transform.position;
+                        tornado.transform.DOMoveX(_target.transform.position.x, 1).OnComplete(() =>
+                        {
+                            Destroy(tornado.gameObject);
+                        });
                     });
                     break;
                 }
