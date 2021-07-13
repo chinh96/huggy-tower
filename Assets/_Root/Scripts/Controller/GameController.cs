@@ -368,7 +368,6 @@ public class GameController : Singleton<GameController>
     {
         Player.TxtDamage.gameObject.SetActive(false);
 
-        zoomCameraPositionOrigin = Camera.main.transform.position;
         Vector2 endValue = new Vector2(Player.transform.position.x, Player.transform.position.y) + zoomOffset;
         Camera.main.transform.DOMove(endValue, zoomCameraDuration);
 
@@ -382,7 +381,6 @@ public class GameController : Singleton<GameController>
     {
         if (isZoomIn)
         {
-            Camera.main.transform.position = zoomCameraPositionOrigin;
             Camera.main.orthographicSize = zoomOrthoSizeOrigin;
 
             isZoomIn = false;
