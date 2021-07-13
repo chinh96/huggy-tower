@@ -41,7 +41,7 @@ public class LevelMap : MonoBehaviour
                 Camera.main.transform.DOMoveY(0, DurationMoveCamera).SetEase(Ease.Linear).OnComplete(() =>
                 {
                     GameController.Instance.ShowFighterOverlay();
-                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    DOTween.Sequence().AppendInterval(2).AppendCallback(() =>
                     {
                         GameController.Instance.SetEnableLeanTouch(true);
                     });

@@ -110,8 +110,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278193663
-  m_fontColor: {r: 1, g: 0.04995039, b: 0, a: 1}
+    rgba: 4293984353
+  m_fontColor: {r: 0.38039216, g: 0, b: 0.94509804, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -235,8 +235,8 @@ GameObject:
   - component: {fileID: 7842486215880441491}
   - component: {fileID: 7842486215880441488}
   - component: {fileID: 4606286200692833404}
-  - component: {fileID: 6494169447449441732}
   - component: {fileID: 1146077129256069676}
+  - component: {fileID: 4140819091286589022}
   m_Layer: 8
   m_Name: EnemyKappa
   m_TagString: Untagged
@@ -355,26 +355,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onAttack: OnBullet
   endAttack: EndAttack
---- !u!114 &6494169447449441732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7842486215880441493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee04ecb96942ecb438ade9ea8a8fc308, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 0
-  txtDamage: {fileID: 235115582790132306}
-  damage: 0
-  ColorBlood: {r: 0.16862746, g: 0.69411767, b: 0.23137257, a: 1}
-  skeleton: {fileID: 7842486215880441491}
-  rigid: {fileID: 7842486215880441488}
-  coll2D: {fileID: 7003458295348461456}
-  attackHandle: {fileID: 4606286200692833404}
 --- !u!223 &1146077129256069676
 Canvas:
   m_ObjectHideFlags: 0
@@ -396,6 +376,26 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 5
   m_TargetDisplay: 0
+--- !u!114 &4140819091286589022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7842486215880441493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3afe0e821cca7543bd061d5545997c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  txtDamage: {fileID: 235115582790132306}
+  damage: 0
+  ColorBlood: {r: 0.18039216, g: 0.7843138, b: 0.25490198, a: 1}
+  skeleton: {fileID: 7842486215880441491}
+  rigid: {fileID: 7842486215880441488}
+  coll2D: {fileID: 7003458295348461456}
+  attackHandle: {fileID: 4606286200692833404}
 --- !u!1 &7910608366492990824
 GameObject:
   m_ObjectHideFlags: 0

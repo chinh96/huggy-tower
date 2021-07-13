@@ -79,7 +79,7 @@ public class EnemyKappaEditor : UnityEditor.Editor
     {
         base.OnInspectorGUI();
 
-        _enemy.TxtDamage.text = _enemy.Damage.ToString();
+        _enemy.TxtDamage.text = $"-{_enemy.Damage.ToString()}";
 
         serializedObject.Update();
         serializedObject.ApplyModifiedProperties();

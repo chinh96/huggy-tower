@@ -603,7 +603,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             {
                 _cacheTarget.OnBeingAttacked();
 
-                if (_cacheTarget as EnemyGoblin)
+                if (_cacheTarget as EnemyGoblin || _cacheTarget as EnemyKappa)
                 {
                     Damage -= _cacheTarget.Damage;
                 }
