@@ -61,6 +61,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     private bool _dragValidateRoomFlag;
     private List<string> swordNames = new List<string>();
     private bool hasKey = false;
+    private LevelMap levelMap => GameController.Instance.Root.LevelMap;
+    private bool hasBloodEnemy;
 
     private void Start()
     {
@@ -88,7 +90,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         bool check = false;
         int indexSlot = 0;
-        var tower = GameController.Instance.Root.LevelMap.visitTower;
+        var tower = levelMap.visitTower;
         for (int i = 0; i < tower.slots.Count; i++)
         {
             check = tower.slots[i].GetComponent<RectTransform>().Contains(Input.mousePosition, Camera.main);
@@ -115,7 +117,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             {
                 _dragValidateRoomFlag = true;
 
-                var temp = GameController.Instance.Root.LevelMap.visitTower.slots[result.Item2];
+                var temp = levelMap.visitTower.slots[result.Item2];
                 temp.UpdateStatusSelectRoom(true, true);
             }
         }
@@ -124,7 +126,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             if (_dragValidateRoomFlag)
             {
                 _dragValidateRoomFlag = false;
-                GameController.Instance.Root.LevelMap.ResetSelectVisitTower();
+                levelMap.ResetSelectVisitTower();
             }
         }
     }
@@ -188,14 +190,14 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         }
 
         dragTranslate.DragTranslateFlag = false;
-        GameController.Instance.Root.LevelMap.ResetSelectVisitTower();
+        levelMap.ResetSelectVisitTower();
         var checkArea = CheckCorrectArea();
         if (checkArea.Item1)
         {
             RoomTower cache = null;
-            _parentRoom = GameController.Instance.Root.LevelMap.visitTower.slots[checkArea.Item2];
+            _parentRoom = levelMap.visitTower.slots[checkArea.Item2];
             var currentRoom = transform.parent.GetComponent<RoomTower>();
-            if (currentRoom != null && GameController.Instance.Root.LevelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom() && !currentRoom.IsContaintItem() && !currentRoom.IsContaintPrincess())
+            if (currentRoom != null && levelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom() && !currentRoom.IsContaintItem() && !currentRoom.IsContaintPrincess())
             {
                 cache = currentRoom;
             }
@@ -206,15 +208,15 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
             if (cache != null)
             {
-                GameController.Instance.Root.LevelMap.visitTower.RemoveSlot(cache);
+                levelMap.visitTower.RemoveSlot(cache);
 
-                GameController.Instance.Root.LevelMap.homeTower.AddSlot();
+                levelMap.homeTower.AddSlot();
             }
 
             if (!FirstTurn) FirstTurn = true;
 
-            GameController.Instance.Root.LevelMap.visitTower.RefreshRoom();
-            GameController.Instance.Root.LevelMap.homeTower.RefreshRoom();
+            levelMap.visitTower.RefreshRoom();
+            levelMap.homeTower.RefreshRoom();
             OnDeSelected();
             leanSelectableByFinger.Deselect();
 
@@ -242,7 +244,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         _countdownAttack = countdownAttack;
     }
 
-    private void StartSearchingTurn() { Turn = ETurn.Searching; }
+    public void StartSearchingTurn() { Turn = ETurn.Searching; }
 
     public void StartMoveToItemTurn() { Turn = ETurn.MoveToItem; }
 
@@ -263,7 +265,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     private void AddJumpAnimation()
     {
-        foreach (var slot in GameController.Instance.Root.LevelMap.visitTower.slots)
+        foreach (var slot in levelMap.visitTower.slots)
         {
             foreach (var item in slot.items)
             {
@@ -338,11 +340,13 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         _flagAttack = damage > _target.Damage;
                         if (_flagAttack)
                         {
+                            hasBloodEnemy = true;
                             PlayAttack();
                             _target.OnAttack(damage, null);
                         }
                         else
                         {
+                            hasBloodEnemy = false;
                             PlayAttack();
                             _target.OnAttack(damage, BeingAttackedCallback);
                         }
@@ -403,45 +407,59 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 Turn = ETurn.MoveToItem;
                 DOTween.Kill(transform);
 
-                if (_itemTarget.Type == EUnitType.Item)
+                switch (_itemTarget.Type)
                 {
-                    var distance = Math.Abs((_itemTarget.transform.localPosition.x - transform.localPosition.x));
-                    if (distance >= 110)
-                    {
-                        PLayMove(true);
-                        float endValue = 0;
-                        switch (_itemTarget.EquipType)
+                    case EUnitType.Item:
                         {
-                            case ItemType.Sword:
-                                endValue = 25;
-                                break;
-                            case ItemType.BrokenBrick:
-                                endValue = -40;
-                                break;
+                            var distance = Math.Abs((_itemTarget.transform.localPosition.x - transform.localPosition.x));
+                            if (distance >= 110)
+                            {
+                                PLayMove(true);
+                                float endValue = 0;
+                                switch (_itemTarget.EquipType)
+                                {
+                                    case ItemType.Sword:
+                                        endValue = 25;
+                                        break;
+                                    case ItemType.BrokenBrick:
+                                        endValue = -40;
+                                        break;
+                                }
+                                transform.DOLocalMoveX(endValue, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
+                            }
+                            else
+                            {
+                                UseItem();
+                            }
+
+                            break;
                         }
-                        transform.DOLocalMoveX(endValue, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
-                    }
-                    else
-                    {
-                        UseItem();
-                    }
-                }
-                else if (_itemTarget.Type == EUnitType.Gem)
-                {
-                    var distance = Math.Abs((_itemTarget.transform.localPosition.x - cacheCollider.transform.localPosition.x));
-                    if (distance >= 110)
-                    {
-                        PLayMove(true);
-                        transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem(ELevelCondition.CollectGold));
-                    }
-                    else
-                    {
-                        UseItem(ELevelCondition.CollectGold);
-                    }
+
+                    case EUnitType.Gem:
+                        {
+                            var distance = Math.Abs((_itemTarget.transform.localPosition.x - cacheCollider.transform.localPosition.x));
+                            if (distance >= 110)
+                            {
+                                PLayMove(true);
+                                transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem(ELevelCondition.CollectGold));
+                            }
+                            else
+                            {
+                                UseItem(ELevelCondition.CollectGold);
+                            }
+
+                            break;
+                        }
                 }
 
                 void UseItem(ELevelCondition condition = ELevelCondition.CollectChest)
                 {
+                    if (_itemTarget as ItemTeleport != null)
+                    {
+                        _itemTarget.Collect(this);
+                        return;
+                    }
+
                     if (!hasKey && _itemTarget as ItemChest != null)
                     {
                         Turn = ETurn.Drag;
@@ -455,40 +473,48 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     float timeDelay = _itemTarget.EquipType == ItemType.BrokenBrick ? .5f : 1.2f;
                     DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
-                        if (GameController.Instance.Root.LevelMap.condition == condition)
+                        if (levelMap.condition == condition)
                         {
-                            if (condition == ELevelCondition.CollectChest)
+                            switch (condition)
                             {
-                                if (_itemTarget as ItemChest != null)
-                                {
+                                case ELevelCondition.CollectChest:
+                                    if (_itemTarget as ItemChest != null)
+                                    {
+                                        DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+                                        {
+                                            GameController.Instance.OnWinLevel();
+                                        });
+                                        PlayWin(true);
+                                    }
+                                    else
+                                    {
+                                        StartSerching();
+                                    }
+                                    break;
+                                default:
                                     DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                     {
                                         GameController.Instance.OnWinLevel();
                                     });
                                     PlayWin(true);
-                                }
-                                else
-                                {
-                                    StartSearchingTurn();
-                                    PlayIdle(true);
-                                }
-
-                            }
-                            else
-                            {
-                                DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
-                                {
-                                    GameController.Instance.OnWinLevel();
-                                });
-                                PlayWin(true);
+                                    break;
                             }
                         }
                         else
                         {
-                            StartSearchingTurn();
-                            PlayIdle(true);
+                            StartSerching();
                         }
                     });
+
+                    void StartSerching()
+                    {
+                        StartSearchingTurn();
+                        PlayIdle(true);
+                        if (levelMap.visitTower.IsClearTower() && levelMap.hasNewVisitTower)
+                        {
+                            levelMap.ChangeToNewVisitTower();
+                        }
+                    }
 
                     timeDelay = .5f;
                     switch (_itemTarget.EquipType)
@@ -598,8 +624,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
             if (_target as EnemyGoblin)
             {
-                effectBomb.gameObject.SetActive(true);
-                effectBomb.Play();
+                ParticleSystem bomb = Instantiate(effectBomb, transform.parent);
+                bomb.transform.position = transform.position;
+                bomb.gameObject.SetActive(true);
+                bomb.Play();
                 SoundController.Instance.PlayOnce(SoundType.BombGoblin);
             }
         }
@@ -647,7 +675,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         PlayIdle(true);
 
-        var room = GameController.Instance.Root.LevelMap.visitTower.RoomContainPlayer(this);
+        var room = levelMap.visitTower.RoomContainPlayer(this);
         if (room != null && !room.IsClearEnemyInRoom() || room.IsContaintItem())
         {
             StartSearchingTurn();
@@ -656,10 +684,17 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         }
 
         StartDragTurn();
-        if (GameController.Instance.Root.LevelMap.visitTower.IsClearTower() && IsWinCondition(GameController.Instance.Root.LevelMap.condition))
+        if (levelMap.visitTower.IsClearTower())
         {
-            PlayWin(true);
-            GameController.Instance.OnWinLevel();
+            if (levelMap.hasNewVisitTower)
+            {
+                levelMap.ChangeToNewVisitTower();
+            }
+            else if (IsWinCondition(levelMap.condition))
+            {
+                PlayWin(true);
+                GameController.Instance.OnWinLevel();
+            }
         }
     }
 
@@ -730,35 +765,47 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         }
     }
 
+    private void PlayBloodEnemy(string attack = "")
+    {
+        if (!hasBloodEnemy) return;
+
+        float timeDelay = attack == "AttackSword" ? .8f : .5f;
+        if (!(_target as EnemyGhost))
+        {
+            DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
+            {
+                var main = effectBlood.main;
+                main.startColor = _target.ColorBlood;
+
+                main = effectBlood2.main;
+                main.startColor = _target.ColorBlood;
+
+                main = effectBlood3.main;
+                main.startColor = _target.ColorBlood;
+
+                effectBlood.transform.position = _target.transform.position;
+                effectBlood.transform.localPosition += new Vector3(0, 40, 0);
+                effectBlood.gameObject.SetActive(true);
+                effectBlood.Play();
+            });
+        }
+    }
+
     public void PlayAttack()
     {
-        void PlayBloodEnemy(string attack = "")
-        {
-            float timeDelay = attack == "AttackSword" ? .8f : .5f;
-            if (!(_target as EnemyGhost))
-            {
-                DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
-                {
-                    var main = effectBlood.main;
-                    main.startColor = _target.ColorBlood;
-
-                    main = effectBlood2.main;
-                    main.startColor = _target.ColorBlood;
-
-                    main = effectBlood3.main;
-                    main.startColor = _target.ColorBlood;
-
-                    effectBlood.transform.position = _target.transform.position;
-                    effectBlood.transform.localPosition += new Vector3(0, 40, 0);
-                    effectBlood.gameObject.SetActive(true);
-                    effectBlood.Play();
-                });
-            }
-        }
         switch (EquipType)
         {
-            case ItemType.Sword:
             case ItemType.SwordJapan:
+                {
+                    skeleton.Play("AttackKiemJapan", false);
+                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    {
+                        SoundController.Instance.PlayOnce(SoundType.HeroCut3);
+                        PlayBloodEnemy();
+                    });
+                    break;
+                }
+            case ItemType.Sword:
                 {
                     string[] attacks = { "Attack", "AttackSword", "AttackSword2" };
                     string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
@@ -821,33 +868,41 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
                     skeleton.Play(attack, false);
 
-                    if (EquipType == ItemType.Axe)
+                    switch (EquipType)
                     {
-                        float delay = .7f;
-                        ParticleSystem particlePrefab = effectThunder1;
-                        Vector3 offset = Vector3.zero;
-
-                        if (attack == "AttackAxe2")
-                        {
-                            delay = .3f;
-                            particlePrefab = effectThunder2;
-                            offset = new Vector3(0, .5f, 0);
-                        }
-
-                        DOTween.Sequence().AppendInterval(delay).AppendCallback(() =>
-                        {
-                            ParticleSystem particle = Instantiate(particlePrefab);
-                            particle.transform.position = _target.transform.position + offset;
-
-                            if (attack == "AttackAxe")
+                        case ItemType.Axe:
                             {
-                                SoundController.Instance.PlayOnce(SoundType.Axe1);
+                                float delay = .7f;
+                                ParticleSystem particlePrefab = effectThunder1;
+                                Vector3 offset = Vector3.zero;
+
+                                if (attack == "AttackAxe2")
+                                {
+                                    delay = .3f;
+                                    particlePrefab = effectThunder2;
+                                    offset = new Vector3(0, .5f, 0);
+                                }
+
+                                DOTween.Sequence().AppendInterval(delay).AppendCallback(() =>
+                                {
+                                    ParticleSystem particle = Instantiate(particlePrefab);
+                                    particle.transform.position = _target.transform.position + offset;
+
+                                    if (attack == "AttackAxe")
+                                    {
+                                        SoundController.Instance.PlayOnce(SoundType.Axe1);
+                                    }
+                                    else
+                                    {
+                                        SoundController.Instance.PlayOnce(SoundType.Axe2);
+                                    }
+                                });
+                                break;
                             }
-                            else
-                            {
-                                SoundController.Instance.PlayOnce(SoundType.Axe2);
-                            }
-                        });
+
+                        case ItemType.Knife:
+                            PlayBloodEnemy(attack);
+                            break;
                     }
 
                     break;

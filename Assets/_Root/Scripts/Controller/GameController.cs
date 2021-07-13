@@ -23,6 +23,7 @@ public class GameController : Singleton<GameController>
     [SerializeField] private List<GameObject> backgrounds;
     [SerializeField] private List<MoveOutAnimation> moveOutAnimations;
     [SerializeField] private FighterOverlay fighterOverlay;
+    [SerializeField] private GameObject opacity;
 
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
@@ -104,6 +105,7 @@ public class GameController : Singleton<GameController>
 
         FadeOutOverlay();
         ZoomOutCamera();
+        Camera.main.transform.position = Vector3.zero;
 
         firePaper.gameObject.SetActive(false);
 
@@ -206,6 +208,8 @@ public class GameController : Singleton<GameController>
         {
             AnalyticController.Level20StartFunnel();
         }
+
+        opacity.SetActive(Root.LevelMap.DurationMoveCamera > 0);
     }
 
     public void UpdateDislayCurrentLevel(int level, ELevelCondition condition)
