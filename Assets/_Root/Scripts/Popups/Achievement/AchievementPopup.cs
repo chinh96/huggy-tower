@@ -20,8 +20,10 @@ public class AchievementPopup : Popup
 
     public void Init(AchievementDailyQuestPopup achievementDailyQuestPopup)
     {
-        AfterInstantiate();
+        achievementItems.Clear();
+        content.Clear();
         this.achievementDailyQuestPopup = achievementDailyQuestPopup;
+        AfterInstantiate();
     }
 
     public void Show()

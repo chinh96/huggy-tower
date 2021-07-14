@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,14 +10,6 @@ public class AchievementDailyQuestPopup : Popup
     [SerializeField] private GameObject achievementActiveButton;
     [SerializeField] private GameObject dailyQuestActiveButton;
 
-    protected override void AfterInstantiate()
-    {
-        base.AfterInstantiate();
-
-        achievementPopup.Init(this);
-        dailyQuestPopup.Init();
-    }
-
     protected override void BeforeShow()
     {
         base.BeforeShow();
@@ -24,8 +17,14 @@ public class AchievementDailyQuestPopup : Popup
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.BuySkin);
         ResourcesController.Achievement.IncreaseByType(AchievementType.BuySkin);
 
+        ResourcesController.DailyQuest.Reset();
+
+        achievementPopup.Init(this);
+        dailyQuestPopup.Init();
+
         achievementPopup.Show();
         dailyQuestPopup.Show();
+
         achievementPopup.UpdateProgress();
 
         OnClickDailyQuestButton();

@@ -13,6 +13,8 @@ public class DailyQuestPopup : Popup
 
     public void Init()
     {
+        dailyQuestItems.Clear();
+        content.Clear();
         AfterInstantiate();
     }
 
