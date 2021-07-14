@@ -93,7 +93,7 @@ public class AchievementResources : ScriptableObject
         {
             foreach (var achievement in AchievementDatas)
             {
-                if (achievement.NumberCurrent >= achievement.NumberTarget)
+                if (achievement.HasNoti)
                 {
                     return true;
                 }
@@ -144,17 +144,19 @@ public class AchievementData
     public string Number => (NumberCurrent < NumberTarget ? NumberCurrent : NumberTarget) + "/" + NumberTarget;
     public string Title => Text.Replace("{}", NumberTarget.ToString());
     public int NumberTemp;
-    public int NumberCurrent
-    {
-        get { Data.AchievementId = Id; return Data.AchievementNumberCurrent; }
-
-        set { Data.AchievementId = Id; Data.AchievementNumberCurrent = value; }
-    }
+    public bool HasNoti => IsUnlocked && !IsClaimed;
+    public bool IsUnlocked => NumberCurrent >= NumberTarget;
     public bool IsClaimed
     {
         get { Data.IdCheckUnlocked = Id + "Claimed"; return Data.IsUnlocked; }
 
         set { Data.IdCheckUnlocked = Id + "Claimed"; Data.IsUnlocked = value; }
+    }
+    public int NumberCurrent
+    {
+        get { Data.AchievementId = Id; return Data.AchievementNumberCurrent; }
+
+        set { Data.AchievementId = Id; Data.AchievementNumberCurrent = value; }
     }
 }
 
