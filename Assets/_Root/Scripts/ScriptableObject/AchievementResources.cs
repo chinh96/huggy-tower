@@ -27,6 +27,16 @@ public class AchievementResources : ScriptableObject
     {
         switch (type)
         {
+            case AchievementType.CompleteEarth:
+            case AchievementType.CompleteDesert:
+            case AchievementType.CompleteIceland:
+            case AchievementType.CompleteInferno:
+            case AchievementType.CompleteJade:
+            case AchievementType.CompleteOlympus:
+            case AchievementType.JoinGroupFacebookSuccessfully:
+            case AchievementType.ClaimDailyReward:
+                data.NumberCurrent += value;
+                break;
             case AchievementType.PlayToLevel:
                 data.NumberCurrent = Data.CurrentLevel;
                 break;
@@ -34,20 +44,13 @@ public class AchievementResources : ScriptableObject
                 data.NumberCurrent = ResourcesController.Hero.SkinsIsUnlocked.Count;
                 break;
             default:
-                if (GameController.Instance == null)
+                if (data.NumberTemp == 0)
                 {
-                    data.NumberCurrent += value;
+                    data.NumberTemp = data.NumberCurrent + value;
                 }
                 else
                 {
-                    if (data.NumberTemp == 0)
-                    {
-                        data.NumberTemp = data.NumberCurrent + value;
-                    }
-                    else
-                    {
-                        data.NumberTemp += value;
-                    }
+                    data.NumberTemp += value;
                 }
                 break;
         }
