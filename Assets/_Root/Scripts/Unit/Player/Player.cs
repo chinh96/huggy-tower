@@ -461,6 +461,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 switch (_itemTarget.EquipType)
                                 {
                                     case ItemType.Sword:
+                                    case ItemType.SwordBlood:
                                         endValue = 25;
                                         break;
                                     case ItemType.BrokenBrick:
@@ -562,6 +563,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     switch (_itemTarget.EquipType)
                     {
                         case ItemType.Sword:
+                        case ItemType.SwordBlood:
                             timeDelay = .2f;
                             break;
                         case ItemType.Bow:
@@ -880,6 +882,17 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     PlayBloodEnemy(attack);
                     break;
                 }
+            case ItemType.SwordBlood:
+                skeleton.Play("SwordBlood", false);
+                DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                {
+                    SoundController.Instance.PlayOnce(SoundType.HeroCut3);
+                });
+                DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                {
+                    PlayBloodEnemy();
+                });
+                break;
             case ItemType.Shuriken:
                 skeleton.Play("Shuriken", false);
                 SoundController.Instance.PlayOnce(SoundType.Knife);
@@ -988,7 +1001,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     public void PLayMove(bool isLoop)
     {
-        if (EquipType == ItemType.Sword)
+        if (EquipType == ItemType.Sword || EquipType == ItemType.SwordBlood || EquipType == ItemType.SwordJapan)
         {
             skeleton.Play("RunKiem", true);
         }
@@ -1034,6 +1047,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Axe:
             case ItemType.Shuriken:
             case ItemType.SwordJapan:
+            case ItemType.SwordBlood:
                 skeleton.Play("Pick", false);
                 SoundController.Instance.PlayOnce(SoundType.HeroPickSword);
                 break;
@@ -1102,7 +1116,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 });
                 break;
             default:
-                if (EquipType == ItemType.Sword)
+                if (EquipType == ItemType.Sword || EquipType == ItemType.SwordBlood || EquipType == ItemType.SwordJapan)
                 {
                     skeleton.Play("Open1", false);
                 }

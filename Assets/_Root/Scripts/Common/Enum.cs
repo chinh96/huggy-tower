@@ -69,7 +69,8 @@ public enum ItemType
     Axe,
     Lock,
     SwordJapan,
-    Shuriken
+    Shuriken,
+    SwordBlood
 }
 
 public enum ETurn
