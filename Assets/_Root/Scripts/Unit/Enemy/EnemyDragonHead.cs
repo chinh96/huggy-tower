@@ -83,7 +83,7 @@ public class EnemyDragonHead : Unit, IAnim
         if (equipType == ItemType.Sword || equipType == ItemType.SwordBlood)
         {
             skeleton.Play("Die2", false);
-            DOTween.Sequence().AppendInterval(.85f).AppendCallback(() =>
+            DOTween.Sequence().AppendInterval(.75f).AppendCallback(() =>
             {
                 skeleton.DOFade(0, .2f);
             });

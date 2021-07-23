@@ -829,7 +829,14 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 main.startColor = _target.ColorBlood;
 
                 effectBlood.transform.position = _target.transform.position;
-                effectBlood.transform.localPosition += new Vector3(0, 40, 0);
+                if (_target as EnemyDragonHead)
+                {
+                    effectBlood.transform.localPosition += new Vector3(-250, 400, 0);
+                }
+                else
+                {
+                    effectBlood.transform.localPosition += new Vector3(0, 40, 0);
+                }
                 effectBlood.gameObject.SetActive(true);
                 effectBlood.Play();
             });
