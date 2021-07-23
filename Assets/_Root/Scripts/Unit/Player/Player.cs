@@ -655,6 +655,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     effectIncreaseDamge.gameObject.SetActive(true);
                     effectIncreaseDamge.Play();
 
+                    _cacheTarget.TxtDamage.transform.SetParent(transform);
                     _cacheTarget.TxtDamage.gameObject.SetActive(true);
                     _cacheTarget.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
                     {
