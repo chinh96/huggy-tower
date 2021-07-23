@@ -71,6 +71,7 @@ public class LibraryPopup : Popup
             skeletonGraphic.gameObject.SetActive(true);
             skeletonGraphic.transform.localPosition = libraryDataCurrent.Offset;
             skeletonGraphic.transform.localScale = libraryDataCurrent.Scale;
+            skeletonGraphic.transform.localRotation = Quaternion.Euler(libraryDataCurrent.Rotation.x, libraryDataCurrent.Rotation.y, libraryDataCurrent.Rotation.z);
             skeletonGraphic.skeletonDataAsset = libraryDataCurrent.SkeletonDataAsset;
             skeletonGraphic.initialFlipX = libraryDataCurrent.IsFlipX;
             skeletonGraphic.initialSkinName = libraryDataCurrent.LibraryAnimation.SkinName;
