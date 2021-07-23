@@ -21,6 +21,11 @@ public class EnemyDragonHead : Unit, IAnim
     {
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
         SoundController.Instance.PlayOnce(SoundType.DragonStart);
+
+        DOTween.Sequence().AppendInterval(UnityEngine.Random.Range(0, 1f)).AppendCallback(() =>
+        {
+            PlayIdle(true);
+        });
     }
 
     public override void OnAttack(int damage, Action callback)
@@ -83,10 +88,10 @@ public class EnemyDragonHead : Unit, IAnim
         if (equipType == ItemType.Sword || equipType == ItemType.SwordBlood)
         {
             skeleton.Play("Die2", false);
-            DOTween.Sequence().AppendInterval(.75f).AppendCallback(() =>
-            {
-                skeleton.DOFade(0, .2f);
-            });
+            // DOTween.Sequence().AppendInterval(.75f).AppendCallback(() =>
+            // {
+            //     skeleton.DOFade(0, .2f);
+            // });
         }
         else
         {
