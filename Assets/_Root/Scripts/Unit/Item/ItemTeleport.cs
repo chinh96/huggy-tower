@@ -18,6 +18,7 @@ public class ItemTeleport : Item
                 player.transform.SetParent(itemTeleport.transform.parent);
                 player.Skeleton.DOColor(new Color(1, 1, 1, 1), .5f).OnComplete(() =>
                 {
+                    player.PlayIdle(true);
                     canvasGroup.DOFade(0, .5f).OnComplete(() =>
                     {
                         State = EUnitState.Invalid;

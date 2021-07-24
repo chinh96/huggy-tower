@@ -505,7 +505,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 {
                     if (_itemTarget as ItemTeleport != null)
                     {
-                        PlayIdle(true);
+                        skeleton.Play("Teleport", false);
                         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                         {
                             _itemTarget.Collect(this);
@@ -1065,12 +1065,14 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     public void PlayDead()
     {
         SoundController.Instance.PlayOnce(SoundType.HeroDie);
-        skeleton.Play("Die", false);
+        var dies = new string[] { "Die", "Die3" };
+        string die = dies[UnityEngine.Random.Range(0, dies.Length)];
+        skeleton.Play(die, false);
     }
 
     public void PlayWin(bool isLoop)
     {
-        string[] wins = { "Win", "Win2" };
+        string[] wins = { "Win", "Win2", "Win3" };
         skeleton.Play(wins[UnityEngine.Random.Range(0, wins.Length)], true);
         SoundController.Instance.PlayOnce(SoundType.HeroYeah);
     }
