@@ -903,7 +903,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     break;
                 }
             case ItemType.SwordBlood:
-                skeleton.Play("SwordBlood", false);
+                skeleton.Play("AttackSword3", false);
                 DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                 {
                     SoundController.Instance.PlayOnce(SoundType.HeroCut3);
