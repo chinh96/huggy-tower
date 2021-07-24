@@ -723,6 +723,35 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         PlayIdle(true);
 
+        if (_target as EnemyWolfGhost)
+        {
+            DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+            {
+                skeleton.Play("PickClaws", false);
+            });
+
+            DOTween.Sequence().AppendInterval(.8f).AppendCallback(() =>
+            {
+                EquipType = ItemType.Claws;
+                ChangeSword(skinWolfGhost);
+                PlayIdle(true);
+                AttackByEvent();
+            });
+
+            DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
+            {
+                effectKillWolfGhost.gameObject.SetActive(true);
+                effectKillWolfGhost.Play();
+            });
+        }
+        else
+        {
+            AttackByEvent();
+        }
+    }
+
+    private void AttackByEvent()
+    {
         var room = levelMap.visitTower.RoomContainPlayer(this);
         if (room != null && !room.IsClearEnemyInRoom() || room.IsContaintItem())
         {
@@ -1023,27 +1052,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                     break;
                 }
-        }
-
-        if (_target as EnemyWolfGhost)
-        {
-            DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
-            {
-                skeleton.Play("PickClaws", false);
-            });
-
-            DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
-            {
-                EquipType = ItemType.Claws;
-                ChangeSword(skinWolfGhost);
-                PlayIdle(true);
-            });
-
-            DOTween.Sequence().AppendInterval(1.3f).AppendCallback(() =>
-            {
-                effectKillWolfGhost.gameObject.SetActive(true);
-                effectKillWolfGhost.Play();
-            });
         }
 
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
