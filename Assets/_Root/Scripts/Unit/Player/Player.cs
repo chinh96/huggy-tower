@@ -44,6 +44,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private ParticleSystem effectBomb;
     [SerializeField] private ParticleSystem effectTornado;
     [SerializeField] private ParticleSystem effectHitEnemy;
+    [SerializeField] private ParticleSystem effectKillWolfGhost;
     [SerializeField] private GameObject shuriken;
 
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
@@ -454,7 +455,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 {
                     case EUnitType.Item:
                         {
-                            var distance = Math.Abs((_itemTarget.transform.localPosition.x - transform.localPosition.x));
+                            var distance = Math.Abs(_itemTarget.transform.localPosition.x - transform.localPosition.x);
                             if (distance >= 110)
                             {
                                 PLayMove(true);
@@ -469,6 +470,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                         endValue = -40;
                                         break;
                                 }
+                                if (_itemTarget as ItemTeleport)
+                                {
+                                    endValue = 130;
+                                }
                                 transform.DOLocalMoveX(endValue, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
                             }
                             else
@@ -481,7 +486,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                     case EUnitType.Gem:
                         {
-                            var distance = Math.Abs((_itemTarget.transform.localPosition.x - cacheCollider.transform.localPosition.x));
+                            var distance = Math.Abs(_itemTarget.transform.localPosition.x - cacheCollider.transform.localPosition.x);
                             if (distance >= 110)
                             {
                                 PLayMove(true);
@@ -500,7 +505,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 {
                     if (_itemTarget as ItemTeleport != null)
                     {
-                        _itemTarget.Collect(this);
+                        PlayIdle(true);
+                        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                        {
+                            _itemTarget.Collect(this);
+                        });
                         return;
                     }
 
@@ -919,6 +928,18 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     string[] attacks;
                     switch (EquipType)
                     {
+                        case ItemType.Claws:
+                            DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                            {
+                                PlayBloodEnemy();
+                            });
+
+                            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                            {
+                                SoundController.Instance.PlayOnce(SoundType.HeroHit3);
+                            });
+                            attacks = new string[] { "AttackClaws2" };
+                            break;
                         case ItemType.Gloves:
                             DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                             {
@@ -1006,8 +1027,20 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         {
             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
             {
-                EquipType = ItemType.SwordBlood;
+                skeleton.Play("PickClaws", false);
+            });
+
+            DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
+            {
+                EquipType = ItemType.Claws;
                 ChangeSword(skinWolfGhost);
+                PlayIdle(true);
+            });
+
+            DOTween.Sequence().AppendInterval(1.3f).AppendCallback(() =>
+            {
+                effectKillWolfGhost.gameObject.SetActive(true);
+                effectKillWolfGhost.Play();
             });
         }
 
