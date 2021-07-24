@@ -10,6 +10,7 @@ using Spine.Unity;
 
 public class Player : Unit, IAnim, IHasSkeletonDataAsset
 {
+    public bool IsDie;
     public bool IsDie3;
     [SerializeField] private SkeletonDataAsset skeletonDataAsset;
     public SkeletonDataAsset SkeletonDataAsset => skeletonDataAsset;
@@ -808,11 +809,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop)
     {
-        if (GameController.Instance.GameState != EGameState.Lose)
+        if (GameController.Instance.GameState != EGameState.Lose && !IsDie)
         {
             if (Data.CurrentSkinHero == skinLess)
             {
-                skeleton.Play("Idle", true);
+                skeleton.Play("Idle2", true);
             }
             else
             {
@@ -1071,6 +1072,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         skeleton.Play(die, false);
 
         IsDie3 = die == "Die3";
+        IsDie = true;
     }
 
     public void PlayWin(bool isLoop)
