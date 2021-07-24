@@ -10,6 +10,7 @@ using Spine.Unity;
 
 public class Player : Unit, IAnim, IHasSkeletonDataAsset
 {
+    public bool IsDie3;
     [SerializeField] private SkeletonDataAsset skeletonDataAsset;
     public SkeletonDataAsset SkeletonDataAsset => skeletonDataAsset;
 
@@ -1068,6 +1069,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         var dies = new string[] { "Die", "Die3" };
         string die = dies[UnityEngine.Random.Range(0, dies.Length)];
         skeleton.Play(die, false);
+
+        IsDie3 = die == "Die3";
     }
 
     public void PlayWin(bool isLoop)

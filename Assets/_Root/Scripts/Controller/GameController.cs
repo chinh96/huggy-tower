@@ -370,6 +370,10 @@ public class GameController : Singleton<GameController>
         Player.TxtDamage.gameObject.SetActive(false);
 
         Vector2 endValue = new Vector2(Player.transform.position.x, Player.transform.position.y) + zoomOffset;
+        if (Player.IsDie3)
+        {
+            endValue -= new Vector2(1f, 0);
+        }
         Camera.main.transform.DOMove(endValue, zoomCameraDuration);
 
         zoomOrthoSizeOrigin = Camera.main.orthographicSize;
