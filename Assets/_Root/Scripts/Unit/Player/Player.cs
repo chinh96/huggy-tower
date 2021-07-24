@@ -26,6 +26,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField, Range(0, 10)] private float moveSpeed = 1.5f;
     [SerializeField] private ETurn turn = ETurn.None;
     [SerializeField, SpineSkin] private string skinLess;
+    [SerializeField, SpineSkin] private string skinWolfGhost;
 
     public ItemType EquipType;
 
@@ -999,6 +1000,15 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                     break;
                 }
+        }
+
+        if (_target as EnemyWolfGhost)
+        {
+            DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+            {
+                EquipType = ItemType.SwordBlood;
+                ChangeSword(skinWolfGhost);
+            });
         }
 
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
