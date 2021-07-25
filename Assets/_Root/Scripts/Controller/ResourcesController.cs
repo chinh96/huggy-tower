@@ -33,6 +33,23 @@ public class ResourcesController : Singleton<ResourcesController>
     {
         base.Awake();
 
+        DontDestroyOnLoad(gameObject);
+
+        Init();
+
+        if (Data.DateTimeStart == "")
+        {
+            Data.DateTimeStart = DateTime.Now.ToString();
+        }
+    }
+
+    private void Start()
+    {
+        Reset();
+    }
+
+    private void Init()
+    {
         Hero = heroResources;
         Princess = princessResources;
         Sound = soundResources;
@@ -44,18 +61,6 @@ public class ResourcesController : Singleton<ResourcesController>
         DailyQuest = dailyQuest;
         Library = library;
         Country = country;
-    }
-
-    private void Start()
-    {
-        DontDestroyOnLoad(gameObject);
-
-        if (Data.DateTimeStart == "")
-        {
-            Data.DateTimeStart = DateTime.Now.ToString();
-        }
-
-        Reset();
     }
 
     private void Reset()

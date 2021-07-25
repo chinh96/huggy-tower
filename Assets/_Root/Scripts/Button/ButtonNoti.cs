@@ -56,7 +56,10 @@ public class ButtonNoti : MonoBehaviour
                 break;
         }
 
-        noti.SetActive(hasNoti);
+        if (noti != null)
+        {
+            noti.SetActive(hasNoti);
+        }
     }
 
     private void OnDestroy()

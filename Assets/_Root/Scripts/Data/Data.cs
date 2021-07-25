@@ -106,7 +106,7 @@ public static class Data
     public static int AchievementNumberTarget { get => GetInt(Constants.ACHIEVEMENT_NUMBER_TARGET + AchievementId, 10); set => SetInt(Constants.ACHIEVEMENT_NUMBER_TARGET + AchievementId, value); }
     public static int AchievementNumberCurrent { get => GetInt(Constants.ACHIEVEMENT_NUMBER_CURRENT + AchievementId, 0); set => SetInt(Constants.ACHIEVEMENT_NUMBER_CURRENT + AchievementId, value); }
 
-    public static int TotalDays => (int)(DateTime.Now - DateTime.Parse(Data.DateTimeStart)).TotalDays;
+    public static int TotalDays => (int)(DateTime.Now - DateTime.Parse(DateTimeStart)).TotalDays;
 
     public static string DailyQuestId;
     public static int DailyQuestNumberCurrent { get => GetInt(Constants.DAILY_QUEST_NUMBER_CURRENT + DailyQuestId, 0); set => SetInt(Constants.DAILY_QUEST_NUMBER_CURRENT + DailyQuestId, value); }

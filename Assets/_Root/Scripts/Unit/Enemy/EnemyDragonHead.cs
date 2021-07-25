@@ -22,7 +22,7 @@ public class EnemyDragonHead : Unit, IAnim
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
         SoundController.Instance.PlayOnce(SoundType.DragonStart);
 
-        DOTween.Sequence().AppendInterval(UnityEngine.Random.Range(0, 1f)).AppendCallback(() =>
+        DOTween.Sequence().AppendInterval(UnityEngine.Random.Range(0, .5f)).AppendCallback(() =>
         {
             PlayIdle(true);
         });
