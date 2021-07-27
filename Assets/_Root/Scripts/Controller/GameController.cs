@@ -106,6 +106,10 @@ public class GameController : Singleton<GameController>
 
     public async void LoadLevel(int fakeIndex)
     {
+        if (fakeIndex > 0)
+        {
+            IsOnboarding = false;
+        }
         AdController.Instance.JustShowReward = false;
         AdController.Instance.Request();
 
