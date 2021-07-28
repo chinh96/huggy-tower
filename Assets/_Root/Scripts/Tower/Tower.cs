@@ -53,7 +53,8 @@ public class Tower : MonoBehaviour
         {
             item.units.ForEach(unit =>
             {
-                unit.GetComponent<Canvas>().sortingOrder = index + 5;
+                int offset = unit as EnemyKraken1 ? 30 : 5;
+                unit.GetComponent<Canvas>().sortingOrder = index + offset;
                 index++;
             });
         });

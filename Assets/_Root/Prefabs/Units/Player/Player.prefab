@@ -392,6 +392,8 @@ MonoBehaviour:
   txtDamage: {fileID: 3870594194286436057}
   damage: 5
   ColorBlood: {r: 0, g: 0, b: 0, a: 0}
+  IsDie: 0
+  IsDie3: 0
   skeletonDataAsset: {fileID: 11400000, guid: c86ceadda8f93d74fac2806db79f7a61, type: 2}
   skeleton: {fileID: 1520873680537687464}
   rigid2D: {fileID: 1520873680537687466}
@@ -1450,6 +1452,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3408224788480668753, guid: 3d0c208d914b71d4a85f196edd79e1b4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 3408224788480668753, guid: 3d0c208d914b71d4a85f196edd79e1b4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 5128509403623142441, guid: 3d0c208d914b71d4a85f196edd79e1b4, type: 3}
       propertyPath: m_Scale3D.x
       value: 50
@@ -1521,6 +1531,10 @@ PrefabInstance:
     - target: {fileID: 6214544819103960623, guid: 3d0c208d914b71d4a85f196edd79e1b4, type: 3}
       propertyPath: m_Name
       value: HitEnemies
+      objectReference: {fileID: 0}
+    - target: {fileID: 6214544819103960623, guid: 3d0c208d914b71d4a85f196edd79e1b4, type: 3}
+      propertyPath: m_Layer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6214544819103960623, guid: 3d0c208d914b71d4a85f196edd79e1b4, type: 3}
       propertyPath: m_IsActive

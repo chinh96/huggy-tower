@@ -874,6 +874,26 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 {
                     effectBlood.transform.localPosition += new Vector3(-250, 400, 0);
                 }
+                else if (_target as EnemyKraken2)
+                {
+                    effectBlood.transform.localPosition += new Vector3(60, -85, 0);
+                }
+                else if (_target as EnemyKraken3)
+                {
+                    effectBlood.transform.localPosition += new Vector3(100, 180, 0);
+                }
+                else if (_target as EnemyKraken4)
+                {
+                    effectBlood.transform.localPosition += new Vector3(20, -45, 0);
+                }
+                else if (_target as EnemyKraken5)
+                {
+                    effectBlood.transform.localPosition += new Vector3(200, -355, 0);
+                }
+                else if (_target as EnemyKraken6)
+                {
+                    effectBlood.transform.localPosition += new Vector3(100, -500, 0);
+                }
                 else
                 {
                     effectBlood.transform.localPosition += new Vector3(0, 40, 0);
@@ -1001,9 +1021,38 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                     DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                                     {
                                         ParticleSystem hitEnemy = Instantiate(effectHitEnemy, transform.parent);
-                                        hitEnemy.transform.position = _target.transform.position + new Vector3(0, 1, 0);
+                                        hitEnemy.transform.position = _target.transform.position;
+                                        if (_target as EnemyDragonHead)
+                                        {
+                                            hitEnemy.transform.position += new Vector3(0, 6, 0);
+                                        }
+                                        else if (_target as EnemyKraken2)
+                                        {
+                                            hitEnemy.transform.position += new Vector3(0, -1, 0);
+                                        }
+                                        else if (_target as EnemyKraken3)
+                                        {
+                                            hitEnemy.transform.position += new Vector3(0, -1, 0);
+                                        }
+                                        else if (_target as EnemyKraken4)
+                                        {
+                                            hitEnemy.transform.position += new Vector3(0, -1, 0);
+                                        }
+                                        else if (_target as EnemyKraken5)
+                                        {
+                                            hitEnemy.transform.position += new Vector3(0, -6, 0);
+                                        }
+                                        else if (_target as EnemyKraken6)
+                                        {
+                                            hitEnemy.transform.position += new Vector3(0, -6, 0);
+                                        }
+                                        else
+                                        {
+                                            hitEnemy.transform.position += new Vector3(0, 1, 0);
+                                        }
                                         hitEnemy.gameObject.SetActive(true);
                                         hitEnemy.Play();
+
                                     });
                                 }
                                 break;
