@@ -874,6 +874,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 {
                     effectBlood.transform.localPosition += new Vector3(-250, 400, 0);
                 }
+                else if (_target as EnemyKraken)
+                {
+                    effectBlood.transform.localPosition += new Vector3(-200, 50, 0);
+                }
                 else if (_target as EnemyKraken2)
                 {
                     effectBlood.transform.localPosition += new Vector3(60, -85, 0);
@@ -1025,6 +1029,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                         if (_target as EnemyDragonHead)
                                         {
                                             hitEnemy.transform.position += new Vector3(0, 6, 0);
+                                        }
+                                        else if (_target as EnemyKraken)
+                                        {
+                                            hitEnemy.transform.position += new Vector3(-2, 1, 0);
                                         }
                                         else if (_target as EnemyKraken2)
                                         {
