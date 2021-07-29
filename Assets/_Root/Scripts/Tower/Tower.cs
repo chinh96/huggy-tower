@@ -21,6 +21,9 @@ public class Tower : MonoBehaviour
     public List<GameObject> flagJapans;
     public Image HomeTowerJapan;
     public List<Image> HomeTowerJapanFlags;
+    public Image HomeTowerSea;
+    public Sprite towerSea;
+    public List<GameObject> flagSeas;
 
     private void Start()
     {
@@ -43,6 +46,10 @@ public class Tower : MonoBehaviour
         if (GameController.Instance.IsJapanBackground)
         {
             ChangeToJapanTower();
+        }
+        else if (GameController.Instance.IsSeaBackground)
+        {
+            ChangeToSeaTower();
         }
     }
 
@@ -136,7 +143,7 @@ public class Tower : MonoBehaviour
         }
     }
 
-    public void ChangeToHomTower()
+    public void ChangeToHomeTower()
     {
         float duration = 2;
 
@@ -150,12 +157,22 @@ public class Tower : MonoBehaviour
                 homeTowerFlag.DOColor(new Color(1, 1, 1, 1), duration);
             });
         }
+        else if (GameController.Instance.IsSeaBackground)
+        {
+            HomeTowerSea.rectTransform.sizeDelta = GetComponent<RectTransform>().sizeDelta;
+            HomeTowerSea.DOColor(new Color(1, 1, 1, 1), duration);
+        }
         else
         {
             homeTower.rectTransform.sizeDelta = GetComponent<RectTransform>().sizeDelta;
             homeTower.DOColor(new Color(1, 1, 1, 1), duration);
             homeTowerFlag.DOColor(new Color(1, 1, 1, 1), duration);
         }
+
+        DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
+        {
+            tower.DOColor(new Color(0, 0, 0, 0), duration / 2);
+        });
 
         slots.ForEach(slot =>
         {
@@ -178,6 +195,25 @@ public class Tower : MonoBehaviour
         flagJapans.ForEach(flagJapan =>
         {
             flagJapan.SetActive(true);
+        });
+    }
+
+    public virtual void ChangeToSeaTower()
+    {
+        tower.sprite = towerSea;
+        if (this is VisitTower)
+        {
+            verticalLayoutGroup.padding.left = -10;
+        }
+        else
+        {
+            verticalLayoutGroup.padding.left = 10;
+        }
+        verticalLayoutGroup.padding.top = 500;
+        flag.SetActive(false);
+        flagSeas.ForEach(flagSea =>
+        {
+            flagSea.SetActive(true);
         });
     }
 }

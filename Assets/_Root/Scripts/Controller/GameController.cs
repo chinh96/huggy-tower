@@ -46,6 +46,7 @@ public class GameController : Singleton<GameController>
 
     [NonSerialized] public bool IsOnboarding;
     [NonSerialized] public bool IsJapanBackground;
+    [NonSerialized] public bool IsSeaBackground;
     [NonSerialized] public Vector3 positionCameraOrigin;
 
     public void SetEnableLeanTouch(bool enable)
@@ -102,6 +103,7 @@ public class GameController : Singleton<GameController>
         int random = UnityEngine.Random.Range(0, backgrounds.Count);
         backgrounds[random].SetActive(true);
         IsJapanBackground = backgrounds[random].name == "Jav";
+        IsSeaBackground = backgrounds[random].name == "Sea";
     }
 
     public async void LoadLevel(int fakeIndex)
@@ -314,7 +316,7 @@ public class GameController : Singleton<GameController>
             AnalyticController.Level10CompleteFunnel();
         }
 
-        root.LevelMap.visitTower.ChangeToHomTower();
+        root.LevelMap.visitTower.ChangeToHomeTower();
 
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LevelPassed);
 

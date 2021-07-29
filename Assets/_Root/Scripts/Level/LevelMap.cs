@@ -25,7 +25,7 @@ public class LevelMap : MonoBehaviour
 
     public void ChangeToNewVisitTower()
     {
-        visitTower.ChangeToHomTower();
+        visitTower.ChangeToHomeTower();
         indexVisitTower++;
         MoveToNewVisitTower();
     }
