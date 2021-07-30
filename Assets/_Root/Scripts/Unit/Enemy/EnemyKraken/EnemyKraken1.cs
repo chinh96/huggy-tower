@@ -21,6 +21,7 @@ public class EnemyKraken1 : Unit, IAnim
     {
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
         GameController.Instance.Kraken0s = Kraken0s;
+        SoundController.Instance.PlayOnce(SoundType.BearStart);
     }
 
     public override void OnAttack(int damage, Action callback)
@@ -51,7 +52,7 @@ public class EnemyKraken1 : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack", false); }
+    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.DemonAttack); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
@@ -59,6 +60,8 @@ public class EnemyKraken1 : Unit, IAnim
     {
         GameController.Instance.Kraken0s.RemoveAt(0);
         skeleton.Play("Die", false);
+
+        SoundController.Instance.PlayOnce(SoundType.BearDie);
     }
 
     public void PlayWin(bool isLoop) { }

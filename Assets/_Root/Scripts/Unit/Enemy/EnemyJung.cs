@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using Spine.Unity;
 #if UNITY_EDITOR
@@ -12,12 +13,15 @@ public class EnemyJung : Unit, IAnim
     public Collider2D coll2D;
     public SpineAttackHandle attackHandle;
     public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
+    public ParticleSystem Fx;
 
     private Action _callbackAttackPlayer;
+    private bool isDead;
 
     private void Start()
     {
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
+        SoundController.Instance.PlayOnce(SoundType.BearStart);
     }
 
     public override void OnAttack(int damage, Action callback)
@@ -48,13 +52,29 @@ public class EnemyJung : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack", false); }
+    public void PlayAttack()
+    {
+        skeleton.Play("Attack", false);
+        SoundController.Instance.PlayOnce(SoundType.DemonAttack);
+
+        DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
+        {
+            if (!isDead)
+            {
+                ParticleSystem fx = Instantiate(Fx);
+                fx.transform.position = transform.position + new Vector3(-1f, 0, 0);
+            }
+        });
+    }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
     public void PlayDead()
     {
         skeleton.Play("Die", false);
+        isDead = true;
+
+        SoundController.Instance.PlayOnce(SoundType.BearDie);
     }
 
     public void PlayWin(bool isLoop) { }

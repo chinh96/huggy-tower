@@ -38,6 +38,7 @@ public class EnemyKappa : Unit, IAnim
 
     public void OnDead()
     {
+        Debug.Log(1);
         State = EUnitState.Invalid;
         coll2D.enabled = false;
         rigid.simulated = false;
