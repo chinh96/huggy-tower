@@ -19,7 +19,6 @@ public class EnemyGoblin : Unit, IAnim
     private void Start()
     {
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
-        SoundController.Instance.PlayOnce(SoundType.BearStart);
     }
 
     public override void OnAttack(int damage, Action callback)
@@ -45,8 +44,6 @@ public class EnemyGoblin : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.BearEnemy);
-        ResourcesController.Achievement.IncreaseByType(AchievementType.BearEnemy);
     }
 
     public SkeletonGraphic Skeleton => skeleton;

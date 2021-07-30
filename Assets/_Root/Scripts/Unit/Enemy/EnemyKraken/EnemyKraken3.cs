@@ -18,7 +18,6 @@ public class EnemyKraken3 : Unit, IAnim
     private void Start()
     {
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
-        SoundController.Instance.PlayOnce(SoundType.BearStart);
     }
 
     public override void OnAttack(int damage, Action callback)
@@ -44,21 +43,19 @@ public class EnemyKraken3 : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Yeti);
     }
 
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.YetiAttack); }
+    public void PlayAttack() { skeleton.Play("Attack", false); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
     public void PlayDead()
     {
+        GameController.Instance.RemoveKraken0();
         skeleton.Play("Die", false);
-
-        SoundController.Instance.PlayOnce(SoundType.YetiDie);
     }
 
     public void PlayWin(bool isLoop) { }

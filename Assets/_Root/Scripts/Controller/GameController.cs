@@ -48,6 +48,13 @@ public class GameController : Singleton<GameController>
     [NonSerialized] public bool IsJapanBackground;
     [NonSerialized] public bool IsSeaBackground;
     [NonSerialized] public Vector3 positionCameraOrigin;
+    [NonSerialized] public List<GameObject> Kraken0s = new List<GameObject>();
+
+    public void RemoveKraken0()
+    {
+        Destroy(Kraken0s[0].gameObject);
+        Kraken0s.RemoveAt(0);
+    }
 
     public void SetEnableLeanTouch(bool enable)
     {

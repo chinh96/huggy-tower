@@ -4,6 +4,7 @@ using Spine.Unity;
 using UnityEditor;
 #endif
 using UnityEngine;
+using System.Collections.Generic;
 
 public class EnemyKraken1 : Unit, IAnim
 {
@@ -12,13 +13,14 @@ public class EnemyKraken1 : Unit, IAnim
     public Collider2D coll2D;
     public SpineAttackHandle attackHandle;
     public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
+    public List<GameObject> Kraken0s;
 
     private Action _callbackAttackPlayer;
 
     private void Start()
     {
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
-        SoundController.Instance.PlayOnce(SoundType.BearStart);
+        GameController.Instance.Kraken0s = Kraken0s;
     }
 
     public override void OnAttack(int damage, Action callback)
@@ -44,21 +46,19 @@ public class EnemyKraken1 : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Yeti);
     }
 
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.YetiAttack); }
+    public void PlayAttack() { skeleton.Play("Attack", false); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
     public void PlayDead()
     {
+        GameController.Instance.Kraken0s.RemoveAt(0);
         skeleton.Play("Die", false);
-
-        SoundController.Instance.PlayOnce(SoundType.YetiDie);
     }
 
     public void PlayWin(bool isLoop) { }

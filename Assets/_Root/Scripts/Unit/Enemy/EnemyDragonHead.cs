@@ -50,8 +50,6 @@ public class EnemyDragonHead : Unit, IAnim
         coll2D.enabled = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.DragonEnemy);
-        ResourcesController.Achievement.IncreaseByType(AchievementType.DragonEnemy);
     }
 
     public SkeletonGraphic Skeleton => skeleton;
