@@ -47,7 +47,12 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private ParticleSystem effectTornado;
     [SerializeField] private ParticleSystem effectHitEnemy;
     [SerializeField] private ParticleSystem effectKillWolfGhost;
+    [SerializeField] private ParticleSystem effectFire;
+    [SerializeField] private ParticleSystem effectIce;
+    [SerializeField] private ParticleSystem effectElectric;
+    [SerializeField] private ParticleSystem effectPoison;
     [SerializeField] private GameObject shuriken;
+    [SerializeField] private GameObject bow;
 
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
     public bool FirstTurn { get; set; }
@@ -955,6 +960,70 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     PlayBloodEnemy(attack);
                     break;
                 }
+            case ItemType.Ice:
+            case ItemType.Fire:
+            case ItemType.Electric:
+            case ItemType.Poison:
+                {
+                    skeleton.Play("AttackElemetal", false);
+                    SoundController.Instance.PlayOnce(SoundType.Axe1);
+
+                    if (hasBloodEnemy)
+                    {
+                        DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
+                        {
+                            ParticleSystem temp;
+                            switch (EquipType)
+                            {
+                                case ItemType.Ice:
+                                    temp = effectIce;
+                                    break;
+                                case ItemType.Fire:
+                                    temp = effectFire;
+                                    break;
+                                case ItemType.Electric:
+                                    temp = effectElectric;
+                                    break;
+                                default:
+                                    temp = effectPoison;
+                                    break;
+                            }
+                            ParticleSystem elemental = Instantiate(temp, transform.parent);
+                            elemental.transform.position = transform.position + Vector3.up * 2f + Vector3.right * 1f;
+                            elemental.gameObject.SetActive(true);
+                            elemental.Play();
+                            elemental.transform.DOMove(_target.transform.position + Vector3.up * .5f + Vector3.right * .5f, .2f).OnComplete(() =>
+                            {
+                                DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                                {
+                                    Destroy(elemental.gameObject);
+                                });
+                            });
+                        });
+                    }
+                    break;
+                }
+            case ItemType.Bow2:
+                skeleton.Play("AttackBow", false);
+                SoundController.Instance.PlayOnce(SoundType.Knife);
+                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                {
+                    PlayBloodEnemy();
+                });
+                DOTween.Sequence().AppendInterval(.8f).AppendCallback(() =>
+                {
+                    GameObject bow1 = Instantiate(bow, transform.parent);
+                    bow1.transform.position = transform.position + new Vector3(1, 1, 0);
+                    Vector3 endValue = bow1.transform.position + new Vector3(5, 0, 0);
+                    bow1.transform.DOMove(endValue, .5f).OnComplete(() => Destroy(bow1));
+                });
+                break;
+            case ItemType.Mace:
+                {
+                    skeleton.Play("AttackMace", false);
+                    SoundController.Instance.PlayOnce(SoundType.HeroHit);
+                    break;
+                }
             case ItemType.SwordBlood:
                 skeleton.Play("AttackSword3", false);
                 DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
@@ -1119,13 +1188,25 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     public void PLayMove(bool isLoop)
     {
-        if (EquipType == ItemType.Sword || EquipType == ItemType.SwordBlood || EquipType == ItemType.SwordJapan)
+        switch (EquipType)
         {
-            skeleton.Play("RunKiem", true);
-        }
-        else
-        {
-            skeleton.Play("Run", true);
+            case ItemType.Sword:
+            case ItemType.Knife:
+            case ItemType.Axe:
+            case ItemType.Shuriken:
+            case ItemType.SwordJapan:
+            case ItemType.SwordBlood:
+            case ItemType.Electric:
+            case ItemType.Fire:
+            case ItemType.Ice:
+            case ItemType.Poison:
+            case ItemType.Mace:
+            case ItemType.Bow2:
+                skeleton.Play("RunKiem", true);
+                break;
+            default:
+                skeleton.Play("Run", true);
+                break;
         }
     }
 
@@ -1171,6 +1252,12 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Shuriken:
             case ItemType.SwordJapan:
             case ItemType.SwordBlood:
+            case ItemType.Electric:
+            case ItemType.Fire:
+            case ItemType.Ice:
+            case ItemType.Poison:
+            case ItemType.Mace:
+            case ItemType.Bow2:
                 skeleton.Play("Pick", false);
                 SoundController.Instance.PlayOnce(SoundType.HeroPickSword);
                 break;
@@ -1239,15 +1326,29 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 });
                 break;
             default:
-                if (EquipType == ItemType.Sword || EquipType == ItemType.SwordBlood || EquipType == ItemType.SwordJapan)
                 {
-                    skeleton.Play("Open1", false);
+                    switch (EquipType)
+                    {
+                        case ItemType.Sword:
+                        case ItemType.Knife:
+                        case ItemType.Axe:
+                        case ItemType.Shuriken:
+                        case ItemType.SwordJapan:
+                        case ItemType.SwordBlood:
+                        case ItemType.Electric:
+                        case ItemType.Fire:
+                        case ItemType.Ice:
+                        case ItemType.Poison:
+                        case ItemType.Mace:
+                        case ItemType.Bow2:
+                            skeleton.Play("Open1", false);
+                            break;
+                        default:
+                            skeleton.Play("Open2", false);
+                            break;
+                    }
+                    break;
                 }
-                else
-                {
-                    skeleton.Play("Open2", false);
-                }
-                break;
         }
     }
 }

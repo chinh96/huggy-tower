@@ -12,8 +12,6 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
     [SerializeField, SpineSkin] private string itemSwordSkin;
 
     public Image render;
-    public Rigidbody2D rigid;
-    public Collider2D coll2D;
     public TextMeshProUGUI txtDamage;
     public int damage;
 
@@ -57,6 +55,12 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
                 case ItemType.SwordJapan:
                 case ItemType.Shuriken:
                 case ItemType.SwordBlood:
+                case ItemType.Electric:
+                case ItemType.Fire:
+                case ItemType.Ice:
+                case ItemType.Poison:
+                case ItemType.Mace:
+                case ItemType.Bow2:
                     player.EquipType = EquipType;
                     break;
             }

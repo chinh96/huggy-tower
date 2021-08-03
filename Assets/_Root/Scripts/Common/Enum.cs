@@ -71,7 +71,13 @@ public enum ItemType
     SwordJapan,
     Shuriken,
     SwordBlood,
-    Claws
+    Claws,
+    Ice,
+    Fire,
+    Electric,
+    Poison,
+    Mace,
+    Bow2
 }
 
 public enum ETurn

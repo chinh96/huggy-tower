@@ -84,6 +84,7 @@ public class LibraryPopup : Popup
             image.gameObject.SetActive(true);
             image.sprite = libraryDataCurrent.Image;
             image.SetNativeSize();
+            image.transform.localScale = libraryDataCurrent.Scale;
         }
 
         name.text = libraryDataCurrent.Name;

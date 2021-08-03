@@ -35,6 +35,7 @@ public class LibraryItemInfoPopup : Popup
             image.transform.localScale = Vector3.one * .8f;
             image.sprite = Data.LibraryItemInfo.Image;
             image.SetNativeSize();
+            image.transform.localScale = Data.LibraryItemInfo.Scale2;
         }
 
         name.text = Data.LibraryItemInfo.Name;
