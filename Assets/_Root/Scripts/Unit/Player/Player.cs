@@ -1018,6 +1018,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     bow1.transform.DOMove(endValue, .5f).OnComplete(() => Destroy(bow1));
                 });
                 break;
+            case ItemType.Polllaxe:
+                skeleton.Play("AttackPollaxe", false);
+                PlayBloodEnemy();
+                break;
             case ItemType.Mace:
                 {
                     skeleton.Play("AttackMace", false);
@@ -1202,6 +1206,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Poison:
             case ItemType.Mace:
             case ItemType.Bow2:
+            case ItemType.Polllaxe:
                 skeleton.Play("RunKiem", true);
                 break;
             default:
@@ -1258,6 +1263,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Poison:
             case ItemType.Mace:
             case ItemType.Bow2:
+            case ItemType.Polllaxe:
                 skeleton.Play("Pick", false);
                 SoundController.Instance.PlayOnce(SoundType.HeroPickSword);
                 break;
@@ -1341,6 +1347,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         case ItemType.Poison:
                         case ItemType.Mace:
                         case ItemType.Bow2:
+                        case ItemType.Polllaxe:
                             skeleton.Play("Open1", false);
                             break;
                         default:

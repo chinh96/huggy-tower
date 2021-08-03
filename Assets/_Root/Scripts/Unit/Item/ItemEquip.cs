@@ -61,6 +61,7 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
                 case ItemType.Poison:
                 case ItemType.Mace:
                 case ItemType.Bow2:
+                case ItemType.Polllaxe:
                     player.EquipType = EquipType;
                     break;
             }

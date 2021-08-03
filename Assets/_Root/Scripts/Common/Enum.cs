@@ -77,7 +77,8 @@ public enum ItemType
     Electric,
     Poison,
     Mace,
-    Bow2
+    Bow2,
+    Polllaxe
 }
 
 public enum ETurn
