@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 using Lean.Touch;
+using Spine.Unity;
 
 public class GameController : Singleton<GameController>
 {
@@ -52,7 +53,7 @@ public class GameController : Singleton<GameController>
 
     public void RemoveKraken0()
     {
-        Destroy(Kraken0s[0].gameObject);
+        Kraken0s[0].GetComponent<SkeletonGraphic>().Play("Die", false);
         Kraken0s.RemoveAt(0);
     }
 

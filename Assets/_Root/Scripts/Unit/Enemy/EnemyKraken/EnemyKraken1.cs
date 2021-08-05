@@ -58,7 +58,6 @@ public class EnemyKraken1 : Unit, IAnim
 
     public void PlayDead()
     {
-        GameController.Instance.Kraken0s.RemoveAt(0);
         skeleton.Play("Die", false);
 
         SoundController.Instance.PlayOnce(SoundType.BearDie);

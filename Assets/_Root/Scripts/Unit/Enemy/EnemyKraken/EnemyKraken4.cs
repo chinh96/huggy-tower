@@ -54,7 +54,6 @@ public class EnemyKraken4 : Unit, IAnim
 
     public void PlayDead()
     {
-        GameController.Instance.RemoveKraken0();
         skeleton.Play("Die", false);
     }
 

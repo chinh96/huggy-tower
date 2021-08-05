@@ -4,6 +4,7 @@ using Spine.Unity;
 using UnityEditor;
 #endif
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyPoisonSnake : Unit, IAnim
 {
@@ -12,6 +13,8 @@ public class EnemyPoisonSnake : Unit, IAnim
     public Collider2D coll2D;
     public SpineAttackHandle attackHandle;
     public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
+    public ParticleSystem Fx;
+    public ParticleSystem Fx2;
 
     private Action _callbackAttackPlayer;
 
@@ -29,9 +32,18 @@ public class EnemyPoisonSnake : Unit, IAnim
 
     public override void OnBeingAttacked() { OnDead(); }
 
-    private void OnAttackByEvent() { _callbackAttackPlayer?.Invoke(); }
+    private void OnAttackByEvent()
+    {
+        Fx.Play();
+        ParticleSystem fx = Instantiate(Fx2, GameController.Instance.Player.transform.parent);
+        fx.transform.position = GameController.Instance.Player.transform.position + Vector3.up;
+        _callbackAttackPlayer?.Invoke();
+    }
 
-    private void OnEndAttackByEvent() { PlayIdle(true); }
+    private void OnEndAttackByEvent()
+    {
+        PlayIdle(true);
+    }
 
     public override void DarknessRise() { }
 
