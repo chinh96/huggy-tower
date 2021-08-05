@@ -965,7 +965,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Electric:
             case ItemType.Poison:
                 {
-                    skeleton.Play("AttackElemetal", false);
+                    skeleton.Play("AttackElemental", false);
                     SoundController.Instance.PlayOnce(SoundType.Axe1);
 
                     if (hasBloodEnemy)
