@@ -1,4 +1,6 @@
+using DG.Tweening;
 using System;
+using System.Collections.Generic;
 using Spine.Unity;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -12,6 +14,7 @@ public class EnemyIceDragon : Unit, IAnim
     public Collider2D coll2D;
     public SpineAttackHandle attackHandle;
     public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
+    public List<ParticleSystem> particleSystems;
 
     private Action _callbackAttackPlayer;
 
@@ -29,7 +32,16 @@ public class EnemyIceDragon : Unit, IAnim
 
     public override void OnBeingAttacked() { OnDead(); }
 
-    private void OnAttackByEvent() { _callbackAttackPlayer?.Invoke(); }
+    private void OnAttackByEvent()
+    {
+        ParticleSystem particleSystem1 = Instantiate(particleSystems[0], transform);
+        ParticleSystem particleSystem2 = Instantiate(particleSystems[1], transform);
+        particleSystem1.gameObject.SetActive(true);
+        particleSystem2.gameObject.SetActive(true);
+        particleSystem1.transform.DOMove(GameController.Instance.Player.transform.position + Vector3.left / 2 + Vector3.up / 2, .3f).OnComplete(() => DestroyImmediate(particleSystem1.gameObject));
+        particleSystem2.transform.DOMove(GameController.Instance.Player.transform.position + Vector3.left / 2 + Vector3.up / 2, .3f).OnComplete(() => DestroyImmediate(particleSystem2.gameObject));
+        _callbackAttackPlayer?.Invoke();
+    }
 
     private void OnEndAttackByEvent() { PlayIdle(true); }
 

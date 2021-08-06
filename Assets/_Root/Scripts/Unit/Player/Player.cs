@@ -1217,12 +1217,19 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     public void PlayDead()
     {
-        SoundController.Instance.PlayOnce(SoundType.HeroDie);
-        var dies = new string[] { "Die", "Die3" };
-        string die = dies[UnityEngine.Random.Range(0, dies.Length)];
-        skeleton.Play(die, false);
+        if (_target as EnemyIceDragon)
+        {
+            skeleton.Play("DieIce", false);
+        }
+        else
+        {
+            SoundController.Instance.PlayOnce(SoundType.HeroDie);
+            var dies = new string[] { "Die", "Die3" };
+            string die = dies[UnityEngine.Random.Range(0, dies.Length)];
+            skeleton.Play(die, false);
+            IsDie3 = die == "Die3";
+        }
 
-        IsDie3 = die == "Die3";
         IsDie = true;
     }
 
