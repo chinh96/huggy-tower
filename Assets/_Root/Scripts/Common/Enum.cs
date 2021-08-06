@@ -191,7 +191,8 @@ public enum SoundType
     PrincessStart,
     BombGoblin,
     KappaDie,
-    GoblinKappaAttack
+    GoblinKappaAttack,
+    Elemental
 }
 
 public enum WorldType

@@ -530,8 +530,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                     Turn = ETurn.UsingItem;
                     PlayUseItem(_itemTarget.EquipType);
-                    float timeDelay = _itemTarget.EquipType == ItemType.BrokenBrick ? .5f : 1.2f;
-                    DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
+                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                     {
                         if (levelMap.condition == condition)
                         {
@@ -576,7 +575,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         }
                     }
 
-                    timeDelay = .5f;
+                    float timeDelay = .5f;
                     switch (_itemTarget.EquipType)
                     {
                         case ItemType.Sword:
@@ -999,6 +998,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                     Destroy(elemental.gameObject);
                                 });
                             });
+                            SoundController.Instance.PlayOnce(SoundType.Elemental);
                         });
                     }
                     break;
