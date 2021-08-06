@@ -85,6 +85,18 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
                 case ItemType.HolyWater:
                     damage = player.Damage;
                     break;
+                case ItemType.Fire:
+                    damage = player.Damage * 2;
+                    break;
+                case ItemType.Electric:
+                    damage = player.Damage * 3;
+                    break;
+                case ItemType.Ice:
+                    damage = player.Damage * 4;
+                    break;
+                case ItemType.Poison:
+                    damage = player.Damage * 5;
+                    break;
             }
 
             player.IncreaseDamage(damage);
@@ -139,7 +151,13 @@ public class ItemSwordEditor : UnityEditor.Editor
     {
         base.OnInspectorGUI();
 
-        if (_item.EquipType != ItemType.Food && _item.EquipType != ItemType.Key && _item.EquipType != ItemType.HolyWater)
+        if (_item.EquipType != ItemType.Food &&
+            _item.EquipType != ItemType.Key &&
+            _item.EquipType != ItemType.HolyWater &&
+            _item.EquipType != ItemType.Fire &&
+            _item.EquipType != ItemType.Electric &&
+            _item.EquipType != ItemType.Ice &&
+            _item.EquipType != ItemType.Poison)
         {
             _item.txtDamage.text = $"{_item.damage}";
 
