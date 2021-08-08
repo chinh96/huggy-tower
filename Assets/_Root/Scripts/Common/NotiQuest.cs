@@ -15,6 +15,8 @@ public class NotiQuest : MonoBehaviour
     [SerializeField] private float duration = .3f;
     [SerializeField] private float delay = 2;
 
+    private Sequence sequence;
+
     public void Init(DailyQuestDayItem item)
     {
         image.sprite = item.Sprite;
@@ -26,7 +28,7 @@ public class NotiQuest : MonoBehaviour
     {
         transform.DOLocalMoveX(endValueX, duration).OnComplete(() =>
         {
-            DOTween.Sequence().AppendInterval(delay).AppendCallback(() =>
+            sequence = DOTween.Sequence().AppendInterval(delay).AppendCallback(() =>
             {
                 MoveOut();
             });
@@ -50,5 +52,6 @@ public class NotiQuest : MonoBehaviour
     private void OnDestroy()
     {
         transform.DOKill();
+        sequence.Kill();
     }
 }

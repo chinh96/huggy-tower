@@ -21,22 +21,7 @@ public class EnemyHorn : Unit, IAnim
 
     private void OnEndAttackByEvent() { PlayIdle(true); }
 
-    private void OnAttackByEvent()
-    {
-        var pool = GameController.Instance.poolArrow;
-
-        var arrow = pool.Spawn(pool.transform, false);
-        var arowHandle = arrow.GetComponent<ArrowHandle>();
-        arowHandle.Initialize((go) =>
-        {
-            _callbackAttackPlayer?.Invoke();
-            GameController.Instance.poolArrow.Despawn(go);
-        });
-        arrow.transform.position = arrowSpawnPosition.position;
-        arrow.transform.localEulerAngles = new Vector3(0, 0, 180);
-        arrow.SetActive(true);
-        arrow.GetComponent<Rigidbody2D>().velocity = Vector2.left * 12;
-    }
+    private void OnAttackByEvent() { }
 
     public override void OnBeingAttacked() { OnDead(); }
 

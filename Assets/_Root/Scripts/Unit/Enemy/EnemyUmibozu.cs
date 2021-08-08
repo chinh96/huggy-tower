@@ -56,7 +56,7 @@ public class EnemyUmibozu : Unit, IAnim
 
     public void PlayAttack()
     {
-        DOTween.Sequence().AppendInterval(.4f).AppendCallback(() =>
+        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
         {
             if (!isDead)
             {

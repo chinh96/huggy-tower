@@ -27,7 +27,9 @@ public class HomeController : Singleton<HomeController>
 
     public void CheckButton()
     {
+#if UNITY_IOS
         fbLoginButton.SetActive(RemoteConfigController.Instance.EnableFbLogin);
+#endif
         removeAdsButton.SetActive(!Data.IsRemovedAds);
     }
 

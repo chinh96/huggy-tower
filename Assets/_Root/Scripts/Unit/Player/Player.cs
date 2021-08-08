@@ -530,7 +530,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                     Turn = ETurn.UsingItem;
                     PlayUseItem(_itemTarget.EquipType);
-                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    float timeDelay = _itemTarget.EquipType == ItemType.Bow || _itemTarget.EquipType == ItemType.BrokenBrick ? 1.2f : .5f;
+                    DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
                         if (levelMap.condition == condition)
                         {
@@ -575,7 +576,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         }
                     }
 
-                    float timeDelay = .5f;
+                    timeDelay = .5f;
                     switch (_itemTarget.EquipType)
                     {
                         case ItemType.Sword:
