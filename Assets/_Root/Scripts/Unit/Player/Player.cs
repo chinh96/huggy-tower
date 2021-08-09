@@ -466,22 +466,18 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             if (distance >= 110)
                             {
                                 PLayMove(true);
-                                float endValue = 0;
+                                float endValue = _itemTarget.transform.position.x - 1;
                                 switch (_itemTarget.EquipType)
                                 {
-                                    case ItemType.Sword:
-                                    case ItemType.SwordBlood:
-                                        endValue = 25;
-                                        break;
                                     case ItemType.BrokenBrick:
-                                        endValue = -40;
+                                        endValue = _itemTarget.transform.position.x - .5f;
                                         break;
                                 }
                                 if (_itemTarget as ItemTeleport)
                                 {
-                                    endValue = 130;
+                                    endValue = _itemTarget.transform.position.x;
                                 }
-                                transform.DOLocalMoveX(endValue, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
+                                transform.DOMoveX(endValue, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
                             }
                             else
                             {
