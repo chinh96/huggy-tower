@@ -8,3 +8,13 @@ public class LeaderboardData : MonoBehaviour
     public static bool IsWorldTab = true;
     public static List<LeaderboardUserInfo> UserInfos = new List<LeaderboardUserInfo>();
 }
+
+public class LeaderboardUserInfo
+{
+    public Sprite Sprite;
+    public string PlayerId;
+    public string Name = "";
+    public int Stat;
+    public string CountryCode;
+    public int Index;
+}

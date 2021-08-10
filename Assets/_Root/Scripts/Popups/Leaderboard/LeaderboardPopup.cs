@@ -55,7 +55,10 @@ public class LeaderboardPopup : Popup
 
         LeaderboardController.Instance.GetUserInfoCurrent();
         name.text = LeaderboardData.UserInfoCurrent.Name;
-        rank.text = LeaderboardData.UserInfoCurrent.Rank;
+
+        string textTab = LeaderboardData.IsWorldTab ? "World rank" : "Country rank";
+        string textRank = LeaderboardData.UserInfoCurrent.Index > Playfab.MaxResultsCount ? $"{textTab}: +{Playfab.MaxResultsCount}" : $"{textTab}: {LeaderboardData.UserInfoCurrent.Index}";
+        rank.text = textRank;
 
         FillData();
     }

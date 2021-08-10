@@ -176,15 +176,3 @@ public class LeaderboardController : Singleton<LeaderboardController>
         );
     }
 }
-
-public class LeaderboardUserInfo
-{
-    public Sprite Sprite;
-    public string PlayerId;
-    public string Name = "";
-    public int Stat;
-    public string CountryCode;
-    public int Index;
-    public string Rank => Index > Playfab.MaxResultsCount ? $"{textTab}: +{Playfab.MaxResultsCount}" : $"{textTab}: {Index}";
-    private string textTab => LeaderboardData.IsWorldTab ? "World rank" : "Country rank";
-}
