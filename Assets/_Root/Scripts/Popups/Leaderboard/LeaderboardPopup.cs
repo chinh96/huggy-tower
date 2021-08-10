@@ -23,7 +23,7 @@ public class LeaderboardPopup : Popup
     {
         base.BeforeShow();
 
-        LeaderboardController.Instance.IsWorldTab = true;
+        LeaderboardData.IsWorldTab = true;
         Reset();
     }
 
@@ -54,8 +54,11 @@ public class LeaderboardPopup : Popup
         page = 0;
 
         LeaderboardController.Instance.GetUserInfoCurrent();
-        name.text = LeaderboardController.Instance.UserInfoCurrent.Name;
-        rank.text = LeaderboardController.Instance.UserInfoCurrent.Rank;
+        name.text = LeaderboardData.UserInfoCurrent.Name;
+
+        string textTab = LeaderboardData.IsWorldTab ? "World rank" : "Country rank";
+        string textRank = LeaderboardData.UserInfoCurrent.Index > Playfab.MaxResultsCount ? $"{textTab}: +{Playfab.MaxResultsCount}" : $"{textTab}: {LeaderboardData.UserInfoCurrent.Index}";
+        rank.text = textRank;
 
         FillData();
     }
@@ -63,13 +66,13 @@ public class LeaderboardPopup : Popup
     private void ResetButton()
     {
         previousButton.SetActive(page > 0);
-        nextButton.SetActive((page + 1) * 10 < LeaderboardController.Instance.UserInfos.Count);
+        nextButton.SetActive((page + 1) * 10 < LeaderboardData.UserInfos.Count);
     }
 
     private void FillData()
     {
         int offset = 0;
-        List<LeaderboardUserInfo> userInfoByTab = LeaderboardController.Instance.UserInfos;
+        List<LeaderboardUserInfo> userInfoByTab = LeaderboardData.UserInfos;
         leaderboardItems.ForEach(item =>
         {
             item.gameObject.SetActive(false);
@@ -89,7 +92,7 @@ public class LeaderboardPopup : Popup
 
         ResetButton();
 
-        if ((page + 1) * 10 == LeaderboardController.Instance.UserInfos.Count)
+        if ((page + 1) * 10 == LeaderboardData.UserInfos.Count)
         {
             LeaderboardController.Instance.GetMoreLeaderboard(() => ResetButton());
         }
@@ -97,9 +100,9 @@ public class LeaderboardPopup : Popup
 
     public void OnClickWorldTab()
     {
-        if (!LeaderboardController.Instance.IsWorldTab)
+        if (!LeaderboardData.IsWorldTab)
         {
-            LeaderboardController.Instance.IsWorldTab = true;
+            LeaderboardData.IsWorldTab = true;
             worldTab.SetActive(true);
             countryTab.SetActive(false);
 
@@ -109,9 +112,9 @@ public class LeaderboardPopup : Popup
 
     public void OnClickCountryTab()
     {
-        if (LeaderboardController.Instance.IsWorldTab)
+        if (LeaderboardData.IsWorldTab)
         {
-            LeaderboardController.Instance.IsWorldTab = false;
+            LeaderboardData.IsWorldTab = false;
             worldTab.SetActive(false);
             countryTab.SetActive(true);
 
