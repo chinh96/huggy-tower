@@ -44,6 +44,8 @@ public class WinPopup : Popup
             {
                 Data.CoinTotal = coinTotal;
             });
+            
+            AnalyticController.AdjustLogEventClaimX5CoinWinLevel();
         });
     }
 

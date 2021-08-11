@@ -49,6 +49,12 @@ namespace com.adjust.sdk
                 adjustConfig.setEventBufferingEnabled(this.eventBuffering);
                 adjustConfig.setLaunchDeferredDeeplink(this.launchDeferredDeeplink);
                 Adjust.start(adjustConfig);
+
+                if (!Data.FirstOpen)
+                {
+                    Data.FirstOpen = true;
+                    AnalyticController.AdjustLogEventFirstOpen();
+                }
             }
         }
 

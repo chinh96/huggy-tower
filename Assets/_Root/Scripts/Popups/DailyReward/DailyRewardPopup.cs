@@ -70,6 +70,8 @@ public class DailyRewardPopup : Popup
                 Data.CoinTotal = coinTotal;
             }, claimButton);
         }
+        
+        AnalyticController.AdjustLogEventClaimDailyReward();
     }
 
     public void OnClickClaimAds()
@@ -85,6 +87,8 @@ public class DailyRewardPopup : Popup
                 Claim();
                 Data.CoinTotal = coinTotal;
             }, x5Button);
+            
+            AnalyticController.AdjustLogEventClaimDailyRewardByAds();
         });
     }
 
