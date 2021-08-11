@@ -333,6 +333,7 @@ GameObject:
   - component: {fileID: 877919177891067353}
   - component: {fileID: 4998709069009794008}
   - component: {fileID: 214398663600787977}
+  - component: {fileID: 85278139103991611}
   m_Layer: 0
   m_Name: Text1
   m_TagString: Untagged
@@ -387,9 +388,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Play game to get golden medal
-
-    From Princess'
+  m_text: "\uAC8C\uC784\uC744 \uD50C\uB808\uC774\uD558\uC5EC \uAE08\uBA54\uB2EC\uC744
+    \uD68D\uB4DD\uD558\uC138\uC694\n\uACF5\uC8FC\uC5D0\uC11C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5af23b118811c284a974f2178409d2c5, type: 2}
   m_sharedMaterial: {fileID: 188819359160415666, guid: 5af23b118811c284a974f2178409d2c5, type: 2}
@@ -458,6 +458,44 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &85278139103991611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2685400931129878754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: RescueParty_txtTutorial
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &2814390270286743396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,6 +1166,7 @@ GameObject:
   - component: {fileID: 5405004738449174942}
   - component: {fileID: 1045083547049658624}
   - component: {fileID: 3901068301266877352}
+  - component: {fileID: 7254019834449549504}
   m_Layer: 0
   m_Name: Text2
   m_TagString: Untagged
@@ -1182,7 +1221,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Golden medal total:'
+  m_text: "\uAE08\uBA54\uB2EC \uD569\uACC4:"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5af23b118811c284a974f2178409d2c5, type: 2}
   m_sharedMaterial: {fileID: 188819359160415666, guid: 5af23b118811c284a974f2178409d2c5, type: 2}
@@ -1251,6 +1290,44 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7254019834449549504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6578682370275758379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: RescueParty_txtGoldenTotal
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &6630465178506896783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,6 +1339,7 @@ GameObject:
   - component: {fileID: 2292427332006782569}
   - component: {fileID: 4681419878348244831}
   - component: {fileID: 6926362770697984570}
+  - component: {fileID: 5527207152400626120}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -1316,7 +1394,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Rescue Party
+  m_text: "\uAD6C\uC870\uB300"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45767933e9a7b3b45a7dc93937633f78, type: 2}
   m_sharedMaterial: {fileID: 188819359160415666, guid: 45767933e9a7b3b45a7dc93937633f78, type: 2}
@@ -1385,6 +1463,44 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5527207152400626120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630465178506896783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: RescueParty_txtTitle
+  mTermSecondary: BoldenVanBold
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &8836004904570094427
 GameObject:
   m_ObjectHideFlags: 0
@@ -1595,6 +1711,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -183
       objectReference: {fileID: 0}
+    - target: {fileID: 5527172451934431080, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
+      propertyPath: mTermSecondary
+      value: BoldenVanBold
+      objectReference: {fileID: 0}
+    - target: {fileID: 5527172451934431080, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
+      propertyPath: mLocalizeTargetName
+      value: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
+      objectReference: {fileID: 0}
     - target: {fileID: 5550368438702570718, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -171
@@ -1603,12 +1727,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -169
       objectReference: {fileID: 0}
+    - target: {fileID: 6306620408121259934, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
+      propertyPath: m_text
+      value: "\uC8FC\uC7A5\uD558\uB2E4"
+      objectReference: {fileID: 0}
     - target: {fileID: 7263680728133465115, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
       propertyPath: m_Name
       value: RescuePartyItem_2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
+--- !u!224 &2045537339970152985 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1620596115814949145, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
+  m_PrefabInstance: {fileID: 729221175966747392}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3176401726346557036 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2741124551728577900, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
@@ -1620,11 +1753,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fc6315096c5fb149ac809872e99bf26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &2045537339970152985 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1620596115814949145, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
-  m_PrefabInstance: {fileID: 729221175966747392}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1717241028356988802
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1834,6 +1962,18 @@ PrefabInstance:
       propertyPath: Type
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5527172451934431080, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
+      propertyPath: mTermSecondary
+      value: BoldenVanBold
+      objectReference: {fileID: 0}
+    - target: {fileID: 5527172451934431080, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
+      propertyPath: mLocalizeTargetName
+      value: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6306620408121259934, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
+      propertyPath: m_text
+      value: "\uC8FC\uC7A5\uD558\uB2E4"
+      objectReference: {fileID: 0}
     - target: {fileID: 7079324038471287694, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 147
@@ -1970,6 +2110,18 @@ PrefabInstance:
     - target: {fileID: 2741124551728577900, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
       propertyPath: Type
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5527172451934431080, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
+      propertyPath: mTermSecondary
+      value: BoldenVanBold
+      objectReference: {fileID: 0}
+    - target: {fileID: 5527172451934431080, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
+      propertyPath: mLocalizeTargetName
+      value: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6306620408121259934, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
+      propertyPath: m_text
+      value: "\uC8FC\uC7A5\uD558\uB2E4"
       objectReference: {fileID: 0}
     - target: {fileID: 7079324038471287694, guid: 96d7f86f052759b4082a767ad5f57dcf, type: 3}
       propertyPath: m_AnchoredPosition.x

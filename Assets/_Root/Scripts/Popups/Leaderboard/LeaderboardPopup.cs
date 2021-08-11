@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using I2.Loc;
 
 public class LeaderboardPopup : Popup
 {
@@ -56,10 +57,13 @@ public class LeaderboardPopup : Popup
         LeaderboardController.Instance.GetUserInfoCurrent();
         name.text = LeaderboardData.UserInfoCurrent.Name;
 
-        string textTab = LeaderboardData.IsWorldTab ? "World rank" : "Country rank";
-        string textRank = LeaderboardData.UserInfoCurrent.Index > Playfab.MaxResultsCount ? $"{textTab}: +{Playfab.MaxResultsCount}" : $"{textTab}: {LeaderboardData.UserInfoCurrent.Index}";
-        rank.text = textRank;
-
+        //string textTab = LeaderboardData.IsWorldTab ? "World rank" : "Country rank";
+        string term = LeaderboardData.IsWorldTab ? "LeaderBoard_txtWorldRank rank" : "LeaderBoard_txtCountryRank";
+        rank.GetComponent<Localize>().SetTerm(term);
+        //string textRank = LeaderboardData.UserInfoCurrent.Index > Playfab.MaxResultsCount ? $"{textTab}: +{Playfab.MaxResultsCount}" : $"{textTab}: {LeaderboardData.UserInfoCurrent.Index}";
+        string value = LeaderboardData.UserInfoCurrent.Index > Playfab.MaxResultsCount ? "+ " + Playfab.MaxResultsCount : LeaderboardData.UserInfoCurrent.Index.ToString();
+        //rank.text = textRank;
+        rank.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", value, true);
         FillData();
     }
 
