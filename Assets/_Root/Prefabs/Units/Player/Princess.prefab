@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 8096404603239075968}
   - component: {fileID: 8096404603239075999}
   - component: {fileID: 5143322456468075501}
+  - component: {fileID: 7095499331076311993}
   m_Layer: 11
   m_Name: Princess
   m_TagString: Untagged
@@ -186,7 +187,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   skeletonDataAsset: {fileID: 11400000, guid: d9763a4e1fd674747b6a4e27c2c5916f, type: 2}
-  initialSkinName: 
+  initialSkinName: Princess
   initialFlipX: 1
   initialFlipY: 0
   startingAnimation: idle
@@ -274,6 +275,21 @@ MonoBehaviour:
   rigid2D: {fileID: 8096404603239075968}
   coll2D: {fileID: 7870550860818650309}
   lockObj: {fileID: 0}
+  lockObj2: {fileID: 0}
+--- !u!114 &7095499331076311993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8096404603239075972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b464a8f2fd212493fb3c985bfd2f8106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eUnitType: 4
+  character: {fileID: 8096404603239075970}
 --- !u!1 &9014724620313647040
 GameObject:
   m_ObjectHideFlags: 0

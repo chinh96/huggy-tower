@@ -44,7 +44,7 @@ public static class Data
         set
         {
             SetString(Constants.CURRENT_SKIN_HERO, value);
-            EventController.CurrentSkinHeroChanged();
+            EventController.CurrentSkinHeroChanged?.Invoke();
         }
     }
 
@@ -54,7 +54,7 @@ public static class Data
         set
         {
             SetString(Constants.CURRENT_SKIN_PRINCESS, value);
-            // EventController.CurrentSkinPrincessChanged();
+            EventController.CurrentSkinPrincessChanged?.Invoke();
         }
     }
 
