@@ -58,10 +58,10 @@ public class SkinPopup : Popup
         switch (eUnitType)
         {
             case EUnitType.Hero:
-                character.ChangeSkin(Data.CurrentSkinHero);
+                character.ChangeSkin(Data.CurrentSkinHero, eUnitType);
                 break;
             case EUnitType.Princess:
-                character.ChangeSkin(Data.CurrentSkinPrincess);
+                character.ChangeSkin(Data.CurrentSkinPrincess, eUnitType);
                 break;
         }
 
@@ -83,7 +83,7 @@ public class SkinPopup : Popup
 
     public void ChangeCharacterSkin(string skinName)
     {
-        character.ChangeSkin(skinName);
+        character.ChangeSkin(skinName, eUnitType);
     }
 
     public void ResetDock()
@@ -99,5 +99,10 @@ public class SkinPopup : Popup
     public void ResetFx()
     {
         skinRows.ForEach(skinRow => skinRow.ResetFx());
+    }
+
+    public void ShowPrincessPopup()
+    {
+        PopupController.Instance.Show<SkinPrincessPopup>(null, ShowAction.DoNothing);
     }
 }

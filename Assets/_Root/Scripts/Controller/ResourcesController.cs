@@ -29,6 +29,8 @@ public class ResourcesController : Singleton<ResourcesController>
     public static LibraryResources Library;
     public static CountryResources Country;
 
+    public static List<SkinData> SkinRescuePartys = new List<SkinData>();
+
     protected override void Awake()
     {
         base.Awake();
@@ -41,6 +43,13 @@ public class ResourcesController : Singleton<ResourcesController>
         {
             Data.DateTimeStart = DateTime.Now.ToString();
         }
+
+        if (Data.DateTimeStartRescueParty == "")
+        {
+            Data.DateTimeStartRescueParty = DateTime.Now.ToString();
+        }
+
+        GetSkinRescueParty();
     }
 
     private void Start()
@@ -66,7 +75,31 @@ public class ResourcesController : Singleton<ResourcesController>
     private void Reset()
     {
         Hero.Reset();
+        Princess.Reset();
         DailyQuest.Reset();
         Library.Reset();
+    }
+
+    public static void GetSkinRescueParty()
+    {
+        SkinRescuePartys.Add(Princess.SkinDatas.Find(data => data.RescuePartyType == RescuePartyType.Princess));
+        SkinRescuePartys.Add(Hero.SkinDatas.Find(data => data.RescuePartyType == RescuePartyType.Hero));
+        SkinRescuePartys.Add(Hero.SkinDatas.Find(data => data.RescuePartyType == RescuePartyType.Top100));
+    }
+
+    public static void ReceiveSkin(Action action)
+    {
+        if (Data.TimeToRescueParty.TotalMilliseconds <= 0)
+        {
+            SkinData data = SkinRescuePartys.Find(data => data.RescuePartyType == RescuePartyType.Top100);
+            if (!data.IsUnlocked)
+            {
+                LeaderboardRescuePartyController.Instance.IsTop100(() =>
+                {
+                    action?.Invoke();
+                });
+            }
+        }
+
     }
 }

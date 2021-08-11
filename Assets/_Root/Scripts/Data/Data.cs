@@ -50,11 +50,11 @@ public static class Data
 
     public static string CurrentSkinPrincess
     {
-        get => GetString(Constants.CURRENT_SKIN_PRINCESS, "");
+        get => GetString(Constants.CURRENT_SKIN_PRINCESS, ResourcesController.Princess.SkinDefault.SkinName);
         set
         {
             SetString(Constants.CURRENT_SKIN_PRINCESS, value);
-            EventController.CurrentSkinPrincessChanged();
+            // EventController.CurrentSkinPrincessChanged();
         }
     }
 
@@ -118,4 +118,18 @@ public static class Data
     public static bool IsBuildFirstKingdomItem { get => GetBool(Constants.BUILD_FIRST_KINGDOM_ITEM, false); set => SetBool(Constants.BUILD_FIRST_KINGDOM_ITEM, value); }
 
     public static bool IsClaimFirstDailyQuest { get => GetBool(Constants.CLAIM_FIRST_DAILY_QUEST, false); set => SetBool(Constants.CLAIM_FIRST_DAILY_QUEST, value); }
+
+    public static int TotalGoldMedal
+    {
+        get => GetInt(Constants.TOTAL_GOLD_MEDAL, 0);
+        set
+        {
+            SetInt(Constants.TOTAL_GOLD_MEDAL, value);
+            EventController.MedalTotalChanged?.Invoke();
+        }
+    }
+
+    public static TimeSpan TimeToRescueParty => new DateTime(DateTime.Now.Year, 9, 1, 0, 0, 0) - DateTime.Now;
+
+    public static string DateTimeStartRescueParty { get => GetString(Constants.DATE_TIME_START_RESCUE_PARTY, ""); set => SetString(Constants.DATE_TIME_START_RESCUE_PARTY, value); }
 }
