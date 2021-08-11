@@ -105,30 +105,33 @@ public class AchievementResources : ScriptableObject
 
     public void CheckCompleteCastle()
     {
-        if (ResourcesController.Universe.WorldCurrent.IsComplete)
+        ResourcesController.Universe.Worlds.ForEach(world =>
         {
-            switch (ResourcesController.Universe.WorldCurrent.WorldType)
+            if (world.IsComplete)
             {
-                case WorldType.Earth:
-                    IncreaseByType(AchievementType.CompleteEarth);
-                    break;
-                case WorldType.Desert:
-                    IncreaseByType(AchievementType.CompleteDesert);
-                    break;
-                case WorldType.Iceland:
-                    IncreaseByType(AchievementType.CompleteIceland);
-                    break;
-                case WorldType.Inferno:
-                    IncreaseByType(AchievementType.CompleteInferno);
-                    break;
-                case WorldType.Jade:
-                    IncreaseByType(AchievementType.CompleteJade);
-                    break;
-                case WorldType.Olympus:
-                    IncreaseByType(AchievementType.CompleteOlympus);
-                    break;
+                switch (world.WorldType)
+                {
+                    case WorldType.Earth:
+                        IncreaseByType(AchievementType.CompleteEarth);
+                        break;
+                    case WorldType.Desert:
+                        IncreaseByType(AchievementType.CompleteDesert);
+                        break;
+                    case WorldType.Iceland:
+                        IncreaseByType(AchievementType.CompleteIceland);
+                        break;
+                    case WorldType.Inferno:
+                        IncreaseByType(AchievementType.CompleteInferno);
+                        break;
+                    case WorldType.Jade:
+                        IncreaseByType(AchievementType.CompleteJade);
+                        break;
+                    case WorldType.Olympus:
+                        IncreaseByType(AchievementType.CompleteOlympus);
+                        break;
+                }
             }
-        }
+        });
     }
 }
 
