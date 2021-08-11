@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using I2.Loc;
 
 public class AchievementItem : MonoBehaviour
 {
@@ -32,7 +33,9 @@ public class AchievementItem : MonoBehaviour
     {
         image.sprite = data.Sprite;
         number.text = data.Number;
-        title.text = data.Title;
+        //title.text = data.Title;
+        title.GetComponent<Localize>().SetTerm("AchieveItem_txt" + data.Type + "Type");
+        title.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", data.NumberTarget.ToString(), true);
         buttonActive.SetActive(data.NumberCurrent >= data.NumberTarget);
         buttonDeactive.SetActive(data.NumberCurrent < data.NumberTarget);
         bonus.text = data.Bonus.ToString();

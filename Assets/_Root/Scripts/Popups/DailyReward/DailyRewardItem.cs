@@ -5,6 +5,7 @@ using TMPro;
 using System;
 using Spine.Unity;
 using UnityEngine.UI;
+using I2.Loc;
 
 public class DailyRewardItem : MonoBehaviour
 {
@@ -47,7 +48,8 @@ public class DailyRewardItem : MonoBehaviour
 
     public void Reset()
     {
-        dayText.text = $"Day {day + 1}";
+        //dayText.text = $"Day {day + 1}";
+        dayText.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", (day + 1).ToString(), true);
         coinText.text = $"{coin}";
         Hide();
         Check();

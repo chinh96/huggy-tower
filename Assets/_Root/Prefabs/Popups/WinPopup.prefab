@@ -360,6 +360,7 @@ GameObject:
   - component: {fileID: 2427297383312220791}
   - component: {fileID: 2427297383312220789}
   - component: {fileID: 2427297383312220790}
+  - component: {fileID: 6783899175942188579}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -483,6 +484,44 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6783899175942188579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427297383312220744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: WinPopup_txtTitle
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &2427297383688437176
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,6 +863,7 @@ GameObject:
   - component: {fileID: 2427297384349335242}
   - component: {fileID: 2427297384349335240}
   - component: {fileID: 2427297384349335241}
+  - component: {fileID: 6406147985931879530}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -947,6 +987,44 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6406147985931879530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427297384349335243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: WinPopup_TapToContinue
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &2427297384611456138
 GameObject:
   m_ObjectHideFlags: 0
@@ -1413,14 +1491,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
---- !u!224 &2238582934808684670 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2791554019889413724, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
-  m_PrefabInstance: {fileID: 4155868933248226850}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4295205897488436823 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 159666436122450037, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
+  m_PrefabInstance: {fileID: 4155868933248226850}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2238582934808684670 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2791554019889413724, guid: 857bdd7c63223a14898bf1a4c949853d, type: 3}
   m_PrefabInstance: {fileID: 4155868933248226850}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5073199541863841991
@@ -1645,6 +1723,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84b8156482dc1b14293ef871d4ab8ae8, type: 3}
+--- !u!224 &2427297383149530795 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7591940511485275624, guid: 84b8156482dc1b14293ef871d4ab8ae8, type: 3}
+  m_PrefabInstance: {fileID: 5256971490542666563}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6893569108855869999 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1683892314802688364, guid: 84b8156482dc1b14293ef871d4ab8ae8, type: 3}
@@ -1656,11 +1739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d7a91dda283e934887a29f28937c879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &2427297383149530795 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7591940511485275624, guid: 84b8156482dc1b14293ef871d4ab8ae8, type: 3}
-  m_PrefabInstance: {fileID: 5256971490542666563}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8909323418231345329
 PrefabInstance:
   m_ObjectHideFlags: 0

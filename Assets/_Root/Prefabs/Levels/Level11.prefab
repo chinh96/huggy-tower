@@ -1,5 +1,43 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &8807230991509194643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393946929780743094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: InGame_Level11_txtTutorial
+  mTermSecondary: BoldenVanBold
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &2878378500859808896
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +131,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   condition: 1
   homeTower: {fileID: 0}
-  visitTower: {fileID: 0}
   DurationMoveCamera: 0
 --- !u!1001 &107474788515054664
 PrefabInstance:
@@ -214,7 +251,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1016125452115513533, guid: b6b2a838eb8bb3541b48dc791d2950b1, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1405862431931591222, guid: b6b2a838eb8bb3541b48dc791d2950b1, type: 3}
       propertyPath: m_RootOrder
@@ -226,11 +263,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4614216581153747573, guid: b6b2a838eb8bb3541b48dc791d2950b1, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5126489664775943022, guid: b6b2a838eb8bb3541b48dc791d2950b1, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6303475055208827782, guid: b6b2a838eb8bb3541b48dc791d2950b1, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849996844959230444, guid: b6b2a838eb8bb3541b48dc791d2950b1, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8600561889827291720, guid: b6b2a838eb8bb3541b48dc791d2950b1, type: 3}
       propertyPath: m_Name
@@ -578,7 +623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 905074450525146971, guid: 90aefcffc58927145809db872441fbd9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 905074450525146971, guid: 90aefcffc58927145809db872441fbd9, type: 3}
       propertyPath: m_SizeDelta.y
@@ -634,7 +679,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1158128373548879551, guid: 90aefcffc58927145809db872441fbd9, type: 3}
       propertyPath: m_text
-      value: GET KEY TO OPEN THE TREASURE
+      value: "\uBCF4\uBB3C\uC744 \uC5EC\uB294 \uC5F4\uC1E0\uB97C \uC5BB\uB2E4"
       objectReference: {fileID: 0}
     - target: {fileID: 2407184272045489550, guid: 90aefcffc58927145809db872441fbd9, type: 3}
       propertyPath: m_Name
@@ -642,6 +687,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90aefcffc58927145809db872441fbd9, type: 3}
+--- !u!1 &1393946929780743094 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2407184272045489550, guid: 90aefcffc58927145809db872441fbd9, type: 3}
+  m_PrefabInstance: {fileID: 3616463135478539832}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4521396757638883683 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 905074450525146971, guid: 90aefcffc58927145809db872441fbd9, type: 3}
@@ -753,7 +803,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 270637539858150073, guid: 9d9c0ce0413e1e440978fbe5c74def19, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2106530317073345012, guid: 9d9c0ce0413e1e440978fbe5c74def19, type: 3}
       propertyPath: m_RootOrder
@@ -762,6 +812,10 @@ PrefabInstance:
     - target: {fileID: 3123453800769353956, guid: 9d9c0ce0413e1e440978fbe5c74def19, type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4168741726585665570, guid: 9d9c0ce0413e1e440978fbe5c74def19, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6351516534676861867, guid: 9d9c0ce0413e1e440978fbe5c74def19, type: 3}
       propertyPath: m_Type

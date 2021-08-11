@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using I2.Loc;
 
 public class DailyQuestItem : MonoBehaviour
 {
@@ -29,7 +30,9 @@ public class DailyQuestItem : MonoBehaviour
     public void Reset()
     {
         image.sprite = item.Sprite;
-        title.text = item.Title;
+        //title.text = item.Title;
+        title.GetComponent<Localize>().SetTerm("DailyQuestItem_txt" + item.Type + "Type");
+        title.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", item.NumberTarget.ToString(), true);
         bonus.text = item.Bonus.ToString();
         buttonActive.SetActive(item.IsUnlocked && !item.IsClaimed);
         buttonDeactive.SetActive(!item.IsUnlocked);

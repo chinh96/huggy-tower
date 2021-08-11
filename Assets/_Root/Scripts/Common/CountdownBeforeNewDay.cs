@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using I2.Loc;
 
 public class CountdownBeforeNewDay : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class CountdownBeforeNewDay : MonoBehaviour
 
     private void Countdown()
     {
-        countdownText.text = pattern.Replace("{}", Util.SecondsToTimeFormatBeforeNewDay());
+        //countdownText.text = pattern.Replace("{}", Util.SecondsToTimeFormatBeforeNewDay());
+        countdownText.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", Util.SecondsToTimeFormatBeforeNewDay().ToString(), true);
     }
 }

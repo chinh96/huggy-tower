@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using I2.Loc;
 
 public class LevelText : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class LevelText : MonoBehaviour
 
     private void ChangeLevel()
     {
-        level.text = $"Level {Data.CurrentLevel + 1}";
+        //level.text = $"Level {Data.CurrentLevel + 1}";
+        level.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", (Data.CurrentLevel + 1).ToString(), true);
     }
 }

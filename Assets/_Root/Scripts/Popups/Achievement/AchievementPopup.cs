@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using I2.Loc;
 
 public class AchievementPopup : Popup
 {
@@ -73,7 +74,8 @@ public class AchievementPopup : Popup
     {
         int total = ResourcesController.Achievement.AchievementDatas.Count;
         int number = ResourcesController.Achievement.GetDatasIsClaimed().Count;
-        text.text = $"Complete {number}/{total}";
+        //text.text = $"Complete {number}/{total}";
+        text.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", number + "/" + total, true);
 
         float endValue = (float)number / total;
         if (hasAnimation)

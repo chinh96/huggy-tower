@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
+using I2.Loc;
 
 public class NotiQuest : MonoBehaviour
 {
@@ -20,7 +21,8 @@ public class NotiQuest : MonoBehaviour
     public void Init(DailyQuestDayItem item)
     {
         image.sprite = item.Sprite;
-        title.text = item.Title;
+        //title.text = item.Title;
+        title.GetComponent<Localize>().SetTerm("DailyQuestItem_txt" + item.Type + "Type");
         number.text = item.Number;
     }
 

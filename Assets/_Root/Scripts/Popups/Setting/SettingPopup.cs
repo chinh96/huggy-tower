@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using I2.Loc;
 
 public class SettingPopup : Popup
 {
@@ -18,7 +19,8 @@ public class SettingPopup : Popup
     {
         base.BeforeShow();
 
-        versionText.text = $"Version {Application.version}";
+        //versionText.text = $"Version {Application.version}";
+        versionText.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", Application.version.ToString(), true);
 #if UNITY_IOS
         purchaseButton.SetActive(true);
 #endif
@@ -37,5 +39,10 @@ public class SettingPopup : Popup
     public void OnClickRateUs()
     {
         RatingController.Instance.LinkToStore();
+    }
+
+    public void OnClickShowPopupSelect() 
+    {
+        PopupController.Instance.Show<PopupSelectLanguage>();
     }
 }
