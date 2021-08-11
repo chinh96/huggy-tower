@@ -5,6 +5,7 @@ using Spine.Unity;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
+using I2.Loc;
 
 public class LibraryPopup : Popup
 {
@@ -88,6 +89,7 @@ public class LibraryPopup : Popup
         }
 
         name.text = libraryDataCurrent.Name;
-        description.text = libraryDataCurrent.Description;
+        //description.text = libraryDataCurrent.Description;
+        description.GetComponent<Localize>().SetTerm("LibraryPopup_txt"+ libraryDataCurrent.Name + "Description");
     }
 }

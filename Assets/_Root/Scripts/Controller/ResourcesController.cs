@@ -41,6 +41,7 @@ public class ResourcesController : Singleton<ResourcesController>
         {
             Data.DateTimeStart = DateTime.Now.ToString();
         }
+
     }
 
     private void Start()

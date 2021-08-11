@@ -4,6 +4,7 @@ using Spine.Unity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using I2.Loc;
 
 public class LibraryItemInfoPopup : Popup
 {
@@ -39,6 +40,7 @@ public class LibraryItemInfoPopup : Popup
         }
 
         name.text = Data.LibraryItemInfo.Name;
-        levelUnlock.text = $"Unlock Lv {Data.LibraryItemInfo.LevelUnlock}";
+        //levelUnlock.text = $"Unlock Lv {Data.LibraryItemInfo.LevelUnlock}";
+        levelUnlock.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", " LV " + Data.LibraryItemInfo.LevelUnlock, true);
     }
 }

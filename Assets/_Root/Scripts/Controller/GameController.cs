@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Lean.Touch;
 using Spine.Unity;
+using I2.Loc;
 
 public class GameController : Singleton<GameController>
 {
@@ -239,7 +240,8 @@ public class GameController : Singleton<GameController>
     {
         var data = ResourcesController.Quest.GetQuestByCondition(condition);
 
-        txtQuest.text = $"Level {level + 1}: {data.Quest}";
+        //txtQuest.text = $"Level {level + 1}: {data.Quest}";
+        txtQuest.GetComponent<Localize>().SetTerm("QuestInGame_txt" + data.Condition + "Type");
         imgQuest.sprite = data.Sprite;
     }
 
