@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
+using UnityEngine.Purchasing;
 
 public class HomeController : Singleton<HomeController>
 {
@@ -20,10 +21,12 @@ public class HomeController : Singleton<HomeController>
         overlay.DOFade(1, 0);
     }
 
-    public void OnPurchaseSuccessRemoveAds()
+    public void OnPurchaseSuccessRemoveAds(Product product)
     {
         Data.IsRemovedAds = true;
         CheckButton();
+        
+        AnalyticController.AdjustLogEventPurchaseItem("o6ssbb", 2.99f, "USD", product.transactionID);
     }
 
     public void CheckButton()

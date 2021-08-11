@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Purchasing;
 
 public class ShopItem : MonoBehaviour
 {
@@ -75,6 +76,31 @@ public class ShopItem : MonoBehaviour
 
         shopPopup.CheckItems();
         EventController.SkinPopupReseted();
+    }
+
+    public void OnPurchaseSuccessTracking(Product product)
+    {
+        switch (shopItemType)
+        {
+            case ShopItemType.Gold1:
+                AnalyticController.AdjustLogEventPurchaseItem("kqr0x8", 0.99f, "USD", product.transactionID);
+                break;
+            case ShopItemType.Gold2:
+                AnalyticController.AdjustLogEventPurchaseItem("ygs9gy", 1.99f, "USD", product.transactionID);
+                break;
+            case ShopItemType.Gold3:
+                AnalyticController.AdjustLogEventPurchaseItem("kk1yzu", 4.99f, "USD", product.transactionID);
+                break;
+            case ShopItemType.UnlockAllSkins:
+                AnalyticController.AdjustLogEventPurchaseItem("5dxgq2", 4.99f, "USD", product.transactionID);
+                break;
+            case ShopItemType.RemoveAds:
+                AnalyticController.AdjustLogEventPurchaseItem("o6ssbb", 2.99f, "USD", product.transactionID);
+                break;
+            case ShopItemType.Vip:
+                AnalyticController.AdjustLogEventPurchaseItem("usm42a", 9.99f, "USD", product.transactionID);
+                break;
+        }
     }
 }
 

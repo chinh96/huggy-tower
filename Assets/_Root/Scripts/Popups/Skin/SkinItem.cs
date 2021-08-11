@@ -170,8 +170,9 @@ public class SkinItem : MonoBehaviour
             {
                 if (!result.Cancelled && String.IsNullOrEmpty(result.Error))
                 {
-                    AnalyticController.UnlockSkinFacebook();
                     Done();
+                    AnalyticController.UnlockSkinFacebook();
+                    AnalyticController.AdjustLogEventShareFb();
                 }
             },
             linkName: "Hero Tower Wars",

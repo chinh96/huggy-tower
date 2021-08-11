@@ -38,6 +38,6 @@ public class LosePopup : Popup
 
     public void OnClickSkipButton()
     {
-        GameController.Instance.OnSkipLevel();
+        GameController.Instance.OnSkipLevel(AnalyticController.AdjustLogEventSkipLoseLevel);
     }
 }

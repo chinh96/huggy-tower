@@ -42,6 +42,18 @@ public class Constants
     public const string DAILY_QUEST_NUMBER_CURRENT = "DAILY_QUEST_NUMBER_CURRENT";
     public const string PLAYER_ID = "PLAYER_ID";
     public const string DONT_SHOW_UPDATE_AGAIN = "DONT_SHOW_UPDATE_AGAIN";
+    public const string FIRST_OPEN = "first_open";
+    public const string PLAY_LEVEL_1 = "play_level_1";
+    public const string PLAY_LEVEL_2 = "play_level_2";
+    public const string PLAY_LEVEL_3 = "play_level_3";
+    public const string PLAY_LEVEL_4 = "play_level_4";
+    public const string PLAY_LEVEL_5 = "play_level_5";
+    public const string PLAY_LEVEL_6 = "play_level_6";
+    public const string PLAY_LEVEL_7 = "play_level_7";
+    public const string PLAY_LEVEL_8 = "play_level_8";
+    public const string PLAY_LEVEL_9 = "play_level_9";
+    public const string PLAY_LEVEL_10= "play_level_10";
+    public const string PLAY_LEVEL_20= "play_level_20";
 
     // Scene
     public const string LOADING_SCENE = "LoadingScene";

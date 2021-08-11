@@ -216,22 +216,87 @@ public class GameController : Singleton<GameController>
         InternalPlayLevel();
         SavePreviousLevel(levelInstall);
         AnalyticController.StartLevel();
-        if (Data.CurrentLevel == 0)
+
+
+        switch (Data.CurrentLevel)
         {
-            AnalyticController.StartLevel1Funnel();
-            AnalyticController.Level1StartFunnel();
-        }
-        else if (Data.CurrentLevel == 7)
-        {
-            AnalyticController.StartLevel8Funnel();
-        }
-        else if (Data.CurrentLevel == 9)
-        {
-            AnalyticController.Level10StartFunnel();
-        }
-        else if (Data.CurrentLevel == 19)
-        {
-            AnalyticController.Level20StartFunnel();
+            case 0:
+                if (!Data.FlagPlayLevel1)
+                {
+                    AnalyticController.StartLevel1Funnel();
+                    AnalyticController.Level1StartFunnel();
+                    AnalyticController.AdjustLogEventPlayLevel1();
+                }
+
+                break;
+            case 1:
+                if (!Data.FlagPlayLevel2)
+                {
+                    AnalyticController.AdjustLogEventPlayLevel2();
+                }
+
+                break;
+            case 2:
+                if (!Data.FlagPlayLevel3)
+                {
+                }
+
+                AnalyticController.AdjustLogEventPlayLevel3();
+                break;
+            case 3:
+                if (!Data.FlagPlayLevel4)
+                {
+                    AnalyticController.AdjustLogEventPlayLevel4();
+                }
+
+                break;
+            case 4:
+                if (!Data.FlagPlayLevel5)
+                {
+                    AnalyticController.AdjustLogEventPlayLevel5();
+                }
+
+                break;
+            case 5:
+                if (!Data.FlagPlayLevel6)
+                {
+                    AnalyticController.AdjustLogEventPlayLevel6();
+                }
+
+                break;
+            case 6:
+                if (!Data.FlagPlayLevel7)
+                {
+                    AnalyticController.AdjustLogEventPlayLevel7();
+                }
+
+                break;
+            case 7:
+                if (!Data.FlagPlayLevel8)
+                {
+                    AnalyticController.StartLevel8Funnel();
+                    AnalyticController.AdjustLogEventPlayLevel8();
+                }
+
+                break;
+            case 8:
+                if (!Data.FlagPlayLevel9)
+                {
+                    AnalyticController.AdjustLogEventPlayLevel9();
+                }
+
+                break;
+            case 9:
+                if (!Data.FlagPlayLevel10)
+                {
+                    AnalyticController.Level10StartFunnel();
+                    AnalyticController.AdjustLogEventPlayLevel10();
+                }
+
+                break;
+            case 19:
+                AnalyticController.Level20StartFunnel();
+                break;
         }
 
         opacity.SetActive(Root.LevelMap.DurationMoveCamera > 0);
@@ -292,6 +357,11 @@ public class GameController : Singleton<GameController>
 
     public void OnSkipLevel()
     {
+        OnSkipLevel(null);
+    }
+    
+    public void OnSkipLevel(Action onAdCompleted)
+    {
         AnalyticController.SkipLevel();
 
         PopupController.Instance.DismissAll();
@@ -300,6 +370,7 @@ public class GameController : Singleton<GameController>
         {
             Data.CurrentLevel++;
             OnNextLevel();
+            onAdCompleted?.Invoke();
         });
     }
 
