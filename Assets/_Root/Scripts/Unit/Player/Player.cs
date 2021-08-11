@@ -808,6 +808,14 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             effectHitKappa.gameObject.SetActive(true);
             effectHitKappa.Play();
         }
+        else if (_target as EnemyGoblin)
+        {
+            ParticleSystem bomb = Instantiate(effectBomb, transform.parent);
+            bomb.transform.position = transform.position;
+            bomb.gameObject.SetActive(true);
+            bomb.Play();
+            SoundController.Instance.PlayOnce(SoundType.BombGoblin);
+        }
         else
         {
             effectHit.gameObject.SetActive(true);

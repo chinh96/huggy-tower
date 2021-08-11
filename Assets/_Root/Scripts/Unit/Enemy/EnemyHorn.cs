@@ -21,7 +21,10 @@ public class EnemyHorn : Unit, IAnim
 
     private void OnEndAttackByEvent() { PlayIdle(true); }
 
-    private void OnAttackByEvent() { }
+    private void OnAttackByEvent()
+    {
+        _callbackAttackPlayer?.Invoke();
+    }
 
     public override void OnBeingAttacked() { OnDead(); }
 

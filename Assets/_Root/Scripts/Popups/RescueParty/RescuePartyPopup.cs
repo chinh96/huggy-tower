@@ -6,6 +6,7 @@ using System;
 public class RescuePartyPopup : Popup
 {
     [SerializeField] private List<RescuePartyItem> rescuePartyItems;
+    [SerializeField] private GameObject noti;
 
     protected override void AfterInstantiate()
     {
@@ -25,10 +26,19 @@ public class RescuePartyPopup : Popup
         base.BeforeShow();
 
         rescuePartyItems.ForEach(item => item.Reset());
+
+        CheckNoti();
     }
 
     public void ShowLeaderboardRescueParty()
     {
+        Data.ClickedTop100Button = true;
+        CheckNoti();
         LeaderboardRescuePartyController.Instance.Show();
+    }
+
+    private void CheckNoti()
+    {
+        noti.SetActive(!Data.ClickedTop100Button);
     }
 }
