@@ -44,17 +44,17 @@ public static class Data
         set
         {
             SetString(Constants.CURRENT_SKIN_HERO, value);
-            EventController.CurrentSkinHeroChanged();
+            EventController.CurrentSkinHeroChanged?.Invoke();
         }
     }
 
     public static string CurrentSkinPrincess
     {
-        get => GetString(Constants.CURRENT_SKIN_PRINCESS, "");
+        get => GetString(Constants.CURRENT_SKIN_PRINCESS, ResourcesController.Princess.SkinDefault.SkinName);
         set
         {
             SetString(Constants.CURRENT_SKIN_PRINCESS, value);
-            EventController.CurrentSkinPrincessChanged();
+            EventController.CurrentSkinPrincessChanged?.Invoke();
         }
     }
 
@@ -118,4 +118,41 @@ public static class Data
     public static bool IsBuildFirstKingdomItem { get => GetBool(Constants.BUILD_FIRST_KINGDOM_ITEM, false); set => SetBool(Constants.BUILD_FIRST_KINGDOM_ITEM, value); }
 
     public static bool IsClaimFirstDailyQuest { get => GetBool(Constants.CLAIM_FIRST_DAILY_QUEST, false); set => SetBool(Constants.CLAIM_FIRST_DAILY_QUEST, value); }
+    
+    public static bool FirstOpen { get => GetBool(Constants.FIRST_OPEN, false); set => SetBool(Constants.FIRST_OPEN, value); }
+    
+    public static bool FlagPlayLevel1 { get => GetBool(Constants.PLAY_LEVEL_1, false); set => SetBool(Constants.PLAY_LEVEL_1, value); }
+    
+    public static bool FlagPlayLevel2 { get => GetBool(Constants.PLAY_LEVEL_2, false); set => SetBool(Constants.PLAY_LEVEL_2, value); }
+    
+    public static bool FlagPlayLevel3 { get => GetBool(Constants.PLAY_LEVEL_3, false); set => SetBool(Constants.PLAY_LEVEL_3, value); }
+    
+    public static bool FlagPlayLevel4 { get => GetBool(Constants.PLAY_LEVEL_4, false); set => SetBool(Constants.PLAY_LEVEL_4, value); }
+    
+    public static bool FlagPlayLevel5 { get => GetBool(Constants.PLAY_LEVEL_5, false); set => SetBool(Constants.PLAY_LEVEL_5, value); }
+    
+    public static bool FlagPlayLevel6 { get => GetBool(Constants.PLAY_LEVEL_6, false); set => SetBool(Constants.PLAY_LEVEL_6, value); }
+    
+    public static bool FlagPlayLevel7 { get => GetBool(Constants.PLAY_LEVEL_7, false); set => SetBool(Constants.PLAY_LEVEL_7, value); }
+    
+    public static bool FlagPlayLevel8 { get => GetBool(Constants.PLAY_LEVEL_8, false); set => SetBool(Constants.PLAY_LEVEL_8, value); }
+    
+    public static bool FlagPlayLevel9 { get => GetBool(Constants.PLAY_LEVEL_9, false); set => SetBool(Constants.PLAY_LEVEL_9, value); }
+    
+    public static bool FlagPlayLevel10 { get => GetBool(Constants.PLAY_LEVEL_10, false); set => SetBool(Constants.PLAY_LEVEL_10, value); }
+    public static bool FlagPlayLevel20 { get => GetBool(Constants.PLAY_LEVEL_20, false); set => SetBool(Constants.PLAY_LEVEL_20, value); }
+
+    public static int TotalGoldMedal
+    {
+        get => GetInt(Constants.TOTAL_GOLD_MEDAL, 0);
+        set
+        {
+            SetInt(Constants.TOTAL_GOLD_MEDAL, value);
+            EventController.MedalTotalChanged?.Invoke();
+        }
+    }
+
+    public static TimeSpan TimeToRescueParty => new DateTime(DateTime.Now.Year, 9, 1, 0, 0, 0) - DateTime.Now;
+
+    public static string DateTimeStartRescueParty { get => GetString(Constants.DATE_TIME_START_RESCUE_PARTY, ""); set => SetString(Constants.DATE_TIME_START_RESCUE_PARTY, value); }
 }

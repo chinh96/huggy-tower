@@ -1,4 +1,5 @@
-﻿using Firebase.Analytics;
+﻿using com.adjust.sdk;
+using Firebase.Analytics;
 
 public static class AnalyticController
 {
@@ -142,4 +143,127 @@ public static class AnalyticController
     {
         FirebaseAnalytics.LogEvent(name, param);
     }
+
+    
+    #region adjust
+
+    public static void AdjustLogEventPurchaseItem(string token, double revenue, string currency, string transactionId)
+    {
+        AdjustEvent adjustEvent = new AdjustEvent(token);
+        adjustEvent.setRevenue(revenue, currency);
+        adjustEvent.setTransactionId(transactionId);
+        
+        Adjust.trackEvent(adjustEvent);
+    }
+
+    public static void AdjustLogEventFirstOpen()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("2ng43u");
+        Adjust.trackEvent(adjustEvent);
+    }
+
+    public static void AdjustLogEventPlayLevel1()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("stigq2");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventPlayLevel10()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("bop09g");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventPlayLevel2()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("u1xwya");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventPlayLevel3()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("947epe");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventPlayLevel4()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("i0iqy6");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventPlayLevel5()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("75zm9b");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventPlayLevel6()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("7ki2zj");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventPlayLevel7()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("pfkw26");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventPlayLevel8()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("h692zz");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventPlayLevel9()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("ft60rt");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventClaimDailyReward()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("8hgi5a");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventClaimDailyRewardByAds()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("o9qvze");
+        Adjust.trackEvent(adjustEvent);
+    }
+
+    public static void AdjustLogEventClaimX5CoinWinLevel()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("tdpoes");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventSkipLoseLevel()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("qwz9ld");
+        Adjust.trackEvent(adjustEvent);
+    }
+
+    public static void AdjustLogEventClaimGiftProcessWinLevel()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("eqxbmi");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventShareFb()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("yuoia3");
+        Adjust.trackEvent(adjustEvent);
+    }
+    
+    public static void AdjustLogEventBuildCastle()
+    {
+        AdjustEvent adjustEvent = new AdjustEvent("skrw1k");
+        Adjust.trackEvent(adjustEvent);
+    }
+
+
+    #endregion
 }

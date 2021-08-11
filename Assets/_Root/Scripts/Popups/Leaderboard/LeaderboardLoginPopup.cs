@@ -74,19 +74,38 @@ public class LeaderboardLoginPopup : Popup
         {
             btnDisable.SetActive(true);
             connecting.SetActive(true);
-            LeaderboardController.Instance.Login(
-                inputName.text,
-                countryCurrent.Code,
-                () => Close(),
-                () =>
-                {
-                    ShowWarning("The name you choose already exists!");
-                },
-                () =>
-                {
-                    ShowWarning("Check your network connection again!");
-                }
-            );
+            if (data == null)
+            {
+                LeaderboardController.Instance.Login(
+                    inputName.text,
+                    countryCurrent.Code,
+                    () => Close(),
+                    () =>
+                    {
+                        ShowWarning("The name you choose already exists!");
+                    },
+                    () =>
+                    {
+                        ShowWarning("Check your network connection again!");
+                    }
+                );
+            }
+            else
+            {
+                LeaderboardRescuePartyController.Instance.Login(
+                    inputName.text,
+                    countryCurrent.Code,
+                    () => Close(),
+                    () =>
+                    {
+                        ShowWarning("The name you choose already exists!");
+                    },
+                    () =>
+                    {
+                        ShowWarning("Check your network connection again!");
+                    }
+                );
+            }
         }
     }
 

@@ -44,6 +44,7 @@ public class IronSourceController : MonoBehaviour, IAd
         };
         IronSourceEvents.onRewardedVideoAdRewardedEvent += (arg) => OnRewardEarned();
         IronSourceEvents.onInterstitialAdReadyEvent += () => OnInterLoaded();
+        IronSourceEvents.onImpressionSuccessEvent += ImpressionSuccessEvent;
 
         this.OnInterClosed = OnInterClosed;
         this.OnRewardLoaded = OnRewardLoaded;
@@ -89,5 +90,20 @@ public class IronSourceController : MonoBehaviour, IAd
     private void OnApplicationPause(bool pauseStatus)
     {
         IronSource.Agent.onApplicationPause(pauseStatus);
+    }
+    
+    private void ImpressionSuccessEvent(IronSourceImpressionData impressionData)
+    {
+        com.adjust.sdk.AdjustAdRevenue adjustAdRevenue = new com.adjust.sdk.AdjustAdRevenue(com.adjust.sdk.AdjustConfig.AdjustAdRevenueSourceIronSource);
+        if (impressionData.revenue != null)
+        {
+            adjustAdRevenue.setRevenue(impressionData.revenue.Value, "USD");
+        }
+        // optional fields
+        adjustAdRevenue.setAdRevenueNetwork(impressionData.adNetwork);
+        adjustAdRevenue.setAdRevenueUnit(impressionData.adUnit);
+        adjustAdRevenue.setAdRevenuePlacement(impressionData.placement);
+        // track Adjust ad revenue
+        com.adjust.sdk.Adjust.trackAdRevenue(adjustAdRevenue);
     }
 }

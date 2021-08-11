@@ -23,6 +23,8 @@ public class GiftPopup : Popup
             Data.SkinGift.IsUnlocked = true;
             GameController.Instance.Player.ChangeSword();
             Close();
+            
+            AnalyticController.AdjustLogEventClaimGiftProcessWinLevel();
         });
     }
 }

@@ -53,10 +53,12 @@ public class SkinData
     public string Name;
 
     public SkinType SkinType;
+    public RescuePartyType RescuePartyType;
 
     public int Coin;
 
     public string Giftcode;
+    public int NumberMedalTarget;
 
     public bool IsUnlocked
     {

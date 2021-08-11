@@ -17,7 +17,8 @@ public enum NotiType
     DailyQuest,
     Facebook,
     Leaderboard,
-    AchievementDailyQuest
+    AchievementDailyQuest,
+    RescueParty
 }
 
 public enum EGameState
@@ -118,7 +119,8 @@ public enum SkinType
     Daily,
     Facebook,
     Achievement,
-    Giftcode
+    Giftcode,
+    RescueParty
 }
 
 public enum SoundType
@@ -259,4 +261,12 @@ public enum DailyQuestType
     Yeti,
     LogIntoTheGame,
     WatchVideoReward
+}
+
+public enum RescuePartyType
+{
+    None,
+    Hero,
+    Princess,
+    Top100
 }

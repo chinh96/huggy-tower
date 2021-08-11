@@ -31,6 +31,7 @@ public class Constants
     public const string COUNT_PLAY_LEVEL = "COUNT_PLAY_LEVEL";
     public const string COIN_TOTAL = "COIN_TOTAL";
     public const string DATE_TIME_START = "DATE_TIME_START";
+    public const string DATE_TIME_START_RESCUE_PARTY = "DATE_TIME_START_RESCUE_PARTY";
     public const string DAILY_REWARD_CURRENT = "DAILY_REWARD_CURRENT";
     public const string PERCENT_PROGRESS_GIFT = "PERCENT_PROGRESS_GIFT";
     public const string WORLD_CURRENT = "WORLD_CURRENT";
@@ -41,6 +42,18 @@ public class Constants
     public const string DAILY_QUEST_NUMBER_CURRENT = "DAILY_QUEST_NUMBER_CURRENT";
     public const string PLAYER_ID = "PLAYER_ID";
     public const string DONT_SHOW_UPDATE_AGAIN = "DONT_SHOW_UPDATE_AGAIN";
+    public const string FIRST_OPEN = "first_open";
+    public const string PLAY_LEVEL_1 = "play_level_1";
+    public const string PLAY_LEVEL_2 = "play_level_2";
+    public const string PLAY_LEVEL_3 = "play_level_3";
+    public const string PLAY_LEVEL_4 = "play_level_4";
+    public const string PLAY_LEVEL_5 = "play_level_5";
+    public const string PLAY_LEVEL_6 = "play_level_6";
+    public const string PLAY_LEVEL_7 = "play_level_7";
+    public const string PLAY_LEVEL_8 = "play_level_8";
+    public const string PLAY_LEVEL_9 = "play_level_9";
+    public const string PLAY_LEVEL_10= "play_level_10";
+    public const string PLAY_LEVEL_20= "play_level_20";
 
     // Scene
     public const string LOADING_SCENE = "LoadingScene";
@@ -76,4 +89,5 @@ public class Constants
     public const string LEVEL_10_COMPLETE_FUNNEL = "LEVEL_10_COMPLETE_FUNNEL";
     public const string CLAIM_FIRST_DAILY_QUEST = "CLAIM_FIRST_DAILY_QUEST";
     public const string LEVEL_20_START_FUNNEL = "LEVEL_20_START_FUNNEL";
+    public const string TOTAL_GOLD_MEDAL = "TOTAL_GOLD_MEDAL";
 }
