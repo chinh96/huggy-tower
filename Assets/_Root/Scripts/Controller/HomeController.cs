@@ -7,6 +7,7 @@ using UnityEngine.Purchasing;
 
 public class HomeController : Singleton<HomeController>
 {
+    [SerializeField] private GameObject rescuePartyButton;
     [SerializeField] private GameObject fbLoginButton;
     [SerializeField] private GameObject removeAdsButton;
     [SerializeField] private Image overlay;
@@ -34,6 +35,7 @@ public class HomeController : Singleton<HomeController>
         fbLoginButton.SetActive(RemoteConfigController.Instance.EnableFbLogin);
 #endif
         removeAdsButton.SetActive(!Data.IsRemovedAds);
+        rescuePartyButton.SetActive(Data.TimeToRescueParty.TotalMilliseconds > 0);
     }
 
     private void Start()
@@ -51,6 +53,11 @@ public class HomeController : Singleton<HomeController>
 
         ResourcesController.Achievement.CheckCompleteCastle();
         ResourcesController.DailyQuest.CheckCompleteCastle();
+
+        ResourcesController.ReceiveSkin(() =>
+        {
+            PopupController.Instance.Show<RescuePartyReceiveSkinPopup>();
+        });
     }
 
     public void TapToStart()
@@ -130,6 +137,16 @@ public class HomeController : Singleton<HomeController>
     {
         AnalyticController.ClickRankButton();
         LeaderboardController.Instance.Show();
+    }
+
+    public void OnClickLeaderboardRescuePartyButton()
+    {
+        LeaderboardRescuePartyController.Instance.Show();
+    }
+
+    public void OnClickRescuePartyButton()
+    {
+        PopupController.Instance.Show<RescuePartyPopup>();
     }
 
     public void CheckNewUpdatePopup()

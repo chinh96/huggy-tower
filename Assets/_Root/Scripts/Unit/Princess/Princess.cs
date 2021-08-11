@@ -41,12 +41,25 @@ public class Princess : Unit, IAnim
 
     public void PlayWin(bool isLoop)
     {
-        SoundController.Instance.PlayOnce(SoundType.RescuePrincess);
-        skeleton.Play("win", false);
-        DOTween.Sequence().AppendInterval(.7f).AppendCallback(() =>
+        if (Data.TimeToRescueParty.TotalMilliseconds > 0)
         {
-            skeleton.Play("win 2", true);
-        });
+            Data.TotalGoldMedal++;
+            skeleton.Play("GiveMedal", false);
+            DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
+            {
+                skeleton.Play("GiveMedal2", true);
+            });
+        }
+        else
+        {
+            skeleton.Play("win", false);
+            DOTween.Sequence().AppendInterval(.7f).AppendCallback(() =>
+            {
+                skeleton.Play("win 2", true);
+            });
+        }
+
+        SoundController.Instance.PlayOnce(SoundType.RescuePrincess);
         ResourcesController.Achievement.IncreaseByType(AchievementType.Princess);
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Princess);
     }

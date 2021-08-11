@@ -382,6 +382,7 @@ RectTransform:
   - {fileID: 4436647607843250103}
   - {fileID: 6657135443508742489}
   - {fileID: 6331258420884113826}
+  - {fileID: 8884096079146677897}
   m_Father: {fileID: 2427297384611456137}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -577,6 +578,110 @@ MonoBehaviour:
   content: {fileID: 4725549421731497644}
   skinRow: {fileID: 6157889971225226801, guid: 5b72c619028513843b4109459dd95e8a, type: 3}
   character: {fileID: 9019028313569429556}
+--- !u!1 &2790046840146191130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8884096079146677897}
+  - component: {fileID: 307248164697585330}
+  - component: {fileID: 6658280210008935849}
+  - component: {fileID: 3669545956196222863}
+  m_Layer: 0
+  m_Name: PrincessButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8884096079146677897
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2790046840146191130}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2427297383046953720}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 404, y: 415}
+  m_SizeDelta: {x: 229, y: 214}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &307248164697585330
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2790046840146191130}
+  m_CullTransparentMesh: 1
+--- !u!114 &6658280210008935849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2790046840146191130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 2408770451293055198, guid: d590a1dfa18ca9b4c8d2aaa672e587d1, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3669545956196222863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2790046840146191130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dfcf405286e2c74fa0638d8bb9a6e76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6032806777992851514}
+        m_TargetAssemblyTypeName: SkinPopup, Assembly-CSharp
+        m_MethodName: ShowPrincessPopup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  canClick: 1
 --- !u!1 &4714982667116032459
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,11 +1422,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bf35c657c603e0439ba35292fab9a7a, type: 3}
---- !u!224 &7679966950025135890 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5385283249254777996, guid: 7bf35c657c603e0439ba35292fab9a7a, type: 3}
-  m_PrefabInstance: {fileID: 2317356910703821726}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &9019028313569429556 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6702167283415075754, guid: 7bf35c657c603e0439ba35292fab9a7a, type: 3}
@@ -1333,6 +1433,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85b887af7e6c3f45a2e2d2920d641bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &7679966950025135890 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5385283249254777996, guid: 7bf35c657c603e0439ba35292fab9a7a, type: 3}
+  m_PrefabInstance: {fileID: 2317356910703821726}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2427297383160965770
 PrefabInstance:
   m_ObjectHideFlags: 0

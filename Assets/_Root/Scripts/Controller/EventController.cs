@@ -15,4 +15,5 @@ public static class EventController
     public static Action AdsRewardLoaded;
     public static Action AdsRewardRequested;
     public static Action LoginLeaderBoard;
+    public static Action MedalTotalChanged;
 }

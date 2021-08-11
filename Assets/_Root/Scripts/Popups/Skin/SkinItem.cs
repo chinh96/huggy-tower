@@ -8,6 +8,7 @@ using System;
 
 public class SkinItem : MonoBehaviour
 {
+    // [SerializeField] private EUnitType eUnitType;
     [SerializeField] private SkeletonGraphic skeletonGraphic;
     [SerializeField] private GameObject buttonBuy;
     [SerializeField] private GameObject buttonDisableBuy;
@@ -16,6 +17,7 @@ public class SkinItem : MonoBehaviour
     [SerializeField] private GameObject buttonFacebook;
     [SerializeField] private GameObject buttonAchievement;
     [SerializeField] private GameObject buttonGiftcode;
+    [SerializeField] private GameObject buttonRescueParty;
     [SerializeField] private TextMeshProUGUI cost;
     [SerializeField] private TextMeshProUGUI costDisable;
     [SerializeField] private GameObject dockActive;
@@ -33,7 +35,7 @@ public class SkinItem : MonoBehaviour
 
     public void Reset()
     {
-        skeletonGraphic.ChangeSkin(skinData.SkinName);
+        skeletonGraphic.ChangeSkin(skinData.SkinName, skinPopup.EUnitType);
 
         cost.text = skinData.Coin.ToString();
         costDisable.text = skinData.Coin.ToString();
@@ -45,14 +47,8 @@ public class SkinItem : MonoBehaviour
             switch (skinData.SkinType)
             {
                 case SkinType.Coin:
-                    if (Data.CoinTotal >= skinData.Coin)
-                    {
-                        buttonBuy.SetActive(true);
-                    }
-                    else
-                    {
-                        buttonDisableBuy.SetActive(true);
-                    }
+                    buttonBuy.SetActive(Data.CoinTotal >= skinData.Coin);
+                    buttonDisableBuy.SetActive(Data.CoinTotal < skinData.Coin);
                     break;
                 case SkinType.Ads:
                     buttonAds.SetActive(true);
@@ -68,6 +64,17 @@ public class SkinItem : MonoBehaviour
                     break;
                 case SkinType.Giftcode:
                     buttonGiftcode.SetActive(true);
+                    break;
+                case SkinType.RescueParty:
+                    if (Data.TimeToRescueParty.TotalMilliseconds > 0)
+                    {
+                        buttonRescueParty.SetActive(true);
+                    }
+                    else
+                    {
+                        buttonBuy.SetActive(Data.CoinTotal >= skinData.Coin);
+                        buttonDisableBuy.SetActive(Data.CoinTotal < skinData.Coin);
+                    }
                     break;
             }
         }
@@ -105,6 +112,7 @@ public class SkinItem : MonoBehaviour
         buttonFacebook.SetActive(false);
         buttonAchievement.SetActive(false);
         buttonGiftcode.SetActive(false);
+        buttonRescueParty.SetActive(false);
         usedLabel.SetActive(false);
         dockActive.SetActive(false);
         fx.SetActive(false);
@@ -143,6 +151,11 @@ public class SkinItem : MonoBehaviour
     public void OnClickButtonGiftcode()
     {
         PopupController.Instance.Show<GiftcodePopup>(null, ShowAction.DoNothing);
+    }
+
+    public void OnClickButtonRescurParty()
+    {
+        PopupController.Instance.Show<RescuePartyPopup>(null, ShowAction.DoNothing);
     }
 
     public void OnClickFacebookButton()

@@ -27,6 +27,7 @@ public class GameController : Singleton<GameController>
     [SerializeField] private FighterOverlay fighterOverlay;
     [SerializeField] private GameObject opacity;
     [SerializeField] private LeanTouch LeanTouch;
+    [SerializeField] private GameObject rescuePartyButton;
 
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
@@ -91,6 +92,7 @@ public class GameController : Singleton<GameController>
         positionCameraOrigin = Camera.main.transform.position;
         LoadLevel(Data.CurrentLevel);
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LogIntoTheGame);
+        rescuePartyButton.SetActive(Data.TimeToRescueParty.TotalMilliseconds > 0);
     }
 
     private void CheckRadioCamera()

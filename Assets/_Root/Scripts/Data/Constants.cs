@@ -31,6 +31,7 @@ public class Constants
     public const string COUNT_PLAY_LEVEL = "COUNT_PLAY_LEVEL";
     public const string COIN_TOTAL = "COIN_TOTAL";
     public const string DATE_TIME_START = "DATE_TIME_START";
+    public const string DATE_TIME_START_RESCUE_PARTY = "DATE_TIME_START_RESCUE_PARTY";
     public const string DAILY_REWARD_CURRENT = "DAILY_REWARD_CURRENT";
     public const string PERCENT_PROGRESS_GIFT = "PERCENT_PROGRESS_GIFT";
     public const string WORLD_CURRENT = "WORLD_CURRENT";
@@ -88,5 +89,5 @@ public class Constants
     public const string LEVEL_10_COMPLETE_FUNNEL = "LEVEL_10_COMPLETE_FUNNEL";
     public const string CLAIM_FIRST_DAILY_QUEST = "CLAIM_FIRST_DAILY_QUEST";
     public const string LEVEL_20_START_FUNNEL = "LEVEL_20_START_FUNNEL";
-    
+    public const string TOTAL_GOLD_MEDAL = "TOTAL_GOLD_MEDAL";
 }

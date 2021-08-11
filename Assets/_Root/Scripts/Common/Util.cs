@@ -94,20 +94,27 @@ public static partial class Util
         if (onEnd != null) i.AnimationState.End -= onEnd;
     }
 
-    public static void ChangeSkin(this SkeletonGraphic skeletonGraphic, string skinName)
+    public static void ChangeSkin(this SkeletonGraphic skeletonGraphic, string skinName, EUnitType characterType = EUnitType.Hero)
     {
         skeletonGraphic.Skeleton.SetSkin(skinName);
         skeletonGraphic.Skeleton.SetSlotsToSetupPose();
 
         if (GameController.Instance == null)
         {
-            if (skinName == "Hero21")
+            if (characterType == EUnitType.Hero)
+            {
+                if (skinName == "Hero21")
+                {
+                    skeletonGraphic.AnimationState.SetAnimation(0, "Idle2", true).MixDuration = 0;
+                }
+                else
+                {
+                    skeletonGraphic.AnimationState.SetAnimation(0, "Idle", true).MixDuration = 0;
+                }
+            }
+            else if (characterType == EUnitType.Princess)
             {
                 skeletonGraphic.AnimationState.SetAnimation(0, "Idle2", true).MixDuration = 0;
-            }
-            else
-            {
-                skeletonGraphic.AnimationState.SetAnimation(0, "Idle", true).MixDuration = 0;
             }
         }
     }
@@ -165,6 +172,18 @@ public static partial class Util
         TimeSpan distance = TimeBeforeNewDay();
 
         return string.Format("{0:00}:{1:00}:{2:00}", distance.Hours, distance.Minutes, distance.Seconds);
+    }
+
+    public static string FormatTime(TimeSpan distance)
+    {
+        if (distance.Days > 0)
+        {
+            return string.Format("{0}d {1}h", distance.Days, distance.Hours);
+        }
+        else
+        {
+            return string.Format("{0:00}:{1:00}:{2:00}", distance.Hours, distance.Minutes, distance.Seconds);
+        }
     }
 
     public static bool NotInternet => Application.internetReachability == NetworkReachability.NotReachable;

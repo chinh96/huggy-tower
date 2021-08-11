@@ -44,17 +44,17 @@ public static class Data
         set
         {
             SetString(Constants.CURRENT_SKIN_HERO, value);
-            EventController.CurrentSkinHeroChanged();
+            EventController.CurrentSkinHeroChanged?.Invoke();
         }
     }
 
     public static string CurrentSkinPrincess
     {
-        get => GetString(Constants.CURRENT_SKIN_PRINCESS, "");
+        get => GetString(Constants.CURRENT_SKIN_PRINCESS, ResourcesController.Princess.SkinDefault.SkinName);
         set
         {
             SetString(Constants.CURRENT_SKIN_PRINCESS, value);
-            EventController.CurrentSkinPrincessChanged();
+            EventController.CurrentSkinPrincessChanged?.Invoke();
         }
     }
 
@@ -141,4 +141,18 @@ public static class Data
     
     public static bool FlagPlayLevel10 { get => GetBool(Constants.PLAY_LEVEL_10, false); set => SetBool(Constants.PLAY_LEVEL_10, value); }
     public static bool FlagPlayLevel20 { get => GetBool(Constants.PLAY_LEVEL_20, false); set => SetBool(Constants.PLAY_LEVEL_20, value); }
+
+    public static int TotalGoldMedal
+    {
+        get => GetInt(Constants.TOTAL_GOLD_MEDAL, 0);
+        set
+        {
+            SetInt(Constants.TOTAL_GOLD_MEDAL, value);
+            EventController.MedalTotalChanged?.Invoke();
+        }
+    }
+
+    public static TimeSpan TimeToRescueParty => new DateTime(DateTime.Now.Year, 9, 1, 0, 0, 0) - DateTime.Now;
+
+    public static string DateTimeStartRescueParty { get => GetString(Constants.DATE_TIME_START_RESCUE_PARTY, ""); set => SetString(Constants.DATE_TIME_START_RESCUE_PARTY, value); }
 }
