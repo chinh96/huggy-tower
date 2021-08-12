@@ -87,7 +87,7 @@ public class ResourcesController : Singleton<ResourcesController>
         SkinRescuePartys.Add(Hero.SkinDatas.Find(data => data.RescuePartyType == RescuePartyType.Top100));
     }
 
-    public static void ReceiveSkin(Action action)
+    public static void ReceiveSkinRescueParty(Action action)
     {
         if (Data.TimeToRescueParty.TotalMilliseconds <= 0)
         {
@@ -100,6 +100,5 @@ public class ResourcesController : Singleton<ResourcesController>
                 });
             }
         }
-
     }
 }

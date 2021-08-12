@@ -20,6 +20,7 @@ public class MedalTotal : MonoBehaviour
 
     public void ShowRescuePartyPopup()
     {
+        Data.FirstOpenRescuePartyInGame = false;
         PopupController.Instance.Show<RescuePartyPopup>(null, ShowAction.DoNothing);
     }
 }

@@ -142,7 +142,7 @@ public static class Data
     public static bool FlagPlayLevel10 { get => GetBool(Constants.PLAY_LEVEL_10, false); set => SetBool(Constants.PLAY_LEVEL_10, value); }
     public static bool FlagPlayLevel20 { get => GetBool(Constants.PLAY_LEVEL_20, false); set => SetBool(Constants.PLAY_LEVEL_20, value); }
     public static bool FlagFirstTimeVisitCastle { get => GetBool(Constants.FIRST_TIME_VISIT_CASTLE, false); set => SetBool(Constants.FIRST_TIME_VISIT_CASTLE, value); }
-    
+
     public static int TotalGoldMedal
     {
         get => GetInt(Constants.TOTAL_GOLD_MEDAL, 0);
@@ -158,4 +158,10 @@ public static class Data
     public static string DateTimeStartRescueParty { get => GetString(Constants.DATE_TIME_START_RESCUE_PARTY, ""); set => SetString(Constants.DATE_TIME_START_RESCUE_PARTY, value); }
 
     public static bool ClickedTop100Button { get => GetBool(Constants.CLICKED_TOP_100_BUTTON, false); set => SetBool(Constants.CLICKED_TOP_100_BUTTON, value); }
+
+    public static bool FirstOpenLanguage { get => GetBool(Constants.FIRST_OPEN_LANGUAGE, true); set => SetBool(Constants.FIRST_OPEN_LANGUAGE, value); }
+
+    public static bool FirstOpenRescuePartyInHome { get => GetBool(Constants.FIRST_OPEN_RESCUE_PARTY_IN_HOME, true); set => SetBool(Constants.FIRST_OPEN_RESCUE_PARTY_IN_HOME, value); }
+
+    public static bool FirstOpenRescuePartyInGame { get => GetBool(Constants.FIRST_OPEN_RESCUE_PARTY_IN_GAME, true); set => SetBool(Constants.FIRST_OPEN_RESCUE_PARTY_IN_GAME, value); }
 }

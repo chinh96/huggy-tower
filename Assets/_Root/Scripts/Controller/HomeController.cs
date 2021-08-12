@@ -25,7 +25,7 @@ public class HomeController : Singleton<HomeController>
     {
         Data.IsRemovedAds = true;
         CheckButton();
-        
+
         AnalyticController.AdjustLogEventPurchaseItem("o6ssbb", 2.99f, "USD", product.transactionID);
     }
 
@@ -45,7 +45,13 @@ public class HomeController : Singleton<HomeController>
         SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
         FadeOutOverlay();
         CheckNewUpdatePopup();
+        CheckAchievementDailyQuest();
+        CheckRescueParty();
+        CheckLanguage();
+    }
 
+    private void CheckAchievementDailyQuest()
+    {
         NotificationController.Instance.CheckDailyQuestRepeat();
         NotificationController.Instance.CheckDailyRewardRepeat();
 
@@ -53,11 +59,23 @@ public class HomeController : Singleton<HomeController>
 
         ResourcesController.Achievement.CheckCompleteCastle();
         ResourcesController.DailyQuest.CheckCompleteCastle();
+    }
 
-        ResourcesController.ReceiveSkin(() =>
+    private void CheckRescueParty()
+    {
+        ResourcesController.ReceiveSkinRescueParty(() =>
         {
             PopupController.Instance.Show<RescuePartyReceiveSkinPopup>();
         });
+    }
+
+    private void CheckLanguage()
+    {
+        if (Data.FirstOpenLanguage)
+        {
+            Data.FirstOpenLanguage = false;
+            PopupController.Instance.Show<PopupSelectLanguage>();
+        }
     }
 
     public void TapToStart()
@@ -146,6 +164,7 @@ public class HomeController : Singleton<HomeController>
 
     public void OnClickRescuePartyButton()
     {
+        Data.FirstOpenRescuePartyInHome = false;
         PopupController.Instance.Show<RescuePartyPopup>();
     }
 

@@ -18,6 +18,8 @@ public class LoadingController : MonoBehaviour
 
         Addressables.InitializeAsync();
 
+        Vibration.Init();
+
         progress.fillAmount = 0;
         progress.DOFillAmount(1, duration).SetEase(ease).OnComplete(() =>
         {

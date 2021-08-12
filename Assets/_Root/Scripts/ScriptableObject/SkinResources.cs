@@ -59,6 +59,27 @@ public class SkinData
 
     public string Giftcode;
     public int NumberMedalTarget;
+    public bool HasNotiRescueParty
+    {
+        get
+        {
+            if (!IsUnlocked)
+            {
+                if (RescuePartyType == RescuePartyType.Top100)
+                {
+                    return false;
+                }
+                else
+                {
+                    return Data.TotalGoldMedal >= NumberMedalTarget;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 
     public bool IsUnlocked
     {

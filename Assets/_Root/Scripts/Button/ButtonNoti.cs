@@ -11,6 +11,7 @@ public class ButtonNoti : MonoBehaviour
     {
         EventController.CoinTotalChanged += CheckNoti;
         EventController.LoginLeaderBoard += CheckNoti;
+        EventController.MedalTotalChanged += CheckNoti;
     }
 
     private void OnEnable()
@@ -53,6 +54,20 @@ public class ButtonNoti : MonoBehaviour
                 break;
             case NotiType.AchievementDailyQuest:
                 hasNoti = ResourcesController.Achievement.HasNoti || ResourcesController.DailyQuest.HasNoti;
+                break;
+            case NotiType.RescueParty:
+                if (HomeController.Instance != null && !Data.FirstOpenRescuePartyInHome)
+                {
+                    hasNoti = true;
+                }
+                else if (GameController.Instance != null && !Data.FirstOpenRescuePartyInGame)
+                {
+                    hasNoti = true;
+                }
+                else
+                {
+                    hasNoti = ResourcesController.SkinRescuePartys.Exists(data => data.HasNotiRescueParty);
+                }
                 break;
         }
 
