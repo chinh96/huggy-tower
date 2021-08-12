@@ -309,6 +309,7 @@ public class GameController : Singleton<GameController>
 
         //txtQuest.text = $"Level {level + 1}: {data.Quest}";
         txtQuest.GetComponent<Localize>().SetTerm("QuestInGame_txt" + data.Condition + "Type");
+        txtQuest.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", $"{level + 1}", true);
         imgQuest.sprite = data.Sprite;
     }
 
@@ -361,7 +362,7 @@ public class GameController : Singleton<GameController>
     {
         OnSkipLevel(null);
     }
-    
+
     public void OnSkipLevel(Action onAdCompleted)
     {
         AnalyticController.SkipLevel();
