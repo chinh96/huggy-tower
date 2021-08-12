@@ -52,8 +52,10 @@ public class Constants
     public const string PLAY_LEVEL_7 = "play_level_7";
     public const string PLAY_LEVEL_8 = "play_level_8";
     public const string PLAY_LEVEL_9 = "play_level_9";
-    public const string PLAY_LEVEL_10= "play_level_10";
-    public const string PLAY_LEVEL_20= "play_level_20";
+    public const string PLAY_LEVEL_10 = "play_level_10";
+    public const string PLAY_LEVEL_20 = "play_level_20";
+    public const string FIRST_TIME_VISIT_CASTLE= "first_time_visit_castle";
+    public const string CLICKED_TOP_100_BUTTON = "CLICKED_TOP_100_BUTTON";
 
     // Scene
     public const string LOADING_SCENE = "LoadingScene";

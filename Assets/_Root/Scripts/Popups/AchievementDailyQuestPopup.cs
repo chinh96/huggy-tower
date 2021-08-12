@@ -27,7 +27,15 @@ public class AchievementDailyQuestPopup : Popup
 
         achievementPopup.UpdateProgress();
 
-        OnClickDailyQuestButton();
+
+        if (data == null)
+        {
+            OnClickDailyQuestButton();
+        }
+        else
+        {
+            OnClickAchievementButton();
+        }
     }
 
     public void OnClickDailyQuestButton()

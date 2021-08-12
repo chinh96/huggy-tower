@@ -125,6 +125,5 @@ public class Castle : MonoBehaviour
 
         ResourcesController.Achievement.CheckCompleteCastle();
         ResourcesController.DailyQuest.CheckCompleteCastle();
-        AnalyticController.AdjustLogEventBuildCastle();
     }
 }

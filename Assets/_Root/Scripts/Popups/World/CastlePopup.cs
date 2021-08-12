@@ -19,5 +19,11 @@ public class CastlePopup : Popup
             Castle castle = castles[i];
             castle.Init(i, this, worldCurrent);
         }
+        
+        if (!Data.FlagFirstTimeVisitCastle)
+        {
+            Data.FlagFirstTimeVisitCastle = true;
+            AnalyticController.AdjustLogEventBuildCastle();
+        }
     }
 }

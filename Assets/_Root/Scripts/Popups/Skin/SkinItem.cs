@@ -144,7 +144,7 @@ public class SkinItem : MonoBehaviour
 
     public void OnClickButtonAchievement()
     {
-        PopupController.Instance.Show<AchievementDailyQuestPopup>(null, ShowAction.DoNothing);
+        PopupController.Instance.Show<AchievementDailyQuestPopup>(true, ShowAction.DoNothing);
     }
 
 
