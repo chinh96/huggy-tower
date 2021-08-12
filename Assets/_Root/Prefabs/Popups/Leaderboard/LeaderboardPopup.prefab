@@ -312,6 +312,8 @@ GameObject:
   - component: {fileID: 1061343392701028362}
   - component: {fileID: 1854424951745639822}
   - component: {fileID: 4952784745804526761}
+  - component: {fileID: 243603320157627462}
+  - component: {fileID: 8391785829456599513}
   m_Layer: 0
   m_Name: Rank
   m_TagString: Untagged
@@ -366,7 +368,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'World rank: 100+'
+  m_text: 'World rank: 100'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5af23b118811c284a974f2178409d2c5, type: 2}
   m_sharedMaterial: {fileID: 188819359160415666, guid: 5af23b118811c284a974f2178409d2c5, type: 2}
@@ -435,6 +437,60 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &243603320157627462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920834824457800216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: LeaderBoard_txtWorldRank
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
+--- !u!114 &8391785829456599513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920834824457800216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9586cfd190ca384a8dd72aa92c86152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Params:
+  - Name: VALUE
+    Value: 100
+  _IsGlobalManager: 0
 --- !u!1 &1986362184043900209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1366,7 +1422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mTerm: LeaderBoard_txtTitle
-  mTermSecondary: 
+  mTermSecondary: BoldenVanBold
   PrimaryTermModifier: 0
   SecondaryTermModifier: 0
   TermPrefix: 
@@ -1778,7 +1834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mTerm: LeaderBoard_txtWord
-  mTermSecondary: 
+  mTermSecondary: BoldenVanBold
   PrimaryTermModifier: 0
   SecondaryTermModifier: 0
   TermPrefix: 
@@ -2282,7 +2338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mTerm: LeaderBoard_txtCountry
-  mTermSecondary: 
+  mTermSecondary: BoldenVanBold
   PrimaryTermModifier: 0
   SecondaryTermModifier: 0
   TermPrefix: 
@@ -3260,11 +3316,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d19b4c35ae5e69044952e6fe302ce219, type: 3}
---- !u!224 &7384227773177334610 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3820829110787020621, guid: d19b4c35ae5e69044952e6fe302ce219, type: 3}
-  m_PrefabInstance: {fileID: 6015757816430697503}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3661165004401998241 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7040060733884294590, guid: d19b4c35ae5e69044952e6fe302ce219, type: 3}
@@ -3276,6 +3327,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34b89a34ab147f14bbac821035237f43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &7384227773177334610 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3820829110787020621, guid: d19b4c35ae5e69044952e6fe302ce219, type: 3}
+  m_PrefabInstance: {fileID: 6015757816430697503}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6930789072230031760
 PrefabInstance:
   m_ObjectHideFlags: 0

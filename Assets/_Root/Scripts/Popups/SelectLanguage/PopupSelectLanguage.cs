@@ -12,6 +12,12 @@ public class PopupSelectLanguage : Popup
     private Toggle[] tgLanguage;
     private Toggle selectLanguage;
     private Toggle currentLanguage;
+
+    public void Start()
+    {
+        Initialize();
+    }
+
     public void Initialize()
     {
         btnOk.onClick.RemoveListener(SelectLanguage);
@@ -21,12 +27,6 @@ public class PopupSelectLanguage : Popup
         btnClose.onClick.AddListener(Back);
 
         CheckLanguage();
-    }
-
-    protected override void BeforeShow()
-    {
-        base.BeforeShow();
-        Initialize();
     }
 
     private void CheckLanguage() 
