@@ -141,7 +141,8 @@ public static class Data
 
     public static bool FlagPlayLevel10 { get => GetBool(Constants.PLAY_LEVEL_10, false); set => SetBool(Constants.PLAY_LEVEL_10, value); }
     public static bool FlagPlayLevel20 { get => GetBool(Constants.PLAY_LEVEL_20, false); set => SetBool(Constants.PLAY_LEVEL_20, value); }
-
+    public static bool FlagFirstTimeVisitCastle { get => GetBool(Constants.FIRST_TIME_VISIT_CASTLE, false); set => SetBool(Constants.FIRST_TIME_VISIT_CASTLE, value); }
+    
     public static int TotalGoldMedal
     {
         get => GetInt(Constants.TOTAL_GOLD_MEDAL, 0);
