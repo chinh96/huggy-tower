@@ -6,7 +6,6 @@ using I2.Loc;
 public class PopupSelectLanguage : Popup
 {
     [SerializeField] private Button btnOk;
-    [SerializeField] private Button btnClose;
     [SerializeField] private ToggleGroup languageGroup;
 
     private Toggle[] tgLanguage;
@@ -23,13 +22,10 @@ public class PopupSelectLanguage : Popup
         btnOk.onClick.RemoveListener(SelectLanguage);
         btnOk.onClick.AddListener(SelectLanguage);
 
-        btnClose.onClick.RemoveListener(Back);
-        btnClose.onClick.AddListener(Back);
-
         CheckLanguage();
     }
 
-    private void CheckLanguage() 
+    private void CheckLanguage()
     {
         tgLanguage = languageGroup.GetComponentsInChildren<Toggle>();
         tgLanguage[0].isOn = true;
@@ -50,7 +46,7 @@ public class PopupSelectLanguage : Popup
         {
             if (tg.isOn)
             {
-                if(selectLanguage != tg) 
+                if (selectLanguage != tg)
                 {
                     selectLanguage = tg;
                     selectLanguage.GetComponent<SetLanguage>().ApplyLanguage();
@@ -68,7 +64,7 @@ public class PopupSelectLanguage : Popup
 
     private void Back()
     {
-        if(currentLanguage != selectLanguage)
+        if (currentLanguage != selectLanguage)
         {
             currentLanguage.GetComponent<SetLanguage>().ApplyLanguage();
         }
