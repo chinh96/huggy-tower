@@ -1010,7 +1010,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 }
             case ItemType.Bow2:
                 skeleton.Play("AttackBow", false);
-                SoundController.Instance.PlayOnce(SoundType.Knife);
+                SoundController.Instance.PlayOnce(SoundType.Bow2);
                 DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
                 {
                     PlayBloodEnemy();
@@ -1025,12 +1025,13 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 break;
             case ItemType.Polllaxe:
                 skeleton.Play("AttackPollaxe", false);
+                SoundController.Instance.PlayOnce(SoundType.Pollaxe);
                 PlayBloodEnemy();
                 break;
             case ItemType.Mace:
                 {
                     skeleton.Play("AttackMace", false);
-                    SoundController.Instance.PlayOnce(SoundType.HeroHit);
+                    SoundController.Instance.PlayOnce(SoundType.Mace);
                     break;
                 }
             case ItemType.SwordBlood:
@@ -1191,7 +1192,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
         {
-            Vibration.Vibrate();
+            Vibration.VibratePeek();
         });
     }
 

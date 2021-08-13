@@ -194,7 +194,10 @@ public enum SoundType
     BombGoblin,
     KappaDie,
     GoblinKappaAttack,
-    Elemental
+    Elemental,
+    Mace,
+    Pollaxe,
+    Bow2
 }
 
 public enum WorldType

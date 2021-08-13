@@ -23,6 +23,7 @@ public class NotiQuest : MonoBehaviour
         image.sprite = item.Sprite;
         //title.text = item.Title;
         title.GetComponent<Localize>().SetTerm("DailyQuestItem_txt" + item.Type + "Type");
+        title.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", item.Number, true);
         number.text = item.Number;
     }
 

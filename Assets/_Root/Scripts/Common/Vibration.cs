@@ -82,6 +82,11 @@ public static class Vibration
     ///</summary>
     public static void VibratePeek()
     {
+        if (!Data.VibrateState)
+        {
+            return;
+        }
+
         if (Application.isMobilePlatform)
         {
 #if UNITY_IOS
