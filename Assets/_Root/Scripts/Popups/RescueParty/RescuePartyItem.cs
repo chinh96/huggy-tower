@@ -61,5 +61,6 @@ public class RescuePartyItem : MonoBehaviour
         }
         data.IsUnlocked = true;
         Reset();
+        EventController.MedalTotalChanged?.Invoke();
     }
 }
