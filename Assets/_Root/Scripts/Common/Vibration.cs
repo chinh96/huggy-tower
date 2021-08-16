@@ -47,7 +47,6 @@ public static class Vibration
     public static void Vibrate()
     {
 #if UNITY_ANDROID
-
         if (AndroidVersion >= 26)
         {
             AndroidJavaObject createOneShot = vibrationEffect.CallStatic<AndroidJavaObject>("createOneShot", 100, -1);

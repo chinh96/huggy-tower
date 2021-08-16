@@ -1227,6 +1227,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         {
             skeleton.Play("DieIce", false);
         }
+        else if (_target as EnemyDragonHead)
+        {
+            skeleton.Play("DieFire2", false);
+        }
         else
         {
             SoundController.Instance.PlayOnce(SoundType.HeroDie);
@@ -1248,13 +1252,20 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     public void GiveFlower()
     {
-        if (Data.CurrentSkinHero == skinLess)
+        if (Data.TimeToRescueParty.TotalMilliseconds > 0)
         {
-            skeleton.Play("Sit2", true);
+            skeleton.Play("GetMedal", true);
         }
         else
         {
-            skeleton.Play("Sit", true);
+            if (Data.CurrentSkinHero == skinLess)
+            {
+                skeleton.Play("Sit2", true);
+            }
+            else
+            {
+                skeleton.Play("Sit", true);
+            }
         }
     }
 
