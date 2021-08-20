@@ -3,6 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 #if UNITY_IOS
 using Unity.Advertisement.IosSupport;
+using com.adjust.sdk;
 #endif
 
 public class AdController : Singleton<AdController>
@@ -41,9 +42,16 @@ public class AdController : Singleton<AdController>
 #if UNITY_EDITOR
         Init();
 #elif UNITY_IOS
-        if (ATTrackingStatusBinding.GetAuthorizationTrackingStatus() == ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED)
+        // if (ATTrackingStatusBinding.GetAuthorizationTrackingStatus() == ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED)
+        // {
+        //     ATTrackingStatusBinding.RequestAuthorizationTracking();
+        // }
+        
+        if (Adjust.getAppTrackingAuthorizationStatus() == 0)
         {
-            ATTrackingStatusBinding.RequestAuthorizationTracking();
+            Adjust.requestTrackingAuthorizationWithCompletionHandler(_=>{
+                
+            });
         }
 #endif
     }
