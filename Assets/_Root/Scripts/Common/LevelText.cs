@@ -18,7 +18,7 @@ public class LevelText : MonoBehaviour
         EventController.CurrentLevelChanged = ChangeLevel;
     }
 
-    private void ChangeLevel()
+    public void ChangeLevel()
     {
         //level.text = $"Level {Data.CurrentLevel + 1}";
         level.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", (Data.CurrentLevel + 1).ToString(), true);

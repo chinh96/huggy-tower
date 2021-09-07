@@ -59,6 +59,8 @@ public class Constants
     public const string FIRST_OPEN_LANGUAGE = "FIRST_OPEN_LANGUAGE";
     public const string FIRST_OPEN_RESCUE_PARTY_IN_HOME = "FIRST_OPEN_RESCUE_PARTY_IN_HOME";
     public const string FIRST_OPEN_RESCUE_PARTY_IN_GAME = "FIRST_OPEN_RESCUE_PARTY_IN_GAME";
+    public const string DATA_VERSION = "DATA_VERSION";
+    public const string CUSTOM_ID = "CUSTOM_ID";
 
     // Scene
     public const string LOADING_SCENE = "LoadingScene";

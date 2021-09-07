@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public static class Data
 {
@@ -152,7 +153,10 @@ public static class Data
             EventController.MedalTotalChanged?.Invoke();
         }
     }
-
+    
+    public static int DataVersion { get => PlayerPrefs.GetInt(Constants.DATA_VERSION, 0); set => PlayerPrefs.SetInt(Constants.DATA_VERSION, value); }
+    public static string CustomId { get => PlayerPrefs.GetString(Constants.CUSTOM_ID, SystemInfo.deviceUniqueIdentifier); set => PlayerPrefs.SetString(Constants.CUSTOM_ID, value); }
+    
     public static TimeSpan TimeToRescueParty => new DateTime(DateTime.Now.Year, 9, 1, 0, 0, 0) - DateTime.Now;
 
     public static string DateTimeStartRescueParty { get => GetString(Constants.DATE_TIME_START_RESCUE_PARTY, ""); set => SetString(Constants.DATE_TIME_START_RESCUE_PARTY, value); }
@@ -164,4 +168,10 @@ public static class Data
     public static bool FirstOpenRescuePartyInHome { get => GetBool(Constants.FIRST_OPEN_RESCUE_PARTY_IN_HOME, true); set => SetBool(Constants.FIRST_OPEN_RESCUE_PARTY_IN_HOME, value); }
 
     public static bool FirstOpenRescuePartyInGame { get => GetBool(Constants.FIRST_OPEN_RESCUE_PARTY_IN_GAME, true); set => SetBool(Constants.FIRST_OPEN_RESCUE_PARTY_IN_GAME, value); }
+}
+
+[Serializable]
+public class DataModel
+{
+    public string data;
 }

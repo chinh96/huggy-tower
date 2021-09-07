@@ -133,6 +133,57 @@ public class AchievementResources : ScriptableObject
             }
         });
     }
+
+    public string ConvertData()
+    {
+        AchievementDataModel[] models = new AchievementDataModel[AchievementDatas.Count];
+
+        for (int i = 0; i < AchievementDatas.Count; i++)
+        {
+            models[i] = new AchievementDataModel() { isClaimed = AchievementDatas[i].IsClaimed, number = AchievementDatas[i].NumberCurrent};
+        }
+
+        return JsonHelper.ToJson(models);
+    }
+    
+    public string ConvertDataTarget()
+    {
+        DataModel[] models = new DataModel[AchievementTargetDatas.Count];
+
+        for (int i = 0; i < AchievementTargetDatas.Count; i++)
+        {
+            models[i] = new DataModel() { data = AchievementTargetDatas[i].IsClaimed.ToString()};
+        }
+
+        return JsonHelper.ToJson(models);
+    }
+
+    public void TransformData(string raw)
+    {
+        var result = JsonHelper.FromJson<AchievementDataModel>(raw);
+        
+        int count = result.Length;
+        if (count > AchievementDatas.Count) count = AchievementDatas.Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            AchievementDatas[i].IsClaimed = result[i].isClaimed;
+            AchievementDatas[i].NumberCurrent = result[i].number;
+        }
+    }
+    
+    public void TransformTargetData(string raw)
+    {
+        var result = JsonHelper.FromJson<DataModel>(raw);
+        
+        int count = result.Length;
+        if (count > AchievementTargetDatas.Count) count = AchievementTargetDatas.Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            AchievementTargetDatas[i].IsClaimed = bool.Parse(result[i].data.ToLower());
+        }
+    }
 }
 
 [Serializable]
@@ -174,4 +225,11 @@ public class AchievementTargetData
 
         set { Data.IdCheckUnlocked = Id + "Claimed"; Data.IsUnlocked = value; }
     }
+}
+
+[Serializable]
+public class AchievementDataModel
+{
+    public bool isClaimed;
+    public int number;
 }
