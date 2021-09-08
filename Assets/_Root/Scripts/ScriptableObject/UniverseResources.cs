@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "UniverseResources", menuName = "ScriptableObjects/UniverseResources")]
@@ -97,4 +98,30 @@ public class UniverseResources : ScriptableObject
 
         return false;
     }
+    
+    public string ConvertData()
+    {
+        DataModel[] models = new DataModel[Worlds.Count];
+
+        for (int i = 0; i < Worlds.Count; i++)
+        {
+            models[i] = new DataModel() { data = Worlds[i].ConvertData() };
+        }
+
+        return JsonHelper.ToJson(models);
+    }
+
+    public void TransformData(string raw)
+    {
+        DataModel[] models = JsonHelper.FromJson<DataModel>(raw);
+        
+        int count = models.Length;
+        if (count > Worlds.Count) count = Worlds.Count;
+        
+        for (int i = 0; i < count; i++)
+        {
+            Worlds[i].TransformData(models[i].data);
+        }
+    }
+    
 }

@@ -101,4 +101,9 @@ public class ResourcesController : Singleton<ResourcesController>
             }
         }
     }
+
+    public static int TotalSkinUnlocked()
+    {
+        return Hero.TotalSkinUnlocked() + Princess.TotalSkinUnlocked();
+    }
 }

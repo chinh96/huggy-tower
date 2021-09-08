@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Text;
 
 [CreateAssetMenu(fileName = "CastleResources", menuName = "ScriptableObjects/CastleResources")]
 public class CastleResources : ScriptableObject
@@ -37,6 +38,30 @@ public class CastleResources : ScriptableObject
     }
 
     public bool IsComplete => Castles.TrueForAll(item => item.IsUnlocked);
+    
+    public string ConvertData()
+    {
+        StringBuilder result = new StringBuilder("");
+        for (int i = 0; i < Castles.Count; i++)
+        {
+            result.Append($"{Castles[i].IsUnlocked}@");
+        }
+
+        result.Remove(result.Length - 1, 1);
+        return result.ToString();
+    }
+
+    public void TransformData(string raw)
+    {
+        var result = raw.Split('@');
+        int count = result.Length;
+        if (count > Castles.Count) count = Castles.Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            Castles[i].IsUnlocked = bool.Parse(result[i].ToLower());
+        }
+    }
 }
 
 [Serializable]

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Spine.Unity;
 using UnityEngine;
 using UnityEditor;
@@ -20,6 +21,19 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
     public SkinData SkinGiftcode => SkinDatas.Find(item => item.SkinType == SkinType.Giftcode);
     public List<SkinData> SkinsIsUnlocked => SkinDatas.FindAll(item => item.IsUnlocked && item.SkinName != skinNameDefault);
 
+    public int TotalSkinUnlocked()
+    {
+        int count = 0;
+        for (int i = 0; i < SkinDatas.Count; i++)
+        {
+            if (SkinDatas[i].IsUnlocked)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
     public bool HasNoti
     {
         get
@@ -38,6 +52,31 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
     public void Reset()
     {
         SkinDefault.IsUnlocked = true;
+    }
+
+    public string ConvertData()
+    {
+        StringBuilder result = new StringBuilder("");
+        for (int i = 0; i < SkinDatas.Count; i++)
+        {
+            result.Append($"{SkinDatas[i].IsUnlocked}@");
+        }
+
+        result.Remove(result.Length - 1, 1);
+        return result.ToString();
+    }
+    
+    public void TransformTargetData(string raw)
+    {
+        var result = raw.Split('@');
+        
+        int count = result.Length;
+        if (count > SkinDatas.Count) count = SkinDatas.Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            SkinDatas[i].IsUnlocked = bool.Parse(result[i].ToLower());
+        }
     }
 }
 

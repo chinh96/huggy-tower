@@ -15,7 +15,7 @@ public static class Playfab
         if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId)) PlayFabSettings.staticSettings.TitleId = TitleId;
 
         PlayFabClientAPI.LoginWithCustomID(
-            new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, TitleId = TitleId, CreateAccount = true },
+            new LoginWithCustomIDRequest { CustomId = Data.CustomId, TitleId = TitleId, CreateAccount = true },
             callbackResult,
             callbackError
         );
@@ -57,5 +57,13 @@ public static class Playfab
             callbackResult,
             callbackError
         );
+    }
+    
+    public static void LoginWithFacebook(string tokenId, Action<LoginResult> onLoginSuccessFacebook)
+    {
+        if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId)) PlayFabSettings.staticSettings.TitleId = TitleId;
+
+        var request = new LoginWithFacebookRequest() { AccessToken = tokenId, CreateAccount = true, };
+        PlayFabClientAPI.LoginWithFacebook(request, onLoginSuccessFacebook, error => { });
     }
 }

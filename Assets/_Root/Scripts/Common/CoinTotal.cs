@@ -13,7 +13,7 @@ public class CoinTotal : MonoBehaviour
         UpdateCoinText();
     }
 
-    private void UpdateCoinText()
+    public void UpdateCoinText()
     {
         coinTotal.text = Data.CoinTotal.ToString();
     }
