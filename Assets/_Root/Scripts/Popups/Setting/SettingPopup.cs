@@ -272,7 +272,7 @@ public class SettingPopup : Popup
                         Action actionSaveUserData = SaveUserData;
                         object[] obj =
                             {
-                                actionDo, actionSaveUserData, message, title, serverCurrentLevel, serverCoin, serverTotalSkin, titleRight, titleLeft, _isBackup
+                                actionDo, actionSaveUserData, message, title, serverCurrentLevel, serverCoin, serverTotalSkin, titleRight, titleLeft, _isBackup, _funcLogin
                             };
 
                         PopupController.Instance.Show<BackupPopup>(obj);
