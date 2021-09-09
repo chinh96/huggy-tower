@@ -53,6 +53,7 @@ public class Constants
     public const string PLAY_LEVEL_8 = "play_level_8";
     public const string PLAY_LEVEL_9 = "play_level_9";
     public const string PLAY_LEVEL_10 = "play_level_10";
+    public const string PLAY_LEVEL_15 = "play_level_15";
     public const string PLAY_LEVEL_20 = "play_level_20";
     public const string FIRST_TIME_VISIT_CASTLE = "first_time_visit_castle";
     public const string CLICKED_TOP_100_BUTTON = "CLICKED_TOP_100_BUTTON";
@@ -96,5 +97,8 @@ public class Constants
     public const string LEVEL_10_COMPLETE_FUNNEL = "LEVEL_10_COMPLETE_FUNNEL";
     public const string CLAIM_FIRST_DAILY_QUEST = "CLAIM_FIRST_DAILY_QUEST";
     public const string LEVEL_20_START_FUNNEL = "LEVEL_20_START_FUNNEL";
+    public const string LEVEL_20_COMPLETE_FUNNEL = "LEVEL_20_COMPLETE_FUNNEL";
+    public const string LEVEL_15_START_FUNNEL = "LEVEL_15_START_FUNNEL";
+    public const string LEVEL_15_COMPLETE_FUNNEL = "LEVEL_15_COMPLETE_FUNNEL";
     public const string TOTAL_GOLD_MEDAL = "TOTAL_GOLD_MEDAL";
 }

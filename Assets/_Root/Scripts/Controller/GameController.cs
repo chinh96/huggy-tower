@@ -224,79 +224,90 @@ public class GameController : Singleton<GameController>
             case 0:
                 if (!Data.FlagPlayLevel1)
                 {
-                    AnalyticController.StartLevel1Funnel();
-                    AnalyticController.Level1StartFunnel();
-                    AnalyticController.AdjustLogEventPlayLevel1();
+                    AnalyticController.CompleteLevel1Funnel();
+                    AnalyticController.Level1CompleteFunnel();
+                    Data.FlagPlayLevel1 = true;
                 }
 
                 break;
             case 1:
                 if (!Data.FlagPlayLevel2)
                 {
-                    AnalyticController.AdjustLogEventPlayLevel2();
+                    Data.FlagPlayLevel2 = true;
                 }
-
+                
                 break;
             case 2:
                 if (!Data.FlagPlayLevel3)
                 {
+                    Data.FlagPlayLevel3 = true;
                 }
-
-                AnalyticController.AdjustLogEventPlayLevel3();
+                
                 break;
             case 3:
                 if (!Data.FlagPlayLevel4)
                 {
-                    AnalyticController.AdjustLogEventPlayLevel4();
+                    Data.FlagPlayLevel4 = true;
                 }
-
+                
                 break;
             case 4:
                 if (!Data.FlagPlayLevel5)
                 {
-                    AnalyticController.AdjustLogEventPlayLevel5();
+                    Data.FlagPlayLevel5 = true;
                 }
-
+                
                 break;
             case 5:
                 if (!Data.FlagPlayLevel6)
                 {
-                    AnalyticController.AdjustLogEventPlayLevel6();
+                    Data.FlagPlayLevel6 = true;
                 }
-
+                
                 break;
             case 6:
                 if (!Data.FlagPlayLevel7)
                 {
-                    AnalyticController.AdjustLogEventPlayLevel7();
+                    Data.FlagPlayLevel7 = true;
                 }
-
                 break;
             case 7:
                 if (!Data.FlagPlayLevel8)
                 {
-                    AnalyticController.StartLevel8Funnel();
-                    AnalyticController.AdjustLogEventPlayLevel8();
+                    Data.FlagPlayLevel8 = true;
                 }
-
+                
                 break;
             case 8:
                 if (!Data.FlagPlayLevel9)
                 {
-                    AnalyticController.AdjustLogEventPlayLevel9();
+                    Data.FlagPlayLevel9 = true;
                 }
-
+                
                 break;
             case 9:
                 if (!Data.FlagPlayLevel10)
                 {
-                    AnalyticController.Level10StartFunnel();
-                    AnalyticController.AdjustLogEventPlayLevel10();
+                    AnalyticController.Level10CompleteFunnel();
+                    Data.FlagPlayLevel10 = true;
                 }
 
                 break;
+            case 14:
+                if (!Data.FlagPlayLevel15)
+                {
+                    AnalyticController.Level15CompleteFunnel();
+                    Data.FlagPlayLevel15 = true;
+                }
+                
+                break;
             case 19:
-                AnalyticController.Level20StartFunnel();
+                if (!Data.FlagPlayLevel20)
+                {
+                    AnalyticController.Level20CompleteFunnel();
+                    Data.FlagPlayLevel20 = true;
+                }
+                
                 break;
         }
 
@@ -390,15 +401,96 @@ public class GameController : Singleton<GameController>
     {
         AnalyticController.CompleteLevel();
 
-        if (Data.CurrentLevel == 0)
+        switch (Data.CurrentLevel)
         {
-            AnalyticController.CompleteLevel1Funnel();
-            AnalyticController.Level1CompleteFunnel();
+            case 0:
+                if (!Data.FlagPlayLevel1)
+                {
+                    AnalyticController.StartLevel1Funnel();
+                    AnalyticController.Level1StartFunnel();
+                    AnalyticController.AdjustLogEventPlayLevel1();
+                }
+
+                break;
+            case 1:
+                if (!Data.FlagPlayLevel2)
+                {
+                    AnalyticController.AdjustLogEventPlayLevel2();
+                }
+
+                break;
+            case 2:
+                if (!Data.FlagPlayLevel3)
+                {
+                }
+
+                AnalyticController.AdjustLogEventPlayLevel3();
+                break;
+            case 3:
+                if (!Data.FlagPlayLevel4)
+                {
+                    AnalyticController.AdjustLogEventPlayLevel4();
+                }
+
+                break;
+            case 4:
+                if (!Data.FlagPlayLevel5)
+                {
+                    AnalyticController.AdjustLogEventPlayLevel5();
+                }
+
+                break;
+            case 5:
+                if (!Data.FlagPlayLevel6)
+                {
+                    AnalyticController.AdjustLogEventPlayLevel6();
+                }
+
+                break;
+            case 6:
+                if (!Data.FlagPlayLevel7)
+                {
+                    AnalyticController.AdjustLogEventPlayLevel7();
+                }
+
+                break;
+            case 7:
+                if (!Data.FlagPlayLevel8)
+                {
+                    AnalyticController.StartLevel8Funnel();
+                    AnalyticController.AdjustLogEventPlayLevel8();
+                }
+
+                break;
+            case 8:
+                if (!Data.FlagPlayLevel9)
+                {
+                    AnalyticController.AdjustLogEventPlayLevel9();
+                }
+
+                break;
+            case 9:
+                if (!Data.FlagPlayLevel10)
+                {
+                    AnalyticController.Level10StartFunnel();
+                    AnalyticController.AdjustLogEventPlayLevel10();
+                }
+
+                break;
+            case 14:
+                if (!Data.FlagPlayLevel15)
+                {
+                    AnalyticController.Level15StartFunnel();
+                }
+                break;
+            case 19:
+                if (!Data.FlagPlayLevel20)
+                {
+                    AnalyticController.Level20StartFunnel();
+                }
+                break;
         }
-        else if (Data.CurrentLevel == 9)
-        {
-            AnalyticController.Level10CompleteFunnel();
-        }
+
 
         root.LevelMap.visitTower.ChangeToHomeTower();
 
