@@ -218,8 +218,13 @@ public class BackupPopup : Popup
         string titleRight = (string)convert[7];
         string titleLeft = (string)convert[8];
         bool isBackup = (bool)convert[9];
-        
-        Initialized(actionDo, actionSaveUserData, message, title, serverCurrentLevel,
+        Action actionFuncLogin = (Action)convert[10];
+
+        Initialized(()=>
+            {
+                 actionDo?.Invoke();
+                 actionFuncLogin?.Invoke();
+            }, actionSaveUserData, message, title, serverCurrentLevel,
             serverCoin, serverTotalSkin, titleRight, titleLeft, isBackup);
     }
 
