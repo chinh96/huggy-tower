@@ -138,6 +138,21 @@ public static class AnalyticController
     {
         LogEvent(Constants.LEVEL_20_START_FUNNEL, new Parameter[] { });
     }
+    
+    public static void Level20CompleteFunnel()
+    {
+        LogEvent(Constants.LEVEL_20_COMPLETE_FUNNEL, new Parameter[] { });
+    }
+    
+    public static void Level15StartFunnel()
+    {
+        LogEvent(Constants.LEVEL_15_START_FUNNEL, new Parameter[] { });
+    }   
+    
+    public static void Level15CompleteFunnel()
+    {
+        LogEvent(Constants.LEVEL_15_COMPLETE_FUNNEL, new Parameter[] { });
+    }
 
     private static void LogEvent(string name, Parameter[] param)
     {
