@@ -31,13 +31,13 @@ public class Onboarding1 : Singleton<Onboarding1>, IHasSkeletonDataAsset
     {
         get
         {
-            Data.IdCheckUnlocked = "Onboarding1";
+            Data.IdCheckUnlocked = "Onboarding0";
             return Data.IsUnlocked;
         }
 
         set
         {
-            Data.IdCheckUnlocked = "Onboarding1";
+            Data.IdCheckUnlocked = "Onboarding0";
             Data.IsUnlocked = value;
         }
     }
