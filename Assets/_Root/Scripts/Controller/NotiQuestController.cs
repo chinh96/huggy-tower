@@ -16,7 +16,7 @@ public class NotiQuestController : Singleton<NotiQuestController>
 
     public void Show()
     {
-        if (item != null && Data.CurrentLevel > 0)
+        if (item != null && Data.CurrentLevel > 2)
         {
             item.IsShownNoti = true;
 

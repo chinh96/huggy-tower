@@ -39,7 +39,7 @@ public class RoomTower : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (isMousePress && units.Find(unit => unit as Player) == null)
+        if (isMousePress && units.Find(unit => unit as Player) == null && Data.CurrentLevel > 1)
         {
             UpdateStatusSelectRoom(false, true);
 
