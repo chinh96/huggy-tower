@@ -44,7 +44,7 @@ public class GameController : Singleton<GameController>
 
     public LeanGameObjectPool poolArrow;
     public LevelRoot Root => root;
-    public EGameState GameState { get; set; }
+    public EGameState GameState;
     public RoomTower RoomPrefab => roomPrefab;
 
     [NonSerialized] public bool IsOnboarding;
@@ -399,7 +399,7 @@ public class GameController : Singleton<GameController>
     {
         AnalyticController.CompleteLevel();
 
-                switch (Data.CurrentLevel)
+        switch (Data.CurrentLevel)
         {
             case 0:
                 if (!Data.FlagPlayLevel1)
@@ -415,35 +415,35 @@ public class GameController : Singleton<GameController>
                 {
                     Data.FlagPlayLevel2 = true;
                 }
-                
+
                 break;
             case 2:
                 if (!Data.FlagPlayLevel3)
                 {
                     Data.FlagPlayLevel3 = true;
                 }
-                
+
                 break;
             case 3:
                 if (!Data.FlagPlayLevel4)
                 {
                     Data.FlagPlayLevel4 = true;
                 }
-                
+
                 break;
             case 4:
                 if (!Data.FlagPlayLevel5)
                 {
                     Data.FlagPlayLevel5 = true;
                 }
-                
+
                 break;
             case 5:
                 if (!Data.FlagPlayLevel6)
                 {
                     Data.FlagPlayLevel6 = true;
                 }
-                
+
                 break;
             case 6:
                 if (!Data.FlagPlayLevel7)
@@ -456,14 +456,14 @@ public class GameController : Singleton<GameController>
                 {
                     Data.FlagPlayLevel8 = true;
                 }
-                
+
                 break;
             case 8:
                 if (!Data.FlagPlayLevel9)
                 {
                     Data.FlagPlayLevel9 = true;
                 }
-                
+
                 break;
             case 9:
                 if (!Data.FlagPlayLevel10)
@@ -479,7 +479,7 @@ public class GameController : Singleton<GameController>
                     AnalyticController.Level15CompleteFunnel();
                     Data.FlagPlayLevel15 = true;
                 }
-                
+
                 break;
             case 19:
                 if (!Data.FlagPlayLevel20)
@@ -487,7 +487,7 @@ public class GameController : Singleton<GameController>
                     AnalyticController.Level20CompleteFunnel();
                     Data.FlagPlayLevel20 = true;
                 }
-                
+
                 break;
         }
 

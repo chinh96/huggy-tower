@@ -33,6 +33,7 @@ RectTransform:
   - {fileID: 8541910850482845572}
   - {fileID: 9141839984330408371}
   - {fileID: 8042469626064799559}
+  - {fileID: 5471685508393120463}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -130,6 +131,44 @@ RectTransform:
   m_AnchoredPosition: {x: 169, y: -135}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5339013751087456046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7352167929931382810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: InGame_Level3_txtTutorial
+  mTermSecondary: BoldenVanBold
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1001 &685957263475672058
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -631,6 +670,45 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4120956299093312330, guid: cf9b7a471c9d77b4ebce69ea4c8d2d07, type: 3}
   m_PrefabInstance: {fileID: 3815790992742082400}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5143159771791752596
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2878378500859808899}
+    m_Modifications:
+    - target: {fileID: 905074450525146971, guid: 90aefcffc58927145809db872441fbd9, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 905074450525146971, guid: 90aefcffc58927145809db872441fbd9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 450
+      objectReference: {fileID: 0}
+    - target: {fileID: 905074450525146971, guid: 90aefcffc58927145809db872441fbd9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 905074450525146971, guid: 90aefcffc58927145809db872441fbd9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 1158128373548879551, guid: 90aefcffc58927145809db872441fbd9, type: 3}
+      propertyPath: m_text
+      value: YOU CAN TAP THE TOWER
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 90aefcffc58927145809db872441fbd9, type: 3}
+--- !u!1 &7352167929931382810 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2407184272045489550, guid: 90aefcffc58927145809db872441fbd9, type: 3}
+  m_PrefabInstance: {fileID: 5143159771791752596}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &5471685508393120463 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 905074450525146971, guid: 90aefcffc58927145809db872441fbd9, type: 3}
+  m_PrefabInstance: {fileID: 5143159771791752596}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6386518511026715377
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -838,7 +916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8139157664181917076, guid: a91c5f9d3ad111f4d83307dc0f004533, type: 3}
       propertyPath: m_OverrideSorting
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a91c5f9d3ad111f4d83307dc0f004533, type: 3}
@@ -1162,7 +1240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8139157664181917076, guid: a91c5f9d3ad111f4d83307dc0f004533, type: 3}
       propertyPath: m_OverrideSorting
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a91c5f9d3ad111f4d83307dc0f004533, type: 3}

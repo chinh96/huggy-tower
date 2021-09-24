@@ -47,7 +47,10 @@ public class Onboarding : Singleton<Onboarding>
 
     public void StartRound()
     {
-        GameController.Instance.IsOnboarding = true;
+        if (!IsDone)
+        {
+            GameController.Instance.IsOnboarding = true;
+        }
         Rounds[indexRound].SetActive(true);
     }
 

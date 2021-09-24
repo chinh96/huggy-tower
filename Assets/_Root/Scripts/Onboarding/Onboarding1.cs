@@ -62,7 +62,10 @@ public class Onboarding1 : Singleton<Onboarding1>, IHasSkeletonDataAsset
 
     private void Start()
     {
-        GameController.Instance.IsOnboarding = true;
+        if (!IsDone)
+        {
+            GameController.Instance.IsOnboarding = true;
+        }
         BeforeMove();
     }
 
