@@ -44,7 +44,7 @@ public class WinPopup : Popup
             {
                 Data.CoinTotal = coinTotal;
             });
-            
+
             AnalyticController.AdjustLogEventClaimX5CoinWinLevel();
         });
     }
@@ -62,9 +62,9 @@ public class WinPopup : Popup
     public void OnClickCrossAdsFishPin()
     {
 #if UNITY_ANDROID
-        Application.OpenURL("market://details?id=com.gamee.fishpin");
+        Application.OpenURL("market://details?id=com.gamee.savethehero");
 #else
-        Application.OpenURL("itms-apps://itunes.apple.com/app/id1562329957");
+        // Application.OpenURL("itms-apps://itunes.apple.com/app/id1562329957");
 #endif
     }
 }

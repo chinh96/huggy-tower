@@ -51,6 +51,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private ParticleSystem effectIce;
     [SerializeField] private ParticleSystem effectElectric;
     [SerializeField] private ParticleSystem effectPoison;
+    [SerializeField] private ParticleSystem effectFadeIn;
+    [SerializeField] private ParticleSystem effectFadeOut;
     [SerializeField] private GameObject shuriken;
     [SerializeField] private GameObject bow;
 
@@ -223,16 +225,18 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         if (Turn != ETurn.Drag) return;
         Turn = ETurn.None;
 
-        Skeleton.DOColor(new Color(0, 0, 0, 0), .3f).OnComplete(() =>
+        effectFadeIn.Play();
+        Skeleton.Play("FadeOut", false);
+        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
         {
             MoveToSlot(parentRoom);
-            Skeleton.DOColor(new Color(1, 1, 1, 1), .1f);
+            effectFadeOut.Play();
+            Skeleton.Play("FadeIn", false);
         });
     }
 
     public void MoveToSlot(RoomTower parentRoom)
     {
-
         RoomTower cache = null;
         _parentRoom = parentRoom;
         var currentRoom = transform.parent.GetComponent<RoomTower>();
