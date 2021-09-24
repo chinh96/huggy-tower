@@ -285,6 +285,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         {
             Onboarding.Instance.StartRound();
         }
+        if (_parentRoom != null)
+        {
+            _parentRoom.GetComponent<BoxCollider2D>().enabled = false;
+        }
     }
 
     public void StartSearchingTurn() { Turn = ETurn.Searching; }
