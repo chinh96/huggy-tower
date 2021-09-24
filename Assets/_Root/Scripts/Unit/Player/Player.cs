@@ -561,7 +561,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                     Turn = ETurn.UsingItem;
                     PlayUseItem(_itemTarget.EquipType);
-                    float timeDelay = _itemTarget.EquipType == ItemType.Bow || _itemTarget.EquipType == ItemType.BrokenBrick ? 1.2f : .5f;
+                    float timeDelay = _itemTarget.EquipType == ItemType.Bow || _itemTarget.EquipType == ItemType.BrokenBrick || _itemTarget.EquipType == ItemType.Trap ? 1.2f : .5f;
                     DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
                         if (levelMap.condition == condition)
