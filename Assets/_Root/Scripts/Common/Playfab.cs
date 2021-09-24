@@ -58,7 +58,7 @@ public static class Playfab
             callbackError
         );
     }
-    
+
     public static void LoginWithFacebook(string tokenId, Action<LoginResult> onLoginSuccessFacebook)
     {
         if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId)) PlayFabSettings.staticSettings.TitleId = TitleId;

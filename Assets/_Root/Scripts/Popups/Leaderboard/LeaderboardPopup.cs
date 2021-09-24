@@ -25,6 +25,7 @@ public class LeaderboardPopup : Popup
         base.BeforeShow();
 
         LeaderboardData.IsWorldTab = true;
+        LeaderboardData.UserInfos.Clear();
         Reset();
     }
 
@@ -96,7 +97,7 @@ public class LeaderboardPopup : Popup
 
         ResetButton();
 
-        if ((page + 1) * 10 == LeaderboardData.UserInfos.Count)
+        if ((page + 1) * 10 >= LeaderboardData.UserInfos.Count)
         {
             LeaderboardController.Instance.GetMoreLeaderboard(() => ResetButton());
         }

@@ -144,16 +144,19 @@ public class LeaderboardController : Singleton<LeaderboardController>
                 result.Leaderboard.ForEach(
                     entry =>
                     {
-                        string[] split = entry.DisplayName.Split('|');
-                        LeaderboardData.UserInfos.Add(new LeaderboardUserInfo
+                        if (entry.DisplayName != null)
                         {
-                            Sprite = ResourcesController.Country.GetDataByCode(split[1]).Sprite,
-                            Name = split[0],
-                            CountryCode = split[1],
-                            PlayerId = entry.Profile.PlayerId,
-                            Stat = entry.StatValue + 1,
-                            Index = entry.Position + 1
-                        });
+                            string[] split = entry.DisplayName.Split('|');
+                            LeaderboardData.UserInfos.Add(new LeaderboardUserInfo
+                            {
+                                Sprite = ResourcesController.Country.GetDataByCode(split[1]).Sprite,
+                                Name = split[0],
+                                CountryCode = split[1],
+                                PlayerId = entry.Profile.PlayerId,
+                                Stat = entry.StatValue + 1,
+                                Index = entry.Position + 1
+                            });
+                        }
                     }
                 );
 

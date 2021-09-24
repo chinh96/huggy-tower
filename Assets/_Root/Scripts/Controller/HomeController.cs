@@ -46,7 +46,7 @@ public class HomeController : Singleton<HomeController>
         FadeOutOverlay();
         CheckNewUpdatePopup();
         CheckAchievementDailyQuest();
-        CheckRescueParty();
+        // CheckRescueParty();
         CheckLanguage();
     }
 
