@@ -99,8 +99,6 @@ public static class Data
 
     public static SkinData SkinGift;
 
-    public static bool DoneOnboarding { get => GetBool(Constants.DONE_ONBOARDING, false); set => SetBool(Constants.DONE_ONBOARDING, value); }
-
     public static int JoinFbProgress { get => GetInt(Constants.JOIN_FB_PROGRESS, 0); set => SetInt(Constants.JOIN_FB_PROGRESS, value); }
 
     public static string AchievementId;
@@ -154,10 +152,10 @@ public static class Data
             EventController.MedalTotalChanged?.Invoke();
         }
     }
-    
+
     public static int DataVersion { get => PlayerPrefs.GetInt(Constants.DATA_VERSION, 0); set => PlayerPrefs.SetInt(Constants.DATA_VERSION, value); }
     public static string CustomId { get => PlayerPrefs.GetString(Constants.CUSTOM_ID, SystemInfo.deviceUniqueIdentifier); set => PlayerPrefs.SetString(Constants.CUSTOM_ID, value); }
-    
+
     public static TimeSpan TimeToRescueParty => new DateTime(DateTime.Now.Year, 9, 1, 0, 0, 0) - DateTime.Now;
 
     public static string DateTimeStartRescueParty { get => GetString(Constants.DATE_TIME_START_RESCUE_PARTY, ""); set => SetString(Constants.DATE_TIME_START_RESCUE_PARTY, value); }

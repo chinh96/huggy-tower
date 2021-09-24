@@ -6,7 +6,7 @@ using Spine.Unity;
 using Spine;
 using UnityEngine.EventSystems;
 
-public class HandOnboarding : Singleton<HandOnboarding>, IHasSkeletonDataAsset
+public class Onboarding1 : Singleton<Onboarding1>, IHasSkeletonDataAsset
 {
     [SerializeField] private SkeletonDataAsset skeletonDataAsset;
     public SkeletonDataAsset SkeletonDataAsset => skeletonDataAsset;
@@ -23,18 +23,30 @@ public class HandOnboarding : Singleton<HandOnboarding>, IHasSkeletonDataAsset
     public GameObject TextBackgroundEnemy;
     public GameObject Arrow;
     public GameObject Text2;
-    public GameObject OKButton;
 
-    private bool isMouseDowned;
-    private bool isMouseUped;
     private Vector2 sizeDelta;
     private Sequence sequence;
+
+    public bool IsDone
+    {
+        get
+        {
+            Data.IdCheckUnlocked = "Onboarding1";
+            return Data.IsUnlocked;
+        }
+
+        set
+        {
+            Data.IdCheckUnlocked = "Onboarding1";
+            Data.IsUnlocked = value;
+        }
+    }
 
     protected override void Awake()
     {
         base.Awake();
 
-        if (Data.DoneOnboarding)
+        if (IsDone)
         {
             Destroy(gameObject);
         }
@@ -103,7 +115,6 @@ public class HandOnboarding : Singleton<HandOnboarding>, IHasSkeletonDataAsset
         TextBackgroundEnemy.SetActive(false);
         Arrow.SetActive(false);
         Text2.SetActive(false);
-        OKButton.SetActive(false);
 
         DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
         {
@@ -114,24 +125,19 @@ public class HandOnboarding : Singleton<HandOnboarding>, IHasSkeletonDataAsset
                 DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                 {
                     TextBackgroundEnemy.SetActive(true);
-                    DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
+                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                     {
                         Text2.SetActive(true);
-                        DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
+                        DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
                         {
-                            OKButton.SetActive(true);
+                            IsDone = true;
+                            GameController.Instance.IsOnboarding = false;
+                            Destroy(gameObject);
                         });
                     });
                 });
             });
         });
-    }
-
-    public void OnClickOKButton()
-    {
-        Data.DoneOnboarding = true;
-        GameController.Instance.IsOnboarding = false;
-        Destroy(gameObject);
     }
 
     private void OnDisable()

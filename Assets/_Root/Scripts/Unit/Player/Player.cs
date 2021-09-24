@@ -167,7 +167,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         GameController.Instance.SetSlicerActive(false);
     }
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
         if (GameController.Instance.GameState != EGameState.Playing)
         {
@@ -185,7 +185,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         }
     }
 
-    private void OnMouseUp()
+    public void OnMouseUp()
     {
         if (GameController.Instance.GameState != EGameState.Playing)
         {
@@ -206,38 +206,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         var checkArea = CheckCorrectArea();
         if (checkArea.Item1)
         {
-            RoomTower cache = null;
-            _parentRoom = levelMap.visitTower.slots[checkArea.Item2];
-            var currentRoom = transform.parent.GetComponent<RoomTower>();
-            if (currentRoom != null && levelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom() && !currentRoom.IsContaintItem() && !currentRoom.IsContaintPrincess())
-            {
-                cache = currentRoom;
-            }
-
-            transform.SetParent(_parentRoom.transform, false);
-            transform.localPosition = _parentRoom.spawnPoint.localPosition;
-            UpdateDefault();
-
-            if (cache != null)
-            {
-                levelMap.visitTower.RemoveSlot(cache);
-
-                levelMap.homeTower.AddSlot();
-            }
-
-            if (!FirstTurn) FirstTurn = true;
-
-            levelMap.visitTower.RefreshRoom();
-            levelMap.homeTower.RefreshRoom();
-            OnDeSelected();
-            leanSelectableByFinger.Deselect();
-
-            _isMouseUpDragDetected = true;
-
-            if (HandOnboarding.Instance != null)
-            {
-                HandOnboarding.Instance.ShowRound2();
-            }
+            var parentRoom = levelMap.visitTower.slots[checkArea.Item2];
+            MoveToSlot(parentRoom);
         }
         else
         {
@@ -248,12 +218,69 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         }
     }
 
+    public void FlashToSlot(RoomTower parentRoom)
+    {
+        if (Turn != ETurn.Drag) return;
+        Turn = ETurn.None;
+
+        Skeleton.DOColor(new Color(0, 0, 0, 0), .3f).OnComplete(() =>
+        {
+            MoveToSlot(parentRoom);
+            Skeleton.DOColor(new Color(1, 1, 1, 1), .1f);
+        });
+    }
+
+    public void MoveToSlot(RoomTower parentRoom)
+    {
+
+        RoomTower cache = null;
+        _parentRoom = parentRoom;
+        var currentRoom = transform.parent.GetComponent<RoomTower>();
+        if (currentRoom != null && levelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom() && !currentRoom.IsContaintItem() && !currentRoom.IsContaintPrincess())
+        {
+            cache = currentRoom;
+        }
+
+        transform.SetParent(_parentRoom.transform, false);
+        transform.localPosition = _parentRoom.spawnPoint.localPosition;
+        UpdateDefault();
+
+        if (cache != null)
+        {
+            levelMap.visitTower.RemoveSlot(cache);
+
+            levelMap.homeTower.AddSlot();
+        }
+
+        if (!FirstTurn) FirstTurn = true;
+
+        levelMap.visitTower.RefreshRoom();
+        levelMap.homeTower.RefreshRoom();
+        OnDeSelected();
+        leanSelectableByFinger.Deselect();
+
+        _isMouseUpDragDetected = true;
+
+        if (Onboarding1.Instance != null)
+        {
+            Onboarding1.Instance.ShowRound2();
+        }
+        if (Onboarding.Instance != null)
+        {
+            Onboarding.Instance.EndRound();
+        }
+    }
+
     #region turn
 
     public void StartDragTurn()
     {
         Turn = ETurn.Drag;
         _countdownAttack = countdownAttack;
+        if (Onboarding.Instance != null)
+        {
+            Onboarding.Instance.StartRound();
+        }
     }
 
     public void StartSearchingTurn() { Turn = ETurn.Searching; }

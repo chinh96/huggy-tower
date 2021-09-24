@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
-
+using DG.Tweening;
 using UnityEngine;
 
 public class RoomTower : MonoBehaviour
@@ -15,7 +15,37 @@ public class RoomTower : MonoBehaviour
     public List<Unit> units = new List<Unit>();
     public List<Item> items = new List<Item>();
 
+    private bool isMousePress;
+
     private void Start() { UpdateUnitCollection(); }
+
+    private void OnMouseDown()
+    {
+        isMousePress = true;
+        UpdateStatusSelectRoom(true, true);
+    }
+
+    private void OnMouseEnter()
+    {
+        isMousePress = true;
+        UpdateStatusSelectRoom(true, true);
+    }
+
+    private void OnMouseExit()
+    {
+        isMousePress = false;
+        UpdateStatusSelectRoom(false, true);
+    }
+
+    private void OnMouseUp()
+    {
+        if (isMousePress)
+        {
+            UpdateStatusSelectRoom(false, true);
+
+            GameController.Instance.Player.FlashToSlot(this);
+        }
+    }
 
     public void UpdateUnitCollection()
     {
