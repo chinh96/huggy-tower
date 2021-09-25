@@ -700,8 +700,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 else
                 {
                     Damage += _cacheTarget.Damage;
-                    effectIncreaseDamge.gameObject.SetActive(true);
-                    effectIncreaseDamge.Play();
+                    DOTween.Sequence().AppendInterval(.05f).AppendCallback(() =>
+                    {
+                        effectIncreaseDamge.gameObject.SetActive(true);
+                        effectIncreaseDamge.Play();
+                    });
 
                     _cacheTarget.TxtDamage.transform.SetParent(transform);
                     _cacheTarget.TxtDamage.gameObject.SetActive(true);

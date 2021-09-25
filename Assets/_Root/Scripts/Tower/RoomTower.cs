@@ -39,11 +39,17 @@ public class RoomTower : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (isMousePress && units.Find(unit => unit as Player) == null && items.Find(item => item as ItemLock) == null && Data.CurrentLevel > 1)
+        if (Data.CurrentLevel > 1)
         {
-            UpdateStatusSelectRoom(false, true);
+            bool hasPlayer = units.Find(unit => unit as Player) != null;
+            var itemLock = items.Find(item => item as ItemLock);
+            bool hasItemLock = itemLock != null && (itemLock.State == EUnitState.Invalid);
+            if (isMousePress && !hasPlayer && !hasItemLock)
+            {
+                UpdateStatusSelectRoom(false, true);
 
-            GameController.Instance.Player.FlashToSlot(this);
+                GameController.Instance.Player.FlashToSlot(this);
+            }
         }
     }
 
