@@ -78,6 +78,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     private LevelMap levelMap => GameController.Instance.Root.LevelMap;
     private bool hasBloodEnemy;
 
+    public void SetParentRoom(RoomTower parentRoom)
+    {
+        _parentRoom = parentRoom;
+    }
+
     private void Start()
     {
         dragTranslate.valiateAction = ValidateChooseRoom;
