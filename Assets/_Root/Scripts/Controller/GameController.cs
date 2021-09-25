@@ -25,9 +25,9 @@ public class GameController : Singleton<GameController>
     [SerializeField] private Image overlay;
     [SerializeField] private List<GameObject> backgrounds;
     [SerializeField] private List<MoveOutAnimation> moveOutAnimations;
-    [SerializeField] private FighterOverlay fighterOverlay;
+    private FighterOverlay fighterOverlay;
     [SerializeField] private GameObject opacity;
-    [SerializeField] private LeanTouch LeanTouch;
+    public LeanTouch LeanTouch;
     [SerializeField] private GameObject rescuePartyButton;
 
     private Player player;
@@ -119,6 +119,11 @@ public class GameController : Singleton<GameController>
 
     public async void LoadLevel(int fakeIndex)
     {
+        if (fighterOverlay != null)
+        {
+            Destroy(fighterOverlay.gameObject);
+        }
+
         if (fakeIndex > 0)
         {
             IsOnboarding = false;
@@ -624,6 +629,6 @@ public class GameController : Singleton<GameController>
 
     public void ShowFighterOverlay()
     {
-        Instantiate(fighterOverlay, Root.transform.parent);
+        fighterOverlay = Instantiate(ResourcesController.Config.FighterOverlay, Root.transform.parent);
     }
 }

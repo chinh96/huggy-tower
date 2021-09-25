@@ -13,4 +13,5 @@ public class ConfigResources : ScriptableObject
     public bool EnableAds;
     public bool EnableTest;
     public int LevelShowRate;
+    public FighterOverlay FighterOverlay;
 }
