@@ -396,6 +396,7 @@ public class GameController : Singleton<GameController>
         FadeInOverlay(() =>
         {
             PopupController.Instance.DismissAll();
+            DOTween.KillAll();
             SceneManager.LoadScene(Constants.HOME_SCENE);
         });
     }
