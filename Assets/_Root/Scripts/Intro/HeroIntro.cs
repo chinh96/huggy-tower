@@ -76,7 +76,7 @@ public class HeroIntro : MonoBehaviour, IHasSkeletonDataAsset
     {
         PlayFallInLove();
         IntroController.Instance.PlayExploison();
-        DOTween.Sequence().AppendInterval(2).AppendCallback(() =>
+        DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
         {
             IntroController.Instance.LookBackToDragon();
         });

@@ -167,6 +167,7 @@ public static class Data
     public static bool FirstOpenRescuePartyInHome { get => GetBool(Constants.FIRST_OPEN_RESCUE_PARTY_IN_HOME, true); set => SetBool(Constants.FIRST_OPEN_RESCUE_PARTY_IN_HOME, value); }
 
     public static bool FirstOpenRescuePartyInGame { get => GetBool(Constants.FIRST_OPEN_RESCUE_PARTY_IN_GAME, true); set => SetBool(Constants.FIRST_OPEN_RESCUE_PARTY_IN_GAME, value); }
+    public static bool IsIntro { get => GetBool(Constants.IS_INTRO, true); set => SetBool(Constants.IS_INTRO, value); }
 }
 
 [Serializable]

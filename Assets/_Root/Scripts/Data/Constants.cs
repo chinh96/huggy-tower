@@ -62,11 +62,13 @@ public class Constants
     public const string FIRST_OPEN_RESCUE_PARTY_IN_GAME = "FIRST_OPEN_RESCUE_PARTY_IN_GAME";
     public const string DATA_VERSION = "DATA_VERSION";
     public const string CUSTOM_ID = "CUSTOM_ID";
+    public const string IS_INTRO = "IS_INTRO";
 
     // Scene
     public const string LOADING_SCENE = "LoadingScene";
     public const string HOME_SCENE = "HomeScene";
     public const string GAME_SCENE = "GameScene";
+    public const string INTRO_SCENE = "IntroScene";
 
     // Analytics
     public const string LEVEL_INDEX_NAME = "LEVEL_INDEX_NAME";

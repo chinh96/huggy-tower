@@ -23,7 +23,14 @@ public class LoadingController : MonoBehaviour
         progress.fillAmount = 0;
         progress.DOFillAmount(1, duration).SetEase(ease).OnComplete(() =>
         {
-            SceneManager.LoadScene(Constants.HOME_SCENE);
+            if (Data.IsIntro)
+            {
+                SceneManager.LoadScene(Constants.INTRO_SCENE);
+            }
+            else
+            {
+                SceneManager.LoadScene(Constants.HOME_SCENE);
+            }
         });
 
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>

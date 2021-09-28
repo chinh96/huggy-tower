@@ -2,6 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using Cinemachine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class IntroController : Singleton<IntroController>
 {
@@ -22,6 +23,8 @@ public class IntroController : Singleton<IntroController>
     public ParticleSystem Exploison;
     public ParticleSystem FireFx;
     public DragonIntro DragonIntro0;
+    public FireFull FireFull;
+    public SpriteRenderer Overlay;
 
     private void Start()
     {
@@ -110,15 +113,28 @@ public class IntroController : Singleton<IntroController>
         PrincessIntro2.gameObject.SetActive(true);
         VirtualCamera.Follow = DragonIntro2.transform;
         Transposer.m_FollowOffset = new Vector3(-2, 0, -10);
-        DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
         {
-            DragonIntro2.PlayFlyUp();
-            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+            DragonIntro2.PlayAttack();
+            FireFx.Play();
+            DOTween.To(() => Transposer.m_FollowOffset, (x) => Transposer.m_FollowOffset = x, new Vector3(-3, -12, -10), 1);
+            DOTween.To(() => VirtualCamera.m_Lens.OrthographicSize, (x) => VirtualCamera.m_Lens.OrthographicSize = x, 18, 1).OnComplete(() =>
             {
-                DragonIntro2.PlayAttack();
-                FireFx.Play();
-                DOTween.To(() => Transposer.m_FollowOffset, (x) => Transposer.m_FollowOffset = x, new Vector3(-3, -12, -10), 1);
-                DOTween.To(() => VirtualCamera.m_Lens.OrthographicSize, (x) => VirtualCamera.m_Lens.OrthographicSize = x, 20, 1);
+                FireFull.Show();
+
+                DOTween.Sequence().AppendInterval(2).AppendCallback(() =>
+                {
+                    float alpha = 0;
+                    DOTween.To(() => alpha, (x) =>
+                    {
+                        alpha = x;
+                        Overlay.color = new Color(0, 0, 0, x);
+                    }, 1, 1).OnComplete(() =>
+                    {
+                        Data.IsIntro = false;
+                        SceneManager.LoadScene(Constants.HOME_SCENE);
+                    });
+                });
             });
         });
     }

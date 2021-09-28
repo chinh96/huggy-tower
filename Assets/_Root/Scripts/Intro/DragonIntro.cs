@@ -9,7 +9,6 @@ public class DragonIntro : MonoBehaviour, IHasSkeletonDataAsset
 
     [SpineAnimation] public string Fly;
     [SpineAnimation] public string Attack;
-    [SpineAnimation] public string FlyUp;
 
     public void PlayFly()
     {
@@ -19,11 +18,6 @@ public class DragonIntro : MonoBehaviour, IHasSkeletonDataAsset
     public void PlayAttack()
     {
         PlayAnim(Attack, true);
-    }
-
-    public void PlayFlyUp()
-    {
-        PlayAnim(FlyUp, false);
     }
 
     private void PlayAnim(string name, bool isLoop)
