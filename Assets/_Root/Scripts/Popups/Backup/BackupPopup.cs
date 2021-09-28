@@ -1,8 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using PlayFab;
-using PlayFab.ClientModels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,11 +24,11 @@ public class BackupPopup : Popup
     [SerializeField] private TextMeshProUGUI txtTotalSkinRight;
     [SerializeField] private Image arrowSkinRigth;
     [SerializeField] private TextMeshProUGUI txtTitleRight;
-    
-    private Action actionOk;
-    private Action actionClose;
-    
-   /// <summary>
+
+    private Action _actionOk;
+    private Action _actionClose;
+
+    /// <summary>
     /// 
     /// </summary>
     /// <param name="actionOk"></param>
@@ -57,8 +53,8 @@ public class BackupPopup : Popup
         string titleLeft,
         bool isBackup)
     {
-        this.actionOk = actionOk;
-        this.actionClose = actionClose;
+        _actionOk = actionOk;
+        _actionClose = actionClose;
         txtMessage.text = message;
         txtTitle.text = title;
         btnOk.onClick.RemoveAllListeners();
@@ -189,7 +185,7 @@ public class BackupPopup : Popup
 
     private void OnCloseButtonPressed()
     {
-        actionClose?.Invoke();
+        _actionClose?.Invoke();
         gameObject.SetActive(false);
     }
 
@@ -198,7 +194,7 @@ public class BackupPopup : Popup
     /// </summary>
     private void OnOkButtonPressed()
     {
-        actionOk?.Invoke();
+        _actionOk?.Invoke();
         gameObject.SetActive(false);
     }
 
@@ -212,7 +208,7 @@ public class BackupPopup : Popup
         string message = (string)convert[2];
         string title = (string)convert[3];
         int serverCurrentLevel = (int)convert[4];
-        
+
         int serverCoin = (int)convert[5];
         int serverTotalSkin = (int)convert[6];
         string titleRight = (string)convert[7];
@@ -220,17 +216,42 @@ public class BackupPopup : Popup
         bool isBackup = (bool)convert[9];
         Action actionFuncLogin = (Action)convert[10];
 
-        Initialized(()=>
-            {
-                 actionDo?.Invoke();
-                 actionFuncLogin?.Invoke();
-            }, actionSaveUserData, message, title, serverCurrentLevel,
-            serverCoin, serverTotalSkin, titleRight, titleLeft, isBackup);
+
+        if (isBackup)
+        {
+            Initialized(() =>
+                {
+                    actionSaveUserData?.Invoke();
+                    actionFuncLogin?.Invoke();
+                },
+                null,
+                message,
+                title,
+                serverCurrentLevel,
+                serverCoin,
+                serverTotalSkin,
+                titleRight,
+                titleLeft,
+                true);
+        }
+        else
+        {
+            Initialized(() =>
+                {
+                    actionDo?.Invoke();
+                    actionFuncLogin?.Invoke();
+                },
+                null,
+                message,
+                title,
+                serverCurrentLevel,
+                serverCoin,
+                serverTotalSkin,
+                titleRight,
+                titleLeft,
+                false);
+        }
     }
 
-    public void Show()
-    {
-        BeforeShow();
-    }
-    
+    public void Show() { BeforeShow(); }
 }
