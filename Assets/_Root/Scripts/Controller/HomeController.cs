@@ -47,7 +47,7 @@ public class HomeController : Singleton<HomeController>
         CheckNewUpdatePopup();
         CheckAchievementDailyQuest();
         // CheckRescueParty();
-        CheckLanguage();
+        // CheckLanguage();
     }
 
     private void CheckAchievementDailyQuest()
