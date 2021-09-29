@@ -28,10 +28,14 @@ public class IntroController : Singleton<IntroController>
 
     private void Start()
     {
+        SoundController.Instance.PlayOnce(SoundType.IntroBackground);
+        SoundController.Instance.PlayOnce(SoundType.IntroRunStart);
         Transposer = VirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
         DragonIntro.gameObject.SetActive(false);
         HeroIntro.transform.DOMoveX(PrincessIntro.transform.position.x - 4f, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
+            SoundController.Instance.PlayOnce(SoundType.IntroEnemyStart);
+            SoundController.Instance.PlayOnce(SoundType.IntroPrincessStart);
             HeroVsGoblin();
         });
         DragonIntro0.transform.DOMoveX(-6, 4);
@@ -55,12 +59,14 @@ public class IntroController : Singleton<IntroController>
             WolfIntro.PlayIdle();
             WolfIntro.GetComponent<MeshRenderer>().sortingOrder = -1;
             HeroIntro.PlayAttack();
+            SoundController.Instance.PlayOnce(SoundType.IntroCutEnemy);
             DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
             {
                 BloodWolfFx.Play();
                 BloodGoblinFx.Play();
                 GoblinIntro.PlayDie();
                 WolfIntro.PlayDie();
+                SoundController.Instance.PlayOnce(SoundType.IntroEnemyDie);
             });
             DOTween.Sequence().AppendInterval(1.2f).AppendCallback(() =>
             {
@@ -75,6 +81,7 @@ public class IntroController : Singleton<IntroController>
         HeroIntro.transform.DOMoveX(PrincessIntro.transform.position.x, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
             HeroIntro.PlayJump();
+            SoundController.Instance.PlayOnce(SoundType.IntroHeroJump);
             DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
             {
                 HeroIntro.PlayWait();
@@ -87,8 +94,10 @@ public class IntroController : Singleton<IntroController>
         });
 
         DragonIntro.gameObject.SetActive(true);
+        SoundController.Instance.PlayOnce(SoundType.IntroDragonStart);
         DragonIntro.transform.DOMove(PrincessIntro.transform.position + Vector3.up * 1.5f + Vector3.right * 1.5f, 1f).SetEase(Ease.Linear).OnComplete(() =>
         {
+            SoundController.Instance.PlayOnce(SoundType.IntroPrincessScare);
             PrincessIntro.transform.SetParent(DragonIntro.transform);
             DragonIntro.transform.DOMove(EnemyTower.transform.position + Vector3.up * 12, 3);
             DOTween.Sequence().AppendInterval(1.3f).AppendCallback(() =>
@@ -96,6 +105,7 @@ public class IntroController : Singleton<IntroController>
                 HeroIntro.transform.SetParent(transform.parent);
                 HeroIntro.gameObject.AddComponent<Rigidbody2D>().gravityScale = 2;
                 HeroIntro.PlayFall();
+                SoundController.Instance.PlayOnce(SoundType.IntroHeroFall);
             });
         });
     }
@@ -118,9 +128,11 @@ public class IntroController : Singleton<IntroController>
             FireFx.Play();
             FireFull.Show();
             DragonIntro2.PlayAttack();
+            SoundController.Instance.PlayOnce(SoundType.IntroDragonAttack);
             DOTween.To(() => Transposer.m_FollowOffset, (x) => Transposer.m_FollowOffset = x, new Vector3(-3, -12, -10), 1);
             DOTween.To(() => VirtualCamera.m_Lens.OrthographicSize, (x) => VirtualCamera.m_Lens.OrthographicSize = x, 18, 1).OnComplete(() =>
             {
+                SoundController.Instance.PlayOnce(SoundType.IntroPrincessEnd);
                 DOTween.Sequence().AppendInterval(3).AppendCallback(() =>
                 {
                     float alpha = 0;

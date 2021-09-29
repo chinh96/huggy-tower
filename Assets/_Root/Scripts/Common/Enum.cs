@@ -197,7 +197,20 @@ public enum SoundType
     Elemental,
     Mace,
     Pollaxe,
-    Bow2
+    Bow2,
+    IntroRunStart,
+    IntroCutEnemy,
+    IntroEnemyStart,
+    IntroEnemyDie,
+    IntroPrincessStart,
+    IntroPrincessScare,
+    IntroDragonStart,
+    IntroHeroJump,
+    IntroHeroFall,
+    IntroHeroFallInLove,
+    IntroDragonAttack,
+    IntroPrincessEnd,
+    IntroBackground
 }
 
 public enum WorldType
