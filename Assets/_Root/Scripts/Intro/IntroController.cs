@@ -30,7 +30,7 @@ public class IntroController : Singleton<IntroController>
     {
         Transposer = VirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
         DragonIntro.gameObject.SetActive(false);
-        HeroIntro.transform.DOMoveX(PrincessIntro.transform.position.x - 4f, 1.5f).SetEase(Ease.Linear).OnComplete(() =>
+        HeroIntro.transform.DOMoveX(PrincessIntro.transform.position.x - 4f, 1).SetEase(Ease.Linear).OnComplete(() =>
         {
             HeroVsGoblin();
         });
@@ -94,7 +94,7 @@ public class IntroController : Singleton<IntroController>
             DOTween.Sequence().AppendInterval(1.3f).AppendCallback(() =>
             {
                 HeroIntro.transform.SetParent(transform.parent);
-                HeroIntro.gameObject.AddComponent<Rigidbody2D>();
+                HeroIntro.gameObject.AddComponent<Rigidbody2D>().gravityScale = 2;
                 HeroIntro.PlayFall();
             });
         });
@@ -115,14 +115,13 @@ public class IntroController : Singleton<IntroController>
         Transposer.m_FollowOffset = new Vector3(-2, 0, -10);
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
         {
-            DragonIntro2.PlayAttack();
             FireFx.Play();
+            FireFull.Show();
+            DragonIntro2.PlayAttack();
             DOTween.To(() => Transposer.m_FollowOffset, (x) => Transposer.m_FollowOffset = x, new Vector3(-3, -12, -10), 1);
             DOTween.To(() => VirtualCamera.m_Lens.OrthographicSize, (x) => VirtualCamera.m_Lens.OrthographicSize = x, 18, 1).OnComplete(() =>
             {
-                FireFull.Show();
-
-                DOTween.Sequence().AppendInterval(2).AppendCallback(() =>
+                DOTween.Sequence().AppendInterval(3).AppendCallback(() =>
                 {
                     float alpha = 0;
                     DOTween.To(() => alpha, (x) =>
