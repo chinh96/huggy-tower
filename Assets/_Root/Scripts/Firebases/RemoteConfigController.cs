@@ -13,6 +13,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
     [NonSerialized] public string UpdateDescription = "0";
     [NonSerialized] public bool OnlyAdmob = true;
     [NonSerialized] public bool EnableFbLogin = false;
+    [NonSerialized] public bool HasIntro = true;
 
     public bool HasNewUpdate => float.Parse(Application.version) < float.Parse(CurrentVersion);
 
@@ -54,6 +55,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         defaults.Add(Constants.ONLY_ADMOB_ANDROID, true);
         defaults.Add(Constants.ONLY_ADMOB_IOS, true);
         defaults.Add(Constants.ENABLE_FB_LOGIN_IOS, false);
+        defaults.Add(Constants.HAS_INTRO, true);
 
         Firebase.RemoteConfig.FirebaseRemoteConfig.SetDefaults(defaults);
     }
@@ -102,6 +104,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         FirstOpenCountLevelWinTurnOnAds = int.Parse(GetConfig(Constants.FIRST_OPEN_COUNT_LEVEL_WIN_TURN_ON_ADS));
         CountLevelWinShowAds = int.Parse(GetConfig(Constants.COUNT_LEVEL_WIN_SHOW_ADS));
         InterstitalTimeLevelCompleted = int.Parse(GetConfig(Constants.INTERSTITIAL_TIME_LEVEL_COMPLETED));
+        HasIntro = bool.Parse(GetConfig(Constants.HAS_INTRO));
 #if UNITY_ANDROID
         OnlyAdmob = bool.Parse(GetConfig(Constants.ONLY_ADMOB_ANDROID));
         CurrentVersion = GetConfig(Constants.CURRENT_VERSION_ANDROID);

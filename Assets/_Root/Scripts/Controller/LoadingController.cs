@@ -21,9 +21,9 @@ public class LoadingController : MonoBehaviour
         Vibration.Init();
 
         progress.fillAmount = 0;
-        progress.DOFillAmount(1, duration).SetEase(ease).OnComplete(() =>
+        progress.DOFillAmount(5, duration).SetEase(ease).OnComplete(() =>
         {
-            if (Data.IsIntro)
+            if (Data.IsIntro && RemoteConfigController.Instance.HasIntro)
             {
                 SceneManager.LoadScene(Constants.INTRO_SCENE);
             }
@@ -31,11 +31,6 @@ public class LoadingController : MonoBehaviour
             {
                 SceneManager.LoadScene(Constants.HOME_SCENE);
             }
-        });
-
-        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
-        {
-            SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
         });
     }
 }

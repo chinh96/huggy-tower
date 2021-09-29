@@ -25,6 +25,12 @@ public class IntroController : Singleton<IntroController>
     public DragonIntro DragonIntro0;
     public FireFull FireFull;
     public SpriteRenderer Overlay;
+    public GameObject SkipButton;
+
+    private void Awake()
+    {
+        SkipButton.SetActive(false);
+    }
 
     private void Start()
     {
@@ -40,6 +46,11 @@ public class IntroController : Singleton<IntroController>
             HeroVsGoblin();
         });
         DragonIntro0.transform.DOMoveX(-6, 4);
+
+        DOTween.Sequence().AppendInterval(5).AppendCallback(() =>
+        {
+            SkipButton.SetActive(true);
+        });
     }
 
     public void HeroVsGoblin()
@@ -143,12 +154,16 @@ public class IntroController : Singleton<IntroController>
                         Overlay.color = new Color(0, 0, 0, x);
                     }, 1, 1).OnComplete(() =>
                     {
-                        Data.IsIntro = false;
-                        SceneManager.LoadScene(Constants.HOME_SCENE);
-                        // SceneManager.LoadScene(Constants.INTRO_SCENE);
+                        Done();
                     });
                 });
             });
         });
+    }
+
+    public void Done()
+    {
+        Data.IsIntro = false;
+        SceneManager.LoadScene(Constants.HOME_SCENE);
     }
 }
