@@ -115,7 +115,7 @@ public class IntroController : Singleton<IntroController>
             DOTween.Sequence().AppendInterval(1.3f).AppendCallback(() =>
             {
                 HeroIntro.transform.SetParent(transform.parent);
-                HeroIntro.gameObject.AddComponent<Rigidbody2D>().gravityScale = 2;
+                HeroIntro.gameObject.AddComponent<Rigidbody2D>().gravityScale = 3;
                 HeroIntro.PlayFall();
                 SoundController.Instance.PlayOnce(SoundType.IntroHeroFall);
             });
@@ -146,7 +146,7 @@ public class IntroController : Singleton<IntroController>
             {
                 SoundController.Instance.PlayOnce(SoundType.IntroPrincessEnd);
                 SoundController.Instance.PlayOnce(SoundType.IntroEnemySmile);
-                DOTween.Sequence().AppendInterval(3).AppendCallback(() =>
+                DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
                 {
                     float alpha = 0;
                     DOTween.To(() => alpha, (x) =>

@@ -178,4 +178,9 @@ public class HomeController : Singleton<HomeController>
             });
         }
     }
+
+    public void OnClickHalloweenButton()
+    {
+        PopupController.Instance.Show<CoomingSoonPopup>();
+    }
 }
