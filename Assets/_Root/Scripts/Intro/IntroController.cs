@@ -145,6 +145,7 @@ public class IntroController : Singleton<IntroController>
             DOTween.To(() => VirtualCamera.m_Lens.OrthographicSize, (x) => VirtualCamera.m_Lens.OrthographicSize = x, 18, 1).OnComplete(() =>
             {
                 SoundController.Instance.PlayOnce(SoundType.IntroPrincessEnd);
+                SoundController.Instance.PlayOnce(SoundType.IntroEnemySmile);
                 DOTween.Sequence().AppendInterval(3).AppendCallback(() =>
                 {
                     float alpha = 0;

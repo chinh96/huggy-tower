@@ -212,7 +212,8 @@ public enum SoundType
     IntroPrincessEnd,
     IntroBackground,
     IntroWolfDie,
-    IntroWolfStart
+    IntroWolfStart,
+    IntroEnemySmile
 }
 
 public enum WorldType
