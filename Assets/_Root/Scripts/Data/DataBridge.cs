@@ -14,7 +14,7 @@ public class DataBridge : Singleton<DataBridge>
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        CheckCacheLevel();
+        // CheckCacheLevel();
     }
 
     public void CheckCacheLevel()
@@ -56,44 +56,48 @@ public class DataBridge : Singleton<DataBridge>
 
     public async Task<(GameObject, int, int)> GetLevel(int levelIndex)
     {
+        // if (levelIndex > ResourcesController.Config.MaxLevelCanReach - 1)
+        // {
+        //     var temp = (levelIndex - ResourcesController.Config.MaxLevelCanReach) % (ResourcesController.Config.MaxLevelWithOutTutorial);
+        //     if (Data.CountPlayLevel >= ResourcesController.Config.MaxLevelWithOutTutorial)
+        //     {
+        //         MakeCacheLevel();
+        //         Data.CountPlayLevel = 0;
+        //     }
+        //     else
+        //     {
+        //         if (_cacheLevels == null || _cacheLevels.Length == 0 || _cacheLevels.Count(_ => _ == 0) > 0 || _cacheLevels.Length <= temp || _cacheLevels[temp] == 0)
+        //         {
+        //             MakeCacheLevel();
+        //         }
+        //         else
+        //         {
+        //             if (_cacheLevels != null && _cacheLevels.Length > 0)
+        //             {
+        //                 var flagLevel = false;
+        //                 for (int i = 0; i < _cacheLevels.Length; i++)
+        //                 {
+        //                     if (_cacheLevels[i] >= ResourcesController.Config.MaxLevelCanReach)
+        //                     {
+        //                         flagLevel = true;
+        //                         break;
+        //                     }
+        //                 }
+
+        //                 if (flagLevel)
+        //                 {
+        //                     MakeCacheLevel();
+        //                 }
+        //             }
+        //         }
+        //     }
+
+        //     var obj = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, _cacheLevels[temp] + 1)).Task;
+        //     return (obj, _cacheLevels[temp], levelIndex);
+        // }
         if (levelIndex > ResourcesController.Config.MaxLevelCanReach - 1)
         {
-            var temp = (levelIndex - ResourcesController.Config.MaxLevelCanReach) % (ResourcesController.Config.MaxLevelWithOutTutorial);
-            if (Data.CountPlayLevel >= ResourcesController.Config.MaxLevelWithOutTutorial)
-            {
-                MakeCacheLevel();
-                Data.CountPlayLevel = 0;
-            }
-            else
-            {
-                if (_cacheLevels == null || _cacheLevels.Length == 0 || _cacheLevels.Count(_ => _ == 0) > 0 || _cacheLevels.Length <= temp || _cacheLevels[temp] == 0)
-                {
-                    MakeCacheLevel();
-                }
-                else
-                {
-                    if (_cacheLevels != null && _cacheLevels.Length > 0)
-                    {
-                        var flagLevel = false;
-                        for (int i = 0; i < _cacheLevels.Length; i++)
-                        {
-                            if (_cacheLevels[i] >= ResourcesController.Config.MaxLevelCanReach)
-                            {
-                                flagLevel = true;
-                                break;
-                            }
-                        }
-
-                        if (flagLevel)
-                        {
-                            MakeCacheLevel();
-                        }
-                    }
-                }
-            }
-
-            var obj = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, _cacheLevels[temp] + 1)).Task;
-            return (obj, _cacheLevels[temp], levelIndex);
+            levelIndex = Random.Range(50, ResourcesController.Config.MaxLevelCanReach);
         }
 
         var levelObject = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, levelIndex + 1)).Task;
