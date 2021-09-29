@@ -28,8 +28,9 @@ public class IntroController : Singleton<IntroController>
 
     private void Start()
     {
-        SoundController.Instance.PlayOnce(SoundType.IntroBackground);
+        SoundController.Instance.PlayBackground(SoundType.IntroBackground);
         SoundController.Instance.PlayOnce(SoundType.IntroRunStart);
+        SoundController.Instance.PlayOnce(SoundType.IntroDragonStart);
         Transposer = VirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
         DragonIntro.gameObject.SetActive(false);
         HeroIntro.transform.DOMoveX(PrincessIntro.transform.position.x - 4f, 1).SetEase(Ease.Linear).OnComplete(() =>
@@ -67,6 +68,7 @@ public class IntroController : Singleton<IntroController>
                 GoblinIntro.PlayDie();
                 WolfIntro.PlayDie();
                 SoundController.Instance.PlayOnce(SoundType.IntroEnemyDie);
+                SoundController.Instance.PlayOnce(SoundType.IntroWolfDie);
             });
             DOTween.Sequence().AppendInterval(1.2f).AppendCallback(() =>
             {
@@ -94,7 +96,6 @@ public class IntroController : Singleton<IntroController>
         });
 
         DragonIntro.gameObject.SetActive(true);
-        SoundController.Instance.PlayOnce(SoundType.IntroDragonStart);
         DragonIntro.transform.DOMove(PrincessIntro.transform.position + Vector3.up * 1.5f + Vector3.right * 1.5f, 1f).SetEase(Ease.Linear).OnComplete(() =>
         {
             SoundController.Instance.PlayOnce(SoundType.IntroPrincessScare);
@@ -144,6 +145,7 @@ public class IntroController : Singleton<IntroController>
                     {
                         Data.IsIntro = false;
                         SceneManager.LoadScene(Constants.HOME_SCENE);
+                        // SceneManager.LoadScene(Constants.INTRO_SCENE);
                     });
                 });
             });
