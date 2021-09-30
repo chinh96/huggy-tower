@@ -1235,7 +1235,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
         {
-            Vibration.Vibrate();
+            Vibration.VibratePeek();
         });
     }
 
