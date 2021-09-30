@@ -112,7 +112,7 @@ public class IntroController : Singleton<IntroController>
             SoundController.Instance.PlayOnce(SoundType.IntroPrincessScare);
             PrincessIntro.transform.SetParent(DragonIntro.transform);
             DragonIntro.transform.DOMove(EnemyTower.transform.position + Vector3.up * 12, 3);
-            DOTween.Sequence().AppendInterval(1.3f).AppendCallback(() =>
+            DOTween.Sequence().AppendInterval(1.7f).AppendCallback(() =>
             {
                 HeroIntro.transform.SetParent(transform.parent);
                 HeroIntro.gameObject.AddComponent<Rigidbody2D>().gravityScale = 3;
