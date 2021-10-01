@@ -1,23 +1,6 @@
-using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
-#if UNITY_IOS
-using System.Collections;
-using System.Runtime.InteropServices;
-#endif
 public static class Vibration
 {
-#if UNITY_IOS
-    [DllImport ( "__Internal" )]
-    private static extern bool _HasVibrator ();
-    [DllImport ( "__Internal" )]
-    private static extern void _Vibrate ();
-    [DllImport ( "__Internal" )]
-    private static extern void _VibratePop ();
-    [DllImport ( "__Internal" )]
-    private static extern void _VibratePeek ();
-    [DllImport ( "__Internal" )]
-    private static extern void _VibrateNope ();
-#endif
 #if UNITY_ANDROID
     public static AndroidJavaClass unityPlayer;
     public static AndroidJavaObject currentActivity;
@@ -52,7 +35,7 @@ public static class Vibration
         if (Application.isMobilePlatform)
         {
 #if UNITY_IOS
-        _VibratePop ();
+        Handheld.Vibrate();
 #elif UNITY_ANDROID
             Vibrate(50);
 #endif
@@ -66,7 +49,7 @@ public static class Vibration
         if (Application.isMobilePlatform)
         {
 #if UNITY_IOS
-        _VibratePeek ();
+        Handheld.Vibrate();
 #elif UNITY_ANDROID
             Vibrate(100);
 #endif
@@ -80,7 +63,7 @@ public static class Vibration
         if (Application.isMobilePlatform)
         {
 #if UNITY_IOS
-        _VibrateNope ();
+        Handheld.Vibrate();
 #elif UNITY_ANDROID
             long[] pattern = { 0, 50, 50, 50 };
             Vibrate(pattern, -1);
@@ -170,7 +153,7 @@ public static class Vibration
                 return false;
             }
 #elif UNITY_IOS
-        return _HasVibrator ();
+        return true;
 #else
         return false;
 #endif
