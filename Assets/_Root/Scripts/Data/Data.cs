@@ -63,7 +63,7 @@ public static class Data
 
     public static bool MusicState { get => GetBool(Constants.MUSIC_STATE, true); set => SetBool(Constants.MUSIC_STATE, value); }
 
-    public static bool VibrateState { get => GetBool(Constants.VIBRATE_STATE, true); set => SetBool(Constants.VIBRATE_STATE, value); }
+    public static bool VibrateState { get => GetBool(Constants.VIBRATE_STATE, false); set => SetBool(Constants.VIBRATE_STATE, value); }
 
     public static bool IsRemovedAds { get => GetBool(Constants.IS_REMOVE_ADS, false); set => SetBool(Constants.IS_REMOVE_ADS, value); }
 
