@@ -1233,10 +1233,14 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 }
         }
 
-        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+
+        if (Data.VibrateState)
         {
-            Vibration.VibratePeek();
-        });
+            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+            {
+                Vibration.VibratePeek();
+            });
+        }
     }
 
     public void PLayMove(bool isLoop)
