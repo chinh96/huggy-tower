@@ -12,6 +12,7 @@ public class HomeController : Singleton<HomeController>
     [SerializeField] private GameObject removeAdsButton;
     [SerializeField] private Image overlay;
     [SerializeField] private CanvasScaler canvasScaler;
+    [SerializeField] private GameObject backgroundHalloween;
 
     protected override void Awake()
     {
@@ -46,7 +47,7 @@ public class HomeController : Singleton<HomeController>
         FadeOutOverlay();
         CheckNewUpdatePopup();
         CheckAchievementDailyQuest();
-        // CheckRescueParty();
+        CheckRescueParty();
         // CheckLanguage();
     }
 
@@ -63,6 +64,7 @@ public class HomeController : Singleton<HomeController>
 
     private void CheckRescueParty()
     {
+        backgroundHalloween.SetActive(Data.TimeToRescueParty.TotalMilliseconds > 0);
         ResourcesController.ReceiveSkinRescueParty(() =>
         {
             PopupController.Instance.Show<RescuePartyReceiveSkinPopup>();

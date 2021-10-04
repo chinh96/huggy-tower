@@ -138,7 +138,7 @@ public class LeaderboardRescuePartyController : Singleton<LeaderboardRescueParty
         startPosition++;
         LeaderboardData.UserInfos.Clear();
         Playfab.GetLeaderboard(
-            "RESCUE_PARTY",
+            "HALLOWEEN",
             startPosition * Playfab.MaxResultsCount,
             result =>
             {
@@ -167,7 +167,7 @@ public class LeaderboardRescuePartyController : Singleton<LeaderboardRescueParty
     {
         Playfab.UpdateScore(
             Data.TotalGoldMedal,
-            "RESCUE_PARTY",
+            "HALLOWEEN",
             result => action?.Invoke()
         );
     }

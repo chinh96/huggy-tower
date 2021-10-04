@@ -23,7 +23,8 @@ public class GameController : Singleton<GameController>
     [SerializeField] private float delayWinLose = 2;
     [SerializeField] private GameObject slicer;
     [SerializeField] private Image overlay;
-    [SerializeField] private List<GameObject> backgrounds;
+    [SerializeField] private List<GameObject> backgroundsNormal;
+    [SerializeField] private List<GameObject> backgroundsHalloween;
     [SerializeField] private List<MoveOutAnimation> moveOutAnimations;
     private FighterOverlay fighterOverlay;
     [SerializeField] private GameObject opacity;
@@ -50,6 +51,7 @@ public class GameController : Singleton<GameController>
     [NonSerialized] public bool IsOnboarding;
     [NonSerialized] public bool IsJapanBackground;
     [NonSerialized] public bool IsSeaBackground;
+    [NonSerialized] public bool IsHalloweenBackground;
     [NonSerialized] public Vector3 positionCameraOrigin;
     [NonSerialized] public List<GameObject> Kraken0s = new List<GameObject>();
 
@@ -111,11 +113,20 @@ public class GameController : Singleton<GameController>
 
     private void LoadBackground()
     {
+        List<GameObject> backgrounds = backgroundsNormal;
+
+        if (Data.TimeToRescueParty.TotalMilliseconds > 0)
+        {
+            backgrounds = backgroundsHalloween;
+        }
+
         backgrounds.ForEach(item => item.SetActive(false));
         int random = UnityEngine.Random.Range(0, backgrounds.Count);
         backgrounds[random].SetActive(true);
+
         IsJapanBackground = backgrounds[random].name == "Jav";
         IsSeaBackground = backgrounds[random].name == "Sea";
+        IsHalloweenBackground = backgrounds[random].name.Contains("Halloween");
     }
 
     public async void LoadLevel(int fakeIndex)

@@ -25,7 +25,7 @@ public class LeaderboardRescuePartyItem : MonoBehaviour
         index.text = userInfo.Index.ToString();
         name.text = userInfo.Name;
         flag.sprite = userInfo.Sprite;
-        level.text = userInfo.Stat.ToString();
+        level.text = (userInfo.Stat - 1).ToString();
 
         backgroundCurrent.SetActive(userInfo.PlayerId == Data.PlayerId);
         backgroundRank1.SetActive(userInfo.Index == 1);

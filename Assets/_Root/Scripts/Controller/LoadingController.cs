@@ -10,7 +10,25 @@ public class LoadingController : MonoBehaviour
 {
     [SerializeField] private float duration;
     [SerializeField] private Ease ease;
-    [SerializeField] private Image progress;
+    [SerializeField] private Image progressNormal;
+    [SerializeField] private Image progressHalloween;
+    [SerializeField] private GameObject backgroundHalloween;
+
+    private Image progress;
+
+    private void Awake()
+    {
+        if (Data.TimeToRescueParty.TotalMilliseconds > 0)
+        {
+            backgroundHalloween.SetActive(true);
+            progress = progressHalloween;
+        }
+        else
+        {
+            backgroundHalloween.SetActive(false);
+            progress = progressNormal;
+        }
+    }
 
     private void Start()
     {

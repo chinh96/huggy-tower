@@ -44,10 +44,10 @@ public class Princess : Unit, IAnim
         if (Data.TimeToRescueParty.TotalMilliseconds > 0)
         {
             Data.TotalGoldMedal++;
-            skeleton.Play("GiveMedal", false);
+            skeleton.Play("GiveCandy", false);
             DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
             {
-                skeleton.Play("GiveMedal2", true);
+                skeleton.Play("GiveCandy2", true);
             });
         }
         else

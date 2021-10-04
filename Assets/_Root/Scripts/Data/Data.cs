@@ -145,7 +145,7 @@ public static class Data
 
     public static int TotalGoldMedal
     {
-        get => GetInt(Constants.TOTAL_GOLD_MEDAL, 0);
+        get => GetInt(Constants.TOTAL_GOLD_MEDAL, 50);
         set
         {
             SetInt(Constants.TOTAL_GOLD_MEDAL, value);
@@ -156,7 +156,7 @@ public static class Data
     public static int DataVersion { get => PlayerPrefs.GetInt(Constants.DATA_VERSION, 0); set => PlayerPrefs.SetInt(Constants.DATA_VERSION, value); }
     public static string CustomId { get => PlayerPrefs.GetString(Constants.CUSTOM_ID, SystemInfo.deviceUniqueIdentifier); set => PlayerPrefs.SetString(Constants.CUSTOM_ID, value); }
 
-    public static TimeSpan TimeToRescueParty => new DateTime(DateTime.Now.Year, 9, 1, 0, 0, 0) - DateTime.Now;
+    public static TimeSpan TimeToRescueParty => new DateTime(DateTime.Now.Year, 11, 1, 0, 0, 0) - DateTime.Now;
 
     public static string DateTimeStartRescueParty { get => GetString(Constants.DATE_TIME_START_RESCUE_PARTY, ""); set => SetString(Constants.DATE_TIME_START_RESCUE_PARTY, value); }
 

@@ -84,7 +84,7 @@ public class ResourcesController : Singleton<ResourcesController>
     {
         SkinRescuePartys.Add(Princess.SkinDatas.Find(data => data.RescuePartyType == RescuePartyType.Princess));
         SkinRescuePartys.Add(Hero.SkinDatas.Find(data => data.RescuePartyType == RescuePartyType.Hero));
-        SkinRescuePartys.Add(Hero.SkinDatas.Find(data => data.RescuePartyType == RescuePartyType.Top100));
+        SkinRescuePartys.Add(Princess.SkinDatas.Find(data => data.RescuePartyType == RescuePartyType.Top100));
     }
 
     public static void ReceiveSkinRescueParty(Action action)

@@ -54,6 +54,11 @@ public class PopupController : Singleton<PopupController>
         SoundController.Instance.PlayOnce(SoundType.OpenPopup);
 
         Show(data, popup, showAction);
+
+        if (GameController.Instance)
+        {
+            GameController.Instance.LeanTouch.enabled = false;
+        }
     }
 
     public void Show(object data, Popup basePopup, ShowAction showAction = ShowAction.DismissCurrent)
@@ -122,6 +127,11 @@ public class PopupController : Singleton<PopupController>
         else
         {
             t.Resume(true);
+        }
+
+        if (GameController.Instance && popups.Count == 0)
+        {
+            GameController.Instance.LeanTouch.enabled = true;
         }
     }
 
