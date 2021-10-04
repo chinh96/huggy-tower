@@ -69,6 +69,7 @@ public class GameController : Singleton<GameController>
         base.Awake();
 
         overlay.DOFade(1, 0);
+        SetEnableLeanTouch(false);
     }
 
     private void Update()
@@ -135,7 +136,13 @@ public class GameController : Singleton<GameController>
 
         SoundController.Instance.PlayOnce(SoundType.EnemyStart);
 
-        FadeOutOverlay();
+        FadeOutOverlay(() =>
+        {
+            if (Root.LevelMap != null && Root.LevelMap.DurationMoveCamera == 0 && !Root.LevelMap.hasNewVisitTower)
+            {
+                SetEnableLeanTouch(true);
+            }
+        });
         ZoomOutCamera();
 
         firePaper.gameObject.SetActive(false);
@@ -345,6 +352,8 @@ public class GameController : Singleton<GameController>
 
     public void OnNextLevel()
     {
+        SetEnableLeanTouch(false);
+
         PopupController.Instance.DismissAll();
         FadeInOverlay(() =>
         {
@@ -359,6 +368,8 @@ public class GameController : Singleton<GameController>
 
     public void OnReplayLevel()
     {
+        SetEnableLeanTouch(false);
+
         ResourcesController.Achievement.ResetNumberTemp();
         ResourcesController.DailyQuest.ResetNumberTemp();
 
@@ -596,7 +607,7 @@ public class GameController : Singleton<GameController>
         }
     }
 
-    private void FadeOutOverlay()
+    private void FadeOutOverlay(Action action)
     {
         if (ResourcesController.Config.EnableTest)
         {
@@ -609,6 +620,7 @@ public class GameController : Singleton<GameController>
             {
                 overlay.gameObject.SetActive(false);
                 NotiQuestController.Instance.Show();
+                action?.Invoke();
             });
         }
     }

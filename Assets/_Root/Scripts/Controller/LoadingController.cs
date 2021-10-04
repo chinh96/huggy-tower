@@ -14,8 +14,6 @@ public class LoadingController : MonoBehaviour
 
     private void Start()
     {
-        FB.Init();
-
         Addressables.InitializeAsync();
 
         Vibration.Init();

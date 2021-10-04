@@ -21,6 +21,10 @@ public class LevelMap : MonoBehaviour
     {
         homeTower = GetComponentInChildren<HomeTower>();
         visitTowers = GetComponentsInChildren<VisitTower>();
+        if (DurationMoveCamera == 0 && !hasNewVisitTower)
+        {
+            GameController.Instance.SetEnableLeanTouch(true);
+        }
     }
 
     public void ChangeToNewVisitTower()
