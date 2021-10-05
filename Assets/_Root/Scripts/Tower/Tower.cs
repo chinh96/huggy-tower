@@ -18,12 +18,21 @@ public class Tower : MonoBehaviour
     public Image tower;
     public VerticalLayoutGroup verticalLayoutGroup;
     public GameObject flag;
-    public List<GameObject> flagJapans;
+
+    [Header("JAPAN")]
     public Image HomeTowerJapan;
+    public List<GameObject> flagJapans;
     public List<Image> HomeTowerJapanFlags;
+
+    [Header("SEA")]
     public Image HomeTowerSea;
     public Sprite towerSea;
     public List<GameObject> flagSeas;
+
+    [Header("HALLOWEEN")]
+    public Image HomeTowerHalloween;
+    public Sprite towerHalloween;
+    public List<GameObject> flagHalloweens;
 
     private void Start()
     {
@@ -50,6 +59,10 @@ public class Tower : MonoBehaviour
         else if (GameController.Instance.IsSeaBackground)
         {
             ChangeToSeaTower();
+        }
+        else if (GameController.Instance.IsHalloweenBackground)
+        {
+            ChangeToHalloween();
         }
     }
 
@@ -162,6 +175,11 @@ public class Tower : MonoBehaviour
             HomeTowerSea.rectTransform.sizeDelta = GetComponent<RectTransform>().sizeDelta;
             HomeTowerSea.DOColor(new Color(1, 1, 1, 1), duration);
         }
+        else if (GameController.Instance.IsHalloweenBackground)
+        {
+            HomeTowerHalloween.rectTransform.sizeDelta = GetComponent<RectTransform>().sizeDelta;
+            HomeTowerHalloween.DOColor(new Color(1, 1, 1, 1), duration);
+        }
         else
         {
             homeTower.rectTransform.sizeDelta = GetComponent<RectTransform>().sizeDelta;
@@ -214,6 +232,18 @@ public class Tower : MonoBehaviour
         flagSeas.ForEach(flagSea =>
         {
             flagSea.SetActive(true);
+        });
+    }
+
+    public virtual void ChangeToHalloween()
+    {
+        tower.sprite = towerHalloween;
+        verticalLayoutGroup.padding.left = -10;
+        verticalLayoutGroup.padding.top = 270;
+        flag.SetActive(false);
+        flagHalloweens.ForEach(flagHalloween =>
+        {
+            flagHalloween.SetActive(true);
         });
     }
 }
