@@ -287,5 +287,6 @@ public enum RescuePartyType
     None,
     Hero,
     Princess,
-    Top100
+    Top100,
+    Hero2
 }

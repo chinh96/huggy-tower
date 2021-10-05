@@ -145,7 +145,7 @@ public static class Data
 
     public static int TotalGoldMedal
     {
-        get => GetInt(Constants.TOTAL_GOLD_MEDAL, 50);
+        get => GetInt(Constants.TOTAL_GOLD_MEDAL, 0);
         set
         {
             SetInt(Constants.TOTAL_GOLD_MEDAL, value);
