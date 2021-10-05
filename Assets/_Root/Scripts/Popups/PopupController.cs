@@ -118,6 +118,12 @@ public class PopupController : Singleton<PopupController>
         basePopup.Dismiss(true);
 
         var t = GetTopPopup();
+
+        if (GameController.Instance && popups.Count == 0)
+        {
+            GameController.Instance.LeanTouch.enabled = true;
+        }
+
         if (t == null) return;
 
         if (t.showAction == ShowAction.DoNothing)
@@ -127,11 +133,6 @@ public class PopupController : Singleton<PopupController>
         else
         {
             t.Resume(true);
-        }
-
-        if (GameController.Instance && popups.Count == 0)
-        {
-            GameController.Instance.LeanTouch.enabled = true;
         }
     }
 
