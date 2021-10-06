@@ -42,6 +42,7 @@ public class GameController : Singleton<GameController>
     private bool _isReplay;
     private bool isSlice;
     private bool isZoomIn;
+    private Sequence sequence;
 
     public LeanGameObjectPool poolArrow;
     public LevelRoot Root => root;
@@ -387,7 +388,7 @@ public class GameController : Singleton<GameController>
         PopupController.Instance.DismissAll();
         FadeInOverlay(() =>
         {
-            DOTween.KillAll();
+            sequence.Kill();
             _isReplay = true;
             Camera.main.transform.position = positionCameraOrigin;
             Instance.LoadLevel(Data.CurrentLevel);
@@ -404,7 +405,7 @@ public class GameController : Singleton<GameController>
         AnalyticController.SkipLevel();
 
         PopupController.Instance.DismissAll();
-        DOTween.KillAll();
+        sequence.Kill();
         AdController.Instance.ShowRewardedAd(() =>
         {
             Data.CurrentLevel++;
@@ -418,7 +419,7 @@ public class GameController : Singleton<GameController>
         FadeInOverlay(() =>
         {
             PopupController.Instance.DismissAll();
-            DOTween.KillAll();
+            sequence.Kill();
             SceneManager.LoadScene(Constants.HOME_SCENE);
         });
     }
@@ -535,7 +536,7 @@ public class GameController : Singleton<GameController>
         GameState = EGameState.Win;
         SoundController.Instance.PlayOnce(SoundType.Win);
 
-        DOTween.Sequence().AppendInterval(delayWinLose).AppendCallback(() =>
+        sequence = DOTween.Sequence().AppendInterval(delayWinLose).AppendCallback(() =>
         {
             ShowPopupWin();
             if (Data.CurrentLevel == ResourcesController.Config.LevelShowRate)
@@ -556,7 +557,7 @@ public class GameController : Singleton<GameController>
             GameState = EGameState.Lose;
             SoundController.Instance.PlayOnce(SoundType.Lose);
 
-            DOTween.Sequence().AppendInterval(delayWinLose / 2).AppendCallback(() =>
+            sequence = DOTween.Sequence().AppendInterval(delayWinLose / 2).AppendCallback(() =>
             {
                 ShowPopupLose();
             });
