@@ -24,6 +24,7 @@ namespace I2.Loc
             set { SetTerm(null, value); }
         }
 
+        [Enum]
         public string mTerm = string.Empty,           // if Target is a Label, this will be the text,  if sprite, this will be the spriteName, etc
                       mTermSecondary = string.Empty; // if Target is a Label, this will be the font Name,  if sprite, this will be the Atlas name, etc
 
@@ -48,24 +49,24 @@ namespace I2.Loc
 
         #region Variables: Target
 
-        public bool IgnoreRTL = false;	// If false, no Right To Left processing will be done
-		public int  MaxCharactersInRTL = 0;     // If the language is RTL, the translation will be split in lines not longer than this amount and the RTL fix will be applied per line
-		public bool IgnoreNumbersInRTL = true; // If the language is RTL, the translation will not convert numbers (will preserve them like: e.g. 123)
+        public bool IgnoreRTL = false;  // If false, no Right To Left processing will be done
+        public int MaxCharactersInRTL = 0;     // If the language is RTL, the translation will be split in lines not longer than this amount and the RTL fix will be applied per line
+        public bool IgnoreNumbersInRTL = true; // If the language is RTL, the translation will not convert numbers (will preserve them like: e.g. 123)
 
-		public bool CorrectAlignmentForRTL = true;	// If true, when Right To Left language, alignment will be set to Right
+        public bool CorrectAlignmentForRTL = true;	// If true, when Right To Left language, alignment will be set to Right
 
         public bool AddSpacesToJoinedLanguages; // Some languages (e.g. Chinese, Japanese and Thai) don't add spaces to their words (all characters are placed toguether), making this variable true, will add spaces to all characters to allow wrapping long texts into multiple lines.
-        public bool AllowLocalizedParameters=true;
+        public bool AllowLocalizedParameters = true;
 
         #endregion
 
         #region Variables: References
 
         public List<Object> TranslatedObjects = new List<Object>();  // For targets that reference objects (e.g. AudioSource, UITexture,etc) 
-                                                                    // this keeps a reference to the possible options.
-                                                                    // If the value is not the name of any of this objects then it will try to load the object from the Resources
+                                                                     // this keeps a reference to the possible options.
+                                                                     // If the value is not the name of any of this objects then it will try to load the object from the Resources
 
-        
+
         [NonSerialized] public Dictionary<string, Object> mAssetDictionary = new Dictionary<string, Object>(StringComparer.Ordinal); //This is used to overcome the issue with Unity not serializing Dictionaries
 
         #endregion
@@ -76,11 +77,11 @@ namespace I2.Loc
         public UnityEvent LocalizeEvent = new UnityEvent();             // This allows scripts to modify the translations :  e.g. "Player {0} wins"  ->  "Player Red wins"	
 
 
-        public static string MainTranslation, SecondaryTranslation;		// The callback should use and modify this variables
-		public static string CallBackTerm, CallBackSecondaryTerm;		// during the callback, this will hold the FinalTerm and FinalSecondary  to know what terms are originating the translation
-		public static Localize CurrentLocalizeComponent;				// while in the LocalizeCallBack, this points to the Localize calling the callback
+        public static string MainTranslation, SecondaryTranslation;     // The callback should use and modify this variables
+        public static string CallBackTerm, CallBackSecondaryTerm;       // during the callback, this will hold the FinalTerm and FinalSecondary  to know what terms are originating the translation
+        public static Localize CurrentLocalizeComponent;                // while in the LocalizeCallBack, this points to the Localize calling the callback
 
-		public bool AlwaysForceLocalize = false;			// Force localization when the object gets enabled (useful for callbacks and parameters that change the localization even through the language is the same as in the previous time it was localized)
+        public bool AlwaysForceLocalize = false;			// Force localization when the object gets enabled (useful for callbacks and parameters that change the localization even through the language is the same as in the previous time it was localized)
 
         [SerializeField] public EventCallback LocalizeCallBack = new EventCallback();    //LocalizeCallBack is deprecated. Please use LocalizeEvent instead.
 
@@ -88,8 +89,8 @@ namespace I2.Loc
 
         #region Variables: Editor Related
         public bool mGUI_ShowReferences = false;
-		public bool mGUI_ShowTems = true;
-		public bool mGUI_ShowCallback = false;
+        public bool mGUI_ShowTems = true;
+        public bool mGUI_ShowCallback = false;
         #endregion
 
         #region Variables: Runtime (LocalizeTarget)
@@ -102,11 +103,11 @@ namespace I2.Loc
         #region Localize
 
         void Awake()
-		{
-            #if UNITY_EDITOR
+        {
+#if UNITY_EDITOR
             if (UnityEditor.BuildPipeline.isBuildingPlayer)
                 return;
-            #endif
+#endif
 
             UpdateAssetDictionary();
             FindTarget();
@@ -115,7 +116,7 @@ namespace I2.Loc
                 OnLocalize();
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         void OnValidate()
         {
             if (LocalizeCallBack.HasCallback())
@@ -131,19 +132,19 @@ namespace I2.Loc
                             UnityEditor.Events.UnityEventTools.AddPersistentListener(LocalizeEvent, methodDelegate);
                     }
                 }
-                catch(Exception)
-                {}
+                catch (Exception)
+                { }
 
                 LocalizeCallBack.Target = null;
                 LocalizeCallBack.MethodName = null;
             }
         }
-        #endif
+#endif
 
         void OnEnable()
-		{
-            OnLocalize ();
-		}
+        {
+            OnLocalize();
+        }
 
         public bool HasCallback()
         {
@@ -152,56 +153,56 @@ namespace I2.Loc
             return LocalizeEvent.GetPersistentEventCount() > 0;
         }
 
-		public void OnLocalize( bool Force = false )
-		{
-			if (!Force && (!enabled || gameObject==null || !gameObject.activeInHierarchy))
-				return;
+        public void OnLocalize(bool Force = false)
+        {
+            if (!Force && (!enabled || gameObject == null || !gameObject.activeInHierarchy))
+                return;
 
-			if (string.IsNullOrEmpty(LocalizationManager.CurrentLanguage))
-				return;
+            if (string.IsNullOrEmpty(LocalizationManager.CurrentLanguage))
+                return;
 
-			if (!AlwaysForceLocalize && !Force && !HasCallback() && LastLocalizedLanguage==LocalizationManager.CurrentLanguage)
-				return;
-			LastLocalizedLanguage = LocalizationManager.CurrentLanguage;
+            if (!AlwaysForceLocalize && !Force && !HasCallback() && LastLocalizedLanguage == LocalizationManager.CurrentLanguage)
+                return;
+            LastLocalizedLanguage = LocalizationManager.CurrentLanguage;
 
-			// These are the terms actually used (will be mTerm/mSecondaryTerm or will get them from the objects if those are missing. e.g. Labels' text and font name)
-			if (string.IsNullOrEmpty(FinalTerm) || string.IsNullOrEmpty(FinalSecondaryTerm))
-				GetFinalTerms( out FinalTerm, out FinalSecondaryTerm );
+            // These are the terms actually used (will be mTerm/mSecondaryTerm or will get them from the objects if those are missing. e.g. Labels' text and font name)
+            if (string.IsNullOrEmpty(FinalTerm) || string.IsNullOrEmpty(FinalSecondaryTerm))
+                GetFinalTerms(out FinalTerm, out FinalSecondaryTerm);
 
 
-			bool hasCallback = I2Utils.IsPlaying() && HasCallback();
+            bool hasCallback = I2Utils.IsPlaying() && HasCallback();
 
-			if (!hasCallback && string.IsNullOrEmpty (FinalTerm) && string.IsNullOrEmpty (FinalSecondaryTerm))
-				return;
+            if (!hasCallback && string.IsNullOrEmpty(FinalTerm) && string.IsNullOrEmpty(FinalSecondaryTerm))
+                return;
 
-			CallBackTerm = FinalTerm;
-			CallBackSecondaryTerm = FinalSecondaryTerm;
-			MainTranslation = (string.IsNullOrEmpty(FinalTerm) || FinalTerm=="-") ? null : LocalizationManager.GetTranslation (FinalTerm, false);
-			SecondaryTranslation = (string.IsNullOrEmpty(FinalSecondaryTerm) || FinalSecondaryTerm == "-") ? null : LocalizationManager.GetTranslation (FinalSecondaryTerm, false);
+            CallBackTerm = FinalTerm;
+            CallBackSecondaryTerm = FinalSecondaryTerm;
+            MainTranslation = (string.IsNullOrEmpty(FinalTerm) || FinalTerm == "-") ? null : LocalizationManager.GetTranslation(FinalTerm, false);
+            SecondaryTranslation = (string.IsNullOrEmpty(FinalSecondaryTerm) || FinalSecondaryTerm == "-") ? null : LocalizationManager.GetTranslation(FinalSecondaryTerm, false);
 
-			if (!hasCallback && /*string.IsNullOrEmpty (MainTranslation)*/ string.IsNullOrEmpty(FinalTerm) && string.IsNullOrEmpty (SecondaryTranslation))
-				return;
+            if (!hasCallback && /*string.IsNullOrEmpty (MainTranslation)*/ string.IsNullOrEmpty(FinalTerm) && string.IsNullOrEmpty(SecondaryTranslation))
+                return;
 
-			CurrentLocalizeComponent = this;
+            CurrentLocalizeComponent = this;
 
-			{
-				LocalizeCallBack.Execute (this);  // This allows scripts to modify the translations :  e.g. "Player {0} wins"  ->  "Player Red wins"
+            {
+                LocalizeCallBack.Execute(this);  // This allows scripts to modify the translations :  e.g. "Player {0} wins"  ->  "Player Red wins"
                 LocalizeEvent.Invoke();
-                LocalizationManager.ApplyLocalizationParams (ref MainTranslation, gameObject, AllowLocalizedParameters);
-			}
+                LocalizationManager.ApplyLocalizationParams(ref MainTranslation, gameObject, AllowLocalizedParameters);
+            }
 
-			if (!FindTarget())
-				return;
+            if (!FindTarget())
+                return;
             bool applyRTL = LocalizationManager.IsRight2Left && !IgnoreRTL;
 
             if (MainTranslation != null)
             {
                 switch (PrimaryTermModifier)
                 {
-                    case TermModification.ToUpper:      MainTranslation = MainTranslation.ToUpper(); break;
-                    case TermModification.ToLower:      MainTranslation = MainTranslation.ToLower(); break;
+                    case TermModification.ToUpper: MainTranslation = MainTranslation.ToUpper(); break;
+                    case TermModification.ToLower: MainTranslation = MainTranslation.ToLower(); break;
                     case TermModification.ToUpperFirst: MainTranslation = GoogleTranslation.UppercaseFirst(MainTranslation); break;
-                    case TermModification.ToTitle:      MainTranslation = GoogleTranslation.TitleCase(MainTranslation); break;
+                    case TermModification.ToTitle: MainTranslation = GoogleTranslation.TitleCase(MainTranslation); break;
                 }
                 if (!string.IsNullOrEmpty(TermPrefix))
                     MainTranslation = applyRTL ? MainTranslation + TermPrefix : TermPrefix + MainTranslation;
@@ -229,13 +230,13 @@ namespace I2.Loc
             {
                 switch (SecondaryTermModifier)
                 {
-                    case TermModification.ToUpper:      SecondaryTranslation = SecondaryTranslation.ToUpper(); break;
-                    case TermModification.ToLower:      SecondaryTranslation = SecondaryTranslation.ToLower(); break;
+                    case TermModification.ToUpper: SecondaryTranslation = SecondaryTranslation.ToUpper(); break;
+                    case TermModification.ToLower: SecondaryTranslation = SecondaryTranslation.ToLower(); break;
                     case TermModification.ToUpperFirst: SecondaryTranslation = GoogleTranslation.UppercaseFirst(SecondaryTranslation); break;
-                    case TermModification.ToTitle:      SecondaryTranslation = GoogleTranslation.TitleCase(SecondaryTranslation); break;
+                    case TermModification.ToTitle: SecondaryTranslation = GoogleTranslation.TitleCase(SecondaryTranslation); break;
                 }
                 if (applyRTL && mLocalizeTarget.AllowSecondTermToBeRTL() && !string.IsNullOrEmpty(SecondaryTranslation))
-                        SecondaryTranslation = LocalizationManager.ApplyRTLfix(SecondaryTranslation);
+                    SecondaryTranslation = LocalizationManager.ApplyRTLfix(SecondaryTranslation);
             }
 
             if (LocalizationManager.HighlightLocalizedTargets)
@@ -243,21 +244,21 @@ namespace I2.Loc
                 MainTranslation = "LOC:" + FinalTerm;
             }
 
-            mLocalizeTarget.DoLocalize( this, MainTranslation, SecondaryTranslation );
+            mLocalizeTarget.DoLocalize(this, MainTranslation, SecondaryTranslation);
 
-			CurrentLocalizeComponent = null;
-		}
+            CurrentLocalizeComponent = null;
+        }
 
-		#endregion
+        #endregion
 
-		#region Finding Target
+        #region Finding Target
 
-		public bool FindTarget()
-		{
+        public bool FindTarget()
+        {
             if (mLocalizeTarget != null && mLocalizeTarget.IsValid(this))
                 return true;
 
-            if (mLocalizeTarget!=null)
+            if (mLocalizeTarget != null)
             {
                 DestroyImmediate(mLocalizeTarget);
                 mLocalizeTarget = null;
@@ -272,7 +273,7 @@ namespace I2.Loc
                     {
                         if (desc.CanLocalize(this))
                             mLocalizeTarget = desc.CreateTarget(this);
-                        if (mLocalizeTarget!=null)
+                        if (mLocalizeTarget != null)
                             return true;
                     }
                 }
@@ -288,25 +289,25 @@ namespace I2.Loc
                     return true;
             }
 
-			return false;
-		}
+            return false;
+        }
 
-		#endregion
+        #endregion
 
-		#region Finding Term
-		
-		// Returns the term that will actually be translated
-		// its either the Term value in this class or the text of the label if there is no term
-		public void GetFinalTerms( out string primaryTerm, out string secondaryTerm )
-		{
-			primaryTerm 	= string.Empty;
-			secondaryTerm 	= string.Empty;
+        #region Finding Term
 
-			if (!FindTarget())
-				return;
+        // Returns the term that will actually be translated
+        // its either the Term value in this class or the text of the label if there is no term
+        public void GetFinalTerms(out string primaryTerm, out string secondaryTerm)
+        {
+            primaryTerm = string.Empty;
+            secondaryTerm = string.Empty;
+
+            if (!FindTarget())
+                return;
 
 
-			// if either the primary or secondary term is missing, get them. (e.g. from the label's text and font name)
+            // if either the primary or secondary term is missing, get them. (e.g. from the label's text and font name)
             if (mLocalizeTarget != null)
             {
                 mLocalizeTarget.GetFinalTerms(this, mTerm, mTermSecondary, out primaryTerm, out secondaryTerm);
@@ -315,78 +316,78 @@ namespace I2.Loc
 
             // If there are values already set, go with those
             if (!string.IsNullOrEmpty(mTerm))
-				primaryTerm = mTerm;
+                primaryTerm = mTerm;
 
-			if (!string.IsNullOrEmpty(mTermSecondary))
-				secondaryTerm = mTermSecondary;
+            if (!string.IsNullOrEmpty(mTermSecondary))
+                secondaryTerm = mTermSecondary;
 
-			if (primaryTerm != null)
-				primaryTerm = primaryTerm.Trim();
-			if (secondaryTerm != null)
-				secondaryTerm = secondaryTerm.Trim();
-		}
+            if (primaryTerm != null)
+                primaryTerm = primaryTerm.Trim();
+            if (secondaryTerm != null)
+                secondaryTerm = secondaryTerm.Trim();
+        }
 
-		public string GetMainTargetsText()
-		{
-			string primary = null, secondary = null;
+        public string GetMainTargetsText()
+        {
+            string primary = null, secondary = null;
 
-			if (mLocalizeTarget!=null)
-				mLocalizeTarget.GetFinalTerms( this, null, null, out primary, out secondary );
+            if (mLocalizeTarget != null)
+                mLocalizeTarget.GetFinalTerms(this, null, null, out primary, out secondary);
 
-			return string.IsNullOrEmpty(primary) ? mTerm : primary;
-		}
-		
-		public void SetFinalTerms( string Main, string Secondary, out string primaryTerm, out string secondaryTerm, bool RemoveNonASCII )
-		{
-			primaryTerm = RemoveNonASCII ? I2Utils.GetValidTermName(Main) : Main;
-			secondaryTerm = Secondary;
-		}
-		
-		#endregion
+            return string.IsNullOrEmpty(primary) ? mTerm : primary;
+        }
 
-		#region Misc
+        public void SetFinalTerms(string Main, string Secondary, out string primaryTerm, out string secondaryTerm, bool RemoveNonASCII)
+        {
+            primaryTerm = RemoveNonASCII ? I2Utils.GetValidTermName(Main) : Main;
+            secondaryTerm = Secondary;
+        }
 
-		public void SetTerm (string primary)
-		{
-			if (!string.IsNullOrEmpty(primary))
-				FinalTerm = mTerm = primary;
+        #endregion
 
-			OnLocalize (true);
-		}
+        #region Misc
 
-		public void SetTerm(string primary, string secondary )
-		{
-			if (!string.IsNullOrEmpty(primary))
-				FinalTerm = mTerm = primary;
-			FinalSecondaryTerm = mTermSecondary = secondary;
+        public void SetTerm(string primary)
+        {
+            if (!string.IsNullOrEmpty(primary))
+                FinalTerm = mTerm = primary;
 
-			OnLocalize(true);
-		}
+            OnLocalize(true);
+        }
 
-		internal T GetSecondaryTranslatedObj<T>( ref string mainTranslation, ref string secondaryTranslation ) where T: Object
-		{
-			string newMain, newSecond;
+        public void SetTerm(string primary, string secondary)
+        {
+            if (!string.IsNullOrEmpty(primary))
+                FinalTerm = mTerm = primary;
+            FinalSecondaryTerm = mTermSecondary = secondary;
 
-			//--[ Allow main translation to override Secondary ]-------------------
-			DeserializeTranslation(mainTranslation, out newMain, out newSecond);
+            OnLocalize(true);
+        }
 
-			T obj = null;
+        internal T GetSecondaryTranslatedObj<T>(ref string mainTranslation, ref string secondaryTranslation) where T : Object
+        {
+            string newMain, newSecond;
 
-			if (!string.IsNullOrEmpty(newSecond))
-			{
-				obj = GetObject<T>(newSecond);
-				if (obj != null)
-				{
-					mainTranslation = newMain;
-					secondaryTranslation = newSecond;
-				}
-			}
+            //--[ Allow main translation to override Secondary ]-------------------
+            DeserializeTranslation(mainTranslation, out newMain, out newSecond);
 
-			if (obj == null)
-				obj = GetObject<T>(secondaryTranslation);
+            T obj = null;
 
-			return obj;
-		}
+            if (!string.IsNullOrEmpty(newSecond))
+            {
+                obj = GetObject<T>(newSecond);
+                if (obj != null)
+                {
+                    mainTranslation = newMain;
+                    secondaryTranslation = newSecond;
+                }
+            }
+
+            if (obj == null)
+                obj = GetObject<T>(secondaryTranslation);
+
+            return obj;
+        }
 
         public void UpdateAssetDictionary()
         {
@@ -396,29 +397,29 @@ namespace I2.Loc
                                                 .ToDictionary(g => g.Key, g => g.First());
         }
 
-        internal T GetObject<T>( string Translation) where T: Object
-		{
-			if (string.IsNullOrEmpty (Translation))
-				return null;
-			T obj = GetTranslatedObject<T>(Translation);
-			
-			//if (obj==null)
-			//{
-				// Remove path and search by name
-				//int Index = Translation.LastIndexOfAny("/\\".ToCharArray());
-				//if (Index>=0)
-				//{
-				//	Translation = Translation.Substring(Index+1);
-				//	obj = GetTranslatedObject<T>(Translation);
-				//}
-			//}
-			return obj;
-		}
+        internal T GetObject<T>(string Translation) where T : Object
+        {
+            if (string.IsNullOrEmpty(Translation))
+                return null;
+            T obj = GetTranslatedObject<T>(Translation);
 
-		T GetTranslatedObject<T>( string Translation) where T: Object
-		{
-			T Obj = FindTranslatedObject<T>(Translation);
-			/*if (Obj == null) 
+            //if (obj==null)
+            //{
+            // Remove path and search by name
+            //int Index = Translation.LastIndexOfAny("/\\".ToCharArray());
+            //if (Index>=0)
+            //{
+            //	Translation = Translation.Substring(Index+1);
+            //	obj = GetTranslatedObject<T>(Translation);
+            //}
+            //}
+            return obj;
+        }
+
+        T GetTranslatedObject<T>(string Translation) where T : Object
+        {
+            T Obj = FindTranslatedObject<T>(Translation);
+            /*if (Obj == null) 
 				return null;
 			
 			if ((Obj as T) != null) 
@@ -431,83 +432,83 @@ namespace I2.Loc
 			if (Obj as GameObject != null)
 				return (Obj as GameObject).GetComponent(typeof(T)) as T;
 			*/
-			return Obj;
-		}
+            return Obj;
+        }
 
 
-		// translation format: "[secondary]value"   [secondary] is optional
-		void DeserializeTranslation( string translation, out string value, out string secondary )
-		{
-			if (!string.IsNullOrEmpty(translation) && translation.Length>1 && translation[0]=='[')
-			{
-				int Index = translation.IndexOf(']');
-				if (Index>0)
-				{
-					secondary = translation.Substring(1, Index-1);
-					value = translation.Substring(Index+1);
-					return;
-				}
-			}
-			value = translation;
-			secondary = string.Empty;
-		}
-		
-		public T FindTranslatedObject<T>( string value) where T : Object
-		{
-			if (string.IsNullOrEmpty(value))
-				return null;
+        // translation format: "[secondary]value"   [secondary] is optional
+        void DeserializeTranslation(string translation, out string value, out string secondary)
+        {
+            if (!string.IsNullOrEmpty(translation) && translation.Length > 1 && translation[0] == '[')
+            {
+                int Index = translation.IndexOf(']');
+                if (Index > 0)
+                {
+                    secondary = translation.Substring(1, Index - 1);
+                    value = translation.Substring(Index + 1);
+                    return;
+                }
+            }
+            value = translation;
+            secondary = string.Empty;
+        }
+
+        public T FindTranslatedObject<T>(string value) where T : Object
+        {
+            if (string.IsNullOrEmpty(value))
+                return null;
 
             if (mAssetDictionary == null || mAssetDictionary.Count != TranslatedObjects.Count)
             {
                 UpdateAssetDictionary();
             }
- 
+
             foreach (var kvp in mAssetDictionary)
-            { 
-				if (kvp.Value is T && value.EndsWith(kvp.Key, StringComparison.OrdinalIgnoreCase))
-				{
-					// Check if the value is just the name or has a path
-					if (string.Compare(value, kvp.Key, StringComparison.OrdinalIgnoreCase)==0)
-						return (T) kvp.Value;
+            {
+                if (kvp.Value is T && value.EndsWith(kvp.Key, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Check if the value is just the name or has a path
+                    if (string.Compare(value, kvp.Key, StringComparison.OrdinalIgnoreCase) == 0)
+                        return (T)kvp.Value;
 
-					// Check if the path matches
-					//Resources.get TranslatedObjects[i].
-				}
-			}
+                    // Check if the path matches
+                    //Resources.get TranslatedObjects[i].
+                }
+            }
 
-			T obj = LocalizationManager.FindAsset(value) as T;
-			if (obj)
-				return obj;
+            T obj = LocalizationManager.FindAsset(value) as T;
+            if (obj)
+                return obj;
 
-			obj = ResourceManager.pInstance.GetAsset<T>(value);
-			return obj;
-		}
+            obj = ResourceManager.pInstance.GetAsset<T>(value);
+            return obj;
+        }
 
-		public bool HasTranslatedObject( Object Obj )
-		{
-			if (TranslatedObjects.Contains(Obj)) 
-				return true;
-			return ResourceManager.pInstance.HasAsset(Obj);
+        public bool HasTranslatedObject(Object Obj)
+        {
+            if (TranslatedObjects.Contains(Obj))
+                return true;
+            return ResourceManager.pInstance.HasAsset(Obj);
 
-		}
+        }
 
-		public void AddTranslatedObject( Object Obj )
-		{
+        public void AddTranslatedObject(Object Obj)
+        {
             if (TranslatedObjects.Contains(Obj))
                 return;
-			TranslatedObjects.Add(Obj);
+            TranslatedObjects.Add(Obj);
             UpdateAssetDictionary();
-		}
+        }
 
-		#endregion
-	
-		#region Utilities
-		// This can be used to set the language when a button is clicked
-		public void SetGlobalLanguage( string Language )
-		{
-			LocalizationManager.CurrentLanguage = Language;
-		}
+        #endregion
 
-		#endregion
-	}
+        #region Utilities
+        // This can be used to set the language when a button is clicked
+        public void SetGlobalLanguage(string Language)
+        {
+            LocalizationManager.CurrentLanguage = Language;
+        }
+
+        #endregion
+    }
 }

@@ -12,6 +12,7 @@ public class SoundResources : ScriptableObject
 [Serializable]
 public class SoundData
 {
+    [Enum]
     public SoundType SoundType;
     public AudioClip Clip;
 }

@@ -36,6 +36,20 @@ public class DailyRewardItem : MonoBehaviour
 
     private bool isDay7 => day % 7 == 6;
     private bool isSkin => !isDayLoop && ResourcesController.DailyReward.DailyRewardsSkin.Contains(day);
+    private bool isUnlocked
+    {
+        get
+        {
+            Data.IdCheckUnlocked = Constants.DAILY_REWARD + day;
+            return Data.IsUnlocked;
+        }
+
+        set
+        {
+            Data.IdCheckUnlocked = Constants.DAILY_REWARD + day;
+            Data.IsUnlocked = value;
+        }
+    }
 
     public void Init(int day, int coin, int dayTotal, bool isDayLoop, DailyRewardPopup dailyRewardPopup)
     {
@@ -84,7 +98,7 @@ public class DailyRewardItem : MonoBehaviour
         }
         else if (day < Data.DailyRewardCurrent)
         {
-            doneIcon.SetActive(true);
+            doneIcon.SetActive(isUnlocked);
 
             dailyRewardType = DailyRewardType.Claimed;
         }
@@ -150,6 +164,8 @@ public class DailyRewardItem : MonoBehaviour
         }
         dailyRewardPopup.OnClickClaim(claimButton, isSkin);
         ResourcesController.Achievement.IncreaseByType(AchievementType.ClaimDailyReward);
+
+        isUnlocked = true;
     }
 
     private enum DailyRewardType

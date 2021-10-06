@@ -64,6 +64,7 @@ public class Constants
     public const string DATA_VERSION = "DATA_VERSION";
     public const string CUSTOM_ID = "CUSTOM_ID";
     public const string IS_INTRO = "IS_INTRO";
+    public const string DAILY_REWARD = "DAILY_REWARD";
 
     // Scene
     public const string LOADING_SCENE = "LoadingScene";
