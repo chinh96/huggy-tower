@@ -62,5 +62,16 @@ public class RescuePartyItem : MonoBehaviour
         data.IsUnlocked = true;
         Reset();
         EventController.MedalTotalChanged?.Invoke();
+
+        if (!Data.ClaimFirstSkinHalloween)
+        {
+            Data.ClaimFirstSkinHalloween = true;
+            AnalyticController.ClaimFirstSkinHalloween();
+        }
+
+        if (Type == RescuePartyType.Top100)
+        {
+            AnalyticController.ClaimSkinTop100Halloween();
+        }
     }
 }

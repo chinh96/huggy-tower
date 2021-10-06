@@ -138,20 +138,40 @@ public static class AnalyticController
     {
         LogEvent(Constants.LEVEL_20_START_FUNNEL, new Parameter[] { });
     }
-    
+
     public static void Level20CompleteFunnel()
     {
         LogEvent(Constants.LEVEL_20_COMPLETE_FUNNEL, new Parameter[] { });
     }
-    
+
     public static void Level15StartFunnel()
     {
         LogEvent(Constants.LEVEL_15_START_FUNNEL, new Parameter[] { });
-    }   
-    
+    }
+
     public static void Level15CompleteFunnel()
     {
         LogEvent(Constants.LEVEL_15_COMPLETE_FUNNEL, new Parameter[] { });
+    }
+
+    public static void ClickButtonHalloween()
+    {
+        LogEvent(Constants.CLICK_BUTTON_HALLOWEEN, new Parameter[] { });
+    }
+
+    public static void ClaimFirstSkinHalloween()
+    {
+        LogEvent(Constants.CLAIM_FIRST_SKIN_HALLOWEEN, new Parameter[] { });
+    }
+
+    public static void ClickTop100HalloweenButton()
+    {
+        LogEvent(Constants.CLICK_TOP_100_HALLOWEEN_BUTTON, new Parameter[] { });
+    }
+
+    public static void ClaimSkinTop100Halloween()
+    {
+        LogEvent(Constants.CLAIM_SKIN_TOP_100_HALLOWEEN, new Parameter[] { });
     }
 
     private static void LogEvent(string name, Parameter[] param)
@@ -159,7 +179,7 @@ public static class AnalyticController
         FirebaseAnalytics.LogEvent(name, param);
     }
 
-    
+
     #region adjust
 
     public static void AdjustLogEventPurchaseItem(string token, double revenue, string currency, string transactionId)
@@ -167,7 +187,7 @@ public static class AnalyticController
         AdjustEvent adjustEvent = new AdjustEvent(token);
         adjustEvent.setRevenue(revenue, currency);
         adjustEvent.setTransactionId(transactionId);
-        
+
         Adjust.trackEvent(adjustEvent);
     }
 
@@ -182,67 +202,67 @@ public static class AnalyticController
         AdjustEvent adjustEvent = new AdjustEvent("stigq2");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventPlayLevel10()
     {
         AdjustEvent adjustEvent = new AdjustEvent("bop09g");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventPlayLevel2()
     {
         AdjustEvent adjustEvent = new AdjustEvent("u1xwya");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventPlayLevel3()
     {
         AdjustEvent adjustEvent = new AdjustEvent("947epe");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventPlayLevel4()
     {
         AdjustEvent adjustEvent = new AdjustEvent("i0iqy6");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventPlayLevel5()
     {
         AdjustEvent adjustEvent = new AdjustEvent("75zm9b");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventPlayLevel6()
     {
         AdjustEvent adjustEvent = new AdjustEvent("7ki2zj");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventPlayLevel7()
     {
         AdjustEvent adjustEvent = new AdjustEvent("pfkw26");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventPlayLevel8()
     {
         AdjustEvent adjustEvent = new AdjustEvent("h692zz");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventPlayLevel9()
     {
         AdjustEvent adjustEvent = new AdjustEvent("ft60rt");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventClaimDailyReward()
     {
         AdjustEvent adjustEvent = new AdjustEvent("8hgi5a");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventClaimDailyRewardByAds()
     {
         AdjustEvent adjustEvent = new AdjustEvent("o9qvze");
@@ -254,7 +274,7 @@ public static class AnalyticController
         AdjustEvent adjustEvent = new AdjustEvent("tdpoes");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventSkipLoseLevel()
     {
         AdjustEvent adjustEvent = new AdjustEvent("qwz9ld");
@@ -266,13 +286,13 @@ public static class AnalyticController
         AdjustEvent adjustEvent = new AdjustEvent("eqxbmi");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventShareFb()
     {
         AdjustEvent adjustEvent = new AdjustEvent("yuoia3");
         Adjust.trackEvent(adjustEvent);
     }
-    
+
     public static void AdjustLogEventBuildCastle()
     {
         AdjustEvent adjustEvent = new AdjustEvent("skrw1k");

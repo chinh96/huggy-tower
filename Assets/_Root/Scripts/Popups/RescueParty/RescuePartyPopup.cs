@@ -32,6 +32,7 @@ public class RescuePartyPopup : Popup
 
     public void ShowLeaderboardRescueParty()
     {
+        AnalyticController.ClickTop100HalloweenButton();
         Data.ClickedTop100Button = true;
         CheckNoti();
         LeaderboardRescuePartyController.Instance.Show();
