@@ -11,6 +11,7 @@ public class Princess : Unit, IAnim
     [SerializeField] private Collider2D coll2D;
     [SerializeField] private Image lockObj;
     [SerializeField] private Image lockObj2;
+    [SerializeField] private Canvas canvas;
 
     private void Start()
     {
@@ -41,6 +42,7 @@ public class Princess : Unit, IAnim
 
     public void PlayWin(bool isLoop)
     {
+        canvas.sortingOrder = 130;
         if (Data.TimeToRescueParty.TotalMilliseconds > 0)
         {
             Data.TotalGoldMedal++;
