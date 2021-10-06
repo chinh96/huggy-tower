@@ -126,7 +126,7 @@ public class GameController : Singleton<GameController>
 
         IsJapanBackground = backgrounds[random].name == "Jav";
         IsSeaBackground = backgrounds[random].name == "Sea";
-        IsHalloweenBackground = Data.TimeToRescueParty.TotalMilliseconds > 0;
+        IsHalloweenBackground = Data.TimeToRescueParty.TotalMilliseconds > 0 && UnityEngine.Random.Range(0, 2) == 0;
     }
 
     public async void LoadLevel(int fakeIndex)
