@@ -797,7 +797,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     private void AttackByEvent()
     {
         var room = levelMap.visitTower.RoomContainPlayer(this);
-        if (room != null && !room.IsClearEnemyInRoom() || room.IsContaintItem())
+        if (room != null && (!room.IsClearEnemyInRoom() || room.IsContaintItem() || room.IsContaintPrincess()))
         {
             StartSearchingTurn();
             SearchingTarget();
