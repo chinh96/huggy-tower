@@ -27,7 +27,14 @@ public class RescuePartyItem : MonoBehaviour
     public void Reset()
     {
         text.text = $"{Data.TotalGoldMedal}/{data.NumberMedalTarget}";
-        progress.fillAmount = (float)Data.TotalGoldMedal / data.NumberMedalTarget;
+        if (data.IsUnlocked)
+        {
+            progress.fillAmount = 1;
+        }
+        else
+        {
+            progress.fillAmount = (float)Data.TotalGoldMedal / data.NumberMedalTarget;
+        }
         if (Type == RescuePartyType.Top100)
         {
             claimActiveButton.SetActive(false);
