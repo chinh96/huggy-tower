@@ -77,7 +77,6 @@ public class RescuePartyItem : MonoBehaviour
         }
 
         data.IsUnlocked = true;
-        Data.TotalGoldMedal -= data.NumberMedalTarget;
 
         rescuePartyPopup.Reset();
 
