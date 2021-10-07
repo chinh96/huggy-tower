@@ -145,7 +145,17 @@ public static class Data
 
     public static int TotalGoldMedal
     {
-        get => GetInt(Constants.TOTAL_GOLD_MEDAL, 0);
+        get
+        {
+            int candy = GetInt(Constants.TOTAL_GOLD_MEDAL, 0);
+#if UNITY_EDITOR
+            if (ResourcesController.Config.NumberCandy > 0)
+            {
+                candy = ResourcesController.Config.NumberCandy;
+            }
+#endif
+            return candy;
+        }
         set
         {
             SetInt(Constants.TOTAL_GOLD_MEDAL, value);

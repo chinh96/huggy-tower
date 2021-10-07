@@ -8,7 +8,7 @@ public class RescuePartyReceiveSkinPopup : Popup
     {
         SkinData data = ResourcesController.SkinRescuePartys.Find(data => data.RescuePartyType == RescuePartyType.Top100);
         data.IsUnlocked = true;
-        Data.CurrentSkinHero = data.SkinName;
+        Data.CurrentSkinPrincess = data.SkinName;
         Close();
     }
 }

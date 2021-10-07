@@ -104,7 +104,9 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         FirstOpenCountLevelWinTurnOnAds = int.Parse(GetConfig(Constants.FIRST_OPEN_COUNT_LEVEL_WIN_TURN_ON_ADS));
         CountLevelWinShowAds = int.Parse(GetConfig(Constants.COUNT_LEVEL_WIN_SHOW_ADS));
         InterstitalTimeLevelCompleted = int.Parse(GetConfig(Constants.INTERSTITIAL_TIME_LEVEL_COMPLETED));
+#if !UNITY_EDITOR
         HasIntro = bool.Parse(GetConfig(Constants.HAS_INTRO));
+#endif
 #if UNITY_ANDROID
         OnlyAdmob = bool.Parse(GetConfig(Constants.ONLY_ADMOB_ANDROID));
         CurrentVersion = GetConfig(Constants.CURRENT_VERSION_ANDROID);
