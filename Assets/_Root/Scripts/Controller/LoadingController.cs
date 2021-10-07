@@ -13,6 +13,7 @@ public class LoadingController : MonoBehaviour
     [SerializeField] private Image progressNormal;
     [SerializeField] private Image progressHalloween;
     [SerializeField] private GameObject backgroundHalloween;
+    [SerializeField] private CanvasScaler canvasScaler;
 
     private Image progress;
 
@@ -28,6 +29,8 @@ public class LoadingController : MonoBehaviour
             backgroundHalloween.SetActive(false);
             progress = progressNormal;
         }
+
+        canvasScaler.matchWidthOrHeight = Camera.main.aspect > .7f ? 1 : 0;
     }
 
     private async void Start()
