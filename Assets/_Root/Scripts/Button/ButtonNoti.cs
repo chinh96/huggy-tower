@@ -56,11 +56,11 @@ public class ButtonNoti : MonoBehaviour
                 hasNoti = ResourcesController.Achievement.HasNoti || ResourcesController.DailyQuest.HasNoti;
                 break;
             case NotiType.RescueParty:
-                if (HomeController.Instance != null && !Data.FirstOpenRescuePartyInHome)
+                if (HomeController.Instance != null && Data.FirstOpenRescuePartyInHome)
                 {
                     hasNoti = true;
                 }
-                else if (GameController.Instance != null && !Data.FirstOpenRescuePartyInGame)
+                else if (GameController.Instance != null && Data.FirstOpenRescuePartyInGame)
                 {
                     hasNoti = true;
                 }
