@@ -165,6 +165,6 @@ public class IntroController : Singleton<IntroController>
     public void Done()
     {
         Data.IsIntro = false;
-        SceneManager.LoadScene(Constants.HOME_SCENE);
+        SceneManager.LoadScene(Constants.GAME_SCENE);
     }
 }

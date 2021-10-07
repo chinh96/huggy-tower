@@ -30,11 +30,13 @@ public class LoadingController : MonoBehaviour
         }
     }
 
-    private void Start()
+    private async void Start()
     {
         Addressables.InitializeAsync();
 
         Vibration.Init();
+
+        await DataBridge.Instance.GetLevel(Data.CurrentLevel);
 
         progress.fillAmount = 0;
         progress.DOFillAmount(5, duration).SetEase(ease).OnComplete(() =>
