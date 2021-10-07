@@ -39,6 +39,13 @@ public class LoadingController : MonoBehaviour
 
         Vibration.Init();
 
+#if UNITY_EDITOR
+        if (ResourcesController.Config.NumberCandy > 0)
+        {
+            Data.TotalGoldMedal = ResourcesController.Config.NumberCandy;
+        }
+#endif
+
         await DataBridge.Instance.GetLevel(Data.CurrentLevel);
 
         progress.fillAmount = 0;

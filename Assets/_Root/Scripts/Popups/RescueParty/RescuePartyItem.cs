@@ -13,11 +13,15 @@ public class RescuePartyItem : MonoBehaviour
     [SerializeField] private Image progress;
     [SerializeField] private TextMeshProUGUI text;
 
-    private SkinData data;
+    [SerializeField] private GameObject iconDone;
 
-    public void Init(SkinData data)
+    private SkinData data;
+    private RescuePartyPopup rescuePartyPopup;
+
+    public void Init(SkinData data, RescuePartyPopup rescuePartyPopup)
     {
         this.data = data;
+        this.rescuePartyPopup = rescuePartyPopup;
     }
 
     public void Reset()
@@ -28,10 +32,12 @@ public class RescuePartyItem : MonoBehaviour
         {
             claimActiveButton.SetActive(false);
             claimDisableButton.SetActive(true);
+            iconDone.SetActive(false);
             if (data.IsUnlocked)
             {
                 claimActiveButton.SetActive(false);
                 claimDisableButton.SetActive(false);
+                iconDone.SetActive(true);
             }
             else if ((DateTime.Now - DateTime.Parse(Data.DateTimeStartRescueParty)).TotalDays > 5)
             {
@@ -46,6 +52,7 @@ public class RescuePartyItem : MonoBehaviour
         {
             claimActiveButton.SetActive(Data.TotalGoldMedal >= data.NumberMedalTarget && !data.IsUnlocked);
             claimDisableButton.SetActive(Data.TotalGoldMedal < data.NumberMedalTarget && !data.IsUnlocked);
+            iconDone.SetActive(data.IsUnlocked);
         }
     }
 
@@ -59,8 +66,12 @@ public class RescuePartyItem : MonoBehaviour
         {
             Data.CurrentSkinHero = data.SkinName;
         }
+
         data.IsUnlocked = true;
-        Reset();
+        Data.TotalGoldMedal -= data.NumberMedalTarget;
+
+        rescuePartyPopup.Reset();
+
         EventController.MedalTotalChanged?.Invoke();
 
         if (!Data.ClaimFirstSkinHalloween)

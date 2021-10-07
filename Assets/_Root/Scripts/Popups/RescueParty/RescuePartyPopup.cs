@@ -16,7 +16,7 @@ public class RescuePartyPopup : Popup
         rescuePartyItems.ForEach(item =>
         {
             SkinData data = ResourcesController.SkinRescuePartys.Find(data => data.RescuePartyType == item.Type);
-            item.Init(data);
+            item.Init(data, this);
             index++;
         });
     }
@@ -41,5 +41,10 @@ public class RescuePartyPopup : Popup
     private void CheckNoti()
     {
         noti.SetActive(!Data.ClickedTop100Button);
+    }
+
+    public void Reset()
+    {
+        rescuePartyItems.ForEach(item => item.Reset());
     }
 }
