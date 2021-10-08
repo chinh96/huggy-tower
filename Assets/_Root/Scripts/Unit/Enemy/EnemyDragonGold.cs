@@ -56,7 +56,8 @@ public class EnemyDragonGold : Unit, IAnim
         DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
         {
             fire.gameObject.SetActive(true);
-            fire.transform.DOMove(GameController.Instance.Player.transform.position + new Vector3(0, 1, 0), .2f).OnComplete(() =>
+            fire.Play();
+            fire.transform.DOMove(GameController.Instance.Player.transform.position + new Vector3(-1, .5f, 0), .3f).SetEase(Ease.Linear).OnComplete(() =>
             {
                 Destroy(fire.gameObject);
             });

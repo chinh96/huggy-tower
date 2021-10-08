@@ -49,7 +49,7 @@ public class LoadingController : MonoBehaviour
         await DataBridge.Instance.GetLevel(Data.CurrentLevel);
 
         progress.fillAmount = 0;
-        progress.DOFillAmount(5, duration).SetEase(ease).OnComplete(() =>
+        progress.DOFillAmount(0, duration).SetEase(ease).OnComplete(() =>
         {
             if (Data.IsIntro && RemoteConfigController.Instance.HasIntro)
             {
