@@ -76,6 +76,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     private bool hasKey = false;
     private LevelMap levelMap => GameController.Instance.Root.LevelMap;
     private bool hasBloodEnemy;
+    private Sequence sequence;
 
     public void SetParentRoom(RoomTower parentRoom)
     {
@@ -868,10 +869,15 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         State = EUnitState.Invalid;
         PlayDead();
 
-        DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
+        sequence = DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
         {
             GameController.Instance.OnLoseLevel();
         });
+    }
+
+    public void KillSequence()
+    {
+        sequence.Kill();
     }
 
     private void CollectChest() { }

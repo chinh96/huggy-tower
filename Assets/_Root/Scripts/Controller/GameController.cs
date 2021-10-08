@@ -388,7 +388,7 @@ public class GameController : Singleton<GameController>
         PopupController.Instance.DismissAll();
         FadeInOverlay(() =>
         {
-            sequence.Kill();
+            KillSequence();
             _isReplay = true;
             Camera.main.transform.position = positionCameraOrigin;
             Instance.LoadLevel(Data.CurrentLevel);
@@ -405,7 +405,7 @@ public class GameController : Singleton<GameController>
         AnalyticController.SkipLevel();
 
         PopupController.Instance.DismissAll();
-        sequence.Kill();
+        KillSequence();
         AdController.Instance.ShowRewardedAd(() =>
         {
             Data.CurrentLevel++;
@@ -419,9 +419,15 @@ public class GameController : Singleton<GameController>
         FadeInOverlay(() =>
         {
             PopupController.Instance.DismissAll();
-            sequence.Kill();
+            KillSequence();
             SceneManager.LoadScene(Constants.HOME_SCENE);
         });
+    }
+
+    private void KillSequence()
+    {
+        sequence.Kill();
+        Player.KillSequence();
     }
 
     public void OnWinLevel()
