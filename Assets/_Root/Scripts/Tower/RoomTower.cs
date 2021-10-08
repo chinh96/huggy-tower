@@ -42,14 +42,13 @@ public class RoomTower : MonoBehaviour
     {
         if (!isMouseUp && Data.CurrentLevel > 1 && GameController.Instance.Player.Turn == ETurn.Drag && GameController.Instance.LeanTouch.enabled)
         {
-            isMouseUp = true;
             bool hasPlayer = units.Find(unit => unit as Player) != null;
             var itemLock = items.Find(item => item as ItemLock);
             bool hasItemLock = itemLock != null && (itemLock.State == EUnitState.Invalid);
             if (isMousePress && !hasPlayer && !hasItemLock)
             {
+                isMouseUp = true;
                 UpdateStatusSelectRoom(false, true);
-
                 GameController.Instance.Player.FlashToSlot(this);
             }
         }

@@ -57,7 +57,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private GameObject bow;
 
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
-    public bool FirstTurn { get; set; }
     public ETurn Turn { get => turn; private set => turn = value; }
 
     private Vector3 _defaultPosition;
@@ -176,7 +175,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     public void OnMouseDown()
     {
-        if (GameController.Instance.GameState != EGameState.Playing)
+        if (GameController.Instance.GameState != EGameState.Playing || Turn == ETurn.None)
         {
             return;
         }
@@ -194,7 +193,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     public void OnMouseUp()
     {
-        if (GameController.Instance.GameState != EGameState.Playing)
+        if (GameController.Instance.GameState != EGameState.Playing || Turn == ETurn.None)
         {
             return;
         }
@@ -260,8 +259,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
             levelMap.homeTower.AddSlot();
         }
-
-        if (!FirstTurn) FirstTurn = true;
 
         levelMap.visitTower.RefreshRoom();
         levelMap.homeTower.RefreshRoom();
