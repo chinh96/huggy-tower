@@ -45,7 +45,7 @@ public class Tower : MonoBehaviour
                 NumberedUnits();
             });
 
-            DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
             {
                 GameController.Instance.Root.LevelMap.MoveCameraVertical(slots[0]);
                 GameController.Instance.Root.LevelMap.MoveCameraHorizontal();
