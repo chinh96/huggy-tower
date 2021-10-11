@@ -89,7 +89,7 @@ public class LeaderboardRescuePartyPopup : Popup
 
         if ((page + 1) * 10 >= LeaderboardData.UserInfos.Count)
         {
-            LeaderboardRescuePartyController.Instance.GetMoreLeaderboard(() => ResetButton());
+            LeaderboardRescuePartyController.Instance.GetMoreLeaderboard(() => ResetButton(), false);
         }
     }
 

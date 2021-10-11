@@ -133,9 +133,13 @@ public class LeaderboardController : Singleton<LeaderboardController>
         }
     }
 
-    public void GetMoreLeaderboard(Action action = null)
+    public void GetMoreLeaderboard(Action action = null, bool needCleaer = true)
     {
         startPosition++;
+        if (needCleaer)
+        {
+            LeaderboardData.UserInfos.Clear();
+        }
         Playfab.GetLeaderboard(
             LeaderboardData.IsWorldTab ? "HERO_TOWER_WAR" : LeaderboardData.UserInfoCurrent.CountryCode,
             startPosition * Playfab.MaxResultsCount,

@@ -99,7 +99,7 @@ public class LeaderboardPopup : Popup
 
         if ((page + 1) * 10 >= LeaderboardData.UserInfos.Count)
         {
-            LeaderboardController.Instance.GetMoreLeaderboard(() => ResetButton());
+            LeaderboardController.Instance.GetMoreLeaderboard(() => ResetButton(), false);
         }
     }
 

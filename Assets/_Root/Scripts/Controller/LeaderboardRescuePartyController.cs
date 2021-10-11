@@ -133,10 +133,13 @@ public class LeaderboardRescuePartyController : Singleton<LeaderboardRescueParty
         }
     }
 
-    public void GetMoreLeaderboard(Action action = null)
+    public void GetMoreLeaderboard(Action action = null, bool needCleaer = true)
     {
         startPosition++;
-        LeaderboardData.UserInfos.Clear();
+        if (needCleaer)
+        {
+            LeaderboardData.UserInfos.Clear();
+        }
         Playfab.GetLeaderboard(
             "HALLOWEEN",
             startPosition * Playfab.MaxResultsCount,
