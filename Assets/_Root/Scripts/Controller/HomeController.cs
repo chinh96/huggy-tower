@@ -13,6 +13,12 @@ public class HomeController : Singleton<HomeController>
     [SerializeField] private Image overlay;
     [SerializeField] private CanvasScaler canvasScaler;
     [SerializeField] private GameObject backgroundHalloween;
+    [SerializeField] private GameObject debugButton;
+
+    public void OnClickDebugButton()
+    {
+        PopupController.Instance.Show<DebugPopup>(null, ShowAction.DoNothing);
+    }
 
     protected override void Awake()
     {
@@ -37,6 +43,7 @@ public class HomeController : Singleton<HomeController>
 #endif
         removeAdsButton.SetActive(!Data.IsRemovedAds);
         rescuePartyButton.SetActive(Data.TimeToRescueParty.TotalMilliseconds > 0);
+        debugButton.SetActive(ResourcesController.Config.EnableTest);
     }
 
     private void Start()
