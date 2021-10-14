@@ -65,11 +65,11 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
         result.Remove(result.Length - 1, 1);
         return result.ToString();
     }
-    
+
     public void TransformTargetData(string raw)
     {
         var result = raw.Split('@');
-        
+
         int count = result.Length;
         if (count > SkinDatas.Count) count = SkinDatas.Count;
 
@@ -98,6 +98,8 @@ public class SkinData
 
     public string Giftcode;
     public int NumberMedalTarget;
+    public int DayDaily;
+    public int NumberAchievement;
     public bool HasNotiRescueParty
     {
         get

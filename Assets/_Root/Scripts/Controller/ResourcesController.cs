@@ -78,6 +78,7 @@ public class ResourcesController : Singleton<ResourcesController>
         Princess.Reset();
         DailyQuest.Reset();
         Library.Reset();
+        Achievement.Reset();
     }
 
     public static void GetSkinRescueParty()

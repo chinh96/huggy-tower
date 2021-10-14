@@ -54,7 +54,14 @@ public class SkinItem : MonoBehaviour
                     buttonAds.SetActive(true);
                     break;
                 case SkinType.Daily:
-                    buttonDailyReward.SetActive(true);
+                    if (Data.TotalDays > skinData.DayDaily)
+                    {
+                        buttonBuy.SetActive(true);
+                    }
+                    else
+                    {
+                        buttonDailyReward.SetActive(true);
+                    }
                     break;
                 case SkinType.Facebook:
                     buttonFacebook.SetActive(true);

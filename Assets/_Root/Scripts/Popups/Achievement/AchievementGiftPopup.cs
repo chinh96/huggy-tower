@@ -15,18 +15,19 @@ public class AchievementGiftPopup : Popup
     {
         base.BeforeShow();
 
-        this.indexSkin = (int)data;
+        indexSkin = (int)data;
         skinData = ResourcesController.Hero.SkinAchievements[indexSkin];
         hero.ChangeSkin(skinData.SkinName);
         achievementTargetData = ResourcesController.Achievement.AchievementTargetDatas[indexSkin];
+
+        skinData.IsUnlocked = true;
+        achievementTargetData.IsClaimed = true;
+        EventController.SkinPopupReseted?.Invoke();
     }
 
     public void OnClickClaimButton()
     {
         Data.CurrentSkinHero = skinData.SkinName;
-        skinData.IsUnlocked = true;
-        achievementTargetData.IsClaimed = true;
-        EventController.SkinPopupReseted?.Invoke();
         Close();
     }
 }

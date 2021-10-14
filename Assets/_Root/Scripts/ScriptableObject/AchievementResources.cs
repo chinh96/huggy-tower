@@ -14,6 +14,12 @@ public class AchievementResources : ScriptableObject
         ResetNumberTemp();
     }
 
+    public void Reset()
+    {
+        int number = ResourcesController.Achievement.GetDatasIsClaimed().Count;
+        ResourcesController.Hero.SkinAchievements.ForEach(skin => skin.IsUnlocked = number >= skin.NumberAchievement);
+    }
+
     public void IncreaseByType(AchievementType type, int value = 1)
     {
         var data = GetDataByType(type);
@@ -140,19 +146,19 @@ public class AchievementResources : ScriptableObject
 
         for (int i = 0; i < AchievementDatas.Count; i++)
         {
-            models[i] = new AchievementDataModel() { isClaimed = AchievementDatas[i].IsClaimed, number = AchievementDatas[i].NumberCurrent};
+            models[i] = new AchievementDataModel() { isClaimed = AchievementDatas[i].IsClaimed, number = AchievementDatas[i].NumberCurrent };
         }
 
         return JsonHelper.ToJson(models);
     }
-    
+
     public string ConvertDataTarget()
     {
         DataModel[] models = new DataModel[AchievementTargetDatas.Count];
 
         for (int i = 0; i < AchievementTargetDatas.Count; i++)
         {
-            models[i] = new DataModel() { data = AchievementTargetDatas[i].IsClaimed.ToString()};
+            models[i] = new DataModel() { data = AchievementTargetDatas[i].IsClaimed.ToString() };
         }
 
         return JsonHelper.ToJson(models);
@@ -161,7 +167,7 @@ public class AchievementResources : ScriptableObject
     public void TransformData(string raw)
     {
         var result = JsonHelper.FromJson<AchievementDataModel>(raw);
-        
+
         int count = result.Length;
         if (count > AchievementDatas.Count) count = AchievementDatas.Count;
 
@@ -171,11 +177,11 @@ public class AchievementResources : ScriptableObject
             AchievementDatas[i].NumberCurrent = result[i].number;
         }
     }
-    
+
     public void TransformTargetData(string raw)
     {
         var result = JsonHelper.FromJson<DataModel>(raw);
-        
+
         int count = result.Length;
         if (count > AchievementTargetDatas.Count) count = AchievementTargetDatas.Count;
 
