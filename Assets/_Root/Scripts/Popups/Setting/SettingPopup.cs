@@ -164,7 +164,7 @@ public class SettingPopup : Popup
                                 for (int i = 0; i < count; i++)
                                 {
                                     var unlocked = bool.Parse(heroData[i]);
-                                    ResourcesController.Hero.SkinDatas[i].IsUnlocked = unlocked;
+                                    //ResourcesController.Hero.SkinDatas[i].IsUnlocked = unlocked;
                                     if (unlocked) serverTotalSkin++;
                                 }
                             }
@@ -177,7 +177,7 @@ public class SettingPopup : Popup
                                 for (int i = 0; i < count; i++)
                                 {
                                     var unlocked = bool.Parse(princessData[i]);
-                                    ResourcesController.Princess.SkinDatas[i].IsUnlocked = unlocked;
+                                    //ResourcesController.Princess.SkinDatas[i].IsUnlocked = unlocked;
                                     if (unlocked) serverTotalSkin++;
                                 }
                             }
@@ -215,10 +215,14 @@ public class SettingPopup : Popup
                             if (result.Data.ContainsKey("data_part3"))
                             {
                                 string[] dataPart3 = result.Data["data_part3"].Value.Split('_');
-                                var universe = dataPart3[2];
-                                var achievement = dataPart3[3];
-                                var achievementTarget = dataPart3[4];
+                                string hero = dataPart3[0];
+                                string princess = dataPart3[1];
+                                string universe = dataPart3[2];
+                                string achievement = dataPart3[3];
+                                string achievementTarget = dataPart3[4];
                                 
+                                ResourcesController.Hero.TransformTargetData(hero);
+                                ResourcesController.Princess.TransformTargetData(princess);
                                 ResourcesController.Universe.TransformData(universe);
                                 ResourcesController.Achievement.TransformData(achievement);
                                 ResourcesController.Achievement.TransformTargetData(achievementTarget);

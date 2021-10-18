@@ -54,6 +54,7 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
         SkinDefault.IsUnlocked = true;
     }
 
+    [ContextMenu("Convert")]
     public string ConvertData()
     {
         StringBuilder result = new StringBuilder("");
@@ -63,6 +64,7 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
         }
 
         result.Remove(result.Length - 1, 1);
+        Debug.Log(result.ToString());
         return result.ToString();
     }
 
