@@ -28,7 +28,7 @@ public class SkinPopup : Popup
                 break;
         }
 
-        EventController.SkinPopupReseted = Reset;
+        EventController.SkinPopupReseted += Reset;
     }
 
     protected override void AfterInstantiate()

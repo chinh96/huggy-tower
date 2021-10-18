@@ -56,7 +56,8 @@ public class SkinItem : MonoBehaviour
                 case SkinType.Daily:
                     if (Data.TotalDays > skinData.DayDaily)
                     {
-                        buttonBuy.SetActive(true);
+                        buttonBuy.SetActive(Data.CoinTotal >= skinData.Coin);
+                        buttonDisableBuy.SetActive(Data.CoinTotal < skinData.Coin);
                     }
                     else
                     {
