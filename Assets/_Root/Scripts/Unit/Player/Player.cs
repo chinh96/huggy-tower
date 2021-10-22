@@ -176,53 +176,52 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     public void OnMouseDown()
     {
-        if (GameController.Instance.GameState != EGameState.Playing || Turn == ETurn.None)
+        if (GameController.Instance.GameState == EGameState.Playing && Turn == ETurn.Drag)
         {
-            return;
-        }
-
-        effectFingerPress.gameObject.SetActive(true);
-        effectFingerPress.Play();
-        SoundController.Instance.PlayOnce(SoundType.HeroDrag);
-        _isMouseUpDragDetected = false;
-        if (Turn == ETurn.Drag)
-        {
-            OnSelected();
-            leanSelectableByFinger.SelfSelected = true;
+            effectFingerPress.gameObject.SetActive(true);
+            effectFingerPress.Play();
+            SoundController.Instance.PlayOnce(SoundType.HeroDrag);
+            _isMouseUpDragDetected = false;
+            if (Turn == ETurn.Drag)
+            {
+                OnSelected();
+                leanSelectableByFinger.SelfSelected = true;
+            }
         }
     }
 
     public void OnMouseUp()
     {
-        if (GameController.Instance.GameState != EGameState.Playing || Turn == ETurn.None)
+        if (GameController.Instance.GameState == EGameState.Playing && Turn == ETurn.Drag)
         {
-            return;
+            SoundController.Instance.PlayOnce(SoundType.HeroDrop);
+            if (!dragTranslate.DragTranslateFlag)
+            {
+                _isMouseUpDragDetected = false;
+                OnDeSelected();
+                leanSelectableByFinger.Deselect();
+                return;
+            }
+
+
+            dragTranslate.DragTranslateFlag = false;
+            levelMap.ResetSelectVisitTower();
+            var checkArea = CheckCorrectArea();
+            if (checkArea.Item1)
+            {
+                var parentRoom = levelMap.visitTower.slots[checkArea.Item2];
+                MoveToSlot(parentRoom);
+                Turn = ETurn.None;
+            }
+            else
+            {
+                _isMouseUpDragDetected = false;
+                ResetPlayerState();
+                OnDeSelected();
+                leanSelectableByFinger.Deselect();
+            }
         }
 
-        SoundController.Instance.PlayOnce(SoundType.HeroDrop);
-        if (!dragTranslate.DragTranslateFlag)
-        {
-            _isMouseUpDragDetected = false;
-            OnDeSelected();
-            leanSelectableByFinger.Deselect();
-            return;
-        }
-
-        dragTranslate.DragTranslateFlag = false;
-        levelMap.ResetSelectVisitTower();
-        var checkArea = CheckCorrectArea();
-        if (checkArea.Item1)
-        {
-            var parentRoom = levelMap.visitTower.slots[checkArea.Item2];
-            MoveToSlot(parentRoom);
-        }
-        else
-        {
-            _isMouseUpDragDetected = false;
-            ResetPlayerState();
-            OnDeSelected();
-            leanSelectableByFinger.Deselect();
-        }
     }
 
     public void FlashToSlot(RoomTower parentRoom)

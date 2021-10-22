@@ -57,7 +57,7 @@ public class PopupController : Singleton<PopupController>
 
         if (GameController.Instance)
         {
-            GameController.Instance.LeanTouch.enabled = false;
+            GameController.Instance.SetEnableLeanTouch(false);
         }
     }
 
@@ -121,7 +121,7 @@ public class PopupController : Singleton<PopupController>
 
         if (GameController.Instance && popups.Count == 0)
         {
-            GameController.Instance.LeanTouch.enabled = true;
+            GameController.Instance.SetEnableLeanTouch(true);
         }
 
         if (t == null) return;
