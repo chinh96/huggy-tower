@@ -67,7 +67,7 @@ public class RescuePartyItem : MonoBehaviour
 
     public void OnClickClaim()
     {
-        if (Type == RescuePartyType.Princess)
+        if (Type == RescuePartyType.Princess || Type == RescuePartyType.Top100)
         {
             Data.CurrentSkinPrincess = data.SkinName;
         }

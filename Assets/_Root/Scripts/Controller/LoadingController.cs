@@ -35,6 +35,11 @@ public class LoadingController : MonoBehaviour
 
     private async void Start()
     {
+        if (Data.CurrentSkinHero == "Angel")
+        {
+            Data.CurrentSkinHero = "Hero1";
+        }
+
         Addressables.InitializeAsync();
 
         Vibration.Init();
