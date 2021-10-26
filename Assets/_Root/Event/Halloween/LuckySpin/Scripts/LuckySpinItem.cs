@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class LuckySpinItem : MonoBehaviour
 {
@@ -19,16 +20,17 @@ public class LuckySpinItem : MonoBehaviour
         if (LuckySpinType == LuckySpinType.Coin)
         {
             Image.sprite = Coin;
+            Text.text = Value.ToString();
         }
         else
         {
             Image.sprite = Candy;
+            Text.text = $"+{Value}";
         }
         Image.SetNativeSize();
-        Text.text = Value.ToString();
     }
 
-    public void Receive()
+    public void Receive(Action action)
     {
         if (LuckySpinType == LuckySpinType.Coin)
         {
@@ -36,7 +38,7 @@ public class LuckySpinItem : MonoBehaviour
         }
         else
         {
-            Data.TotalGoldMedal = Value;
+            Data.TotalGoldMedal += Value;
         }
     }
 }

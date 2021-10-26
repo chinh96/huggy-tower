@@ -14,8 +14,10 @@ public class LuckySpinPopup : Popup
     public Transform Spin;
     public int SpinNumber = 10;
     public List<LuckySpinItem> LuckySpinItems;
-    public GameObject Overlay;
     public float radian;
+    public CoinGeneration CoinGeneration;
+    public CoinGeneration CandyGeneration;
+    public GameObject Overlay;
 
     private int SecondsRemaining;
 
@@ -52,7 +54,7 @@ public class LuckySpinPopup : Popup
 
     public void Reset()
     {
-        SecondsRemaining = (int)(DateTime.Parse(LuckySpinDatas.LuckySpinTimeStart).AddSeconds(5) - DateTime.Now).TotalSeconds;
+        SecondsRemaining = (int)(DateTime.Parse(LuckySpinDatas.LuckySpinTimeStart).AddMinutes(10) - DateTime.Now).TotalSeconds;
         if (SecondsRemaining > 0)
         {
             ShowSpinBtn(false);
@@ -95,31 +97,70 @@ public class LuckySpinPopup : Popup
 
     public void OnSpin(Action action = null)
     {
+        SoundController.Instance.PlayOnce(SoundType.LuckySpinRotate);
         Overlay.SetActive(true);
         SpinSkeleton.Play("attack", true);
 
-        Spin.transform.eulerAngles = Vector3.zero;
+        Spin.transform.localEulerAngles = Vector3.zero;
 
         var random = UnityEngine.Random.Range(0, 100);
         var index = LuckySpinItems.FindIndex(item => item.ProbabilityRange.x <= random && random <= item.ProbabilityRange.y);
-        var endValue = -Vector3.forward * (360 * 5 + index * 45 + UnityEngine.Random.Range(1, 44f));
+        var endValue = Vector3.forward * (-360 * 5 + index * 45 + 22.5f);
 
-        Spin.DORotate(endValue, 3, RotateMode.FastBeyond360).SetEase(Ease.OutCubic).OnComplete(() =>
+        Spin.DOLocalRotate(endValue, 3, RotateMode.FastBeyond360).SetEase(Ease.OutCubic).OnComplete(() =>
         {
+            Overlay.SetActive(false);
             SpinSkeleton.Play("done", true);
-            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+
+            GenerateBonus(LuckySpinItems[index], () =>
             {
-                SpinSkeleton.Play("idle", true);
-
-                Overlay.SetActive(false);
-
                 LuckySpinDatas.LuckySpinTimeStart = DateTime.Now.ToString();
-
-                LuckySpinItems[index].Receive();
-
+                SpinSkeleton.Play("idle", true);
                 action?.Invoke();
             });
         });
+    }
+
+    public void GenerateBonus(LuckySpinItem item, Action action)
+    {
+        if (item.LuckySpinType == LuckySpinType.Coin)
+        {
+            GenerateCoin(item, action);
+        }
+        else
+        {
+            GenerateCandy(item, action);
+        }
+    }
+
+    public void GenerateCoin(LuckySpinItem item, Action action)
+    {
+        int coinTotal = Data.CoinTotal + item.Value;
+        CoinGeneration.GenerateCoin(() =>
+        {
+            Data.CoinTotal++;
+        }, () =>
+        {
+            Data.CoinTotal = coinTotal;
+            action?.Invoke();
+        },
+        item.Image.gameObject);
+    }
+
+    public void GenerateCandy(LuckySpinItem item, Action action)
+    {
+        int candyTotal = Data.TotalGoldMedal + item.Value;
+        CandyGeneration.SetNumberCoin(item.Value);
+        CandyGeneration.GenerateCoin(() =>
+        {
+            Data.TotalGoldMedal++;
+        }, () =>
+        {
+            Data.TotalGoldMedal = candyTotal;
+            action?.Invoke();
+
+        },
+        item.Image.gameObject);
     }
 
     public void OnClickFree()

@@ -21,6 +21,11 @@ public class CoinGeneration : MonoBehaviour
     private System.Action moveOneCoinDone;
     private System.Action moveAllCoinDone;
 
+    public void SetNumberCoin(int numberCoin)
+    {
+        this.numberCoin = numberCoin;
+    }
+
     public void SetFromGameObject(GameObject from)
     {
         this.from = from;

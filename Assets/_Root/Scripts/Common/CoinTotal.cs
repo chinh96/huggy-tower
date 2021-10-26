@@ -22,4 +22,9 @@ public class CoinTotal : MonoBehaviour
     {
         PopupController.Instance.Show<ShopPopup>(null, ShowAction.DoNothing);
     }
+
+    private void OnDestroy()
+    {
+        EventController.CoinTotalChanged -= UpdateCoinText;
+    }
 }
