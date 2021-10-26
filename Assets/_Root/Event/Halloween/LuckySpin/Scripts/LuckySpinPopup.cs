@@ -15,8 +15,22 @@ public class LuckySpinPopup : Popup
     public int SpinNumber = 10;
     public List<LuckySpinItem> LuckySpinItems;
     public GameObject Overlay;
+    public float radian;
 
     private int SecondsRemaining;
+
+    [ContextMenu("Execute")]
+    public void Execute()
+    {
+        for (int i = 0; i < LuckySpinItems.Count; i++)
+        {
+            var item = LuckySpinItems[i];
+            float angle = Mathf.PI * (3 - 2 * i) / 8;
+            item.transform.localPosition = new Vector2(radian * Mathf.Cos(angle), radian * Mathf.Sin(angle));
+            item.transform.eulerAngles = new Vector3(0, 0, -i * 45 - 22.5f);
+            item.Setup();
+        }
+    }
 
     protected override void AfterInstantiate()
     {
@@ -101,15 +115,7 @@ public class LuckySpinPopup : Popup
 
                 LuckySpinDatas.LuckySpinTimeStart = DateTime.Now.ToString();
 
-                var item = LuckySpinItems[index];
-                if (item.LuckySpinType == LuckySpinType.Coin)
-                {
-                    Data.CoinTotal += item.Value;
-                }
-                else
-                {
-                    Data.TotalGoldMedal = item.Value;
-                }
+                LuckySpinItems[index].Receive();
 
                 action?.Invoke();
             });
