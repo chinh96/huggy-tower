@@ -174,7 +174,7 @@ public static class AnalyticController
         LogEvent(Constants.CLAIM_SKIN_TOP_100_HALLOWEEN, new Parameter[] { });
     }
 
-    private static void LogEvent(string name, Parameter[] param)
+    public static void LogEvent(string name, Parameter[] param)
     {
         FirebaseAnalytics.LogEvent(name, param);
     }
