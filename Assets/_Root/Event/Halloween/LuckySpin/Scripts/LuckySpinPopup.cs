@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using TMPro;
 using Spine.Unity;
+using System.Collections.Generic;
 
 public class LuckySpinPopup : Popup
 {
@@ -11,6 +12,9 @@ public class LuckySpinPopup : Popup
     public TextMeshProUGUI CountdownText;
     public SkeletonGraphic SpinSkeleton;
     public Transform Spin;
+    public int SpinNumber = 10;
+    public List<LuckySpinItem> LuckySpinItems;
+    public GameObject Overlay;
 
     private int SecondsRemaining;
 
@@ -69,21 +73,55 @@ public class LuckySpinPopup : Popup
 
     public void OnClickSpinNow()
     {
+        OnSpin(() =>
+        {
+            Reset();
+        });
+    }
+
+    public void OnSpin(Action action = null)
+    {
+        Overlay.SetActive(true);
         SpinSkeleton.Play("attack", true);
-        Spin.DORotate(Spin.eulerAngles + Vector3.forward * 180, .1f).SetLoops(10).SetEase(Ease.Linear).OnComplete(() =>
+
+        Spin.transform.eulerAngles = Vector3.zero;
+
+        var random = UnityEngine.Random.Range(0, 100);
+        var index = LuckySpinItems.FindIndex(item => item.ProbabilityRange.x <= random && random <= item.ProbabilityRange.y);
+        var endValue = -Vector3.forward * (360 * 5 + index * 45 + UnityEngine.Random.Range(1, 44f));
+
+        Spin.DORotate(endValue, 3, RotateMode.FastBeyond360).SetEase(Ease.OutCubic).OnComplete(() =>
         {
             SpinSkeleton.Play("done", true);
-            DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
             {
+                SpinSkeleton.Play("idle", true);
+
+                Overlay.SetActive(false);
+
                 LuckySpinDatas.LuckySpinTimeStart = DateTime.Now.ToString();
-                Reset();
+
+                var item = LuckySpinItems[index];
+                if (item.LuckySpinType == LuckySpinType.Coin)
+                {
+                    Data.CoinTotal += item.Value;
+                }
+                else
+                {
+                    Data.TotalGoldMedal = item.Value;
+                }
+
+                action?.Invoke();
             });
         });
     }
 
     public void OnClickFree()
     {
-
+        AdController.Instance.ShowRewardedAd(() =>
+        {
+            OnSpin();
+        });
     }
 
     protected override void BeforeDismiss()

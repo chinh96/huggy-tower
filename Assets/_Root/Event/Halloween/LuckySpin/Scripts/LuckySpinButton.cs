@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LuckySpinBtn : MonoBehaviour
+public class LuckySpinButton : MonoBehaviour
 {
     private void Awake()
     {
