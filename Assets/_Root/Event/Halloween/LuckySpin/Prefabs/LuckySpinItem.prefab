@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 9115995807270008930}
   - component: {fileID: 2643434733349594586}
   - component: {fileID: 1106936230722385748}
-  m_Layer: 0
+  - component: {fileID: 6166647624483832292}
+  m_Layer: 12
   m_Name: Decor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 80}
+  m_AnchoredPosition: {x: -110, y: 25}
   m_SizeDelta: {x: 30, y: 41}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9115995807270008930
@@ -92,6 +93,27 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 15
+--- !u!50 &6166647624483832292
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224103327506039618}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &2736171528018806609
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +124,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3089691170506509831}
   - component: {fileID: 4379630646142583937}
-  - component: {fileID: 4895457786115357706}
   m_Layer: 0
   m_Name: LuckySpinItem
   m_TagString: Untagged
@@ -151,27 +172,6 @@ MonoBehaviour:
   Candy: {fileID: 21300000, guid: ee7d0d86d28933241b79271317cde5f3, type: 3}
   Image: {fileID: 7860429764254154387}
   Text: {fileID: 1655505460918165029}
---- !u!50 &4895457786115357706
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2736171528018806609}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &7899623814511131807
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,13 +197,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7899623814511131807}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children: []
   m_Father: {fileID: 3089691170506509831}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
