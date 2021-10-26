@@ -214,7 +214,8 @@ public enum SoundType
     IntroWolfDie,
     IntroWolfStart,
     IntroEnemySmile,
-    LuckySpinRotate
+    LuckySpinRotate,
+    LuckySpinHit
 }
 
 public enum WorldType

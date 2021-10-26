@@ -752,6 +752,9 @@ GameObject:
   - component: {fileID: 7347886184340323793}
   - component: {fileID: 7731158928553510078}
   - component: {fileID: 2640120263274631764}
+  - component: {fileID: 6299413773081549406}
+  - component: {fileID: 2869374126439114582}
+  - component: {fileID: 2263033771527692540}
   m_Layer: 0
   m_Name: Decor
   m_TagString: Untagged
@@ -816,6 +819,67 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!50 &6299413773081549406
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3049311037787056993}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!233 &2869374126439114582
+HingeJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3049311037787056993}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 6299413773081549406}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_AutoConfigureConnectedAnchor: 1
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_UseMotor: 1
+  m_Motor:
+    m_MotorSpeed: -100
+    m_MaximumMotorForce: 100
+  m_UseLimits: 1
+  m_AngleLimits:
+    m_LowerAngle: 0
+    m_UpperAngle: 359
+--- !u!70 &2263033771527692540
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3049311037787056993}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 60, y: 90}
+  m_Direction: 0
 --- !u!1 &3282651383729197643
 GameObject:
   m_ObjectHideFlags: 0
@@ -2418,6 +2482,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e33ecbbfc9cc78442aa46af23242dbcf, type: 3}
+--- !u!224 &3587622734797866045 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3089691170506509831, guid: e33ecbbfc9cc78442aa46af23242dbcf, type: 3}
+  m_PrefabInstance: {fileID: 1957098130517101114}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2877396362531688123 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4379630646142583937, guid: e33ecbbfc9cc78442aa46af23242dbcf, type: 3}
@@ -2429,11 +2498,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e89247ad991d12e4fbfcee922f963411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &3587622734797866045 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3089691170506509831, guid: e33ecbbfc9cc78442aa46af23242dbcf, type: 3}
-  m_PrefabInstance: {fileID: 1957098130517101114}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2634822962991831207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3038,11 +3102,6 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: ee7d0d86d28933241b79271317cde5f3, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e33ecbbfc9cc78442aa46af23242dbcf, type: 3}
---- !u!224 &7377670218563057585 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3089691170506509831, guid: e33ecbbfc9cc78442aa46af23242dbcf, type: 3}
-  m_PrefabInstance: {fileID: 5513098938164345270}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8090123647166987575 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4379630646142583937, guid: e33ecbbfc9cc78442aa46af23242dbcf, type: 3}
@@ -3054,6 +3113,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e89247ad991d12e4fbfcee922f963411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &7377670218563057585 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3089691170506509831, guid: e33ecbbfc9cc78442aa46af23242dbcf, type: 3}
+  m_PrefabInstance: {fileID: 5513098938164345270}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7571911555934639539
 PrefabInstance:
   m_ObjectHideFlags: 0
