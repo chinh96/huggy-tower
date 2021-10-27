@@ -91,6 +91,7 @@ public class LuckySpinPopup : Popup
     {
         OnSpin(() =>
         {
+            LuckySpinDatas.LuckySpinTimeStart = DateTime.Now.ToString();
             Reset();
         });
     }
@@ -105,7 +106,7 @@ public class LuckySpinPopup : Popup
 
         var random = UnityEngine.Random.Range(0, 100);
         var index = LuckySpinItems.FindIndex(item => item.ProbabilityRange.x <= random && random <= item.ProbabilityRange.y);
-        var endValue = Vector3.forward * (-360 * 5 + index * 45 + UnityEngine.Random.Range(5, 40f));
+        var endValue = Vector3.forward * (-360 * 5 + index * 45 + UnityEngine.Random.Range(10, 35f));
 
         Spin.DOLocalRotate(endValue, 3, RotateMode.FastBeyond360).SetEase(Ease.OutCubic).OnComplete(() =>
         {
@@ -114,7 +115,6 @@ public class LuckySpinPopup : Popup
 
             GenerateBonus(LuckySpinItems[index], () =>
             {
-                LuckySpinDatas.LuckySpinTimeStart = DateTime.Now.ToString();
                 SpinSkeleton.Play("idle", true);
                 action?.Invoke();
             });
