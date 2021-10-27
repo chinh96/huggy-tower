@@ -1,34 +1,50 @@
 using UnityEngine;
 using UnityEngine.Purchasing;
 
-public class IAPController : Singleton<IAPController>, IStoreListener
+public class IAPController : MonoBehaviour
 {
+    public string Gold1 = "com.herotowerwar.gold1";
+    public string Gold2 = "com.herotowerwar.gold2";
+    public string Gold3 = "com.herotowerwar.gold3";
     public string RemoveAdsId = "com.herotowerwar.removeads";
     public string UnlockSkinsId = "com.herotowerwar.unlockhero";
     public string VipId = "com.herotowerwar.vip";
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
-        InitializePurchasing();
+        CheckGold1(CodelessIAPStoreListener.Instance.StoreController);
+        CheckGold2(CodelessIAPStoreListener.Instance.StoreController);
+        CheckGold3(CodelessIAPStoreListener.Instance.StoreController);
+        CheckRemoveAds(CodelessIAPStoreListener.Instance.StoreController);
+        CheckUnlockSkins(CodelessIAPStoreListener.Instance.StoreController);
+        CheckVip(CodelessIAPStoreListener.Instance.StoreController);
     }
 
-    public void InitializePurchasing()
+    private void CheckGold1(IStoreController controller)
     {
-        var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-
-        builder.AddProduct(RemoveAdsId, ProductType.NonConsumable);
-        builder.AddProduct(UnlockSkinsId, ProductType.NonConsumable);
-        builder.AddProduct(VipId, ProductType.NonConsumable);
-
-        UnityPurchasing.Initialize(this, builder);
+        if (controller.products.WithID(Gold1).hasReceipt && !Data.IsGold1)
+        {
+            Data.IsGold1 = true;
+            Data.CoinTotal += 50000;
+        }
     }
 
-    public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+    private void CheckGold2(IStoreController controller)
     {
-        CheckRemoveAds(controller);
-        CheckUnlockSkins(controller);
-        CheckVip(controller);
+        if (controller.products.WithID(Gold2).hasReceipt && !Data.IsGold2)
+        {
+            Data.IsGold2 = true;
+            Data.CoinTotal += 150000;
+        }
+    }
+
+    private void CheckGold3(IStoreController controller)
+    {
+        if (controller.products.WithID(Gold3).hasReceipt && !Data.IsGold3)
+        {
+            Data.IsGold3 = true;
+            Data.CoinTotal += 500000;
+        }
     }
 
     private void CheckRemoveAds(IStoreController controller)
@@ -56,19 +72,5 @@ public class IAPController : Singleton<IAPController>, IStoreListener
             Data.IsVip = true;
             Data.CoinTotal += 500000;
         }
-    }
-
-    public void OnInitializeFailed(InitializationFailureReason error)
-    {
-    }
-
-    public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
-    {
-        return PurchaseProcessingResult.Complete;
-    }
-
-
-    public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
-    {
     }
 }

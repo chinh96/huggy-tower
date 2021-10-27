@@ -28,6 +28,9 @@ public class Constants
     public const string IS_REMOVE_ADS = "IS_REMOVE_ADS";
     public const string IS_UNLOCK_ALL_SKINS = "IS_UNLOCK_ALL_SKINS";
     public const string IS_VIP = "IS_VIP";
+    public const string IS_GOLD_1 = "IS_GOLD_1";
+    public const string IS_GOLD_2 = "IS_GOLD_2";
+    public const string IS_GOLD_3 = "IS_GOLD_3";
     public const string CACHE_LEVEL_INDEX = "CACHE_LEVEL_INDEX";
     public const string COUNT_PLAY_LEVEL = "COUNT_PLAY_LEVEL";
     public const string COIN_TOTAL = "COIN_TOTAL";

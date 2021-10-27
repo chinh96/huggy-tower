@@ -71,6 +71,12 @@ public static class Data
 
     public static bool IsVip { get => GetBool(Constants.IS_VIP, false); set => SetBool(Constants.IS_VIP, value); }
 
+    public static bool IsGold1 { get => GetBool(Constants.IS_GOLD_1, false); set => SetBool(Constants.IS_GOLD_1, value); }
+
+    public static bool IsGold2 { get => GetBool(Constants.IS_GOLD_2, false); set => SetBool(Constants.IS_GOLD_2, value); }
+
+    public static bool IsGold3 { get => GetBool(Constants.IS_GOLD_3, false); set => SetBool(Constants.IS_GOLD_3, value); }
+
     public static int GetCacheLevelIndex(int index) { return GetInt($"{Constants.CACHE_LEVEL_INDEX}_{index}", 0); }
     public static void SetCacheLevelIndex(int index, int level) { SetInt($"{Constants.CACHE_LEVEL_INDEX}_{index}", level); }
 
