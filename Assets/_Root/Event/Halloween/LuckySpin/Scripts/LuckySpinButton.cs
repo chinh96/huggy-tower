@@ -7,6 +7,7 @@ public class LuckySpinButton : MonoBehaviour
     private void Awake()
     {
         gameObject.SetActive(Data.TimeToRescueParty.TotalMilliseconds > 0);
+        EventController.LuckySpinChanged?.Invoke();
     }
 
     public void OnClick()

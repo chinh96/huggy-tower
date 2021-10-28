@@ -18,7 +18,8 @@ public enum NotiType
     Facebook,
     Leaderboard,
     AchievementDailyQuest,
-    RescueParty
+    RescueParty,
+    LuckySpin
 }
 
 public enum EGameState

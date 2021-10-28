@@ -16,4 +16,5 @@ public static class EventController
     public static Action AdsRewardRequested;
     public static Action LoginLeaderBoard;
     public static Action MedalTotalChanged;
+    public static Action LuckySpinChanged;
 }

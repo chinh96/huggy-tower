@@ -34,16 +34,6 @@ public class LuckySpinPopup : Popup
         }
     }
 
-    protected override void AfterInstantiate()
-    {
-        base.AfterInstantiate();
-
-        if (LuckySpinDatas.LuckySpinTimeStart == "")
-        {
-            LuckySpinDatas.LuckySpinTimeStart = DateTime.Now.ToString();
-        }
-    }
-
     protected override void BeforeShow()
     {
         base.BeforeShow();
@@ -54,15 +44,22 @@ public class LuckySpinPopup : Popup
 
     public void Reset()
     {
-        SecondsRemaining = (int)(DateTime.Parse(LuckySpinDatas.LuckySpinTimeStart).AddMinutes(10) - DateTime.Now).TotalSeconds;
-        if (SecondsRemaining > 0)
+        if (LuckySpinDatas.LuckySpinTimeStart == "")
         {
-            ShowSpinBtn(false);
-            InvokeRepeating("Countdown", 0, 1);
+            ShowSpinBtn(true);
         }
         else
         {
-            ShowSpinBtn(true);
+            SecondsRemaining = (int)(DateTime.Parse(LuckySpinDatas.LuckySpinTimeStart).AddMinutes(10) - DateTime.Now).TotalSeconds;
+            if (SecondsRemaining > 0)
+            {
+                ShowSpinBtn(false);
+                InvokeRepeating("Countdown", 0, 1);
+            }
+            else
+            {
+                ShowSpinBtn(true);
+            }
         }
     }
 
@@ -92,6 +89,12 @@ public class LuckySpinPopup : Popup
         OnSpin(() =>
         {
             LuckySpinDatas.LuckySpinTimeStart = DateTime.Now.ToString();
+            EventController.LuckySpinChanged?.Invoke();
+
+            DOTween.Sequence().AppendInterval(10 * 60).AppendCallback(() =>
+            {
+                EventController.LuckySpinChanged?.Invoke();
+            });
             Reset();
         });
     }

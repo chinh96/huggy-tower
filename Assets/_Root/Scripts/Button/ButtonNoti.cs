@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class ButtonNoti : MonoBehaviour
@@ -12,6 +11,7 @@ public class ButtonNoti : MonoBehaviour
         EventController.CoinTotalChanged += CheckNoti;
         EventController.LoginLeaderBoard += CheckNoti;
         EventController.MedalTotalChanged += CheckNoti;
+        EventController.LuckySpinChanged += CheckNoti;
     }
 
     private void OnEnable()
@@ -69,6 +69,16 @@ public class ButtonNoti : MonoBehaviour
                     hasNoti = ResourcesController.SkinRescuePartys.Exists(data => data.HasNotiRescueParty);
                 }
                 break;
+            case NotiType.LuckySpin:
+                if (LuckySpinDatas.LuckySpinTimeStart == "")
+                {
+                    hasNoti = true;
+                }
+                else
+                {
+                    hasNoti = DateTime.Parse(LuckySpinDatas.LuckySpinTimeStart).AddMinutes(10) < DateTime.Now;
+                }
+                break;
         }
 
         if (noti != null)
@@ -80,5 +90,8 @@ public class ButtonNoti : MonoBehaviour
     private void OnDestroy()
     {
         EventController.CoinTotalChanged -= CheckNoti;
+        EventController.LoginLeaderBoard -= CheckNoti;
+        EventController.MedalTotalChanged -= CheckNoti;
+        EventController.LuckySpinChanged -= CheckNoti;
     }
 }
