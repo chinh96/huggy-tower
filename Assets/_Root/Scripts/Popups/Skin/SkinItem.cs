@@ -18,6 +18,8 @@ public class SkinItem : MonoBehaviour
     [SerializeField] private GameObject buttonAchievement;
     [SerializeField] private GameObject buttonGiftcode;
     [SerializeField] private GameObject buttonRescueParty;
+    [SerializeField] private GameObject buttonTG;
+    [SerializeField] private GameObject buttonTGLuckySpin;
     [SerializeField] private TextMeshProUGUI cost;
     [SerializeField] private TextMeshProUGUI costDisable;
     [SerializeField] private GameObject dockActive;
@@ -84,6 +86,28 @@ public class SkinItem : MonoBehaviour
                         buttonDisableBuy.SetActive(Data.CoinTotal < skinData.Coin);
                     }
                     break;
+                case SkinType.TGLuckySpin:
+                    if (TGDatas.IsInTG)
+                    {
+                        buttonTGLuckySpin.SetActive(true);
+                    }
+                    else
+                    {
+                        buttonBuy.SetActive(Data.CoinTotal >= skinData.Coin);
+                        buttonDisableBuy.SetActive(Data.CoinTotal < skinData.Coin);
+                    }
+                    break;
+                case SkinType.ThanksGiving:
+                    if (TGDatas.IsInTG)
+                    {
+                        buttonTG.SetActive(true);
+                    }
+                    else
+                    {
+                        buttonBuy.SetActive(Data.CoinTotal >= skinData.Coin);
+                        buttonDisableBuy.SetActive(Data.CoinTotal < skinData.Coin);
+                    }
+                    break;
             }
         }
 
@@ -121,6 +145,8 @@ public class SkinItem : MonoBehaviour
         buttonAchievement.SetActive(false);
         buttonGiftcode.SetActive(false);
         buttonRescueParty.SetActive(false);
+        buttonTG.SetActive(false);
+        buttonTGLuckySpin.SetActive(false);
         usedLabel.SetActive(false);
         dockActive.SetActive(false);
         fx.SetActive(false);
@@ -164,6 +190,16 @@ public class SkinItem : MonoBehaviour
     public void OnClickButtonRescurParty()
     {
         PopupController.Instance.Show<RescuePartyPopup>(null, ShowAction.DoNothing);
+    }
+
+    public void OnClickButtonTG()
+    {
+        PopupController.Instance.Show<TGPopup>(null, ShowAction.DoNothing);
+    }
+
+    public void OnClickButtonTGLuckySpin()
+    {
+        PopupController.Instance.Show<TGLuckySpinPopup>(null, ShowAction.DoNothing);
     }
 
     public void OnClickFacebookButton()

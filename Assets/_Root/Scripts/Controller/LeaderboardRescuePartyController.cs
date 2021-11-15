@@ -125,7 +125,7 @@ public class LeaderboardRescuePartyController : Singleton<LeaderboardRescueParty
     {
         if (Data.PlayerId == "")
         {
-            PopupController.Instance.Show<LeaderboardLoginPopup>(true, ShowAction.DoNothing);
+            PopupController.Instance.Show<LeaderboardLoginPopup>(1, ShowAction.DoNothing);
         }
         else
         {

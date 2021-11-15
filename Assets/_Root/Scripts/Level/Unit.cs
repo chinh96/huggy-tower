@@ -43,4 +43,13 @@ public abstract class Unit : MonoBehaviour, IUnit, IAttack
     public abstract void LightReturn();
 
     public Color ColorBlood;
+
+    public void CheckTurkey()
+    {
+        var turkey = GetComponentInChildren<TGTurkey>();
+        if (turkey != null)
+        {
+            turkey.Move();
+        }
+    }
 }

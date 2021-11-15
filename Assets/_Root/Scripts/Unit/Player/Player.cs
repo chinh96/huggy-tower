@@ -694,6 +694,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             if (_flagAttack)
             {
                 _cacheTarget.OnBeingAttacked();
+                _cacheTarget.CheckTurkey();
 
                 if (_cacheTarget as EnemyGoblin || _cacheTarget as EnemyKappa)
                 {

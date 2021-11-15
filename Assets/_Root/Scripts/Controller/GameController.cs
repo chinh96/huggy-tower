@@ -132,6 +132,7 @@ public class GameController : Singleton<GameController>
 
     public async void LoadLevel(int fakeIndex)
     {
+        TGDatas.TotalTurkeyText = TGDatas.TotalTurkey;
         if (fighterOverlay != null)
         {
             Destroy(fighterOverlay.gameObject);
@@ -433,6 +434,7 @@ public class GameController : Singleton<GameController>
     public void OnWinLevel()
     {
         AnalyticController.CompleteLevel();
+        TGDatas.TotalTurkey = TGDatas.TotalTurkeyText;
 
         switch (Data.CurrentLevel)
         {

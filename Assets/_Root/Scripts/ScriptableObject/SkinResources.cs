@@ -20,6 +20,7 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
     public List<SkinData> SkinAchievements => SkinDatas.FindAll(item => item.SkinType == SkinType.Achievement);
     public SkinData SkinGiftcode => SkinDatas.Find(item => item.SkinType == SkinType.Giftcode);
     public List<SkinData> SkinsIsUnlocked => SkinDatas.FindAll(item => item.IsUnlocked && item.SkinName != skinNameDefault);
+    public SkinData SkinLuckySpin => SkinDatas.Find(item => item.SkinType == SkinType.TGLuckySpin);
 
     public int TotalSkinUnlocked()
     {
@@ -95,6 +96,7 @@ public class SkinData
 
     public SkinType SkinType;
     public RescuePartyType RescuePartyType;
+    public TGType TGType;
 
     public int Coin;
 
@@ -102,6 +104,7 @@ public class SkinData
     public int NumberMedalTarget;
     public int DayDaily;
     public int NumberAchievement;
+    public int NumberTurkeyTarget;
     public bool HasNotiRescueParty
     {
         get

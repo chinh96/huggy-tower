@@ -108,6 +108,7 @@ public class Constants
     public const string LEVEL_15_START_FUNNEL = "LEVEL_15_START_FUNNEL";
     public const string LEVEL_15_COMPLETE_FUNNEL = "LEVEL_15_COMPLETE_FUNNEL";
     public const string TOTAL_GOLD_MEDAL = "TOTAL_GOLD_MEDAL";
+    public const string TOTAL_TURKEY = "TOTAL_TURKEY";
     public const string CLICK_BUTTON_HALLOWEEN = "CLICK_BUTTON_HALLOWEEN";
     public const string CLAIM_FIRST_SKIN_HALLOWEEN = "CLAIM_FIRST_SKIN_HALLOWEEN";
     public const string CLICK_TOP_100_HALLOWEEN_BUTTON = "CLICK_TOP_100_HALLOWEEN_BUTTON";

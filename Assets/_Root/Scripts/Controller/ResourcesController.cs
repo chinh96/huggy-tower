@@ -30,6 +30,7 @@ public class ResourcesController : Singleton<ResourcesController>
     public static CountryResources Country;
 
     public static List<SkinData> SkinRescuePartys = new List<SkinData>();
+    public static List<SkinData> SkinsTG = new List<SkinData>();
 
     protected override void Awake()
     {
@@ -50,6 +51,7 @@ public class ResourcesController : Singleton<ResourcesController>
         }
 
         GetSkinRescueParty();
+        GetSkinsTG();
     }
 
     private void Start()
@@ -87,6 +89,12 @@ public class ResourcesController : Singleton<ResourcesController>
         SkinRescuePartys.Add(Hero.SkinDatas.Find(data => data.RescuePartyType == RescuePartyType.Hero));
         SkinRescuePartys.Add(Hero.SkinDatas.Find(data => data.RescuePartyType == RescuePartyType.Hero2));
         SkinRescuePartys.Add(Princess.SkinDatas.Find(data => data.RescuePartyType == RescuePartyType.Top100));
+    }
+
+    public static void GetSkinsTG()
+    {
+        SkinsTG.Add(Hero.SkinDatas.Find(data => data.TGType == TGType.Hero));
+        SkinsTG.Add(Princess.SkinDatas.Find(data => data.TGType == TGType.Top100));
     }
 
     public static void ReceiveSkinRescueParty(Action action)

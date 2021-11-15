@@ -90,9 +90,26 @@ public class LeaderboardLoginPopup : Popup
                     }
                 );
             }
-            else
+            else if ((int)data == 1)
             {
                 LeaderboardRescuePartyController.Instance.Login(
+                    inputName.text,
+                    countryCurrent.Code,
+                    () => Close(),
+                    () =>
+                    {
+                        ShowWarning("The name you choose already exists!");
+                    },
+                    () =>
+                    {
+                        ShowWarning("Check your network connection again!");
+                    }
+                );
+            }
+            else if ((int)data == 2)
+            {
+                Debug.Log(1);
+                TGRankController.Instance.Login(
                     inputName.text,
                     countryCurrent.Code,
                     () => Close(),

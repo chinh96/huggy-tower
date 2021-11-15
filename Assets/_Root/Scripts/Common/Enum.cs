@@ -121,7 +121,9 @@ public enum SkinType
     Facebook,
     Achievement,
     Giftcode,
-    RescueParty
+    RescueParty,
+    TGLuckySpin,
+    ThanksGiving
 }
 
 public enum SoundType
@@ -216,7 +218,8 @@ public enum SoundType
     IntroWolfStart,
     IntroEnemySmile,
     LuckySpinRotate,
-    LuckySpinHit
+    LuckySpinHit,
+    TurkeyJump
 }
 
 public enum WorldType
@@ -291,5 +294,6 @@ public enum RescuePartyType
     Hero,
     Princess,
     Top100,
-    Hero2
+    Hero2,
+    Gold
 }

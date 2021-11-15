@@ -14,6 +14,7 @@ public class HomeController : Singleton<HomeController>
     [SerializeField] private CanvasScaler canvasScaler;
     [SerializeField] private GameObject backgroundHalloween;
     [SerializeField] private GameObject debugButton;
+    public GameObject BackgroundTG;
 
     public void OnClickDebugButton()
     {
