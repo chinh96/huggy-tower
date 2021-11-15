@@ -12,6 +12,7 @@ using I2.Loc;
 
 public class GameController : Singleton<GameController>
 {
+    [SerializeField] private Camera UICamera;
     [SerializeField] private LevelRoot root;
     [SerializeField] private RoomTower roomPrefab;
     [SerializeField] private TextMeshProUGUI txtQuest;
@@ -107,6 +108,9 @@ public class GameController : Singleton<GameController>
         {
             Camera.main.transform.position += new Vector3(0, ratio, 0);
             Camera.main.orthographicSize += ratio;
+
+            UICamera.orthographicSize = Camera.main.orthographicSize;
+            UICamera.transform.position = Camera.main.transform.position;
         }
     }
 
@@ -533,7 +537,10 @@ public class GameController : Singleton<GameController>
 
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LevelPassed);
 
-        MoveOutAnim();
+        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+        {
+            MoveOutAnim();
+        });
 
         firePaper.gameObject.SetActive(true);
 

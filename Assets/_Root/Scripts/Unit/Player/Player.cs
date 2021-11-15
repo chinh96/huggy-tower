@@ -693,8 +693,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             var cacheDamage = Damage;
             if (_flagAttack)
             {
-                _cacheTarget.OnBeingAttacked();
                 _cacheTarget.CheckTurkey();
+                _cacheTarget.OnBeingAttacked();
 
                 if (_cacheTarget as EnemyGoblin || _cacheTarget as EnemyKappa)
                 {

@@ -21,11 +21,11 @@ public class TGTurkey : MonoBehaviour
     {
         TGDatas.TotalTurkeyText++;
         Vector3 endValue = tGTurkeyTotal.Target.transform.position;
-        transform.DOScale(Vector3.one * 1.5f, Duration / 2).OnComplete(() =>
+        transform.DOScale(Vector3.one * 1.5f, .25f).OnComplete(() =>
         {
-            transform.DOScale(Vector3.one, Duration / 2).OnComplete(() =>
+            transform.DOScale(Vector3.one, .25f).OnComplete(() =>
             {
-                transform.DOJump(endValue, JumpPower, 0, Duration).OnComplete(() => Destroy(gameObject));
+                transform.DOJump(endValue, JumpPower, 0, .5f).OnComplete(() => Destroy(gameObject));
             });
         });
         SoundController.Instance.PlayOnce(SoundType.TurkeyJump);
