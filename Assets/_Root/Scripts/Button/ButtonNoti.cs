@@ -79,6 +79,20 @@ public class ButtonNoti : MonoBehaviour
                     hasNoti = DateTime.Parse(LuckySpinDatas.LuckySpinTimeStart).AddMinutes(10) < DateTime.Now;
                 }
                 break;
+            case NotiType.ThanksGiving:
+                if (HomeController.Instance != null && Data.FirstOpenRescuePartyInHome)
+                {
+                    hasNoti = true;
+                }
+                else if (GameController.Instance != null && Data.FirstOpenRescuePartyInGame)
+                {
+                    hasNoti = true;
+                }
+                else
+                {
+                    hasNoti = ResourcesController.SkinsTG.Exists(data => data.HasNotiTG);
+                }
+                break;
         }
 
         if (noti != null)

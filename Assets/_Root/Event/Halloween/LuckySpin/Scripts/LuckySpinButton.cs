@@ -12,7 +12,7 @@ public class LuckySpinButton : MonoBehaviour
 
     public void OnClick()
     {
-        AnalyticController.LogEvent(LuckySpinConstants.CLICK_LUCKY_SPIN, new Firebase.Analytics.Parameter[] { });
+        AnalyticController.LogEvent(LuckySpinConstants.CLICK_LUCKY_SPIN);
         PopupController.Instance.Show<LuckySpinPopup>();
     }
 }

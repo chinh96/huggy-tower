@@ -12,7 +12,9 @@ public class LoadingController : MonoBehaviour
     [SerializeField] private Ease ease;
     [SerializeField] private Image progressNormal;
     [SerializeField] private Image progressHalloween;
+    [SerializeField] private Image progressTG;
     [SerializeField] private GameObject backgroundHalloween;
+    [SerializeField] private GameObject backgroundTG;
     [SerializeField] private CanvasScaler canvasScaler;
 
     private Image progress;
@@ -23,6 +25,11 @@ public class LoadingController : MonoBehaviour
         {
             backgroundHalloween.SetActive(true);
             progress = progressHalloween;
+        }
+        else if (TGDatas.IsInTG)
+        {
+            backgroundTG.SetActive(true);
+            progress = progressTG;
         }
         else
         {

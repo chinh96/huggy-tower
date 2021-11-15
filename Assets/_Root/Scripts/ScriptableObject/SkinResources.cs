@@ -127,6 +127,28 @@ public class SkinData
         }
     }
 
+    public bool HasNotiTG
+    {
+        get
+        {
+            if (!IsUnlocked)
+            {
+                if (TGType == TGType.Top100)
+                {
+                    return false;
+                }
+                else
+                {
+                    return TGDatas.TotalTurkey >= NumberTurkeyTarget;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
     public bool IsUnlocked
     {
         get

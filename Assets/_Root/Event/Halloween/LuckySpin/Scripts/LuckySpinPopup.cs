@@ -168,6 +168,7 @@ public class LuckySpinPopup : Popup
 
     public void OnClickFree()
     {
+        AnalyticController.LogEvent(LuckySpinConstants.CLICK_FREE_LUCKY_SPIN);
         AdController.Instance.ShowRewardedAd(() =>
         {
             OnSpin();

@@ -10,8 +10,15 @@ public class TGTurkeyTotal : MonoBehaviour
 
     private void Awake()
     {
-        EventController.TurkeyTotalTextChanged += UpdateTurkeyText;
-        UpdateTurkeyText();
+        if (TGDatas.IsInTG)
+        {
+            EventController.TurkeyTotalTextChanged += UpdateTurkeyText;
+            UpdateTurkeyText();
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private void UpdateTurkeyText()

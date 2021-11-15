@@ -8,6 +8,7 @@ public class TGTurkey : MonoBehaviour
     public float Duration = .5f;
     public Ease Ease = Ease.InBack;
     public float JumpPower = 4f;
+    public ParticleSystem FX;
 
     private TGTurkeyTotal tGTurkeyTotal;
 
@@ -20,8 +21,14 @@ public class TGTurkey : MonoBehaviour
     {
         TGDatas.TotalTurkeyText++;
         Vector3 endValue = tGTurkeyTotal.Target.transform.position;
-        transform.DOJump(endValue, JumpPower, 0, Duration).SetEase(Ease).OnComplete(() => Destroy(gameObject));
-        transform.DOScale(Vector3.one, Duration);
+        transform.DOScale(Vector3.one * 1.5f, Duration / 2).OnComplete(() =>
+        {
+            transform.DOScale(Vector3.one, Duration / 2).OnComplete(() =>
+            {
+                transform.DOJump(endValue, JumpPower, 0, Duration).OnComplete(() => Destroy(gameObject));
+            });
+        });
         SoundController.Instance.PlayOnce(SoundType.TurkeyJump);
+        FX.Play();
     }
 }

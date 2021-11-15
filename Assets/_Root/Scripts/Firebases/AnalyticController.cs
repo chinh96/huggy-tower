@@ -179,6 +179,11 @@ public static class AnalyticController
         FirebaseAnalytics.LogEvent(name, param);
     }
 
+    public static void LogEvent(string name)
+    {
+        FirebaseAnalytics.LogEvent(name, new Firebase.Analytics.Parameter[] { });
+    }
+
 
     #region adjust
 

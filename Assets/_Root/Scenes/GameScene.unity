@@ -349,7 +349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &92741346
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4902,6 +4902,28 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8857227695453596872, guid: 631b46e9ccc3e8f4fab634991129e9a3, type: 3}
   m_PrefabInstance: {fileID: 888625423}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &888625425 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4246459816002103580, guid: 631b46e9ccc3e8f4fab634991129e9a3, type: 3}
+  m_PrefabInstance: {fileID: 888625423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &888625426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888625425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 084cad10cccb96742a20792b7407a581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 3
+  ease: 26
+  duration: 0.5
+  offset: 400
+  delay: 0.1
 --- !u!1 &889828139
 GameObject:
   m_ObjectHideFlags: 0
@@ -12256,6 +12278,7 @@ MonoBehaviour:
   - {fileID: 1453136550}
   - {fileID: 1952544410}
   - {fileID: 4043514245523448172}
+  - {fileID: 888625426}
   opacity: {fileID: 1876263557}
   LeanTouch: {fileID: 1954604932}
   rescuePartyButton: {fileID: 4043514245523448169}

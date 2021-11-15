@@ -19,7 +19,8 @@ public enum NotiType
     Leaderboard,
     AchievementDailyQuest,
     RescueParty,
-    LuckySpin
+    LuckySpin,
+    ThanksGiving
 }
 
 public enum EGameState
