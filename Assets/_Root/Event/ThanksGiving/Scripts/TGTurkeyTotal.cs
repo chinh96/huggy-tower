@@ -28,6 +28,8 @@ public class TGTurkeyTotal : MonoBehaviour
 
     public void ShowTGPopup()
     {
+        Data.FirstOpenRescuePartyInGame = false;
+        EventController.LuckySpinChanged?.Invoke();
         PopupController.Instance.Show<TGPopup>(null, ShowAction.DoNothing);
     }
 }

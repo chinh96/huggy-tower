@@ -172,7 +172,7 @@ public class TGRankController : Singleton<TGRankController>
     public void UpdateScore(Action action = null)
     {
         Playfab.UpdateScore(
-            Data.TotalGoldMedal,
+            TGDatas.TotalTurkey,
             "THANKSGIVING",
             result => action?.Invoke()
         );

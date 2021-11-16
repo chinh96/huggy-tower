@@ -581,6 +581,7 @@ public class GameController : Singleton<GameController>
 
     private void ShowPopupWin()
     {
+        PopupController.Instance.DismissAll();
         ZoomInCamera();
         PopupController.Instance.Show<WinPopup>();
     }
