@@ -31,14 +31,14 @@ public class TGItem : MonoBehaviour
             claimActiveButton.SetActive(TGDatas.TotalTurkey >= 50 && !IsClaimedGoldEventThanksGiving);
             claimDisableButton.SetActive(TGDatas.TotalTurkey < 50 && !IsClaimedGoldEventThanksGiving);
             iconDone.SetActive(IsClaimedGoldEventThanksGiving);
-            keyLock.SetActive(TGDatas.TotalTurkey >= 50 && !IsClaimedGoldEventThanksGiving);
+            keyLock.SetActive(TGDatas.TotalTurkey < 50 && !IsClaimedGoldEventThanksGiving);
         }
         else if (Type == TGType.Hero)
         {
             claimActiveButton.SetActive(TGDatas.TotalTurkey >= data.NumberTurkeyTarget && !data.IsUnlocked);
             claimDisableButton.SetActive(TGDatas.TotalTurkey < data.NumberTurkeyTarget && !data.IsUnlocked);
             iconDone.SetActive(data.IsUnlocked);
-            keyLock.SetActive(TGDatas.TotalTurkey >= data.NumberTurkeyTarget && !data.IsUnlocked);
+            keyLock.SetActive(TGDatas.TotalTurkey < data.NumberTurkeyTarget && !data.IsUnlocked);
         }
         else if (Type == TGType.Top100)
         {
