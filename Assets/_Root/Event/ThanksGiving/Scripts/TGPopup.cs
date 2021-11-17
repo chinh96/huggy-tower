@@ -7,6 +7,7 @@ public class TGPopup : Popup
 {
     [SerializeField] private List<TGItem> tgItems;
     [SerializeField] private GameObject noti;
+    public CoinGeneration CoinGeneration;
 
     protected override void AfterInstantiate()
     {

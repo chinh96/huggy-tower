@@ -10,7 +10,7 @@ public class TGItem : MonoBehaviour
     [SerializeField] private GameObject iconDone;
 
     private SkinData data;
-    private TGPopup tgRankPopup;
+    private TGPopup tgPopup;
 
     public bool IsClaimedGoldEventThanksGiving
     {
@@ -18,10 +18,10 @@ public class TGItem : MonoBehaviour
         set => Data.SetBool("IsClaimedGoldEventThanksGiving", value);
     }
 
-    public void Init(SkinData data, TGPopup tgRankPopup)
+    public void Init(SkinData data, TGPopup tgPopup)
     {
         this.data = data;
-        this.tgRankPopup = tgRankPopup;
+        this.tgPopup = tgPopup;
     }
 
     public void Reset()
@@ -69,21 +69,30 @@ public class TGItem : MonoBehaviour
     {
         if (Type == TGType.Gold)
         {
-            Data.CoinTotal += 10000;
-            IsClaimedGoldEventThanksGiving = true;
+            var coinTotal = Data.CoinTotal + 10000;
+            tgPopup.CoinGeneration.GenerateCoin(() =>
+            {
+                Data.CoinTotal += 1;
+            },
+            () =>
+            {
+                Data.CoinTotal = coinTotal;
+                IsClaimedGoldEventThanksGiving = true;
+                tgPopup.Reset();
+            });
         }
         else if (Type == TGType.Hero)
         {
             Data.CurrentSkinHero = data.SkinName;
             data.IsUnlocked = true;
+            tgPopup.Reset();
         }
         else if (Type == TGType.Top100)
         {
             Data.CurrentSkinPrincess = data.SkinName;
             Data.CoinTotal += 20000;
             data.IsUnlocked = true;
+            tgPopup.Reset();
         }
-
-        tgRankPopup.Reset();
     }
 }
