@@ -5,6 +5,7 @@ public class TGItem : MonoBehaviour
     public TGType Type;
     [SerializeField] private GameObject claimActiveButton;
     [SerializeField] private GameObject claimDisableButton;
+    [SerializeField] private GameObject keyLock;
 
     [SerializeField] private GameObject iconDone;
 
@@ -30,23 +31,27 @@ public class TGItem : MonoBehaviour
             claimActiveButton.SetActive(TGDatas.TotalTurkey >= 50 && !IsClaimedGoldEventThanksGiving);
             claimDisableButton.SetActive(TGDatas.TotalTurkey < 50 && !IsClaimedGoldEventThanksGiving);
             iconDone.SetActive(IsClaimedGoldEventThanksGiving);
+            keyLock.SetActive(!IsClaimedGoldEventThanksGiving);
         }
         else if (Type == TGType.Hero)
         {
             claimActiveButton.SetActive(TGDatas.TotalTurkey >= data.NumberTurkeyTarget && !data.IsUnlocked);
             claimDisableButton.SetActive(TGDatas.TotalTurkey < data.NumberTurkeyTarget && !data.IsUnlocked);
             iconDone.SetActive(data.IsUnlocked);
+            keyLock.SetActive(!data.IsUnlocked);
         }
         else if (Type == TGType.Top100)
         {
             claimActiveButton.SetActive(false);
             claimDisableButton.SetActive(true);
             iconDone.SetActive(false);
+            keyLock.SetActive(true);
             if (data.IsUnlocked)
             {
                 claimActiveButton.SetActive(false);
                 claimDisableButton.SetActive(false);
                 iconDone.SetActive(true);
+                keyLock.SetActive(false);
             }
             else if (TGDatas.IsAfter5Days)
             {
