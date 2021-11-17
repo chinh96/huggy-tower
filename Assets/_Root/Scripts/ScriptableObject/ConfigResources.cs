@@ -14,5 +14,4 @@ public class ConfigResources : ScriptableObject
     public bool EnableTest;
     public int LevelShowRate;
     public FighterOverlay FighterOverlay;
-    public int NumberCandy;
 }
