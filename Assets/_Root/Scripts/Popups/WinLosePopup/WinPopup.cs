@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WinPopup : Popup
 {
@@ -8,14 +9,22 @@ public class WinPopup : Popup
     [SerializeField] private GameObject tapToContinueButton;
     [SerializeField] private GameObject claimX5Button;
     [SerializeField] private CoinGeneration coinGeneration;
-
+    [SerializeField] private Image iconCrossAds;
+    [SerializeField]private Sprite[] imgIconCrossAds;
+   
+    private string[] UrlData = new string [2]{"market://details?id=com.gamee.savethehero","market://details?id=com.gamee.heropyramid"};
+    private int idCrossCurrent = 0;
     protected override void BeforeShow()
     {
+
         base.BeforeShow();
 
         claimX5Button.SetActive(true);
         tapToContinueButton.SetActive(false);
         progressGift.Reset();
+
+        idCrossCurrent = idCrossCurrent == 0 ? 1:0;
+        iconCrossAds.sprite = imgIconCrossAds[idCrossCurrent];
     }
 
     protected override void AfterShown()
@@ -62,7 +71,8 @@ public class WinPopup : Popup
     public void OnClickCrossAdsFishPin()
     {
 #if UNITY_ANDROID
-        Application.OpenURL("market://details?id=com.gamee.savethehero");
+        // Application.OpenURL("market://details?id=com.gamee.savethehero");
+         Application.OpenURL(UrlData[idCrossCurrent]);
 #else
         // Application.OpenURL("itms-apps://itunes.apple.com/app/id1562329957");
 #endif
