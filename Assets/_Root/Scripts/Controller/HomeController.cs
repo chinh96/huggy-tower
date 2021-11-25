@@ -194,4 +194,9 @@ public class HomeController : Singleton<HomeController>
         AnalyticController.ClickButtonHalloween();
         PopupController.Instance.Show<CoomingSoonPopup>();
     }
+
+    public void OnClickDailyEvent()
+    {
+        PopupController.Instance.Show<DailyRewardPopupEvent>();
+    }
 }

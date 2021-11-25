@@ -37,6 +37,8 @@ public class Constants
     public const string DATE_TIME_START = "DATE_TIME_START";
     public const string DATE_TIME_START_RESCUE_PARTY = "DATE_TIME_START_RESCUE_PARTY";
     public const string DAILY_REWARD_CURRENT = "DAILY_REWARD_CURRENT";
+    public const string DAILY_REWARD_EVENT_CURRENT = "DAILY_REWARD_EVENT_CURRENT";
+    public const string LAST_TIME_CLAIM_DAILY_EVENT = "LAST_TIME_CLAIM_DAILY_EVENT";
     public const string PERCENT_PROGRESS_GIFT = "PERCENT_PROGRESS_GIFT";
     public const string WORLD_CURRENT = "WORLD_CURRENT";
     public const string DONE_ONBOARDING = "DONE_ONBOARDING";

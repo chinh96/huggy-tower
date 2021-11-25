@@ -16,6 +16,7 @@ public class ResourcesController : Singleton<ResourcesController>
     [SerializeField] private DailyQuestResources dailyQuest;
     [SerializeField] private LibraryResources library;
     [SerializeField] private CountryResources country;
+    [SerializeField] private DailyRewardEventResources dailyRewardEventResources;
 
     public static SkinResources Hero;
     public static SkinResources Princess;
@@ -28,6 +29,7 @@ public class ResourcesController : Singleton<ResourcesController>
     public static DailyQuestResources DailyQuest;
     public static LibraryResources Library;
     public static CountryResources Country;
+    public static DailyRewardEventResources DailyEventReward;
 
     public static List<SkinData> SkinRescuePartys = new List<SkinData>();
     public static List<SkinData> SkinsTG = new List<SkinData>();
@@ -72,6 +74,7 @@ public class ResourcesController : Singleton<ResourcesController>
         DailyQuest = dailyQuest;
         Library = library;
         Country = country;
+        DailyEventReward = dailyRewardEventResources;
     }
 
     private void Reset()
