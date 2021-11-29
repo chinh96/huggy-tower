@@ -163,4 +163,5 @@ public class SkinData
             Data.IsUnlocked = value;
         }
     }
+    public string FeatureHead;
 }
