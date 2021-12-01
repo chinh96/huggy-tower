@@ -9,6 +9,10 @@ public class DailyRewardPopupEvent : Popup
     [SerializeField] private GameObject containerGird;
     [SerializeField] private CoinGeneration coinGeneration;
     [SerializeField] private GameObject coinTotal;
+    [SerializeField] private GameObject tapGift;
+    [SerializeField] private GameObject tapEvent;
+    [SerializeField] private ToggleButton btnGift;
+    [SerializeField] private ToggleButton btnEvent;
 
     protected override void BeforeShow()
     {
@@ -53,6 +57,7 @@ public class DailyRewardPopupEvent : Popup
         if (cfg.Coin > 0)
         {
             int coinTotal = Data.CoinTotal + cfg.Coin;
+            TGDatas.TotalTurkey += cfg.CandyXmas;
             coinGeneration.GenerateCoin(() =>
             {
                 Data.CoinTotal++;
@@ -61,6 +66,22 @@ public class DailyRewardPopupEvent : Popup
                 Data.CoinTotal = coinTotal;
             }, from, to);
         }
+    }
+
+    public void onClickGift()
+    {
+        this.btnGift.isCheck = true;
+        this.btnEvent.isCheck = false;
+        tapGift.SetActive(true);
+        tapEvent.SetActive(false);
+    }
+
+    public void onClickEvent()
+    {
+        this.btnGift.isCheck = false;
+        this.btnEvent.isCheck = true;
+        tapGift.SetActive(false);
+        tapEvent.SetActive(true);
     }
 
 

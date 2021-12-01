@@ -82,8 +82,8 @@ public class SettingPopup : Popup
     private void SaveUserData()
     {
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
-            {
-                Data = new Dictionary<string, string>()
+        {
+            Data = new Dictionary<string, string>()
                 {
                     {
                         "data_part1",
@@ -98,7 +98,7 @@ public class SettingPopup : Popup
                         $"{Data.CurrentSkinHero}_{Data.CurrentSkinPrincess}_{Data.AchievementNumberCurrent}_{Data.DailyQuestNumberCurrent}_{Data.DailyRewardCurrent}_{Data.CountPlayLevel}"
                     }
                 },
-            },
+        },
             result => { Data.DataVersion++; },
             error =>
             {
@@ -220,7 +220,7 @@ public class SettingPopup : Popup
                                 string universe = dataPart3[2];
                                 string achievement = dataPart3[3];
                                 string achievementTarget = dataPart3[4];
-                                
+
                                 ResourcesController.Hero.TransformTargetData(hero);
                                 ResourcesController.Princess.TransformTargetData(princess);
                                 ResourcesController.Universe.TransformData(universe);
@@ -241,7 +241,7 @@ public class SettingPopup : Popup
                             }
 
 
-                            
+
                             SetActiveBlock(true);
 
                             var coins = GameObject.FindObjectsOfType<CoinTotal>();
@@ -249,13 +249,13 @@ public class SettingPopup : Popup
                             {
                                 coins[i].UpdateCoinText();
                             }
-                            
+
                             var levels = GameObject.FindObjectsOfType<LevelText>();
                             for (int i = 0; i < levels.Length; i++)
                             {
                                 levels[i].ChangeLevel();
                             }
-                            
+
                             // re calculate list level
                             var go = await DataBridge.Instance.GetLevel(Data.CurrentLevel);
                             if (go.Item1 != null)

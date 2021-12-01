@@ -9,6 +9,7 @@ public class SkinPopup : Popup
     [SerializeField] private Transform content;
     [SerializeField] private SkinRow skinRow;
     [SerializeField] private SkeletonGraphic character;
+    private SubjectSkinChange m_subjectSkinChange;
 
     private SkinResources skinResources;
 
@@ -29,6 +30,11 @@ public class SkinPopup : Popup
         }
 
         EventController.SkinPopupReseted += Reset;
+
+        if (!m_subjectSkinChange)
+        {
+            m_subjectSkinChange = character.GetComponent<SubjectSkinChange>();
+        }
     }
 
     protected override void AfterInstantiate()
@@ -81,9 +87,10 @@ public class SkinPopup : Popup
         });
     }
 
-    public void ChangeCharacterSkin(string skinName)
+    public void ChangeCharacterSkin(SkinData skinData)
     {
-        character.ChangeSkin(skinName, eUnitType);
+        m_subjectSkinChange.Next(skinData);
+        character.ChangeSkin(skinData.SkinName, eUnitType);
     }
 
     public void ResetDock()

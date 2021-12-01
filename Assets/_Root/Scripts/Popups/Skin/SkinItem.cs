@@ -29,15 +29,29 @@ public class SkinItem : MonoBehaviour
     private SkinData skinData;
     private SkinPopup skinPopup;
 
+    private SubjectSkinChange m_subjectSkinChange;
+
     public void Init(SkinData skinData, SkinPopup skinPopup)
     {
         this.skinData = skinData;
         this.skinPopup = skinPopup;
+
+
+    }
+    private void Start()
+    {
+        m_subjectSkinChange = GetComponentInChildren<SubjectSkinChange>();
+        if (m_subjectSkinChange != null)
+        {
+            m_subjectSkinChange.Next(skinData);
+        }
+
     }
 
     public void Reset()
     {
         skeletonGraphic.ChangeSkin(skinData.SkinName, skinPopup.EUnitType);
+
 
         cost.text = skinData.Coin.ToString();
         costDisable.text = skinData.Coin.ToString();
@@ -129,9 +143,21 @@ public class SkinItem : MonoBehaviour
 
         if (skinData.SkinName == currentSkinName)
         {
-            SetActiveDock(true);
-            SetActiveUsedLabel(true);
-            SetActiveFX(true);
+            if (Data.currentSkinHeroId == "")
+            {
+                SetActiveDock(true);
+                SetActiveUsedLabel(true);
+                SetActiveFX(true);
+            }
+            else
+            {
+                if (Data.currentSkinHeroId == skinData.Id)
+                {
+                    SetActiveDock(true);
+                    SetActiveUsedLabel(true);
+                    SetActiveFX(true);
+                }
+            }
         }
     }
 
@@ -241,6 +267,7 @@ public class SkinItem : MonoBehaviour
         {
             case EUnitType.Hero:
                 Data.CurrentSkinHero = skinData.SkinName;
+                Data.currentSkinHeroId = skinData.Id;
                 break;
             case EUnitType.Princess:
                 Data.CurrentSkinPrincess = skinData.SkinName;
@@ -257,7 +284,7 @@ public class SkinItem : MonoBehaviour
             SetActiveUsedLabel(true);
         }
 
-        skinPopup.ChangeCharacterSkin(skinData.SkinName);
+        skinPopup.ChangeCharacterSkin(skinData);
 
         skinPopup.ResetDock();
         SetActiveDock(true);

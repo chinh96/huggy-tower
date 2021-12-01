@@ -8,10 +8,12 @@ public class CurrentSkin : MonoBehaviour
     [SerializeField] private EUnitType eUnitType;
     [SerializeField] private SkeletonGraphic character;
 
+    private SubjectSkinChange m_subjectSkinChange;
+
     private void Start()
     {
+        m_subjectSkinChange = transform.GetComponent<SubjectSkinChange>();
         ChangeCurrentSkin();
-
         switch (eUnitType)
         {
             case EUnitType.Hero:
@@ -34,6 +36,8 @@ public class CurrentSkin : MonoBehaviour
                 character.ChangeSkin(Data.CurrentSkinPrincess, eUnitType);
                 break;
         }
+        var SkinData = ResourcesController.Hero.GetSkinDataById(Data.currentSkinHeroId);
+        if (SkinData != null) m_subjectSkinChange.Next(SkinData);
     }
 
     public void ChangeCurrentSkin(string skinName)

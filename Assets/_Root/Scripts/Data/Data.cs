@@ -41,11 +41,36 @@ public static class Data
 
     public static string CurrentSkinHero
     {
-        get => GetString(Constants.CURRENT_SKIN_HERO, ResourcesController.Hero.SkinDefault.SkinName);
+        get
+        {
+
+            var _skinName = GetString(Constants.CURRENT_SKIN_HERO, ResourcesController.Hero.SkinDefault.SkinName);
+            // var splitSkin = _skinName.Split('_');
+
+
+            return _skinName;
+        }
         set
         {
             SetString(Constants.CURRENT_SKIN_HERO, value);
             EventController.CurrentSkinHeroChanged?.Invoke();
+        }
+    }
+
+    public static string currentSkinHeroId
+    {
+        get
+        {
+
+            var _skinid = GetString(Constants.CURRENT_SKIN_HERO_Id, "");
+            // var splitSkin = _skinName.Split('_');
+
+
+            return _skinid;
+        }
+        set
+        {
+            SetString(Constants.CURRENT_SKIN_HERO_Id, value);
         }
     }
 

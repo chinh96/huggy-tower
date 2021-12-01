@@ -124,7 +124,8 @@ public enum SkinType
     Giftcode,
     RescueParty,
     TGLuckySpin,
-    ThanksGiving
+    ThanksGiving,
+    Noel,
 }
 
 public enum SoundType

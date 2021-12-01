@@ -8,14 +8,15 @@ public class FeatureHeadSkin : MonoBehaviour, IObserver<SkinData>
     // Start is called before the first frame update
     private IDisposable cancellation;
     [SerializeField] private SkeletonGraphic skeleton;
-
+    [SerializeField] private SubjectSkinChange provider;
     public virtual void Subscribe(SubjectSkinChange provider)
     {
         cancellation = provider.Subscribe(this);
     }
     public virtual void Unsubscribe()
     {
-        cancellation.Dispose();
+        if (cancellation != null)
+            cancellation.Dispose();
     }
 
     public virtual void OnCompleted()
@@ -41,15 +42,18 @@ public class FeatureHeadSkin : MonoBehaviour, IObserver<SkinData>
     }
 
 
-    void Start()
+    void OnEnable()
     {
-        var provider = transform.GetComponent<SubjectSkinChange>();
-        Subscribe(provider);
+        if (!provider) provider = transform.GetComponent<SubjectSkinChange>();
+        if (provider != null)
+            Subscribe(provider);
     }
     private void OnDestroy()
     {
         Unsubscribe();
     }
+
+
 
 
 

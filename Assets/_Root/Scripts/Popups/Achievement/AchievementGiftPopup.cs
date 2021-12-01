@@ -28,6 +28,7 @@ public class AchievementGiftPopup : Popup
     public void OnClickClaimButton()
     {
         Data.CurrentSkinHero = skinData.SkinName;
+        Data.currentSkinHeroId = skinData.Id;
         Close();
     }
 }

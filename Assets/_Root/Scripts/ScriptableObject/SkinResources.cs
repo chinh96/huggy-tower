@@ -12,6 +12,8 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
     public SkeletonDataAsset SkeletonDataAsset => skeletonDataAsset;
 
     public List<SkinData> SkinDatas;
+
+    public List<SkinData> SkinsHaveFeature;
     [SerializeField, SpineSkin] private string skinNameDefault;
 
     public SkinData SkinDefault => SkinDatas.Find(item => item.SkinName == skinNameDefault);
@@ -80,6 +82,16 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
         {
             SkinDatas[i].IsUnlocked = bool.Parse(result[i].ToLower());
         }
+    }
+    public SkinData GetSkinDataById(string skinId)
+    {
+        for (int i = 0; i < SkinDatas.Count; i++)
+        {
+            var item = SkinDatas[i];
+            if (item.Id == skinId)
+                return item;
+        }
+        return null;
     }
 }
 

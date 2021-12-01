@@ -20,10 +20,11 @@ public class GiftPopup : Popup
         AdController.Instance.ShowRewardedAd(() =>
         {
             Data.CurrentSkinHero = Data.SkinGift.SkinName;
+            Data.currentSkinHeroId = Data.SkinGift.Id;
             Data.SkinGift.IsUnlocked = true;
             GameController.Instance.Player.ChangeSword();
             Close();
-            
+
             AnalyticController.AdjustLogEventClaimGiftProcessWinLevel();
         });
     }

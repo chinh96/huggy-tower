@@ -21,6 +21,7 @@ public class Constants
     public const string CURRENT_LEVEL = "CURRENT_LEVEL";
     public const string MAX_LEVEL = "MAX_LEVEL";
     public const string CURRENT_SKIN_HERO = "CURRENT_SKIN_HERO";
+    public const string CURRENT_SKIN_HERO_Id = "CURRENT_SKIN_HERO_Id";
     public const string CURRENT_SKIN_PRINCESS = "CURRENT_SKIN_PRINCESS";
     public const string SOUND_STATE = "SOUND_STATE";
     public const string MUSIC_STATE = "MUSIC_STATE";

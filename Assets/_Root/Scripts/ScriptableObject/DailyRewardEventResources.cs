@@ -9,6 +9,8 @@ public class DailyRewardEventResources : ScriptableObject
     // Start is called before the first frame update
     public List<ItemConfigEvent> DailyRewards;
 
+    public List<ItemConfigCollectEvent> EventCollectRewards;
+
     // public List<int> DailyRewardsLoop;
 
     // public List<int> DailyRewardsSkin;
@@ -17,9 +19,19 @@ public class DailyRewardEventResources : ScriptableObject
 }
 
 [Serializable]
-public class ItemConfigEvent {
+public class ItemConfigEvent
+{
     public int Coin;
     public int CandyXmas;
     public int SkinId;
 
 }
+[Serializable]
+public class ItemConfigCollectEvent
+{
+    public int NumCandyXmas;
+    public int SkinId;
+    public bool isSkinPrincess;
+}
+
+

@@ -5,7 +5,7 @@ using System;
 
 public class SubjectSkinChange : MonoBehaviour, IObservable<SkinData>
 {
-    private List<IObserver<SkinData>> observers;
+    private List<IObserver<SkinData>> observers = new List<IObserver<SkinData>>();
     private List<SkinData> flights;
     public IDisposable Subscribe(IObserver<SkinData> observer)
     {

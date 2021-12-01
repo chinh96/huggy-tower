@@ -18,6 +18,8 @@ public class DailyRewardEventItem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dayText;
     [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private TextMeshProUGUI textHero;
+    [SerializeField] private TextMeshProUGUI textCandy;
+
     [SerializeField] private Image coinIcon;
     [SerializeField] private GameObject doneIcon;
     [SerializeField] private SkeletonGraphic hero;
@@ -29,6 +31,8 @@ public class DailyRewardEventItem : MonoBehaviour
     [SerializeField] private Sprite spriteCoinClaimed;
     [SerializeField] private Sprite spriteCoinCurrent;
     [SerializeField] private Sprite spriteCoinNotClaimed;
+
+    [SerializeField] private GameObject bgShadownCover;
     public delegate void onClickHandle(int day, ItemConfigEvent cfg, GameObject my);
     private onClickHandle clickCallBack;
     private ItemConfigEvent cfg;
@@ -44,6 +48,7 @@ public class DailyRewardEventItem : MonoBehaviour
         SetCoin(configEvent.Coin);
         SetStateItem(stateClaim);
         SetSkin(configEvent.SkinId);
+        setTextCandy(configEvent.CandyXmas);
     }
     void SetTextDay(string text)
     {
@@ -56,9 +61,27 @@ public class DailyRewardEventItem : MonoBehaviour
         SetTextDay((day + 1).ToString());
     }
 
+    void setTextCandy(int candyXmas)
+    {
+        if (candyXmas > 0)
+        {
+            textCandy.gameObject.SetActive(true);
+            setTextCandy("+" + candyXmas);
+        }
+        else
+        {
+            textCandy.gameObject.SetActive(false);
+        }
+    }
+
     void SetTextCoin(string text)
     {
         coinText.text = text;
+    }
+
+    void setTextCandy(string text)
+    {
+        textCandy.text = text;
     }
 
     void SetCoin(int coin)
@@ -99,25 +122,27 @@ public class DailyRewardEventItem : MonoBehaviour
     {
         this._stateClaim = stateClaim;
         doneIcon.SetActive(false);
+        bgShadownCover.SetActive(false);
         switch (stateClaim)
         {
             case StateClaimDailyEvent.CLAIMED:
                 doneIcon.SetActive(true);
-                background.sprite = spriteCoinClaimed;
+                bgShadownCover.SetActive(true);
+                // background.sprite = spriteCoinClaimed;
                 claimButton.SetActive(false);
                 claimPendingButton.SetActive(false);
                 claimDisableButton.SetActive(true);
                 break;
             case StateClaimDailyEvent.WAITING_CLAIM:
                 // doneIcon.SetActive(false);
-                background.sprite = spriteCoinNotClaimed;
+                // background.sprite = spriteCoinNotClaimed;
                 claimButton.SetActive(false);
                 claimPendingButton.SetActive(true);
                 claimDisableButton.SetActive(false);
                 break;
             case StateClaimDailyEvent.CAN_CLAIM:
                 // doneIcon.SetActive(false);
-                background.sprite = spriteCoinCurrent;
+                // background.sprite = spriteCoinCurrent;
                 claimButton.SetActive(true);
                 claimPendingButton.SetActive(false);
                 claimDisableButton.SetActive(false);
