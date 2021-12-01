@@ -66,7 +66,7 @@ public class ItemEventNoel : MonoBehaviour
                 // background.sprite = spriteCoinNotClaimed;
                 claimActiveButton.SetActive(false);
 
-                claimDisableButton.SetActive(false);
+                claimDisableButton.SetActive(true);
                 break;
             case StateClaimDailyEvent.CAN_CLAIM:
                 // doneIcon.SetActive(false);
