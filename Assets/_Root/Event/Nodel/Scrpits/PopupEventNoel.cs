@@ -6,6 +6,7 @@ public class PopupEventNoel : MonoBehaviour
 {
     [SerializeField]
     private List<ItemEventNoel> ListItem;
+    [SerializeField] private GameObject noti;
     private void Start()
     {
         InitData();
@@ -17,10 +18,43 @@ public class PopupEventNoel : MonoBehaviour
         {
             var itemData = data[i];
             var itemEvent = ListItem[i];
-            itemEvent.InitItemEventNoel(StateClaimDailyEvent.WAITING_CLAIM, itemData, (e, gameObject) =>
+            var state = GetStateItem(itemData.NumCandyXmas, itemData.Id);
+            itemEvent.InitItemEventNoel(state, itemData, (e, gameObject) =>
               {
-
+                  var dataSkin = ResourcesController.Hero.SkinDatas[e.SkinId];
+                  dataSkin.IsUnlocked = true;
               });
         }
+    }
+
+    private StateClaimDailyEvent GetStateItem(int sockXMmas, string idItem)
+    {
+        if (sockXMmas > TGDatas.TotalTurkey)
+            return StateClaimDailyEvent.WAITING_CLAIM;
+        if (sockXMmas < TGDatas.TotalTurkey)
+        {
+            for (int i = 0; i < TGDatas.ClaimedItems.Length; i++)
+            {
+                var id = TGDatas.ClaimedItems[i];
+                if (idItem == id) return StateClaimDailyEvent.CLAIMED;
+            }
+            return StateClaimDailyEvent.CAN_CLAIM;
+        }
+
+        return StateClaimDailyEvent.WAITING_CLAIM;
+    }
+    public void ShowTGRankPopup()
+    {
+        Data.ClickedTop100Button = true;
+        CheckNoti();
+        TGRankController.Instance.Show();
+    }
+    private void CheckNoti()
+    {
+        noti.SetActive(!Data.ClickedTop100Button);
+    }
+    void onClickClaimCallBack()
+    {
+
     }
 }

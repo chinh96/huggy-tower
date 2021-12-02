@@ -21,6 +21,7 @@ public class DailyRewardEventItem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textCandy;
 
     [SerializeField] private Image coinIcon;
+    [SerializeField] private Image candyIcon;
     [SerializeField] private GameObject doneIcon;
     [SerializeField] private SkeletonGraphic hero;
     [SerializeField] private GameObject claimButton;
@@ -65,11 +66,13 @@ public class DailyRewardEventItem : MonoBehaviour
     {
         if (candyXmas > 0)
         {
+            candyIcon.gameObject.SetActive(true);
             textCandy.gameObject.SetActive(true);
             setTextCandy("+" + candyXmas);
         }
         else
         {
+            candyIcon.gameObject.SetActive(false);
             textCandy.gameObject.SetActive(false);
         }
     }
@@ -88,12 +91,14 @@ public class DailyRewardEventItem : MonoBehaviour
     {
         if (coin > 0)
         {
+            coinIcon.gameObject.SetActive(true);
             textHero.gameObject.SetActive(false);
             coinText.gameObject.SetActive(true);
             SetTextCoin($"{coin}");
         }
         else
         {
+            coinIcon.gameObject.SetActive(false);
             coinText.gameObject.SetActive(false);
         }
 
@@ -137,8 +142,8 @@ public class DailyRewardEventItem : MonoBehaviour
                 // doneIcon.SetActive(false);
                 // background.sprite = spriteCoinNotClaimed;
                 claimButton.SetActive(false);
-                claimPendingButton.SetActive(true);
-                claimDisableButton.SetActive(false);
+                // claimPendingButton.SetActive(true);
+                claimDisableButton.SetActive(true);
                 break;
             case StateClaimDailyEvent.CAN_CLAIM:
                 // doneIcon.SetActive(false);

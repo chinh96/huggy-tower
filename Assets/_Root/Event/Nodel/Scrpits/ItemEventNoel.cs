@@ -43,6 +43,13 @@ public class ItemEventNoel : MonoBehaviour
         textSock.text = text;
     }
 
+    public void OnClickClaim()
+    {
+        clickCallBack(cfg, gameObject);
+        SetStateItem(StateClaimDailyEvent.CLAIMED);
+    }
+
+
 
 
 
@@ -60,6 +67,10 @@ public class ItemEventNoel : MonoBehaviour
                 claimActiveButton.SetActive(false);
 
                 claimDisableButton.SetActive(true);
+                if (keyLock)
+                {
+                    keyLock.SetActive(false);
+                }
                 break;
             case StateClaimDailyEvent.WAITING_CLAIM:
                 // doneIcon.SetActive(false);
@@ -71,6 +82,10 @@ public class ItemEventNoel : MonoBehaviour
             case StateClaimDailyEvent.CAN_CLAIM:
                 // doneIcon.SetActive(false);
                 // background.sprite = spriteCoinCurrent;
+                if (keyLock)
+                {
+                    keyLock.SetActive(false);
+                }
                 claimActiveButton.SetActive(true);
 
                 claimDisableButton.SetActive(false);

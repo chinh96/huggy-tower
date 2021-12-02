@@ -57,7 +57,8 @@ public class DailyRewardPopupEvent : Popup
         if (cfg.Coin > 0)
         {
             int coinTotal = Data.CoinTotal + cfg.Coin;
-            TGDatas.TotalTurkey += cfg.CandyXmas;
+            TGDatas.TotalTurkeyText += cfg.CandyXmas;
+            TGDatas.TotalTurkey = TGDatas.TotalTurkeyText;
             coinGeneration.GenerateCoin(() =>
             {
                 Data.CoinTotal++;

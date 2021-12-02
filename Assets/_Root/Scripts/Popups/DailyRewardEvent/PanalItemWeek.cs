@@ -21,11 +21,17 @@ public class PanalItemWeek : MonoBehaviour
     public void InitDataWeek(int week, List<ItemConfigEvent> weekData, DailyRewardEventItem.onClickHandle clickcb)
     {
         int i = 0;
-        for (i = 0; i < weekData.Count && i < 6; i++)
+        bool isHave = false;
+        for (i = 0; i < weekData.Count; i++)
         {
 
             Transform item;
             var itemCfg = weekData[i];
+            if (itemCfg.SkinId != 0)
+            {
+                isHave = true;
+                continue;
+            }
             int day = i + 7 * week;
             if (i < containerGrid.transform.childCount)
                 item = containerGrid.transform.GetChild(i);
@@ -38,9 +44,9 @@ public class PanalItemWeek : MonoBehaviour
             StateClaimDailyEvent state = GetStateItem(day, Data.DailyRewardEventCurrent);
             _comp.InitDailyItem(day, state, itemCfg, clickcb);
         }
-        if (weekData.Count >= 7)
+        if (weekData.Count >= 7 && isHave == true)
         {
-            var itemCfg = weekData[weekData.Count - 1];
+            var itemCfg = weekData[7 - 1];
             int day7 = 6 + 7 * week;
             itemDay7.SetActive(true);
             var _comp = itemDay7.GetComponent<DailyRewardEventItem>();
@@ -69,7 +75,7 @@ public class PanalItemWeek : MonoBehaviour
                 return StateClaimDailyEvent.CAN_CLAIM;
             }
             var time = DateTime.Now - DateTime.Parse(Data.lastTimeClaimDailyEvent);
-            if (time.Days > 0)
+            if (time.Hours > 10)
                 return StateClaimDailyEvent.CAN_CLAIM;
         }
         return StateClaimDailyEvent.WAITING_CLAIM;

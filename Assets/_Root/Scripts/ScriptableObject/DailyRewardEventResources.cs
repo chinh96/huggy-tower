@@ -29,9 +29,12 @@ public class ItemConfigEvent
 [Serializable]
 public class ItemConfigCollectEvent
 {
+
+    [GUID] public string Id;
     public int NumCandyXmas;
     public int SkinId;
     public bool isSkinPrincess;
+
 }
 
 
