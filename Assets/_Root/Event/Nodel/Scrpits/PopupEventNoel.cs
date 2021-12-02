@@ -21,7 +21,7 @@ public class PopupEventNoel : MonoBehaviour
             var state = GetStateItem(itemData.NumCandyXmas, itemData.Id);
             itemEvent.InitItemEventNoel(state, itemData, (e, gameObject) =>
               {
-                  TGDatas.ClaimedItems = Util.Add<string[]>(TGDatas.ClaimedItems, e.Id);
+                  TGDatas.ClaimedItems = Util.Add<string>(TGDatas.ClaimedItems, e.Id);
 
                   if (!e.isSkinPrincess)
                   {
