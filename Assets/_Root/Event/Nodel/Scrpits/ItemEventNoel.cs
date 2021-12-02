@@ -25,6 +25,18 @@ public class ItemEventNoel : MonoBehaviour
         this.clickCallBack = clickcb;
         SetStateItem(state);
         setSock(configEvent.NumCandyXmas);
+
+        if (configEvent.NumCandyXmas == -1)
+        {
+            claimActiveButton.SetActive(false);
+            claimDisableButton.SetActive(true);
+            TGRankController.Instance.IsTop100(() =>
+               {
+                   claimActiveButton.SetActive(true);
+                   claimDisableButton.SetActive(false);
+                   keyLock.SetActive(false);
+               });
+        }
     }
     void setSock(int sockXmas)
     {
@@ -92,6 +104,7 @@ public class ItemEventNoel : MonoBehaviour
                 break;
 
         }
+
     }
 
 }

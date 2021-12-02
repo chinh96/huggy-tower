@@ -21,17 +21,32 @@ public class PopupEventNoel : MonoBehaviour
             var state = GetStateItem(itemData.NumCandyXmas, itemData.Id);
             itemEvent.InitItemEventNoel(state, itemData, (e, gameObject) =>
               {
-                  var dataSkin = ResourcesController.Hero.SkinDatas[e.SkinId];
-                  dataSkin.IsUnlocked = true;
+                  TGDatas.ClaimedItems = Util.Add<string[]>(TGDatas.ClaimedItems, e.Id);
+
+                  if (!e.isSkinPrincess)
+                  {
+                      var dataSkin = ResourcesController.Hero.SkinDatas[e.SkinId];
+                      dataSkin.IsUnlocked = true;
+                  }
+                  else
+                  {
+                      var dataSkin = ResourcesController.Princess.SkinDatas[e.SkinId];
+                      dataSkin.IsUnlocked = true;
+                  }
+
               });
         }
     }
 
     private StateClaimDailyEvent GetStateItem(int sockXMmas, string idItem)
     {
+        // if (sockXMmas == -1)
+        // {
+        //     return StateClaimDailyEvent.WAITING_CLAIM;
+        // }
         if (sockXMmas > TGDatas.TotalTurkey)
             return StateClaimDailyEvent.WAITING_CLAIM;
-        if (sockXMmas < TGDatas.TotalTurkey)
+        if (sockXMmas <= TGDatas.TotalTurkey)
         {
             for (int i = 0; i < TGDatas.ClaimedItems.Length; i++)
             {

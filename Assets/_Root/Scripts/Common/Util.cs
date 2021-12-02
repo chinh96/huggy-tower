@@ -185,6 +185,17 @@ public static partial class Util
             return string.Format("{0:00}:{1:00}:{2:00}", distance.Hours, distance.Minutes, distance.Seconds);
         }
     }
+    public static T[] Add<T>(this T[] target, T item)
+    {
+        if (target == null)
+        {
+            //TODO: Return null or throw ArgumentNullException;
+        }
+        T[] result = new T[target.Length + 1];
+        target.CopyTo(result, 0);
+        result[target.Length] = item;
+        return result;
+    }
 
     public static bool NotInternet => Application.internetReachability == NetworkReachability.NotReachable;
 }
