@@ -82,7 +82,7 @@ public class ItemEventNoel : MonoBehaviour
                 // background.sprite = spriteCoinClaimed;
                 claimActiveButton.SetActive(false);
 
-                claimDisableButton.SetActive(true);
+                claimDisableButton.SetActive(false);
                 if (keyLock)
                 {
                     keyLock.SetActive(false);
