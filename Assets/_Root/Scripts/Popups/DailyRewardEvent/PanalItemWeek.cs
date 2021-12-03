@@ -32,7 +32,7 @@ public class PanalItemWeek : MonoBehaviour
                 isHave = true;
                 continue;
             }
-            int day = i + 7 * week;
+            int day = i + 15 * week;
             if (i < containerGrid.transform.childCount)
                 item = containerGrid.transform.GetChild(i);
             else

@@ -6,6 +6,7 @@ using System;
 using Spine.Unity;
 using UnityEngine.UI;
 using I2.Loc;
+
 public enum StateClaimDailyEvent
 {
     CLAIMED = 1,
@@ -36,8 +37,13 @@ public class DailyRewardEventItem : MonoBehaviour
     [SerializeField] private GameObject bgShadownCover;
     public delegate void onClickHandle(int day, ItemConfigEvent cfg, GameObject my);
     private onClickHandle clickCallBack;
+
     private ItemConfigEvent cfg;
     int _day = 0;
+    bool haveCoin = false;
+    bool haveCandy = false;
+
+
     StateClaimDailyEvent _stateClaim;
 
 
@@ -50,16 +56,18 @@ public class DailyRewardEventItem : MonoBehaviour
         SetStateItem(stateClaim);
         SetSkin(configEvent.SkinId);
         setTextCandy(configEvent.CandyXmas);
+        updateUi();
     }
     void SetTextDay(string text)
     {
-        Debug.Log(text + "textDay");
-        dayText.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", text, true);
+
+        dayText.text = text;
+        // dayText.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", text, true);
     }
     void SetDay(int day)
     {
         this._day = day;
-        SetTextDay((day + 1).ToString());
+        SetTextDay("Day " + (day + 1).ToString());
     }
 
     void setTextCandy(int candyXmas)
@@ -69,9 +77,11 @@ public class DailyRewardEventItem : MonoBehaviour
             candyIcon.gameObject.SetActive(true);
             textCandy.gameObject.SetActive(true);
             setTextCandy("+" + candyXmas);
+            haveCandy = true;
         }
         else
         {
+
             candyIcon.gameObject.SetActive(false);
             textCandy.gameObject.SetActive(false);
         }
@@ -95,6 +105,7 @@ public class DailyRewardEventItem : MonoBehaviour
             textHero.gameObject.SetActive(false);
             coinText.gameObject.SetActive(true);
             SetTextCoin($"{coin}");
+            haveCoin = true;
         }
         else
         {
@@ -159,5 +170,26 @@ public class DailyRewardEventItem : MonoBehaviour
     {
         SetStateItem(StateClaimDailyEvent.CLAIMED);
         this.clickCallBack(_day, this.cfg, gameObject);
+    }
+    void updateUi()
+    {
+        if (haveCandy == true && haveCoin == true)
+        {
+            coinIcon.transform.localPosition = new Vector3(-52.4f, -31.7f, 0);
+            candyIcon.transform.localPosition = new Vector3(49f, 0, 0);
+        }
+        else
+        {
+            if (haveCoin == true)
+            {
+                coinIcon.transform.localPosition = new Vector3(0, 10f, 0);
+            }
+            else
+            {
+                candyIcon.transform.localPosition = new Vector3(0, 0, 0);
+            }
+
+
+        }
     }
 }

@@ -19,8 +19,8 @@ public class GiftcodeGiftPopup : Popup
 
     public void OnClickClaimButton()
     {
-        Data.CurrentSkinHero = skinData.SkinName;
         Data.currentSkinHeroId = skinData.Id;
+        Data.CurrentSkinHero = skinData.SkinName;
         skinData.IsUnlocked = true;
         EventController.SkinPopupReseted?.Invoke();
         Close();

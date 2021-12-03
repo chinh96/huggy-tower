@@ -30,12 +30,16 @@ public class ItemEventNoel : MonoBehaviour
         {
             claimActiveButton.SetActive(false);
             claimDisableButton.SetActive(true);
-            TGRankController.Instance.IsTop100(() =>
-               {
-                   claimActiveButton.SetActive(true);
-                   claimDisableButton.SetActive(false);
-                   keyLock.SetActive(false);
-               });
+            if (TGDatas.IsAfter5Days)
+            {
+                TGRankController.Instance.IsTop100(() =>
+                {
+                    claimActiveButton.SetActive(true);
+                    claimDisableButton.SetActive(false);
+                    keyLock.SetActive(false);
+                });
+            }
+
         }
     }
     void setSock(int sockXmas)

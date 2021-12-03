@@ -31,13 +31,13 @@ public class CurrentSkin : MonoBehaviour
         {
             case EUnitType.Hero:
                 character.ChangeSkin(Data.CurrentSkinHero, eUnitType);
+                var SkinData = ResourcesController.Hero.GetSkinDataById(Data.currentSkinHeroId);
+                if (SkinData != null) m_subjectSkinChange.Next(SkinData);
                 break;
             case EUnitType.Princess:
                 character.ChangeSkin(Data.CurrentSkinPrincess, eUnitType);
                 break;
         }
-        var SkinData = ResourcesController.Hero.GetSkinDataById(Data.currentSkinHeroId);
-        if (SkinData != null) m_subjectSkinChange.Next(SkinData);
     }
 
     public void ChangeCurrentSkin(string skinName)

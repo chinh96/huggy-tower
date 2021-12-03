@@ -7,7 +7,7 @@ public class PopupEventNoel : MonoBehaviour
     [SerializeField]
     private List<ItemEventNoel> ListItem;
     [SerializeField] private GameObject noti;
-    private void Start()
+    private void OnEnable()
     {
         InitData();
     }
@@ -37,6 +37,10 @@ public class PopupEventNoel : MonoBehaviour
               });
         }
     }
+    void updateState()
+    {
+
+    }
 
     private StateClaimDailyEvent GetStateItem(int sockXMmas, string idItem)
     {
@@ -44,9 +48,9 @@ public class PopupEventNoel : MonoBehaviour
         // {
         //     return StateClaimDailyEvent.WAITING_CLAIM;
         // }
-        if (sockXMmas > TGDatas.TotalTurkey)
+        if (sockXMmas > TGDatas.TotalTurkeyText)
             return StateClaimDailyEvent.WAITING_CLAIM;
-        if (sockXMmas <= TGDatas.TotalTurkey)
+        if (sockXMmas <= TGDatas.TotalTurkeyText)
         {
             for (int i = 0; i < TGDatas.ClaimedItems.Length; i++)
             {

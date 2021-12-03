@@ -27,12 +27,15 @@ public class FeatureHeadSkin : MonoBehaviour, IObserver<SkinData>
     {
         if (info.FeatureHead != "")
         {
+            if (!skeleton) return;
             skeleton.gameObject.SetActive(true);
-            skeleton.Skeleton.SetSkin(info.FeatureHead);
+            skeleton.ChangeSkin2(info.FeatureHead);
+            // skeleton.Skeleton.SetSkin(info.FeatureHead);
         }
         else
         {
-            skeleton.gameObject.SetActive(false);
+            if (skeleton)
+                skeleton.gameObject.SetActive(false);
         }
 
     }
@@ -48,10 +51,10 @@ public class FeatureHeadSkin : MonoBehaviour, IObserver<SkinData>
         if (provider != null)
             Subscribe(provider);
     }
-    private void OnDestroy()
-    {
-        Unsubscribe();
-    }
+    // private void OnDestroy()
+    // {
+    //     Unsubscribe();
+    // }
 
 
 

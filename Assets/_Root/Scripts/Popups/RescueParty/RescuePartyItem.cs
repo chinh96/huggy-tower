@@ -73,8 +73,8 @@ public class RescuePartyItem : MonoBehaviour
         }
         else
         {
-            Data.CurrentSkinHero = data.SkinName;
             Data.currentSkinHeroId = data.Id;
+            Data.CurrentSkinHero = data.SkinName;
         }
 
         data.IsUnlocked = true;

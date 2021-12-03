@@ -220,7 +220,7 @@ public class SkinItem : MonoBehaviour
 
     public void OnClickButtonTG()
     {
-        PopupController.Instance.Show<TGPopup>(null, ShowAction.DoNothing);
+        PopupController.Instance.Show<DailyRewardPopupEvent>();
     }
 
     public void OnClickButtonTGLuckySpin()
@@ -266,8 +266,8 @@ public class SkinItem : MonoBehaviour
         switch (skinPopup.EUnitType)
         {
             case EUnitType.Hero:
-                Data.CurrentSkinHero = skinData.SkinName;
                 Data.currentSkinHeroId = skinData.Id;
+                Data.CurrentSkinHero = skinData.SkinName;
                 break;
             case EUnitType.Princess:
                 Data.CurrentSkinPrincess = skinData.SkinName;

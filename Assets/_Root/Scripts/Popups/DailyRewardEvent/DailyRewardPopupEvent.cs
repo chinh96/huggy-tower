@@ -13,6 +13,9 @@ public class DailyRewardPopupEvent : Popup
     [SerializeField] private GameObject tapEvent;
     [SerializeField] private ToggleButton btnGift;
     [SerializeField] private ToggleButton btnEvent;
+    [SerializeField] private GameObject totalSock;
+
+    public CoinGeneration TurkeyGeneration;
 
     protected override void BeforeShow()
     {
@@ -23,13 +26,22 @@ public class DailyRewardPopupEvent : Popup
     void InitData()
     {
         var dataConfig = ResourcesController.DailyEventReward.DailyRewards;
-        var numRows = Math.Ceiling(dataConfig.Count / 7f);
-        for (int i = 0; i < numRows; i++)
+        var numRows = Math.Ceiling(dataConfig.Count / 15f);
+
+        for (int i = 0; i < 2; i++)
         {
 
             Transform row;
             int maxCount = 7;
-            if ((i + 1) * 7 > dataConfig.Count) maxCount = dataConfig.Count - i * 7;
+            // if ((i + 1) * 7 > dataConfig.Count) maxCount = dataConfig.Count - i * 15;
+            if (i == 0)
+            {
+                maxCount = 7;
+            }
+            else
+            {
+                maxCount = dataConfig.Count - 7;
+            }
             var dataWeek = dataConfig.GetRange(i * 7, maxCount);
             if (i < containerGird.transform.childCount)
                 row = containerGird.transform.GetChild(i);
@@ -57,8 +69,8 @@ public class DailyRewardPopupEvent : Popup
         if (cfg.Coin > 0)
         {
             int coinTotal = Data.CoinTotal + cfg.Coin;
-            TGDatas.TotalTurkeyText += cfg.CandyXmas;
-            TGDatas.TotalTurkey = TGDatas.TotalTurkeyText;
+            int sockTotal = TGDatas.TotalTurkey + cfg.CandyXmas;
+
             coinGeneration.GenerateCoin(() =>
             {
                 Data.CoinTotal++;
@@ -66,6 +78,18 @@ public class DailyRewardPopupEvent : Popup
             {
                 Data.CoinTotal = coinTotal;
             }, from, to);
+            TurkeyGeneration.SetNumberCoin(cfg.CandyXmas);
+            TurkeyGeneration.GenerateCoin(() =>
+         {
+             TGDatas.TotalTurkeyText++;
+         }, () =>
+            {
+                TGDatas.TotalTurkeyText = sockTotal;
+                TGDatas.TotalTurkey = sockTotal;
+
+
+            },
+            from, totalSock);
         }
     }
 
@@ -83,6 +107,10 @@ public class DailyRewardPopupEvent : Popup
         this.btnEvent.isCheck = true;
         tapGift.SetActive(false);
         tapEvent.SetActive(true);
+    }
+    public virtual void Close()
+    {
+        gameObject.SetActive(false);
     }
 
 

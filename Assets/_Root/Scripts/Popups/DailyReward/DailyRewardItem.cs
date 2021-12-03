@@ -158,8 +158,8 @@ public class DailyRewardItem : MonoBehaviour
     {
         if (isSkin)
         {
-            Data.CurrentSkinHero = skinData.SkinName;
             Data.currentSkinHeroId = skinData.Id;
+            Data.CurrentSkinHero = skinData.SkinName;
             skinData.IsUnlocked = true;
             EventController.SkinPopupReseted?.Invoke();
         }
