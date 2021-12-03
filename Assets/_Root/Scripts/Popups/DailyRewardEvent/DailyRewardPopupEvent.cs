@@ -108,10 +108,7 @@ public class DailyRewardPopupEvent : Popup
         tapGift.SetActive(false);
         tapEvent.SetActive(true);
     }
-    public virtual void Close()
-    {
-        gameObject.SetActive(false);
-    }
+
 
 
 }
