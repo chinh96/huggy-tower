@@ -24,11 +24,6 @@ public class TGButton : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        HomeController.Instance.BackgroundTG.SetActive(isShow);
-    }
-
     public void OnClick()
     {
         PopupController.Instance.Show<TGPopup>();

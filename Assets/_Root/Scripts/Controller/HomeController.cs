@@ -56,6 +56,7 @@ public class HomeController : Singleton<HomeController>
         CheckNewUpdatePopup();
         CheckAchievementDailyQuest();
         CheckRescueParty();
+        CheckTG();
         // CheckLanguage();
     }
 
@@ -68,6 +69,11 @@ public class HomeController : Singleton<HomeController>
 
         ResourcesController.Achievement.CheckCompleteCastle();
         ResourcesController.DailyQuest.CheckCompleteCastle();
+    }
+
+    private void CheckTG()
+    {
+        BackgroundTG.SetActive(TGDatas.IsInTG);
     }
 
     private void CheckRescueParty()

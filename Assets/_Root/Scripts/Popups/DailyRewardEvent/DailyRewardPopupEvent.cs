@@ -21,6 +21,7 @@ public class DailyRewardPopupEvent : Popup
     {
         base.BeforeShow();
         InitData();
+        onClickEvent();
     }
 
     void InitData()

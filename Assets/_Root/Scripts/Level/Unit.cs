@@ -22,6 +22,15 @@ public abstract class Unit : MonoBehaviour, IUnit, IAttack
                 txtDamage.DOCounter(damage, damage, 0);
             }
         }
+
+        if (!TGDatas.IsInTG)
+        {
+            var turkey = GetComponentInChildren<TGTurkey>();
+            if (turkey != null)
+            {
+                Destroy(turkey.gameObject);
+            }
+        }
     }
 
     public GameObject ThisGameObject => gameObject;
