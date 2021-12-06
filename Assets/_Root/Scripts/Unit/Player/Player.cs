@@ -998,12 +998,23 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     string[] attacks = { "Attack", "AttackSword", "AttackSword2" };
                     string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
                     skeleton.Play(attack, false);
+                    var snowExpore = I2.Loc.ResourceManager.pInstance.LoadFromResources<UnityEngine.GameObject>("Prefabs/Effect/Snow_Explosion");
+
 
                     SoundType[] soundTypes = { SoundType.HeroCut, SoundType.HeroCut2, SoundType.HeroCut3 };
                     SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
                     float timeDelay = attack == "AttackSword" ? .5f : 0;
                     DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
+
+                        DOTween.Sequence().SetDelay(.5f).OnComplete(() =>
+                        {
+                            var go = Instantiate(snowExpore);
+                            go.transform.parent = transform;
+                            go.transform.localScale = new Vector3(200, 200, 200);
+                            go.transform.localPosition = new Vector3(243, 19, 0);
+                        });
+
                         SoundController.Instance.PlayOnce(soundType);
                     });
 

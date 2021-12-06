@@ -203,5 +203,7 @@ public static partial class Util
         return result;
     }
 
+
+
     public static bool NotInternet => Application.internetReachability == NetworkReachability.NotReachable;
 }
