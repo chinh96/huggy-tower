@@ -58,8 +58,8 @@ public class TGLuckySpinPopup : Popup
     {
         var timeRemaining = DateTime.Now - DateTime.Parse(TGDatas.LuckySpinTimeStart);
         var totalMinutes = (int)(timeRemaining.TotalMinutes / 10);
-        count = totalMinutes > 2 ? 2 : totalMinutes;
-        CountText.text = $"{count}/2";
+        count = totalMinutes > 1 ? 1 : totalMinutes;
+        CountText.text = $"{count}/1";
         if (count == 0)
         {
             ShowSpinBtn(false);
@@ -81,11 +81,12 @@ public class TGLuckySpinPopup : Popup
             {
                 TGDatas.LuckySpinTimeStart = DateTime.Now.ToString();
             }
-            else if (count == 2)
+            else
+            if (count == 2)
             {
                 TGDatas.LuckySpinTimeStart = DateTime.Now.AddMinutes(-10).ToString();
             }
-            CountText.text = $"{count - 1}/2";
+            CountText.text = $"{count - 1}/1";
 
             EventController.LuckySpinChanged?.Invoke();
         });
@@ -170,6 +171,7 @@ public class TGLuckySpinPopup : Popup
 
     public void OnClickFree()
     {
+        AnalyticController.LogEvent("FreeSpinClick", new Firebase.Analytics.Parameter[] { });
         AdController.Instance.ShowRewardedAd(() =>
         {
             OnSpin();

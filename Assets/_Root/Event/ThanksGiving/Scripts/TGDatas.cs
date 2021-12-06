@@ -28,8 +28,8 @@ public static class TGDatas
         }
     }
 
-    public static TimeSpan TimeToTG => new DateTime(2022, 1, 2, 0, 0, 0) - DateTime.Now;
-    public static bool IsInTG => DateTime.Now > new DateTime(2021, 11, 15, 0, 0, 0) && new DateTime(2022, 1, 2, 0, 0, 0) > DateTime.Now;
+    public static TimeSpan TimeToTG => new DateTime(2022, 1, 15, 0, 0, 0) - DateTime.Now;
+    public static bool IsInTG => DateTime.Now > new DateTime(2021, 11, 15, 0, 0, 0) && new DateTime(2022, 1, 15, 0, 0, 0) > DateTime.Now;
     public static bool IsAfter5Days => (DateTime.Now - new DateTime(2021, 12, 15, 0, 0, 0)).TotalDays > 5;
     public static bool IsAfterTG => DateTime.Now >= new DateTime(2022, 1, 2, 0, 0, 0);
 
