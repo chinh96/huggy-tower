@@ -74,8 +74,12 @@ public class PanalItemWeek : MonoBehaviour
             {
                 return StateClaimDailyEvent.CAN_CLAIM;
             }
-            var time = DateTime.Now - DateTime.Parse(Data.lastTimeClaimDailyEvent);
-            if (time.Hours > 10)
+            var lastDate = DateTime.Parse(Data.lastTimeClaimDailyEvent);
+            bool time = DateTime.Now.Month > lastDate.Month;
+            if (!time)
+                time = DateTime.Now.Day > lastDate.Day;
+
+            if (time)
                 return StateClaimDailyEvent.CAN_CLAIM;
         }
         return StateClaimDailyEvent.WAITING_CLAIM;
