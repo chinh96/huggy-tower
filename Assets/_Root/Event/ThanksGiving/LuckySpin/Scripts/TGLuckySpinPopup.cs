@@ -62,6 +62,14 @@ public class TGLuckySpinPopup : Popup
         var totalMinutes = (int)(timeRemaining.TotalMinutes / 10);
         count = totalMinutes > 1 ? 1 : totalMinutes;
         CountText.text = $"{count}/1";
+        if (count < 0)
+        {
+            count = 0;
+        }
+        if (count > 1)
+        {
+            count = 1;
+        }
         if (count == 0)
         {
             ShowSpinBtn(false);

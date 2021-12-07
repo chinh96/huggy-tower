@@ -204,5 +204,25 @@ public class HomeController : Singleton<HomeController>
     public void OnClickDailyEvent()
     {
         PopupController.Instance.Show<DailyRewardPopupEvent>();
+
+        var data = ResourcesController.DailyEventReward.EventCollectRewards;
+        for (int i = 0; i < data.Count; i++)
+        {
+            var itemData = data[i];
+            checkHaveItem(itemData);
+        }
+    }
+    private void checkHaveItem(ItemConfigCollectEvent item)
+    {
+        for (int i = 0; i < TGDatas.ClaimedItems.Length; i++)
+        {
+            var id = TGDatas.ClaimedItems[i];
+            if (item.Id == id)
+            {
+                var dataSkin = ResourcesController.Hero.SkinDatas[item.SkinId];
+                if (!dataSkin.IsUnlocked)
+                    dataSkin.IsUnlocked = true;
+            }
+        }
     }
 }
