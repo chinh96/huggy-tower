@@ -92,6 +92,10 @@ public class ButtonNoti : MonoBehaviour
                 {
                     hasNoti = ResourcesController.SkinsTG.Exists(data => data.HasNotiTG);
                 }
+                if (Data.CurrentLevel <= 5)
+                {
+                    hasNoti = false;
+                }
                 break;
         }
 
