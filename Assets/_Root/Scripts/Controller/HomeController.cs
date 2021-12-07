@@ -219,9 +219,20 @@ public class HomeController : Singleton<HomeController>
             var id = TGDatas.ClaimedItems[i];
             if (item.Id == id)
             {
-                var dataSkin = ResourcesController.Hero.SkinDatas[item.SkinId];
-                if (!dataSkin.IsUnlocked)
-                    dataSkin.IsUnlocked = true;
+                if (!item.isSkinPrincess)
+                {
+                    var dataSkin = ResourcesController.Hero.SkinDatas[item.SkinId];
+                    if (!dataSkin.IsUnlocked)
+                        dataSkin.IsUnlocked = true;
+                }
+                else
+                {
+                    var dataSkin = ResourcesController.Princess.SkinDatas[item.SkinId];
+                    if (!dataSkin.IsUnlocked)
+                        dataSkin.IsUnlocked = true;
+                }
+
+
             }
         }
     }
