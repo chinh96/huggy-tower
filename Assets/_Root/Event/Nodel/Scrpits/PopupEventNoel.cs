@@ -7,9 +7,17 @@ public class PopupEventNoel : MonoBehaviour
     [SerializeField]
     private List<ItemEventNoel> ListItem;
     [SerializeField] private GameObject noti;
-    private void OnEnable()
+    private bool isInitData = false;
+    private void Start()
     {
         InitData();
+    }
+    private void OnEnable()
+    {
+        if (isInitData)
+        {
+            updateState();
+        }
     }
     void InitData()
     {
@@ -36,10 +44,18 @@ public class PopupEventNoel : MonoBehaviour
 
               });
         }
+        isInitData = true;
     }
     void updateState()
     {
-
+        var data = ResourcesController.DailyEventReward.EventCollectRewards;
+        for (int i = 0; i < data.Count; i++)
+        {
+            var itemData = data[i];
+            var itemEvent = ListItem[i];
+            var state = GetStateItem(itemData.NumCandyXmas, itemData.Id);
+            itemEvent.SetStateItem(state);
+        }
     }
 
     private StateClaimDailyEvent GetStateItem(int sockXMmas, string idItem)

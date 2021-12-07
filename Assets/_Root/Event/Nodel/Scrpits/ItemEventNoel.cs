@@ -71,7 +71,7 @@ public class ItemEventNoel : MonoBehaviour
 
 
 
-    void SetStateItem(StateClaimDailyEvent stateClaim)
+    public void SetStateItem(StateClaimDailyEvent stateClaim)
     {
         this._stateClaim = stateClaim;
         doneIcon.SetActive(false);

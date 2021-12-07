@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class TGLuckySpinPopup : Popup
 {
     public GameObject SpinNowBtn;
+    public GameObject SpinFreeBtn;
     public GameObject CountdownBtn;
     public TextMeshProUGUI CountdownText;
     public SkeletonGraphic SpinSkeleton;
@@ -52,6 +53,7 @@ public class TGLuckySpinPopup : Popup
     {
         SpinNowBtn.SetActive(state);
         CountdownBtn.SetActive(!state);
+        SpinFreeBtn.SetActive(!state);
     }
 
     public void Countdown()
