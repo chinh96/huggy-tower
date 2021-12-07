@@ -35,11 +35,15 @@ public class PopupEventNoel : MonoBehaviour
                   {
                       var dataSkin = ResourcesController.Hero.SkinDatas[e.SkinId];
                       dataSkin.IsUnlocked = true;
+                      Data.currentSkinHeroId = dataSkin.Id;
+                      Data.CurrentSkinHero = dataSkin.SkinName;
+
                   }
                   else
                   {
                       var dataSkin = ResourcesController.Princess.SkinDatas[e.SkinId];
                       dataSkin.IsUnlocked = true;
+                      Data.CurrentSkinPrincess = dataSkin.SkinName;
                   }
 
               });
@@ -60,10 +64,10 @@ public class PopupEventNoel : MonoBehaviour
 
     private StateClaimDailyEvent GetStateItem(int sockXMmas, string idItem)
     {
-        // if (sockXMmas == -1)
-        // {
-        //     return StateClaimDailyEvent.WAITING_CLAIM;
-        // }
+        if (sockXMmas == -1)
+        {
+            return StateClaimDailyEvent.WAITING_CLAIM;
+        }
         if (sockXMmas > TGDatas.TotalTurkeyText)
             return StateClaimDailyEvent.WAITING_CLAIM;
         if (sockXMmas <= TGDatas.TotalTurkeyText)

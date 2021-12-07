@@ -10,6 +10,7 @@ public class ButtonCustom : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public bool canClick = true;
     private bool isMoveEnter = false;
 
+    private Vector3 oldScale = new Vector3();
     public void OnPointerDown(PointerEventData eventData)
     {
         if (canClick)
@@ -22,7 +23,7 @@ public class ButtonCustom : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         if (canClick)
         {
-            transform.localScale = Vector3.one;
+            transform.localScale = oldScale;
             if (isMoveEnter)
             {
                 onClick.Invoke();
@@ -39,5 +40,9 @@ public class ButtonCustom : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public void OnPointerExit(PointerEventData eventData)
     {
         isMoveEnter = false;
+    }
+    private void Start()
+    {
+        oldScale = transform.localScale;
     }
 }
