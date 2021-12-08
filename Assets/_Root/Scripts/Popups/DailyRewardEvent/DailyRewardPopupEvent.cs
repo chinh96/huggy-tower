@@ -62,6 +62,7 @@ public class DailyRewardPopupEvent : Popup
     {
         Data.DailyRewardEventCurrent = day + 1;
         Data.lastTimeClaimDailyEvent = DateTime.Now.ToString();
+        EventController.DailyEventClaim();
         if (cfg.SkinId > 0)
         {
             var dataSkin = ResourcesController.Hero.SkinDatas[cfg.SkinId];

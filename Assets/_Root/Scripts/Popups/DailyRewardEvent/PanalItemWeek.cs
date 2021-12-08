@@ -41,7 +41,7 @@ public class PanalItemWeek : MonoBehaviour
                 item.SetParent(containerGrid.transform);
             }
             var _comp = item.GetComponent<DailyRewardEventItem>();
-            StateClaimDailyEvent state = GetStateItem(day, Data.DailyRewardEventCurrent);
+            StateClaimDailyEvent state = Util.GetStateItemDaily(day, Data.DailyRewardEventCurrent);
             _comp.InitDailyItem(day, state, itemCfg, clickcb);
         }
         if (weekData.Count >= 7 && isHave == true)
@@ -50,7 +50,7 @@ public class PanalItemWeek : MonoBehaviour
             int day7 = 6 + 7 * week;
             itemDay7.SetActive(true);
             var _comp = itemDay7.GetComponent<DailyRewardEventItem>();
-            StateClaimDailyEvent state = GetStateItem(day7, Data.DailyRewardEventCurrent);
+            StateClaimDailyEvent state = Util.GetStateItemDaily(day7, Data.DailyRewardEventCurrent);
             _comp.InitDailyItem(day7, state, itemCfg, clickcb);
         }
         else
@@ -64,26 +64,7 @@ public class PanalItemWeek : MonoBehaviour
         }
 
     }
-    private StateClaimDailyEvent GetStateItem(int day, int currentDay)
-    {
-        if (day > currentDay) return StateClaimDailyEvent.WAITING_CLAIM;
-        if (day < currentDay) return StateClaimDailyEvent.CLAIMED;
-        if (day == currentDay)
-        {
-            if (Data.lastTimeClaimDailyEvent == "")
-            {
-                return StateClaimDailyEvent.CAN_CLAIM;
-            }
-            var lastDate = DateTime.Parse(Data.lastTimeClaimDailyEvent);
-            bool time = DateTime.Now.Month > lastDate.Month;
-            if (!time)
-                time = DateTime.Now.Day > lastDate.Day;
 
-            if (time)
-                return StateClaimDailyEvent.CAN_CLAIM;
-        }
-        return StateClaimDailyEvent.WAITING_CLAIM;
-    }
 
 
 }

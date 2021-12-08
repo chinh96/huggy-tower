@@ -60,8 +60,8 @@ public class TGLuckySpinPopup : Popup
     {
         var timeRemaining = DateTime.Now - DateTime.Parse(TGDatas.LuckySpinTimeStart);
         var totalMinutes = (int)(timeRemaining.TotalMinutes / 10);
-        count = totalMinutes > 1 ? 1 : totalMinutes;
-        CountText.text = $"{count}/1";
+        count = totalMinutes > 2 ? 1 : totalMinutes;
+
         if (count < 0)
         {
             count = 0;
@@ -70,6 +70,7 @@ public class TGLuckySpinPopup : Popup
         {
             count = 1;
         }
+        CountText.text = $"{count}/1";
         if (count == 0)
         {
             ShowSpinBtn(false);

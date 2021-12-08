@@ -12,6 +12,7 @@ public class ButtonNoti : MonoBehaviour
         EventController.LoginLeaderBoard += CheckNoti;
         EventController.MedalTotalChanged += CheckNoti;
         EventController.LuckySpinChanged += CheckNoti;
+        EventController.DailyEventClaim += CheckNoti;
     }
 
     private void OnEnable()
@@ -92,10 +93,20 @@ public class ButtonNoti : MonoBehaviour
                 {
                     hasNoti = ResourcesController.SkinsTG.Exists(data => data.HasNotiTG);
                 }
-                if (Data.CurrentLevel <= 5)
+                var haveTime = Util.GetStateItemDaily(Data.DailyRewardEventCurrent, Data.DailyRewardEventCurrent);
+                if (haveTime == StateClaimDailyEvent.CAN_CLAIM)
+                {
+                    hasNoti = true;
+                }
+                else
                 {
                     hasNoti = false;
                 }
+                // if (Data.CurrentLevel <= 5)
+                // {
+                //     hasNoti = false;
+                // }
+
                 break;
         }
 
@@ -111,5 +122,6 @@ public class ButtonNoti : MonoBehaviour
         EventController.LoginLeaderBoard -= CheckNoti;
         EventController.MedalTotalChanged -= CheckNoti;
         EventController.LuckySpinChanged -= CheckNoti;
+        // EventController.DailyEventClaim -= CheckNoti;
     }
 }

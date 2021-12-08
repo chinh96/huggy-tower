@@ -57,6 +57,7 @@ public class HomeController : Singleton<HomeController>
         CheckAchievementDailyQuest();
         CheckRescueParty();
         CheckTG();
+        checkAllEvent();
         // CheckLanguage();
     }
 
@@ -205,6 +206,10 @@ public class HomeController : Singleton<HomeController>
     {
         PopupController.Instance.Show<DailyRewardPopupEvent>();
 
+    }
+    private void checkAllEvent()
+    {
+        // var haveTime = Util.GetStateItemDaily(Data.DailyRewardEventCurrent, Data.DailyRewardEventCurrent);
         var data = ResourcesController.DailyEventReward.EventCollectRewards;
         for (int i = 0; i < data.Count; i++)
         {

@@ -19,4 +19,5 @@ public static class EventController
     public static Action TurkeyTotalChanged;
     public static Action TurkeyTotalTextChanged;
     public static Action LuckySpinChanged;
+    public static Action DailyEventClaim;
 }

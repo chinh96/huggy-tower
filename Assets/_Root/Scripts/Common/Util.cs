@@ -202,7 +202,26 @@ public static partial class Util
         result[target.Length] = item;
         return result;
     }
+    public static StateClaimDailyEvent GetStateItemDaily(int day, int currentDay)
+    {
+        if (day > currentDay) return StateClaimDailyEvent.WAITING_CLAIM;
+        if (day < currentDay) return StateClaimDailyEvent.CLAIMED;
+        if (day == currentDay)
+        {
+            if (Data.lastTimeClaimDailyEvent == "")
+            {
+                return StateClaimDailyEvent.CAN_CLAIM;
+            }
+            var lastDate = DateTime.Parse(Data.lastTimeClaimDailyEvent);
+            bool time = DateTime.Now.Month > lastDate.Month;
+            if (!time)
+                time = DateTime.Now.Day > lastDate.Day;
 
+            if (time)
+                return StateClaimDailyEvent.CAN_CLAIM;
+        }
+        return StateClaimDailyEvent.WAITING_CLAIM;
+    }
 
 
     public static bool NotInternet => Application.internetReachability == NetworkReachability.NotReachable;

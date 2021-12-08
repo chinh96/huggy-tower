@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 namespace Com.LuisPedroFonseca.ProCamera2D
 {
     public enum EaseType
@@ -114,7 +114,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
                 var p1 = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, gameCamera.nearClipPlane));
                 var p2 = gameCamera.ViewportToWorldPoint(new Vector3(1, 0, gameCamera.nearClipPlane));
                 var p3 = gameCamera.ViewportToWorldPoint(new Vector3(1, 1, gameCamera.nearClipPlane));
- 
+
                 width = (p2 - p1).magnitude;
                 height = (p3 - p2).magnitude;
             }
@@ -123,7 +123,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
                 height = 2.0f * Mathf.Abs(distance) * Mathf.Tan(gameCamera.fieldOfView * 0.5f * Mathf.Deg2Rad);
                 width = height * gameCamera.aspect;
             }
- 
+
             return new Vector2(width, height);
         }
 
@@ -157,5 +157,6 @@ namespace Com.LuisPedroFonseca.ProCamera2D
         {
             return (pointX - x) * (pointX - x) + (pointY - y) * (pointY - y) < radius * radius;
         }
+
     }
 }
