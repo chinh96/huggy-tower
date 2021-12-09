@@ -98,16 +98,24 @@ public class ButtonNoti : MonoBehaviour
                 {
                     hasNoti = true;
                 }
-                else
+                if (Data.CurrentLevel <= 5)
                 {
                     hasNoti = false;
                 }
-                // if (Data.CurrentLevel <= 5)
-                // {
-                //     hasNoti = false;
-                // }
 
                 break;
+
+            case NotiType.ThanksGiving2:
+
+                hasNoti = ResourcesController.SkinsTG.Exists(data => data.HasNotiTG);
+
+                var haveTime2 = Util.GetStateItemDaily(Data.DailyRewardEventCurrent, Data.DailyRewardEventCurrent);
+                if (haveTime2 == StateClaimDailyEvent.CAN_CLAIM)
+                {
+                    hasNoti = true;
+                }
+                break;
+
         }
 
         if (noti != null)

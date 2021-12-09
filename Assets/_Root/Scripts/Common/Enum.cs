@@ -20,7 +20,8 @@ public enum NotiType
     AchievementDailyQuest,
     RescueParty,
     LuckySpin,
-    ThanksGiving
+    ThanksGiving,
+    ThanksGiving2
 }
 
 public enum EGameState
