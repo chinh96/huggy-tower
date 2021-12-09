@@ -71,7 +71,7 @@ public class DailyRewardPopupEvent : Popup
         if (cfg.Coin > 0)
         {
             int coinTotal = Data.CoinTotal + cfg.Coin;
-            int sockTotal = TGDatas.TotalTurkey + cfg.CandyXmas;
+
 
             coinGeneration.GenerateCoin(() =>
             {
@@ -80,19 +80,26 @@ public class DailyRewardPopupEvent : Popup
             {
                 Data.CoinTotal = coinTotal;
             }, from, to);
+
+
+        }
+        if (cfg.CandyXmas > 0)
+        {
+            int sockTotal = TGDatas.TotalTurkey + cfg.CandyXmas;
             TurkeyGeneration.SetNumberCoin(cfg.CandyXmas);
             TurkeyGeneration.GenerateCoin(() =>
-         {
-             TGDatas.TotalTurkeyText++;
-         }, () =>
             {
-                TGDatas.TotalTurkeyText = sockTotal;
-                TGDatas.TotalTurkey = sockTotal;
+                TGDatas.TotalTurkeyText++;
+            }, () =>
+               {
+                   TGDatas.TotalTurkeyText = sockTotal;
+                   TGDatas.TotalTurkey = sockTotal;
 
 
-            },
+               },
             from, totalSock);
         }
+
     }
 
     public void onClickGift()

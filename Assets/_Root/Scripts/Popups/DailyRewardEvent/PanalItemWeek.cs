@@ -22,7 +22,6 @@ public class PanalItemWeek : MonoBehaviour
     {
         int i = 0;
         bool isHave = false;
-
         for (i = 0; i < weekData.Count; i++)
         {
 
