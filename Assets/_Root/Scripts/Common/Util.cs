@@ -214,6 +214,7 @@ public static partial class Util
             }
             var lastDate = DateTime.Parse(Data.lastTimeClaimDailyEvent);
             bool time = DateTime.Now.Month > lastDate.Month;
+            time = DateTime.Now.Year > lastDate.Year;
             if (!time)
                 time = DateTime.Now.Day > lastDate.Day;
 

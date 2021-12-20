@@ -1012,7 +1012,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             var go = Instantiate(snowExpore);
                             go.transform.parent = transform;
                             go.transform.localScale = new Vector3(200, 200, 200);
-                            go.transform.localPosition = new Vector3(243, -2, 0);
+                            go.transform.localPosition = new Vector3(121, 71, 10);
                         });
 
                         SoundController.Instance.PlayOnce(soundType);
