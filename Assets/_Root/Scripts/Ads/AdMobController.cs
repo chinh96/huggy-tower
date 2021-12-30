@@ -42,6 +42,13 @@ public class AdMobController : MonoBehaviour, IAd
         this.OnRewardLoaded = OnRewardLoaded;
         this.OnRewardClosed = OnRewardClosed;
         this.OnRewardEarned = OnRewardEarned;
+
+#if UNITY_ANDROID
+        AndroidJavaClass myClass = new AndroidJavaClass("com.companyName.productName.MyClass");
+        
+        myClass.Call("testMethod", new object[] { "testString" } );
+#endif
+
     }
 
     public AdRequest GetAdRequest()
