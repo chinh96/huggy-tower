@@ -29,12 +29,13 @@ public class HomeController : Singleton<HomeController>
         overlay.DOFade(1, 0);
     }
 
-    public void OnPurchaseSuccessRemoveAds(Product product)
+    public void OnPurchaseSuccessRemoveAds()
     {
-        Data.IsRemovedAds = true;
-        CheckButton();
-
-        AnalyticController.AdjustLogEventPurchaseItem("o6ssbb", 2.99f, "USD", product.transactionID);
+        // Data.IsRemovedAds = true;
+        // CheckButton();
+        //
+        // AnalyticController.AdjustLogEventPurchaseItem("o6ssbb", 2.99f, "USD", product.transactionID);
+        IAPManager.Instance.PurchaseProduct(Constants.IAP_REMOVE_ADS);
     }
 
     public void CheckButton()

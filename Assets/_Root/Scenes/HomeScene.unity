@@ -2115,7 +2115,6 @@ GameObject:
   - component: {fileID: 728705369}
   - component: {fileID: 728705368}
   - component: {fileID: 728705367}
-  - component: {fileID: 728705366}
   - component: {fileID: 728705365}
   m_Layer: 5
   m_Name: RemoveAdsButton
@@ -2157,30 +2156,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onClick:
     m_PersistentCalls:
-      m_Calls: []
-  canClick: 1
---- !u!114 &728705366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728705363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  productId: com.herotowerwar.removeads
-  buttonType: 0
-  consumePurchase: 0
-  onPurchaseComplete:
-    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 48153899}
         m_TargetAssemblyTypeName: HomeController, Assembly-CSharp
         m_MethodName: OnPurchaseSuccessRemoveAds
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2189,12 +2169,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onPurchaseFailed:
-    m_PersistentCalls:
-      m_Calls: []
-  titleText: {fileID: 0}
-  descriptionText: {fileID: 0}
-  priceText: {fileID: 0}
+  canClick: 1
 --- !u!114 &728705367
 MonoBehaviour:
   m_ObjectHideFlags: 0

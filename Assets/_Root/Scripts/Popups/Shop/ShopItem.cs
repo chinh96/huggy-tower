@@ -46,61 +46,29 @@ public class ShopItem : MonoBehaviour
         doneIcon.SetActive(done);
     }
 
-    public void OnPurchaseSuccess()
+    public void PurchaseItem1()
     {
-        switch (shopItemType)
-        {
-            case ShopItemType.Gold1:
-                Data.CoinTotal += 50000;
-                break;
-            case ShopItemType.Gold2:
-                Data.CoinTotal += 150000;
-                break;
-            case ShopItemType.Gold3:
-                Data.CoinTotal += 500000;
-                break;
-            case ShopItemType.UnlockAllSkins:
-                Data.IsUnlockAllSkins = true;
-                break;
-            case ShopItemType.RemoveAds:
-                Data.IsRemovedAds = true;
-                HomeController.Instance.CheckButton();
-                break;
-            case ShopItemType.Vip:
-                Data.CoinTotal += 500000;
-                Data.IsUnlockAllSkins = true;
-                Data.IsRemovedAds = true;
-                Data.IsVip = true;
-                break;
-        }
-
-        shopPopup.CheckItems();
-        EventController.SkinPopupReseted();
+        IAPManager.Instance.PurchaseProduct(Constants.IAP_PACK1);
     }
-
-    public void OnPurchaseSuccessTracking(Product product)
+    public void PurchaseItem2()
     {
-        switch (shopItemType)
-        {
-            case ShopItemType.Gold1:
-                AnalyticController.AdjustLogEventPurchaseItem("kqr0x8", 0.99f, "USD", product.transactionID);
-                break;
-            case ShopItemType.Gold2:
-                AnalyticController.AdjustLogEventPurchaseItem("ygs9gy", 1.99f, "USD", product.transactionID);
-                break;
-            case ShopItemType.Gold3:
-                AnalyticController.AdjustLogEventPurchaseItem("kk1yzu", 4.99f, "USD", product.transactionID);
-                break;
-            case ShopItemType.UnlockAllSkins:
-                AnalyticController.AdjustLogEventPurchaseItem("5dxgq2", 4.99f, "USD", product.transactionID);
-                break;
-            case ShopItemType.RemoveAds:
-                AnalyticController.AdjustLogEventPurchaseItem("o6ssbb", 2.99f, "USD", product.transactionID);
-                break;
-            case ShopItemType.Vip:
-                AnalyticController.AdjustLogEventPurchaseItem("usm42a", 9.99f, "USD", product.transactionID);
-                break;
-        }
+        IAPManager.Instance.PurchaseProduct(Constants.IAP_PACK2);
+    }
+    public void PurchaseItem3()
+    {
+        IAPManager.Instance.PurchaseProduct(Constants.IAP_PACK3);
+    }
+    public void PurchaseItemUnlockHero()
+    {
+        IAPManager.Instance.PurchaseProduct(Constants.IAP_UNLOCK_HERO);
+    }
+    public void PurchaseItemRemoveAds()
+    {
+        IAPManager.Instance.PurchaseProduct(Constants.IAP_REMOVE_ADS);
+    }
+    public void PurchaseItemVip()
+    {
+        IAPManager.Instance.PurchaseProduct(Constants.IAP_VIP);
     }
 }
 

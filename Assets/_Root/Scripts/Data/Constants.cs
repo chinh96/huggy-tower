@@ -116,4 +116,11 @@ public class Constants
     public const string CLAIM_FIRST_SKIN_HALLOWEEN = "CLAIM_FIRST_SKIN_HALLOWEEN";
     public const string CLICK_TOP_100_HALLOWEEN_BUTTON = "CLICK_TOP_100_HALLOWEEN_BUTTON";
     public const string CLAIM_SKIN_TOP_100_HALLOWEEN = "CLAIM_SKIN_TOP_100_HALLOWEEN";
+    
+    public const string IAP_REMOVE_ADS = "com.herotowerwar.removeads";
+    public const string IAP_PACK1 = "com.herotowerwar.gold1";
+    public const string IAP_PACK2 = "com.herotowerwar.gold2";
+    public const string IAP_PACK3 = "com.herotowerwar.gold3";
+    public const string IAP_UNLOCK_HERO = "com.herotowerwar.unlockhero";
+    public const string IAP_VIP = "com.herotowerwar.vip";
 }
