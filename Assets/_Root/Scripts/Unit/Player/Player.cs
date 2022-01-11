@@ -998,7 +998,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     string[] attacks = { "Attack", "AttackSword", "AttackSword2" };
                     string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
                     skeleton.Play(attack, false);
-                    var snowExpore = I2.Loc.ResourceManager.pInstance.LoadFromResources<UnityEngine.GameObject>("Prefabs/Effect/Snow_Explosion");
+                    // var snowExpore = I2.Loc.ResourceManager.pInstance.LoadFromResources<UnityEngine.GameObject>("Prefabs/Effect/Snow_Explosion");
 
 
                     SoundType[] soundTypes = { SoundType.HeroCut, SoundType.HeroCut2, SoundType.HeroCut3 };
@@ -1007,13 +1007,13 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
 
-                        DOTween.Sequence().SetDelay(.5f).OnComplete(() =>
-                        {
-                            var go = Instantiate(snowExpore);
-                            go.transform.parent = transform;
-                            go.transform.localScale = new Vector3(200, 200, 200);
-                            go.transform.localPosition = new Vector3(121, 71, 10);
-                        });
+                        // DOTween.Sequence().SetDelay(.5f).OnComplete(() =>
+                        // {
+                        //     var go = Instantiate(snowExpore);
+                        //     go.transform.parent = transform;
+                        //     go.transform.localScale = new Vector3(200, 200, 200);
+                        //     go.transform.localPosition = new Vector3(121, 71, 10);
+                        // });
 
                         SoundController.Instance.PlayOnce(soundType);
                     });
