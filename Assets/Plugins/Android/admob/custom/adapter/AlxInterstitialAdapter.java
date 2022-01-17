@@ -110,7 +110,7 @@ public class AlxInterstitialAdapter extends Adapter implements CustomEventInters
             AlxAdSDK.setSubjectToGDPR(true);
 //            // set COPPA
             AlxAdSDK.setBelowConsentAge(true);
-            AlxAdSDK.setUserConsent("0");
+            AlxAdSDK.setUserConsent("1");
 //            // set CCPA
             AlxAdSDK.subjectToUSPrivacy("1YYY");
             // init

@@ -3679,6 +3679,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1658232534}
   - component: {fileID: 1658232533}
+  - component: {fileID: 1658232536}
+  - component: {fileID: 1658232535}
   m_Layer: 0
   m_Name: DataBridge
   m_TagString: Untagged
@@ -3698,6 +3700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f11c8970e82a04792dfe6c5f2d89d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iapManager: {fileID: 1658232536}
   PreviousLevelLoaded: {fileID: 0}
   NextLevelLoaded: {fileID: 0}
 --- !u!4 &1658232534
@@ -3714,6 +3717,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1658232535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658232532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59b34e4a0fea4e8daa701250a72d0a6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1658232536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658232532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2672bd71854315b2a8cb49c25279fb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  googleStoreKey: 
+  listener: {fileID: 1658232535}
 --- !u!1 &1682057279
 GameObject:
   m_ObjectHideFlags: 0

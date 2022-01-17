@@ -122,7 +122,9 @@ public static partial class Util
     public static void ChangeSkin2(this SkeletonGraphic skeletonGraphic, string skinName, EUnitType characterType = EUnitType.Hero)
     {
         skeletonGraphic.Skeleton.SetSkin(skinName);
+
         skeletonGraphic.Skeleton.SetSlotsToSetupPose();
+
     }
 
     public static void ChangeSword(this SkeletonGraphic skeletonGraphic, List<string> swordNames)

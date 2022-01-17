@@ -3,9 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Purchasing;
+
 
 public class DataBridge : Singleton<DataBridge>
 {
+    [SerializeField] private IAPManager iapManager;
     public LevelMap PreviousLevelLoaded;
     public LevelMap NextLevelLoaded;
 
@@ -15,6 +18,21 @@ public class DataBridge : Singleton<DataBridge>
     {
         DontDestroyOnLoad(gameObject);
         // CheckCacheLevel();
+        InitialzieIAP();
+    }
+
+    private void InitialzieIAP()
+    {
+        if (!iapManager.IsInitialize)
+        {
+            iapManager.Initialized(new[]
+            {
+                    new IAPData(Constants.IAP_PACK1, ProductType.Consumable.ToString()), new IAPData(Constants.IAP_PACK2, ProductType.Consumable.ToString()),
+                    new IAPData(Constants.IAP_PACK3, ProductType.Consumable.ToString()), new IAPData(Constants.IAP_REMOVE_ADS, ProductType.NonConsumable.ToString()),
+                    new IAPData(Constants.IAP_UNLOCK_HERO, ProductType.NonConsumable.ToString()), new IAPData(Constants.IAP_VIP, ProductType.NonConsumable.ToString()),
+            });
+        }
+
     }
 
     public void CheckCacheLevel()

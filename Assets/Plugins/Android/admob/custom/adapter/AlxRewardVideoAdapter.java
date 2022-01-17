@@ -153,7 +153,7 @@ public class AlxRewardVideoAdapter extends Adapter implements MediationRewardedA
             AlxAdSDK.setSubjectToGDPR(true);
 //            // set COPPA
             AlxAdSDK.setBelowConsentAge(true);
-            AlxAdSDK.setUserConsent("0");
+            AlxAdSDK.setUserConsent("1");
 //            // set CCPA
             AlxAdSDK.subjectToUSPrivacy("1YYY");
             // init

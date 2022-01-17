@@ -40,6 +40,8 @@ public class LoadingController : MonoBehaviour
         canvasScaler.matchWidthOrHeight = Camera.main.aspect > .7f ? 1 : 0;
     }
 
+
+
     private async void Start()
     {
         if (Data.CurrentSkinHero == "Angel")
