@@ -74,7 +74,7 @@ public class DailyRewardEventItem : MonoBehaviour
     {
         if (candyXmas > 0)
         {
-            candyIcon.gameObject.SetActive(true);
+            // candyIcon.gameObject.SetActive(true);
             textCandy.gameObject.SetActive(true);
             setTextCandy("+" + candyXmas);
             haveCandy = true;
@@ -101,7 +101,7 @@ public class DailyRewardEventItem : MonoBehaviour
     {
         if (coin > 0)
         {
-            coinIcon.gameObject.SetActive(true);
+            // coinIcon.gameObject.SetActive(true);
             textHero.gameObject.SetActive(false);
             coinText.gameObject.SetActive(true);
             SetTextCoin($"{coin}");
