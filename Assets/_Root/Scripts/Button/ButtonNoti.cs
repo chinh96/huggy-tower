@@ -130,6 +130,6 @@ public class ButtonNoti : MonoBehaviour
         EventController.LoginLeaderBoard -= CheckNoti;
         EventController.MedalTotalChanged -= CheckNoti;
         EventController.LuckySpinChanged -= CheckNoti;
-        // EventController.DailyEventClaim -= CheckNoti;
+        EventController.DailyEventClaim -= CheckNoti;
     }
 }

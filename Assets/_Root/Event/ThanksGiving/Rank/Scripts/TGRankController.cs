@@ -141,7 +141,7 @@ public class TGRankController : Singleton<TGRankController>
             LeaderboardData.UserInfos.Clear();
         }
         Playfab.GetLeaderboard(
-            "NOEL",
+            "Valentine2022",
             startPosition * Playfab.MaxResultsCount,
             result =>
             {
@@ -173,7 +173,7 @@ public class TGRankController : Singleton<TGRankController>
     {
         Playfab.UpdateScore(
             TGDatas.TotalTurkey,
-            "NOEL",
+            "Valentine2022",
             result => action?.Invoke()
         );
     }
