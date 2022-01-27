@@ -28,6 +28,16 @@ public class ItemEventNoel : MonoBehaviour
 
         if (configEvent.NumCandyXmas == -1)
         {
+            for (int i = 0; i < TGDatas.ClaimedItems.Length; i++)
+            {
+                var id = TGDatas.ClaimedItems[i];
+                if (configEvent.Id == id)
+                {
+                    SetStateItem(StateClaimDailyEvent.CLAIMED);
+                    return;
+                }
+
+            }
             claimActiveButton.SetActive(false);
             claimDisableButton.SetActive(true);
             if (TGDatas.IsAfter5Days)
@@ -36,7 +46,7 @@ public class ItemEventNoel : MonoBehaviour
                 {
                     claimActiveButton.SetActive(true);
                     claimDisableButton.SetActive(false);
-                    keyLock.SetActive(false);
+                    // keyLock.SetActive(false);
                 });
             }
 

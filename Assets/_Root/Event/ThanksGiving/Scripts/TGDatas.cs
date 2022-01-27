@@ -30,7 +30,7 @@ public static class TGDatas
 
     public static TimeSpan TimeToTG => new DateTime(2022, 3, 15, 0, 0, 0) - DateTime.Now;
     public static bool IsInTG => DateTime.Now > new DateTime(2022, 1, 18, 0, 0, 0) && new DateTime(2022, 3, 15, 0, 0, 0) > DateTime.Now;
-    public static bool IsAfter5Days => (DateTime.Now - new DateTime(2022, 1, 21, 0, 0, 0)).TotalDays > 5;
+    public static bool IsAfter5Days => (DateTime.Now - new DateTime(2022, 1, 23, 0, 0, 0)).TotalDays > 5;
     public static bool IsAfterTG => DateTime.Now >= new DateTime(2022, 3, 16, 0, 0, 0);
 
     public static string[] ClaimedItems

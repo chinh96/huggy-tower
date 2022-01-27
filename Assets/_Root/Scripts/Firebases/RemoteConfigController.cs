@@ -14,6 +14,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
     [NonSerialized] public bool OnlyAdmob = true;
     [NonSerialized] public bool EnableFbLogin = false;
     [NonSerialized] public bool HasIntro = true;
+    [NonSerialized] public bool HasCrossAds = false;
 
     public bool HasNewUpdate => float.Parse(Application.version) < float.Parse(CurrentVersion);
 
@@ -56,6 +57,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         defaults.Add(Constants.ONLY_ADMOB_IOS, true);
         defaults.Add(Constants.ENABLE_FB_LOGIN_IOS, false);
         defaults.Add(Constants.HAS_INTRO, true);
+        defaults.Add(Constants.HAS_CROSS_ADS, false);
 
         Firebase.RemoteConfig.FirebaseRemoteConfig.SetDefaults(defaults);
     }
@@ -104,6 +106,9 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         FirstOpenCountLevelWinTurnOnAds = int.Parse(GetConfig(Constants.FIRST_OPEN_COUNT_LEVEL_WIN_TURN_ON_ADS));
         CountLevelWinShowAds = int.Parse(GetConfig(Constants.COUNT_LEVEL_WIN_SHOW_ADS));
         InterstitalTimeLevelCompleted = int.Parse(GetConfig(Constants.INTERSTITIAL_TIME_LEVEL_COMPLETED));
+        HasCrossAds = bool.Parse(GetConfig(Constants.HAS_CROSS_ADS));
+        Debug.Log(HasCrossAds);
+
 #if !UNITY_EDITOR
         HasIntro = bool.Parse(GetConfig(Constants.HAS_INTRO));
 #endif
@@ -118,6 +123,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         UpdateDescription = GetConfig(Constants.IOS_UPDATE_DESCRIPTION);
         EnableFbLogin = bool.Parse(GetConfig(Constants.ENABLE_FB_LOGIN_IOS));
 #endif
+
         AdController.Instance.Init();
     }
 

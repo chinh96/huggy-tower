@@ -25,6 +25,13 @@ public class WinPopup : Popup
 
         idCrossCurrent = idCrossCurrent == 0 ? 1 : 0;
         iconCrossAds.sprite = imgIconCrossAds[idCrossCurrent];
+        checkCrossAds();
+    }
+
+    void checkCrossAds()
+    {
+        Debug.Log(RemoteConfigController.Instance.HasCrossAds);
+        iconCrossAds.gameObject.SetActive(RemoteConfigController.Instance.HasCrossAds);
     }
 
     protected override void AfterShown()

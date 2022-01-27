@@ -227,5 +227,5 @@ public static partial class Util
     }
 
 
-    public static bool NotInternet => false;
+    public static bool NotInternet => Application.internetReachability == NetworkReachability.NotReachable;
 }

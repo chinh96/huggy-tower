@@ -135,30 +135,38 @@ public class SkinItem : MonoBehaviour
         {
             case EUnitType.Hero:
                 currentSkinName = Data.CurrentSkinHero;
+                if (skinData.SkinName == currentSkinName)
+                {
+                    if (Data.currentSkinHeroId == "")
+                    {
+                        SetActiveDock(true);
+                        SetActiveUsedLabel(true);
+                        SetActiveFX(true);
+                    }
+                    else
+                    {
+                        if (Data.currentSkinHeroId == skinData.Id)
+                        {
+                            SetActiveDock(true);
+                            SetActiveUsedLabel(true);
+                            SetActiveFX(true);
+                        }
+                    }
+                }
                 break;
             case EUnitType.Princess:
                 currentSkinName = Data.CurrentSkinPrincess;
-                break;
-        }
-
-        if (skinData.SkinName == currentSkinName)
-        {
-            if (Data.currentSkinHeroId == "")
-            {
-                SetActiveDock(true);
-                SetActiveUsedLabel(true);
-                SetActiveFX(true);
-            }
-            else
-            {
-                if (Data.currentSkinHeroId == skinData.Id)
+                if (skinData.SkinName == currentSkinName)
                 {
                     SetActiveDock(true);
                     SetActiveUsedLabel(true);
                     SetActiveFX(true);
                 }
-            }
+                break;
         }
+
+
+
     }
 
     private void HideAll()

@@ -14,6 +14,11 @@ public class TGCountdown : MonoBehaviour
 
     public void Countdown()
     {
+        if (TGDatas.TimeToTG.TotalSeconds <= 0)
+        {
+            CancelInvoke("Countdown");
+        };
+
         textCountdown.text = Util.FormatTime(TGDatas.TimeToTG);
     }
 

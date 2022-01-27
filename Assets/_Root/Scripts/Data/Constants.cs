@@ -17,6 +17,8 @@ public class Constants
     public const string ENABLE_FB_LOGIN_IOS = "ENABLE_FB_LOGIN_IOS";
     public const string HAS_INTRO = "HAS_INTRO";
 
+    public const string HAS_CROSS_ADS = "CROSS_ADS";
+
     // Data
     public const string CURRENT_LEVEL = "CURRENT_LEVEL";
     public const string MAX_LEVEL = "MAX_LEVEL";
@@ -38,8 +40,8 @@ public class Constants
     public const string DATE_TIME_START = "DATE_TIME_START";
     public const string DATE_TIME_START_RESCUE_PARTY = "DATE_TIME_START_RESCUE_PARTY";
     public const string DAILY_REWARD_CURRENT = "DAILY_REWARD_CURRENT";
-    public const string DAILY_REWARD_EVENT_CURRENT = "DAILY_REWARD_EVENT_CURRENT";
-    public const string LAST_TIME_CLAIM_DAILY_EVENT = "LAST_TIME_CLAIM_DAILY_EVENT";
+    public const string DAILY_REWARD_EVENT_CURRENT = "DAILY_REWARD_EVENT_CURRENT_VALENTINE_2022";
+    public const string LAST_TIME_CLAIM_DAILY_EVENT = "LAST_TIME_CLAIM_DAILY_EVENT_VALENTINE_2022";
     public const string PERCENT_PROGRESS_GIFT = "PERCENT_PROGRESS_GIFT";
     public const string WORLD_CURRENT = "WORLD_CURRENT";
     public const string DONE_ONBOARDING = "DONE_ONBOARDING";
@@ -116,7 +118,7 @@ public class Constants
     public const string CLAIM_FIRST_SKIN_HALLOWEEN = "CLAIM_FIRST_SKIN_HALLOWEEN";
     public const string CLICK_TOP_100_HALLOWEEN_BUTTON = "CLICK_TOP_100_HALLOWEEN_BUTTON";
     public const string CLAIM_SKIN_TOP_100_HALLOWEEN = "CLAIM_SKIN_TOP_100_HALLOWEEN";
-    
+
     public const string IAP_REMOVE_ADS = "com.herotowerwar.removeads";
     public const string IAP_PACK1 = "com.herotowerwar.gold1";
     public const string IAP_PACK2 = "com.herotowerwar.gold2";

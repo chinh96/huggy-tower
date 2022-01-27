@@ -57,6 +57,7 @@ public class PopupEventNoel : MonoBehaviour
         {
             var itemData = data[i];
             var itemEvent = ListItem[i];
+            if (itemData.NumCandyXmas == -1) continue;
             var state = GetStateItem(itemData.NumCandyXmas, itemData.Id);
             itemEvent.SetStateItem(state);
         }
