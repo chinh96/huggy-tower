@@ -59,6 +59,7 @@ public class HomeController : Singleton<HomeController>
         CheckRescueParty();
         CheckTG();
         checkAllEvent();
+        AdController.Instance.Request();
         // CheckLanguage();
     }
 

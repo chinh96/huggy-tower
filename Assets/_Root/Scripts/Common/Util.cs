@@ -215,8 +215,9 @@ public static partial class Util
                 return StateClaimDailyEvent.CAN_CLAIM;
             }
             var lastDate = DateTime.Parse(Data.lastTimeClaimDailyEvent);
-            bool time = DateTime.Now.Month > lastDate.Month;
-            time = DateTime.Now.Year > lastDate.Year;
+            bool time = DateTime.Now.Year > lastDate.Year;
+            if (!time)
+                time = DateTime.Now.Month > lastDate.Month;
             if (!time)
                 time = DateTime.Now.Day > lastDate.Day;
 
