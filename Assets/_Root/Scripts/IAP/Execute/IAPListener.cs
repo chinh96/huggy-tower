@@ -70,7 +70,7 @@ public class IAPListener : MonoBehaviour
                 shop?.CheckItems();
                 EventController.SkinPopupReseted();
                 break;
-            case "com.homepin.vip":
+            case "com.herotowerwar.vip":
                 Data.IsUnlockAllSkins = true;
                 Data.IsRemovedAds = true;
                 Data.IsVip = true;
