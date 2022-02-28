@@ -35,7 +35,19 @@ public class AdController : Singleton<AdController>
                     !Data.IsRemovedAds;
         }
     }
+    private bool isShowInter2
+    {
+        get
+        {
+            bool canShowInter = Data.CurrentLevel >= RemoteConfigController.Instance.FirstOpenCountLevelWinTurnOnAds;
 
+            return canShowInter &&
+                    GameController.Instance.Root.GetTotalLevelWin() >= RemoteConfigController.Instance.CountLevelWinShowAds &&
+                    GameController.Instance.Root.GetTotalTimesLose() >= RemoteConfigController.Instance.InterstitalTimeOnLoseCompleted &&
+                    !JustShowReward &&
+                    !Data.IsRemovedAds;
+        }
+    }
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -125,11 +137,20 @@ public class AdController : Singleton<AdController>
         }
     }
 
-    public void ShowInterstitial(Action action)
+    public void ShowInterstitial(Action action, bool isWin = true)
     {
         void Show()
         {
-            if (ad != null && isShowInter)
+            bool check = false;
+            if (isWin)
+            {
+                check = isShowInter;
+            }
+            else
+            {
+                check = isShowInter2;
+            }
+            if (ad != null && check)
             {
                 if (ad.IsInterLoaded)
                 {
@@ -138,6 +159,7 @@ public class AdController : Singleton<AdController>
                     handleInterAfterClosed = action;
                     ad.ShowInterstitial();
                     GameController.Instance.Root.ResetTotalTimesPlay();
+                    GameController.Instance.Root.RestTotalTimesLose();
                     GameController.Instance.Root.ResetTotalLevelWin();
                 }
                 else

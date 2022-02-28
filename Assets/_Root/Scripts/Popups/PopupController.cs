@@ -13,12 +13,15 @@ public class PopupController : Singleton<PopupController>
     private Dictionary<Type, Popup> popupDict;
     private LinkedList<Popup> popups;
     private bool initialized;
+    [SerializeField] private Camera cameraUi;
 
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        canvasScaler.matchWidthOrHeight = Camera.main.aspect > .7f ? 1 : 0;
+        Debug.Log(cameraUi.aspect + "cam");
+        canvasScaler.matchWidthOrHeight = cameraUi.aspect > .6f ? 1 : 0;
         Initialize();
+
     }
 
     public void Initialize()

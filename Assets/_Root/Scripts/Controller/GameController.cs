@@ -391,12 +391,22 @@ public class GameController : Singleton<GameController>
         ResourcesController.DailyQuest.ResetNumberTemp();
 
         PopupController.Instance.DismissAll();
+        if (RemoteConfigController.Instance.IsShowInterLose)
+            Root.IncreaseTotalLevelWin();
         FadeInOverlay(() =>
         {
             KillSequence();
             _isReplay = true;
             Camera.main.transform.position = positionCameraOrigin;
             Instance.LoadLevel(Data.CurrentLevel);
+
+
+            AdController.Instance.ShowInterstitial(() =>
+            {
+
+            }, false);
+
+
         });
     }
 
@@ -672,4 +682,5 @@ public class GameController : Singleton<GameController>
     {
         fighterOverlay = Instantiate(ResourcesController.Config.FighterOverlay, Root.transform.parent);
     }
+
 }

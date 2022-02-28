@@ -8,6 +8,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
 {
     [NonSerialized] public int FirstOpenCountLevelWinTurnOnAds = 2;
     [NonSerialized] public int InterstitalTimeLevelCompleted = 30;
+    [NonSerialized] public int InterstitalTimeOnLoseCompleted = 30;
     [NonSerialized] public int CountLevelWinShowAds = 2;
     [NonSerialized] public string CurrentVersion = "0";
     [NonSerialized] public string UpdateDescription = "0";
@@ -15,6 +16,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
     [NonSerialized] public bool EnableFbLogin = false;
     [NonSerialized] public bool HasIntro = true;
     [NonSerialized] public bool HasCrossAds = false;
+    [NonSerialized] public bool IsShowInterLose = false;
 
     public bool HasNewUpdate => float.Parse(Application.version) < float.Parse(CurrentVersion);
 
@@ -47,6 +49,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         Dictionary<string, object> defaults = new Dictionary<string, object>();
         defaults.Add(Constants.FIRST_OPEN_COUNT_LEVEL_WIN_TURN_ON_ADS, 2);
         defaults.Add(Constants.INTERSTITIAL_TIME_LEVEL_COMPLETED, 30);
+        defaults.Add(Constants.INTERSTITIAL_TIME_LEVEL_ON_LOSE_COMPLETED, 30);
         defaults.Add(Constants.COUNT_LEVEL_WIN_SHOW_ADS, 2);
         defaults.Add(Constants.CURRENT_VERSION_ANDROID, "0");
         defaults.Add(Constants.CURRENT_VERSION_IOS, "0");
@@ -58,7 +61,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         defaults.Add(Constants.ENABLE_FB_LOGIN_IOS, false);
         defaults.Add(Constants.HAS_INTRO, true);
         defaults.Add(Constants.HAS_CROSS_ADS, false);
-
+        defaults.Add(Constants.IS_SHOW_INTER_LOSE, false);
         Firebase.RemoteConfig.FirebaseRemoteConfig.SetDefaults(defaults);
     }
 
@@ -106,8 +109,9 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         FirstOpenCountLevelWinTurnOnAds = int.Parse(GetConfig(Constants.FIRST_OPEN_COUNT_LEVEL_WIN_TURN_ON_ADS));
         CountLevelWinShowAds = int.Parse(GetConfig(Constants.COUNT_LEVEL_WIN_SHOW_ADS));
         InterstitalTimeLevelCompleted = int.Parse(GetConfig(Constants.INTERSTITIAL_TIME_LEVEL_COMPLETED));
+        InterstitalTimeOnLoseCompleted = int.Parse(GetConfig(Constants.INTERSTITIAL_TIME_LEVEL_ON_LOSE_COMPLETED));
         HasCrossAds = bool.Parse(GetConfig(Constants.HAS_CROSS_ADS));
-        Debug.Log(HasCrossAds);
+        IsShowInterLose = bool.Parse(GetConfig(Constants.IS_SHOW_INTER_LOSE));
 
 #if !UNITY_EDITOR
         HasIntro = bool.Parse(GetConfig(Constants.HAS_INTRO));

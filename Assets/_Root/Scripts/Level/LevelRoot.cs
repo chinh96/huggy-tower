@@ -10,7 +10,7 @@ public class LevelRoot : MonoBehaviour
     private int times = 0;
     private int totalTimesPlay = 0;
     private int totalLevelWin = 0;
-
+    private int totalTimesLose = 0;
     public int LevelIndex => levelIndex;
     public LevelMap LevelMap => levelMap;
     public LevelMap LevelMapPrefab => levelMapPrefab;
@@ -74,19 +74,29 @@ public class LevelRoot : MonoBehaviour
     private void IncreaseTimes()
     {
         times++;
+        totalTimesLose++;
     }
 
     public void ResetTotalTimesPlay()
     {
         totalTimesPlay = 0;
+
+    }
+    public void RestTotalTimesLose()
+    {
+        totalTimesLose = 0;
     }
 
     public int GetTotalTimesPlay()
     {
         return totalTimesPlay;
     }
+    public int GetTotalTimesLose()
+    {
+        return totalTimesPlay;
+    }
 
-    private void IncreaseTotalLevelWin()
+    public void IncreaseTotalLevelWin()
     {
         totalLevelWin++;
     }

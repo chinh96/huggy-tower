@@ -6,6 +6,7 @@ public class Constants
     // Remote Config
     public const string FIRST_OPEN_COUNT_LEVEL_WIN_TURN_ON_ADS = "FIRST_OPEN_COUNT_LEVEL_WIN_TURN_ON_ADS";
     public const string INTERSTITIAL_TIME_LEVEL_COMPLETED = "INTERSTITIAL_TIME_LEVEL_COMPLETED";
+    public const string INTERSTITIAL_TIME_LEVEL_ON_LOSE_COMPLETED = "INTERSTITIAL_TIME_LEVEL_ON_LOSE_COMPLETED";
     public const string COUNT_LEVEL_WIN_SHOW_ADS = "COUNT_LEVEL_WIN_SHOW_ADS";
     public const string CURRENT_VERSION_ANDROID = "CURRENT_VERSION_ANDROID";
     public const string CURRENT_VERSION_IOS = "CURRENT_VERSION_IOS";
@@ -19,6 +20,7 @@ public class Constants
 
     public const string HAS_CROSS_ADS = "CROSS_ADS";
 
+    public const string IS_SHOW_INTER_LOSE = "IS_SHOW_INTER_LOSE";
     // Data
     public const string CURRENT_LEVEL = "CURRENT_LEVEL";
     public const string MAX_LEVEL = "MAX_LEVEL";
