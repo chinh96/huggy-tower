@@ -4,10 +4,16 @@ using UnityEngine;
 using System;
 public class AdApplovinController : MonoBehaviour, IAd
 {
-    public bool IsBannerLoaded => false;
+    public bool IsBannerLoaded => true;
     public bool IsInterLoaded => true;
-    public bool IsRewardLoaded => false;
-    ApplovinManager ad;
+    public bool IsRewardLoaded => true;
+    public Action OnInterClosed { get; set; }
+    public Action OnInterLoaded { get; set; }
+    public Action OnRewardClosed { get; set; }
+    public Action OnRewardLoaded { get; set; }
+    public Action OnRewardEarned { get; set; }
+    [SerializeField] private ApplovinManager ad;
+
 
     public void Init(Action OnInterClosed, Action OnInterLoaded, Action OnRewardLoaded, Action OnRewardClosed, Action OnRewardEarned)
     {
@@ -36,7 +42,7 @@ public class AdApplovinController : MonoBehaviour, IAd
     }
     public void ShowInterstitial()
     {
-        ad.ShowIntertitial(null);
+        ad.ShowIntertitial(this.OnInterClosed);
     }
     public void RequestRewarded()
     {
@@ -44,11 +50,14 @@ public class AdApplovinController : MonoBehaviour, IAd
     }
     public void ShowRewardedAd()
     {
-        ad.ShowReward(null);
+        ad.ShowReward((isShow) =>
+        {
+            if (isShow)
+            {
+                this.OnRewardEarned?.Invoke();
+            }
+            this.OnRewardClosed?.Invoke();
+        });
     }
-    public Action OnInterClosed { get; set; }
-    public Action OnInterLoaded { get; set; }
-    public Action OnRewardClosed { get; set; }
-    public Action OnRewardLoaded { get; set; }
-    public Action OnRewardEarned { get; set; }
+
 }

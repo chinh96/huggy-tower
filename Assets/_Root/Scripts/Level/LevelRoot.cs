@@ -93,7 +93,7 @@ public class LevelRoot : MonoBehaviour
     }
     public int GetTotalTimesLose()
     {
-        return totalTimesPlay;
+        return totalTimesLose;
     }
 
     public void IncreaseTotalLevelWin()

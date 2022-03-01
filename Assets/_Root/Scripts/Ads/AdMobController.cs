@@ -45,8 +45,8 @@ public class AdMobController : MonoBehaviour, IAd
 
 #if UNITY_ANDROID
         AndroidJavaClass myClass = new AndroidJavaClass("com.companyName.productName.MyClass");
-        
-        myClass.Call("testMethod", new object[] { "testString" } );
+
+        myClass.Call("testMethod", new object[] { "testString" });
 #endif
 
     }
@@ -112,7 +112,7 @@ public class AdMobController : MonoBehaviour, IAd
             new Firebase.Analytics.Parameter("adunitid", id), new Firebase.Analytics.Parameter("network", "admob")
         };
         Firebase.Analytics.FirebaseAnalytics.LogEvent("paid_ad_impression", LTVParameters);
-        
+
         // send ad revenue info to Adjust
         com.adjust.sdk.AdjustAdRevenue adRevenue = new com.adjust.sdk.AdjustAdRevenue(com.adjust.sdk.AdjustConfig.AdjustAdRevenueSourceAdMob);
         adRevenue.setRevenue(adValue.Value / 1000000f, adValue.CurrencyCode);

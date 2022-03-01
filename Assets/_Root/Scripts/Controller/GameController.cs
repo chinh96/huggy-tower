@@ -391,8 +391,7 @@ public class GameController : Singleton<GameController>
         ResourcesController.DailyQuest.ResetNumberTemp();
 
         PopupController.Instance.DismissAll();
-        if (RemoteConfigController.Instance.IsShowInterLose)
-            Root.IncreaseTotalLevelWin();
+
         FadeInOverlay(() =>
         {
             KillSequence();
@@ -405,9 +404,11 @@ public class GameController : Singleton<GameController>
             {
 
             }, false);
-
+            if (RemoteConfigController.Instance.IsShowInterLose)
+                Root.IncreaseTotalLevelWin();
 
         });
+
     }
 
     public void OnSkipLevel()

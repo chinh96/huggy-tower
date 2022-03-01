@@ -21,6 +21,7 @@ public class Constants
     public const string HAS_CROSS_ADS = "CROSS_ADS";
 
     public const string IS_SHOW_INTER_LOSE = "IS_SHOW_INTER_LOSE";
+    public const string IS_SHOW_BANNER = "IS_SHOW_BANNER";
     // Data
     public const string CURRENT_LEVEL = "CURRENT_LEVEL";
     public const string MAX_LEVEL = "MAX_LEVEL";

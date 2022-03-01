@@ -19,7 +19,7 @@ public class AdController : Singleton<AdController>
     {
         get
         {
-            return !Data.IsRemovedAds;
+            return !Data.IsRemovedAds && RemoteConfigController.Instance.isShowBanner;
         }
     }
     private bool isShowInter
@@ -70,6 +70,7 @@ public class AdController : Singleton<AdController>
 
     public void Init()
     {
+
 #if UNITY_EDITOR
         ad = GetComponent<AdMobController>();
 #else
@@ -79,7 +80,7 @@ public class AdController : Singleton<AdController>
         }
         else
         {
-            ad = GetComponent<IronSourceController>();
+            ad = (IAd)GetComponent<AppOpenAdController>();
         }
 #endif
 

@@ -9,6 +9,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
     [NonSerialized] public int FirstOpenCountLevelWinTurnOnAds = 2;
     [NonSerialized] public int InterstitalTimeLevelCompleted = 30;
     [NonSerialized] public int InterstitalTimeOnLoseCompleted = 30;
+
     [NonSerialized] public int CountLevelWinShowAds = 2;
     [NonSerialized] public string CurrentVersion = "0";
     [NonSerialized] public string UpdateDescription = "0";
@@ -17,6 +18,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
     [NonSerialized] public bool HasIntro = true;
     [NonSerialized] public bool HasCrossAds = false;
     [NonSerialized] public bool IsShowInterLose = false;
+    [NonSerialized] public bool isShowBanner = true;
 
     public bool HasNewUpdate => float.Parse(Application.version) < float.Parse(CurrentVersion);
 
@@ -62,6 +64,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         defaults.Add(Constants.HAS_INTRO, true);
         defaults.Add(Constants.HAS_CROSS_ADS, false);
         defaults.Add(Constants.IS_SHOW_INTER_LOSE, false);
+        defaults.Add(Constants.IS_SHOW_BANNER, false);
         Firebase.RemoteConfig.FirebaseRemoteConfig.SetDefaults(defaults);
     }
 
