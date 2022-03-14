@@ -80,7 +80,7 @@ public class AdController : Singleton<AdController>
         }
         else
         {
-            ad = (IAd)GetComponent<AppOpenAdController>();
+            ad = (IAd)GetComponent<AdApplovinController>();
         }
 #endif
 
