@@ -14,10 +14,10 @@ public class PopupEventNoel : MonoBehaviour
     }
     private void OnEnable()
     {
-        if (isInitData)
-        {
-            updateState();
-        }
+        // if (isInitData)
+        // {
+        updateState();
+        // }
     }
     void InitData()
     {

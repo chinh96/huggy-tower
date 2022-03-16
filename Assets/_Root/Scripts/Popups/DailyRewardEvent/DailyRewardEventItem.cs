@@ -147,7 +147,7 @@ public class DailyRewardEventItem : MonoBehaviour
                 // background.sprite = spriteCoinClaimed;
                 claimButton.SetActive(false);
                 claimPendingButton.SetActive(false);
-                claimDisableButton.SetActive(true);
+                claimDisableButton.SetActive(false);
                 break;
             case StateClaimDailyEvent.WAITING_CLAIM:
                 // doneIcon.SetActive(false);
