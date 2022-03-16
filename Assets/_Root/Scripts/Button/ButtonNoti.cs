@@ -81,27 +81,18 @@ public class ButtonNoti : MonoBehaviour
                 }
                 break;
             case NotiType.ThanksGiving:
-                if (HomeController.Instance != null && Data.FirstOpenRescuePartyInHome)
-                {
-                    hasNoti = true;
-                }
-                else if (GameController.Instance != null && Data.FirstOpenRescuePartyInGame)
-                {
-                    hasNoti = true;
-                }
-                else
-                {
-                    hasNoti = ResourcesController.SkinsTG.Exists(data => data.HasNotiTG);
-                }
+
+                hasNoti = ResourcesController.SkinsTG.Exists(data => data.HasNotiTG);
+
                 var haveTime = Util.GetStateItemDaily(Data.DailyRewardEventCurrent, Data.DailyRewardEventCurrent);
                 if (haveTime == StateClaimDailyEvent.CAN_CLAIM)
                 {
                     hasNoti = true;
                 }
-                if (Data.CurrentLevel <= 5)
-                {
-                    hasNoti = false;
-                }
+                // if (Data.CurrentLevel <= 5)
+                // {
+                //     hasNoti = false;
+                // }
 
                 break;
 

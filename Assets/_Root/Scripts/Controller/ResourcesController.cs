@@ -96,7 +96,8 @@ public class ResourcesController : Singleton<ResourcesController>
 
     public static void GetSkinsTG()
     {
-        SkinsTG.Add(Hero.SkinDatas.Find(data => data.TGType == TGType.Hero));
+        var a = Hero.SkinDatas.FindAll(data => data.TGType == TGType.Hero);
+        SkinsTG.AddRange(a);
         SkinsTG.Add(Princess.SkinDatas.Find(data => data.TGType == TGType.Top100));
     }
 

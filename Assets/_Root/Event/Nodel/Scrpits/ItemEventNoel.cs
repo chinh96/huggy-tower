@@ -63,6 +63,7 @@ public class ItemEventNoel : MonoBehaviour
     {
         clickCallBack(cfg, gameObject);
         SetStateItem(StateClaimDailyEvent.CLAIMED);
+        EventController.DailyEventClaim();
     }
 
 

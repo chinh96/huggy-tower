@@ -10,9 +10,9 @@ public class WinPopup : Popup
     [SerializeField] private GameObject claimX5Button;
     [SerializeField] private CoinGeneration coinGeneration;
     [SerializeField] private Image iconCrossAds;
-    [SerializeField]private Sprite[] imgIconCrossAds;
-   
-    private string[] UrlData = new string [2]{"market://details?id=com.gamee.savethehero","market://details?id=com.gamee.heropyramid"};
+    [SerializeField] private Sprite[] imgIconCrossAds;
+
+    private string[] UrlData = new string[2] { "market://details?id=com.gamee.huggytimepin", "market://details?id=com.GameeStudio.PoppyPin3D" };
     private int idCrossCurrent = 0;
     protected override void BeforeShow()
     {
@@ -23,7 +23,7 @@ public class WinPopup : Popup
         tapToContinueButton.SetActive(false);
         progressGift.Reset();
 
-        idCrossCurrent = idCrossCurrent == 0 ? 1:0;
+        idCrossCurrent = idCrossCurrent == 0 ? 1 : 0;
         iconCrossAds.sprite = imgIconCrossAds[idCrossCurrent];
     }
 
@@ -72,7 +72,7 @@ public class WinPopup : Popup
     {
 #if UNITY_ANDROID
         // Application.OpenURL("market://details?id=com.gamee.savethehero");
-         Application.OpenURL(UrlData[idCrossCurrent]);
+        Application.OpenURL(UrlData[idCrossCurrent]);
 #else
         // Application.OpenURL("itms-apps://itunes.apple.com/app/id1562329957");
 #endif
