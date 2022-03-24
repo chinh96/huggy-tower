@@ -71,7 +71,7 @@ public class GameController : Singleton<GameController>
     protected override void Awake()
     {
         base.Awake();
-
+        AdController.Instance.ShowBanner();
         overlay.DOFade(1, 0);
         SetEnableLeanTouch(false);
     }
@@ -92,6 +92,7 @@ public class GameController : Singleton<GameController>
 
     private void Start()
     {
+
         MoveInAnim();
         SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
         CheckRadioCamera();

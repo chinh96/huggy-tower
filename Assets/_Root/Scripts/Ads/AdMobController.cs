@@ -58,7 +58,8 @@ public class AdMobController : MonoBehaviour, IAd
 
     public void RequestBanner()
     {
-        bannerView = new BannerView(bannerId, AdSize.Banner, AdPosition.Bottom);
+        var type = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
+        bannerView = new BannerView(bannerId, type, AdPosition.Bottom);
         bannerView.OnPaidEvent += (sender, args) => HandleAdPaidEvent(sender, args, bannerId);
         bannerView.LoadAd(GetAdRequest());
     }
@@ -70,7 +71,8 @@ public class AdMobController : MonoBehaviour, IAd
 
     public void HideBanner()
     {
-        bannerView.Hide();
+        bannerView.Destroy();
+        bannerView = null;
     }
 
     public void RequestInterstitial()

@@ -27,6 +27,7 @@ public class HomeController : Singleton<HomeController>
 
         CheckButton();
         overlay.DOFade(1, 0);
+
     }
 
     public void OnPurchaseSuccessRemoveAds()
@@ -51,7 +52,6 @@ public class HomeController : Singleton<HomeController>
     private void Start()
     {
         canvasScaler.matchWidthOrHeight = Camera.main.aspect > .7f ? 1 : 0;
-        AdController.Instance.ShowBanner();
         SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
         FadeOutOverlay();
         CheckNewUpdatePopup();
@@ -60,6 +60,7 @@ public class HomeController : Singleton<HomeController>
         CheckTG();
         checkAllEvent();
         AdController.Instance.Request();
+        AdController.Instance.HideBanner();
         // CheckLanguage();
     }
 
@@ -128,6 +129,7 @@ public class HomeController : Singleton<HomeController>
     {
         AnalyticController.ClickDailyReward();
         PopupController.Instance.Show<DailyRewardPopup>();
+
     }
 
     public void OnClickCastleButton()

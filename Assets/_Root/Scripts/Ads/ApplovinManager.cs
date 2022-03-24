@@ -19,13 +19,13 @@ public class ApplovinManager : MonoBehaviour
             InitializeRewardedAds();
         };
 
-        MaxSdk.SetSdkKey("lQvyJfkm3Qv_slnGGmoRT3qODiEZz5n89Cwd1XRtTCRltRWdGeITcqSK5Pwqn0ScUnTia-Twq4Qhps7wD8zfbP");
+        MaxSdk.SetSdkKey("QvyJfkm3Qv_slnGGmoRT3qODiEZz5n89Cwd1XRtTCRltRWdGeITcqSK5Pwqn0ScUnTia-Twq4Qhps7wD8zfbP");
         MaxSdk.InitializeSdk();
     }
 
     #region banner
 
-    public string bannerAdUnitId = "d6821dc46d8967bd"; // Retrieve the ID from your account
+    public string bannerAdUnitId = "6ea3fdcb2e721f0d"; // Retrieve the ID from your account
 
     public void InitializeBannerAds()
     {
@@ -55,7 +55,7 @@ public class ApplovinManager : MonoBehaviour
 
     #region intertitial
 
-    public string intertitialAdUnit = "b10c3e29b29b7fc4";
+    public string intertitialAdUnit = "73354c565006f110";
     private int _retryAttempt;
 
     public void InitializeInterstitialAds()
@@ -134,7 +134,7 @@ public class ApplovinManager : MonoBehaviour
 
     #region reward
 
-    public string rewardAdUnit = "1339b99d8195b5ae";
+    public string rewardAdUnit = "9500bfa82ae6e9be";
     private int _rewardRetryAttempt;
 
     public void InitializeRewardedAds()

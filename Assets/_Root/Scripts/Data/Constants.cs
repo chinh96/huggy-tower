@@ -22,6 +22,7 @@ public class Constants
 
     public const string IS_SHOW_INTER_LOSE = "IS_SHOW_INTER_LOSE";
     public const string IS_SHOW_BANNER = "IS_SHOW_BANNER";
+    public const string IS_SHOW_APP_OPEN = "IS_SHOW_APP_OPEN";
     // Data
     public const string CURRENT_LEVEL = "CURRENT_LEVEL";
     public const string MAX_LEVEL = "MAX_LEVEL";

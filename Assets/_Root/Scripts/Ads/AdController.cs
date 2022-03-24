@@ -9,6 +9,7 @@ using com.adjust.sdk;
 public class AdController : Singleton<AdController>
 {
     [NonSerialized] public bool JustShowReward = false;
+    public bool inShowAds = false;
     public bool IsRewardLoaded => ad != null && ad.IsRewardLoaded;
 
     private IAd ad;
@@ -101,7 +102,7 @@ public class AdController : Singleton<AdController>
     {
         if (ad != null)
         {
-            // ad.RequestBanner();
+            ad.RequestBanner();
         }
     }
 
@@ -111,11 +112,11 @@ public class AdController : Singleton<AdController>
         {
             if (isShowBanner)
             {
-                // ad.ShowBanner();
+                ad.ShowBanner();
             }
             else
             {
-                // ad.HideBanner();
+                ad.HideBanner();
             }
         }
     }
@@ -124,7 +125,7 @@ public class AdController : Singleton<AdController>
     {
         if (ad != null && ad.IsBannerLoaded)
         {
-            // ad.HideBanner();
+            ad.HideBanner();
         }
     }
 
@@ -162,6 +163,7 @@ public class AdController : Singleton<AdController>
                     GameController.Instance.Root.ResetTotalTimesPlay();
                     GameController.Instance.Root.RestTotalTimesLose();
                     GameController.Instance.Root.ResetTotalLevelWin();
+                    inShowAds = true;
                 }
                 else
                 {
@@ -215,6 +217,7 @@ public class AdController : Singleton<AdController>
 
                 handleRewardAfterEarned = action;
                 ad.ShowRewardedAd();
+                inShowAds = true;
             }
         }
 #if UNITY_EDITOR

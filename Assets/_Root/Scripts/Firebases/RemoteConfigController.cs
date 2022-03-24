@@ -18,7 +18,9 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
     [NonSerialized] public bool HasIntro = true;
     [NonSerialized] public bool HasCrossAds = false;
     [NonSerialized] public bool IsShowInterLose = false;
-    [NonSerialized] public bool isShowBanner = true;
+    [NonSerialized] public bool isShowBanner = false;
+    [NonSerialized] public bool isShowAppOpen = false;
+
 
     public bool HasNewUpdate => float.Parse(Application.version) < float.Parse(CurrentVersion);
 
@@ -65,6 +67,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         defaults.Add(Constants.HAS_CROSS_ADS, false);
         defaults.Add(Constants.IS_SHOW_INTER_LOSE, false);
         defaults.Add(Constants.IS_SHOW_BANNER, false);
+        defaults.Add(Constants.IS_SHOW_APP_OPEN, true);
         Firebase.RemoteConfig.FirebaseRemoteConfig.SetDefaults(defaults);
     }
 
@@ -115,7 +118,9 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         InterstitalTimeOnLoseCompleted = int.Parse(GetConfig(Constants.INTERSTITIAL_TIME_LEVEL_ON_LOSE_COMPLETED));
         HasCrossAds = bool.Parse(GetConfig(Constants.HAS_CROSS_ADS));
         IsShowInterLose = bool.Parse(GetConfig(Constants.IS_SHOW_INTER_LOSE));
-
+        isShowBanner = bool.Parse(GetConfig(Constants.IS_SHOW_BANNER));
+        isShowAppOpen = bool.Parse(GetConfig(Constants.IS_SHOW_APP_OPEN));
+        Debug.Log(isShowBanner + "showban");
 #if !UNITY_EDITOR
         HasIntro = bool.Parse(GetConfig(Constants.HAS_INTRO));
 #endif
