@@ -7,8 +7,8 @@ using UnityEngine;
 public class RoomTower : MonoBehaviour
 {
     public Collider2D floor;
-    public RectTransform spawnPoint;
-    public Image selectedObject;
+    public RectTransform spawnPoint; // spawn player at this point
+    public Image selectedObject; // mark to this room is selecting
 
     public Sprite canSelectSprite;
     public Sprite cantSelectSprite;
@@ -100,7 +100,7 @@ public class RoomTower : MonoBehaviour
         return false;
     }
 
-    public bool IsRoomHaveUnitNotInvalid()
+    public bool IsRoomHaveUnitNotInvalid() // equivalent with "Does room have any valid Unit?"
     {
         bool flag = false;
         foreach (var unit in units)

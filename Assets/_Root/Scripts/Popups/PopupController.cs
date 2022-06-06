@@ -26,6 +26,7 @@ public class PopupController : Singleton<PopupController>
 
     public void Initialize()
     {
+        Debug.Log("Initilaize Popup");
         if (initialized) return;
 
         popupDict = new Dictionary<Type, Popup>();
@@ -42,8 +43,15 @@ public class PopupController : Singleton<PopupController>
             var type = popup.GetType();
             popupDict.Add(type, popup);
         }
-
+        Debug.Log(popupDict);
         initialized = true;
+    }
+
+    public Popup GetPopup<T>(){
+        if(!popupDict.TryGetValue(typeof(T), out var popup)){
+            Debug.Log("Cannot find that popup!");
+        }
+        return popup;
     }
 
     public void Show<T>(object data = null, ShowAction showAction = ShowAction.DismissCurrent)
@@ -116,7 +124,7 @@ public class PopupController : Singleton<PopupController>
 
     public void Dismiss(Popup basePopup)
     {
-        Remove(basePopup);
+        Remove(basePopup); // remove and reorder
 
         basePopup.Dismiss(true);
 

@@ -24,7 +24,6 @@ public class PanalItemWeek : MonoBehaviour
         bool isHave = false;
         for (i = 0; i < weekData.Count; i++)
         {
-
             Transform item;
             var itemCfg = weekData[i];
             if (itemCfg.SkinId != 0)
@@ -37,14 +36,14 @@ public class PanalItemWeek : MonoBehaviour
                 item = containerGrid.transform.GetChild(i);
             else
             {
-                item = Instantiate(itemDay, containerGrid.transform).transform;
+                item = Instantiate(itemDay, containerGrid.transform).transform; // if not enough => create additionally gameobjects
                 item.SetParent(containerGrid.transform);
             }
             var _comp = item.GetComponent<DailyRewardEventItem>();
-            StateClaimDailyEvent state = Util.GetStateItemDaily(day, Data.DailyRewardEventCurrent);
+            StateClaimDailyEvent state = Util.GetStateItemDaily(day, Data.DailyRewardEventCurrent); // if day < currentDay => auto Claimed even if the player hasn't claimed.
             _comp.InitDailyItem(day, state, itemCfg, clickcb);
         }
-        if (weekData.Count >= 7 && isHave == true)
+        if (weekData.Count >= 7 && isHave == true) // day7
         {
             var itemCfg = weekData[7 - 1];
             int day7 = 6 + 7 * week;
@@ -57,6 +56,7 @@ public class PanalItemWeek : MonoBehaviour
         {
             itemDay7.SetActive(false);
         }
+        // redundant gameobjects
         for (; i < containerGrid.transform.childCount; i++)
         {
             var item = containerGrid.transform.GetChild(i);

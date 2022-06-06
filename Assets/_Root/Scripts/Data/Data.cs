@@ -129,7 +129,7 @@ public static class Data
     public static int PercentProgressGift { get => GetInt(Constants.PERCENT_PROGRESS_GIFT, 0); set => SetInt(Constants.PERCENT_PROGRESS_GIFT, value); }
 
     public static WorldType WorldCurrent { get => (WorldType)GetInt(Constants.WORLD_CURRENT, (int)(ResourcesController.Universe.WorldDefault.WorldType)); set => SetInt(Constants.WORLD_CURRENT, (int)value); }
-
+    public static RoomType RoomCurrent  { get => (RoomType)GetInt(Constants.ROOM_CURRENT, (int)(ResourcesController.Factory.RoomDefault.roomType)); set => SetInt(Constants.ROOM_CURRENT, (int)value); }
     public static SkinData SkinGift;
 
     public static int JoinFbProgress { get => GetInt(Constants.JOIN_FB_PROGRESS, 0); set => SetInt(Constants.JOIN_FB_PROGRESS, value); }

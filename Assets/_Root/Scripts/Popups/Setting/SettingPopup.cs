@@ -39,7 +39,7 @@ public class SettingPopup : Popup
 
     public void OnClickRateUs() { RatingController.Instance.LinkToStore(); }
 
-    public void OnClickShowPopupSelect() { PopupController.Instance.Show<PopupSelectLanguage>(); }
+    public void OnClickShowPopupSelect() { PopupController.Instance.Show<PopupSelectLanguage>(null,showAction = ShowAction.PauseCurrent); }
 
     #region connect
 

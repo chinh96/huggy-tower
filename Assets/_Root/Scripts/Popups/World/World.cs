@@ -10,15 +10,19 @@ public class World : MonoBehaviour
     [SerializeField] private List<Image> castles;
     [SerializeField] private GameObject hammer;
     [SerializeField] private ParticleSystem smoke;
-
+    [SerializeField] private Transform originalParentTransform;
     public WorldType WorldType { get => worldType; set => worldType = value; }
-
+    
+    public void ReturnOriginalPosition(){
+        transform.SetParent(originalParentTransform, false);
+        transform.SetSiblingIndex(0);
+    }
     public void Reset()
     {
         int index = 0;
         foreach (Image castle in castles)
         {
-            CastleData castleCurrent = ResourcesController.Universe.WorldCurrent.Castles[index].CastleCurrent;
+            CastleData castleCurrent = ResourcesController.Universe.WorldCurrent.Castles[index].CastleCurrent; // last isActive = true
             if (castleCurrent != null)
             {
                 castle.sprite = castleCurrent.Sprite;

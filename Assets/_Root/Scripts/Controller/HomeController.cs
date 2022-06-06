@@ -14,8 +14,11 @@ public class HomeController : Singleton<HomeController>
     [SerializeField] private CanvasScaler canvasScaler;
     [SerializeField] private GameObject backgroundHalloween;
     [SerializeField] private GameObject debugButton;
-    public GameObject BackgroundTG;
 
+    [SerializeField] private GameObject backgroundNormal;
+    [SerializeField] private GameObject backgroundWorld;
+
+    public GameObject BackgroundTG;
     public void OnClickDebugButton()
     {
         PopupController.Instance.Show<DebugPopup>(null, ShowAction.DoNothing);
@@ -28,6 +31,20 @@ public class HomeController : Singleton<HomeController>
         CheckButton();
         overlay.DOFade(1, 0);
 
+    }
+
+    public void ResetBackground(){
+        
+        // int childs = backgroundWorld.transform.childCount;
+        // for (int i = 0; i < childs; i++)
+        // {
+        //     Destroy(backgroundWorld.transform.GetChild(i).gameObject);
+        // }
+        backgroundNormal.GetComponent<Image>().enabled = false;
+        var room = PopupController.Instance.GetPopup<RoomPopup>().gameObject;
+        //Instantiate(room.GetComponent<RoomPopup>().GetRoomCurrentObject(), backgroundWorld.transform);
+        room.GetComponent<RoomPopup>().GetRoomCurrentObject().GetComponent<Room>().SetBackground();
+        room.GetComponent<RoomPopup>().GetRoomCurrentObject().transform.SetParent(backgroundWorld.transform, false);
     }
 
     public void OnPurchaseSuccessRemoveAds()
@@ -61,6 +78,8 @@ public class HomeController : Singleton<HomeController>
         checkAllEvent();
         AdController.Instance.Request();
         AdController.Instance.HideBanner();
+
+        ResetBackground();
         // CheckLanguage();
     }
 
@@ -80,6 +99,7 @@ public class HomeController : Singleton<HomeController>
         BackgroundTG.SetActive(TGDatas.IsInTG);
     }
 
+    // if the player in top100 => display popup
     private void CheckRescueParty()
     {
         backgroundHalloween.SetActive(Data.TimeToRescueParty.TotalMilliseconds > 0);
@@ -102,6 +122,9 @@ public class HomeController : Singleton<HomeController>
     {
         SoundController.Instance.PlayOnce(SoundType.ButtonStart);
         overlay.gameObject.SetActive(true);
+
+        PopupController.Instance.GetPopup<RoomPopup>().gameObject.GetComponent<RoomPopup>().ReturnCurrentRoomToOriginalPosition();
+        
         FadeInOverlay(() =>
         {
             SceneManager.LoadSceneAsync(Constants.GAME_SCENE);
@@ -129,12 +152,12 @@ public class HomeController : Singleton<HomeController>
     {
         AnalyticController.ClickDailyReward();
         PopupController.Instance.Show<DailyRewardPopup>();
-
     }
 
     public void OnClickCastleButton()
     {
-        PopupController.Instance.Show<WorldPopup>();
+        //PopupController.Instance.Show<WorldPopup>();
+        PopupController.Instance.Show<RoomPopup>();
     }
 
     public void OnClickSkinButton()
@@ -221,6 +244,8 @@ public class HomeController : Singleton<HomeController>
             checkHaveItem(itemData);
         }
     }
+    
+    // the player doesn't need to claim the skin but still has it.
     private void checkHaveItem(ItemConfigCollectEvent item)
     {
         for (int i = 0; i < TGDatas.ClaimedItems.Length; i++)
@@ -240,8 +265,6 @@ public class HomeController : Singleton<HomeController>
                     if (!dataSkin.IsUnlocked)
                         dataSkin.IsUnlocked = true;
                 }
-
-
             }
         }
     }

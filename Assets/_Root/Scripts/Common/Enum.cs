@@ -235,6 +235,14 @@ public enum WorldType
     Olympus
 }
 
+public enum RoomType{
+    Receptionist,
+    Storage,
+    Lounge,
+    Showroom,
+    ProductionLine,
+    Bedroom
+}
 public enum AchievementType
 {
     NormalEnemy,

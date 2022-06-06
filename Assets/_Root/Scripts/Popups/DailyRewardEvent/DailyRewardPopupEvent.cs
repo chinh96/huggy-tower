@@ -27,7 +27,7 @@ public class DailyRewardPopupEvent : Popup
     void InitData()
     {
         var dataConfig = ResourcesController.DailyEventReward.DailyRewards;
-        var numRows = Math.Ceiling(dataConfig.Count / 15f);
+        var numRows = Math.Ceiling(dataConfig.Count / 15f); // ?? don't use
 
         for (int i = 0; i < 2; i++)
         {
@@ -117,7 +117,4 @@ public class DailyRewardPopupEvent : Popup
         tapGift.SetActive(false);
         tapEvent.SetActive(true);
     }
-
-
-
 }

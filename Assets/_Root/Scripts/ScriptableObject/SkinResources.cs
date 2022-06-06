@@ -37,6 +37,8 @@ public class SkinResources : ScriptableObject, IHasSkeletonDataAsset
 
         return count;
     }
+
+    // return True if TotalCoin > skinCoin
     public bool HasNoti
     {
         get

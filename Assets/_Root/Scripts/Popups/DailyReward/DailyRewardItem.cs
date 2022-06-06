@@ -90,13 +90,13 @@ public class DailyRewardItem : MonoBehaviour
 
     private void CheckDailyCoin()
     {
-        if (day > dayTotal)
+        if (day > dayTotal) // after claim DailyRewardCurrent > dayTotal
         {
             claimDisableButton.SetActive(true);
 
             dailyRewardType = DailyRewardType.NotClaimed;
         }
-        else if (day < Data.DailyRewardCurrent)
+        else if (day < Data.DailyRewardCurrent) // after claim DailyRewardCurrent > dayTotal
         {
             doneIcon.SetActive(isUnlocked);
 

@@ -19,7 +19,7 @@ public class SkinRow : MonoBehaviour
             if (index < skinResources.SkinDatas.Count)
             {
                 SkinItem item = Instantiate(skinItem, content);
-                item.Init(skinResources.SkinDatas[index], skinPopup);
+                item.Init(skinResources.SkinDatas[index], skinPopup, skinPopup.gameObject);
                 skinItems.Add(item);
                 index++;
             }

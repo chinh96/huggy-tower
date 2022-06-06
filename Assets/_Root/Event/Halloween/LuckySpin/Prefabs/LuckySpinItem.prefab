@@ -30,6 +30,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3089691170506509831}
   m_RootOrder: 2
@@ -141,6 +142,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1333755167452697367}
   - {fileID: 7044173853270237685}
@@ -166,8 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LuckySpinType: 0
-  Value: 100
-  ProbabilityRange: {x: 0, y: 0}
+  Value: 250
+  ProbabilityRange: {x: 40, y: 55}
   Coin: {fileID: 7213120057205517064, guid: af03db74965897446b1fd7549a16309b, type: 3}
   Candy: {fileID: 21300000, guid: ee7d0d86d28933241b79271317cde5f3, type: 3}
   Image: {fileID: 7860429764254154387}
@@ -200,6 +202,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3089691170506509831}
   m_RootOrder: 0
@@ -274,7 +277,8 @@ RectTransform:
   m_GameObject: {fileID: 8909300525169324332}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3089691170506509831}
   m_RootOrder: 1
@@ -312,7 +316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 250
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45767933e9a7b3b45a7dc93937633f78, type: 2}
   m_sharedMaterial: {fileID: 188819359160415666, guid: 45767933e9a7b3b45a7dc93937633f78, type: 2}

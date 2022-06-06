@@ -17,6 +17,7 @@ public class TGRankPopup : Popup
 
     private int page = 0;
 
+    // when the player click to TGPopup => Update Leaderboard
     protected override void BeforeShow()
     {
         base.BeforeShow();

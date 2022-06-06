@@ -63,7 +63,7 @@ public class PopupEventNoel : MonoBehaviour
         }
     }
 
-    private StateClaimDailyEvent GetStateItem(int sockXMmas, string idItem)
+    private StateClaimDailyEvent GetStateItem(int sockXMmas, string idItem) // get state of item that has sockXMas
     {
         if (sockXMmas == -1)
         {

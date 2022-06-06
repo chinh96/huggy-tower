@@ -171,7 +171,7 @@ public class DailyRewardEventItem : MonoBehaviour
         SetStateItem(StateClaimDailyEvent.CLAIMED);
         this.clickCallBack(_day, this.cfg, gameObject);
     }
-    void updateUi()
+    void updateUi() // coinIcon and candyIcon are initially SetVisible = False => this function  cannot be used
     {
         if (haveCandy == true && haveCoin == true)
         {

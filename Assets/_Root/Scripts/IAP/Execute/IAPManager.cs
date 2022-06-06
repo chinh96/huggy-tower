@@ -100,11 +100,8 @@ public class IAPManager : Singleton<IAPManager>, IStoreListener
         // ReSharper disable once ForCanBeConvertedToForeach
         for (var i = 0; i < SkuItem.Count; i++)
         {
-            var sku = SkuItem[i]
-                .sku;
-            Enum.TryParse(SkuItem[i]
-                    .productType,
-                out ProductType type);
+            var sku = SkuItem[i].sku;
+            Enum.TryParse(SkuItem[i].productType,out ProductType type);
             builder.AddProduct(sku, type);
         }
     }

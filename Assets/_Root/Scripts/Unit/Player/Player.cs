@@ -20,8 +20,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private Collider2D coll2D;
     [SerializeField] private Collider2D groundCollider;
     [SerializeField] private Collider2D searchTargetCollider;
+
     [SerializeField] private LeanSelectableByFinger leanSelectableByFinger;
     [SerializeField] private PlayerDragTranslate dragTranslate;
+    
     [SerializeField] private LayerMask searchTargetMark;
     [SerializeField] private SpineAttackHandle attackHandle;
     [SerializeField] private float countdownAttack = 1.25f;
@@ -53,6 +55,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private ParticleSystem effectPoison;
     [SerializeField] private ParticleSystem effectFadeIn;
     [SerializeField] private ParticleSystem effectFadeOut;
+
     [SerializeField] private GameObject shuriken;
     [SerializeField] private GameObject bow;
 
@@ -99,20 +102,21 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         }
     }
 
+    // Update previous position and previous visit room.
     public void UpdateDefault()
     {
         _defaultPosition = transform.localPosition;
         _defaultRoom = transform.parent.GetComponent<RoomTower>();
     }
 
-    public (bool, int) CheckCorrectArea()
+    public (bool, int) CheckCorrectArea() 
     {
         bool check = false;
         int indexSlot = 0;
         var tower = levelMap.visitTower;
         for (int i = 0; i < tower.slots.Count; i++)
         {
-            check = tower.slots[i].GetComponent<RectTransform>().Contains(Input.mousePosition, Camera.main);
+            check = tower.slots[i].GetComponent<RectTransform>().Contains(Input.mousePosition, Camera.main); // why don't use RectTransformUtility.ScreenPointToWorldPointInRectangle
             if (check)
             {
                 var hasUnitNotInvalid = tower.slots[i].IsRoomHaveUnitNotInvalid();
@@ -125,7 +129,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         return (check, indexSlot);
     }
 
-
+    // when drag the player to a visit room, it will be marked.
     public void ValidateChooseRoom()
     {
         var result = CheckCorrectArea();
@@ -159,28 +163,34 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     public void OnSelected()
     {
         rigid2D.gravityScale = 0;
+        // turn off all colliders
         coll2D.enabled = false;
         groundCollider.enabled = false;
         searchTargetCollider.enabled = false;
+
         GameController.Instance.SetSlicerActive(true);
     }
 
     public void OnDeSelected()
     {
         rigid2D.gravityScale = 1;
+        // turn on all colliders
         coll2D.enabled = true;
         groundCollider.enabled = true;
         searchTargetCollider.enabled = true;
+
         GameController.Instance.SetSlicerActive(false);
     }
 
-    public void OnMouseDown()
+    public void OnMouseDown() // => can drag player even by its searching collider.
     {
         if (GameController.Instance.GameState == EGameState.Playing && Turn == ETurn.Drag)
         {
             effectFingerPress.gameObject.SetActive(true);
             effectFingerPress.Play();
+
             SoundController.Instance.PlayOnce(SoundType.HeroDrag);
+
             _isMouseUpDragDetected = false;
             if (Turn == ETurn.Drag)
             {
@@ -224,7 +234,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     }
 
-    public void FlashToSlot(RoomTower parentRoom)
+    public void FlashToSlot(RoomTower parentRoom) // use while people click to a room
     {
         if (Turn != ETurn.Drag) return;
         Turn = ETurn.None;
@@ -244,6 +254,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         RoomTower cache = null;
         _parentRoom = parentRoom;
         var currentRoom = transform.parent.GetComponent<RoomTower>();
+
+        // increasing room for home tower
         if (currentRoom != null && levelMap.visitTower.slots.Contains(currentRoom) && currentRoom.IsClearEnemyInRoom() && !currentRoom.IsContaintItem() && !currentRoom.IsContaintPrincess())
         {
             cache = currentRoom;
@@ -262,11 +274,13 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
         levelMap.visitTower.RefreshRoom();
         levelMap.homeTower.RefreshRoom();
+
         OnDeSelected();
         leanSelectableByFinger.Deselect();
 
         _isMouseUpDragDetected = true;
 
+        // not general
         if (Onboarding1.Instance != null)
         {
             Onboarding1.Instance.ShowRound2();
@@ -345,6 +359,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
         float length = 1000;
         int index = 0;
+
+        // why don't use raycast for get the nearest item/enemy
         for (int i = 0; i < _cachedSearchCollider.Count; i++)
         {
             var coll = _cachedSearchCollider[i];
@@ -364,14 +380,14 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         }
 
         var cacheCollider = _cachedSearchCollider[index];
-        if (cacheCollider == coll2D) return;
+        if (cacheCollider == coll2D) return; // ? removed above
 
         #endregion
 
         _target = cacheCollider.GetComponentInParent<Unit>();
         if (_target != null)
         {
-            if (_target is { State: EUnitState.Invalid })
+            if (_target is { State: EUnitState.Invalid }) // ? checked above
             {
                 _target = null;
                 return;
@@ -387,10 +403,12 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                         // check damage
                         _flagAttack = damage > _target.Damage;
+                        
                         if (_flagAttack)
                         {
                             hasBloodEnemy = true;
-                            _target.OnAttack(damage, null);
+                            _target.OnAttack(damage, null); // enemy attack first
+                            // effect of the enemy attack on the player
                             if (_target as EnemyGoblin || _target as EnemyKappa)
                             {
                                 DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
@@ -418,7 +436,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 });
 
                                 var cacheDamage = Damage;
-                                Damage -= _target.Damage;
+                                Damage -= _target.Damage; // with enemy is either Kappa or Goblin
                                 _target.TxtDamage.gameObject.SetActive(true);
                                 _target.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
                                 {
@@ -461,7 +479,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         void SavePrincess()
                         {
                             Princess princess = _target as Princess;
-                            if (!hasKey && princess.LockObj != null)
+                            if (!hasKey && princess.LockObj != null) // the princess is locked
                             {
                                 Turn = ETurn.Drag;
                                 PlayIdle(true);
@@ -493,7 +511,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             if (_itemTarget != null && _itemTarget.State != EUnitState.Invalid && Turn != ETurn.MoveToItem)
             {
                 Turn = ETurn.MoveToItem;
-                DOTween.Kill(transform);
+                DOTween.Kill(transform); // detect enemy before item/gem => kill
 
                 switch (_itemTarget.Type)
                 {

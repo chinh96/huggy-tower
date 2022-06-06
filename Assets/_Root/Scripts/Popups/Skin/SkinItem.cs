@@ -25,21 +25,32 @@ public class SkinItem : MonoBehaviour
     [SerializeField] private GameObject dockActive;
     [SerializeField] private GameObject usedLabel;
     [SerializeField] private GameObject fx;
-
+    private GameObject BGBottom;
     private SkinData skinData;
     private SkinPopup skinPopup;
 
     private SubjectSkinChange m_subjectSkinChange;
 
-    public void Init(SkinData skinData, SkinPopup skinPopup)
+    public void Init(SkinData skinData, SkinPopup skinPopup, GameObject BGBottom)
     {
         this.skinData = skinData;
         this.skinPopup = skinPopup;
-
-
+        this.BGBottom = BGBottom;
     }
     private void Start()
     {
+        // Debug.Log("Bottom");
+        // Debug.Log(BGBottom.GetComponent<RectTransform>().position);
+        // Debug.Log("Item");
+        // Debug.Log(GetComponent<RectTransform>().position);
+        if (skinData.SkinName == "Hero1")
+        {
+            Debug.Log(skinData.Name);
+            Debug.Log(GetComponent<RectTransform>().position);
+            Debug.Log(GetComponent<RectTransform>().localPosition);
+            Debug.Log(GetComponent<RectTransform>().anchoredPosition);
+        }
+
         m_subjectSkinChange = GetComponentInChildren<SubjectSkinChange>();
         if (m_subjectSkinChange != null)
         {
@@ -48,6 +59,18 @@ public class SkinItem : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (skinData.Id == Data.currentSkinHeroId)
+        {
+
+            if (GetComponent<RectTransform>().position.y + GetComponent<RectTransform>().localScale.y > BGBottom.GetComponent<RectTransform>().position.y)
+            {
+                SetActiveFX(false);
+            }
+            else SetActiveFX(true);
+        }
+    }
     public void Reset()
     {
         skeletonGraphic.ChangeSkin(skinData.SkinName, skinPopup.EUnitType);
@@ -313,6 +336,6 @@ public class SkinItem : MonoBehaviour
 
     public void SetActiveFX(bool active)
     {
-        fx.SetActive(false);
+        fx.SetActive(active);
     }
 }

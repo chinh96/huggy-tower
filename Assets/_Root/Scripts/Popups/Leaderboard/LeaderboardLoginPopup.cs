@@ -30,7 +30,7 @@ public class LeaderboardLoginPopup : Popup
             countryItem.Init(data, this);
         });
 
-        FetchCountryCurrent();
+        FetchCountryCurrent(); // get current country of the mobile device
         countryItemCurrent.Init(countryCurrent);
     }
 

@@ -122,6 +122,7 @@ public class DailyQuestResources : ScriptableObject
         int totalDays = Data.TotalDays;
         if (totalDays > 0)
         {
+            // yesterday
             DailyQuestDays[(Data.TotalDays - 1) % DailyQuestDays.Count].DailyQuestDayItems.ForEach(item =>
             {
                 item.NumberCurrent = 0;

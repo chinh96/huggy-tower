@@ -70,6 +70,7 @@ public class LevelMap : MonoBehaviour
 
     public void MoveToNewVisitTower()
     {
+        // a position between 2 visitTowers.
         float endValue = (visitTowers[indexVisitTower].transform.position.x + visitTowers[indexVisitTower - 1].transform.position.x) / 2;
         Camera.main.transform.DOMoveX(endValue, 2).SetEase(Ease.Linear);
     }

@@ -160,6 +160,7 @@ public class Tower : MonoBehaviour
     {
         float duration = 2;
 
+        // change to white color after 2 seconds.
         if (GameController.Instance.IsJapanBackground)
         {
             HomeTowerJapan.rectTransform.sizeDelta = GetComponent<RectTransform>().sizeDelta;

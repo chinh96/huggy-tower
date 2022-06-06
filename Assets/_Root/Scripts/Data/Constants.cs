@@ -48,6 +48,8 @@ public class Constants
     public const string LAST_TIME_CLAIM_DAILY_EVENT = "LAST_TIME_CLAIM_DAILY_EVENT_VALENTINE_2022";
     public const string PERCENT_PROGRESS_GIFT = "PERCENT_PROGRESS_GIFT";
     public const string WORLD_CURRENT = "WORLD_CURRENT";
+    public const string ROOM_CURRENT = "ROOM_CURRENT";
+
     public const string DONE_ONBOARDING = "DONE_ONBOARDING";
     public const string JOIN_FB_PROGRESS = "JOIN_FB_PROGRESS";
     public const string ACHIEVEMENT_NUMBER_TARGET = "ACHIEVEMENT_NUMBER_TARGET";

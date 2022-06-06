@@ -33,10 +33,12 @@ public class DailyQuestItem : MonoBehaviour
         //title.text = item.Title;
         title.GetComponent<Localize>().SetTerm("DailyQuestItem_txt" + item.Type + "Type");
         title.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", item.NumberTarget.ToString(), true);
+
         bonus.text = item.Bonus.ToString();
         buttonActive.SetActive(item.IsUnlocked && !item.IsClaimed);
         buttonDeactive.SetActive(!item.IsUnlocked);
         button.SetActive(!item.IsClaimed);
+        
         done.SetActive(item.IsClaimed);
         progress.fillAmount = (float)item.NumberCurrent / item.NumberTarget;
         number.text = item.Number;

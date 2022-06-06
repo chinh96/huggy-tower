@@ -5,7 +5,7 @@ using UnityEngine;
 public class WorldPopup : Popup
 {
     [SerializeField] private List<World> worlds;
-
+    
     private World worldCurrent;
 
     protected override void AfterInstantiate()
@@ -35,6 +35,10 @@ public class WorldPopup : Popup
         });
     }
 
+    public GameObject GetWorldCurrentGameObject(){
+        return this.worldCurrent.gameObject;
+    }
+
     public void Build(int castleIndex)
     {
         worldCurrent.Build(castleIndex);
@@ -43,7 +47,7 @@ public class WorldPopup : Popup
     protected override void BeforeShow()
     {
         base.BeforeShow();
-
+        this.worldCurrent.GetComponent<World>().ReturnOriginalPosition();
         SoundController.Instance.PlayBackground(SoundType.BackgroundCastle);
     }
 
@@ -69,5 +73,7 @@ public class WorldPopup : Popup
         {
             SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
         }
+
+        HomeController.Instance.ResetBackground();
     }
 }

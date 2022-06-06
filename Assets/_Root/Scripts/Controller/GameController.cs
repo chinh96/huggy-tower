@@ -173,7 +173,7 @@ public class GameController : Singleton<GameController>
             if (go.Item1 != null)
             {
                 DataBridge.Instance.NextLevelLoaded = go.Item1.GetComponent<LevelMap>();
-                DataBridge.Instance.NextLevelLoaded.SetLevelLoaded(go.Item2, fakeLevelIndex + 1);
+                DataBridge.Instance.NextLevelLoaded.SetLevelLoaded(go.Item2, fakeLevelIndex + 1); // fakeLevelIndex + 1, fakeLevelIndex + 1
             }
         }
 
@@ -208,7 +208,8 @@ public class GameController : Singleton<GameController>
             }
         }
         else
-        {
+        {   
+            // Next level
             if (DataBridge.Instance.NextLevelLoaded != null && DataBridge.Instance.NextLevelLoaded.CurrentFakeLevelIndex == fakeIndex)
             {
                 levelInstall = DataBridge.Instance.NextLevelLoaded;
@@ -216,6 +217,7 @@ public class GameController : Singleton<GameController>
             }
             else
             {
+                // start game
                 DataBridge.Instance.NextLevelLoaded = null;
                 var level = await DataBridge.Instance.GetLevel(fakeIndex);
                 if (level.Item1 != null)

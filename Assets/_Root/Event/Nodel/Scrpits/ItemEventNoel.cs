@@ -26,7 +26,7 @@ public class ItemEventNoel : MonoBehaviour
         SetStateItem(state);
         setSock(configEvent.NumCandyXmas);
 
-        if (configEvent.NumCandyXmas == -1)
+        if (configEvent.NumCandyXmas == -1) // this check no CandyXmas, because PopupEventNoel checked item that has turkeys
         {
             for (int i = 0; i < TGDatas.ClaimedItems.Length; i++)
             {
@@ -49,7 +49,6 @@ public class ItemEventNoel : MonoBehaviour
                     // keyLock.SetActive(false);
                 });
             }
-
         }
     }
     void setSock(int sockXmas)
@@ -75,12 +74,6 @@ public class ItemEventNoel : MonoBehaviour
         SetStateItem(StateClaimDailyEvent.CLAIMED);
         EventController.DailyEventClaim();
     }
-
-
-
-
-
-
 
     public void SetStateItem(StateClaimDailyEvent stateClaim)
     {
@@ -117,7 +110,6 @@ public class ItemEventNoel : MonoBehaviour
 
                 claimDisableButton.SetActive(false);
                 break;
-
         }
 
     }

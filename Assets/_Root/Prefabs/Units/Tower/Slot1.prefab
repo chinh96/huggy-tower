@@ -26,6 +26,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7977980171020204160}
   m_RootOrder: 0
@@ -64,6 +65,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2708244043936116999}
   - {fileID: 2126940315715982302}
@@ -127,6 +129,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floor: {fileID: 2126940315715982297}
   spawnPoint: {fileID: 2708244043936116999}
+  selectedObject: {fileID: 0}
+  canSelectSprite: {fileID: 0}
+  cantSelectSprite: {fileID: 0}
   units: []
   items: []
 --- !u!1001 &2463975122842180708
@@ -226,13 +231,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e5bfa4f7cd3e204abfffb49cea9db67, type: 3}
---- !u!224 &2126940315715982302 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4590756417121357754, guid: 7e5bfa4f7cd3e204abfffb49cea9db67, type: 3}
-  m_PrefabInstance: {fileID: 2463975122842180708}
-  m_PrefabAsset: {fileID: 0}
 --- !u!61 &2126940315715982297 stripped
 BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 4590756417121357757, guid: 7e5bfa4f7cd3e204abfffb49cea9db67, type: 3}
+  m_PrefabInstance: {fileID: 2463975122842180708}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2126940315715982302 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4590756417121357754, guid: 7e5bfa4f7cd3e204abfffb49cea9db67, type: 3}
   m_PrefabInstance: {fileID: 2463975122842180708}
   m_PrefabAsset: {fileID: 0}

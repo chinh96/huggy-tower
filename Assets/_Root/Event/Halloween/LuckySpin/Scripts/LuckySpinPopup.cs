@@ -18,6 +18,7 @@ public class LuckySpinPopup : Popup
     public CoinGeneration CoinGeneration;
     public CoinGeneration CandyGeneration;
     public GameObject Overlay;
+    public GameObject decor;
 
     private int SecondsRemaining;
 
@@ -29,7 +30,13 @@ public class LuckySpinPopup : Popup
             var item = LuckySpinItems[i];
             float angle = Mathf.PI * (3 - 2 * i) / 8;
             item.transform.localPosition = new Vector2(radian * Mathf.Cos(angle), radian * Mathf.Sin(angle));
-            item.transform.eulerAngles = new Vector3(0, 0, -i * 45 - 22.5f);
+
+            Vector2 fromDecorToItem = item.transform.position - decor.transform.position;
+            
+            float sign = item.transform.position.normalized.y > decor.transform.position.normalized.y ? 1.0f : -1.0f;
+            item.transform.RotateAround(item.transform.position,Vector3.forward, sign*Vector3.Angle(item.transform.up, fromDecorToItem));
+            Debug.Log(item.transform.up);
+            //item.transform.eulerAngles = new Vector3(0, 0, -i * 45 - 22.5f);
             item.Setup();
         }
     }
@@ -37,10 +44,10 @@ public class LuckySpinPopup : Popup
     protected override void BeforeShow()
     {
         base.BeforeShow();
-
         Reset();
         SpinSkeleton.Play("idle", true);
     }
+
 
     public void Reset()
     {
