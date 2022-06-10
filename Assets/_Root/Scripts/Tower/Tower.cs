@@ -34,10 +34,18 @@ public class Tower : MonoBehaviour
     public Sprite towerHalloween;
     public List<GameObject> flagHalloweens;
 
+    [Header("HOME FOOTAGE AND ROOFTOP")]
+    public Sprite HomeRoofTop;
+    public Sprite HomeFootTage;
+
     private void Start()
     {
         slots = GetComponentsInChildren<RoomTower>().ToList();
-
+        Debug.Log(slots.Count);
+        slots.ForEach(slot => {
+            slot.GetComponent<Image>().SetNativeSize();
+            Debug.Log(slot.name);
+        });
         if (this as VisitTower)
         {
             DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
@@ -135,6 +143,7 @@ public class Tower : MonoBehaviour
         SoundController.Instance.PlayOnce(SoundType.TowerLevelUp);
 
         var newRoom = Instantiate(GameController.Instance.RoomPrefab, transform, false);
+        newRoom.GetComponent<Image>().SetNativeSize();
         slots.Add(newRoom);
 
         newRoom.transform.localScale = Vector3.zero;
@@ -195,8 +204,18 @@ public class Tower : MonoBehaviour
 
         slots.ForEach(slot =>
         {
-            slot.transform.Find("Slot1").GetComponent<Image>().DOColor(new Color(1, 1, 1, 1), duration);
+            //slot.transform.Find("Slot1").GetComponent<Image>().DOColor(new Color(1, 1, 1, 1), duration);
+            slot.transform.Find("Slot1").gameObject.SetActive(true);
         });
+
+        Image imgVisitFootTage = transform.Find("FootTage").GetComponent<Image>();
+        imgVisitFootTage.sprite = HomeFootTage;
+        imgVisitFootTage.SetNativeSize();
+        imgVisitFootTage.GetComponent<RectTransform>().localPosition = Vector3.zero;
+
+        Image imgVisitRoofTop = transform.Find("RoofTop").GetComponent<Image>();
+        imgVisitRoofTop.sprite = HomeRoofTop;
+        imgVisitRoofTop.SetNativeSize();
     }
 
     public void PlayExplosion()

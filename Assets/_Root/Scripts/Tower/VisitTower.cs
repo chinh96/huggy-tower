@@ -10,4 +10,5 @@ public class VisitTower : Tower
     {
         get { return instance ?? (instance = FindObjectOfType<VisitTower>()); }
     }
+
 }

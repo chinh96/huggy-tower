@@ -15,7 +15,10 @@ public class RoomCollectionItem : MonoBehaviour
     [SerializeField] private GameObject _huggyImage;
 
     private RoomResources _roomResources;
-
+    
+    public RoomType GetRoomType(){
+        return _roomResources.roomType;
+    }
     public void Init(RoomResources roomResources, bool isActive)
     {
         _roomResources = roomResources;

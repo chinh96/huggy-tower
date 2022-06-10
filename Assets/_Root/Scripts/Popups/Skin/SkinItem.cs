@@ -37,40 +37,27 @@ public class SkinItem : MonoBehaviour
         this.skinPopup = skinPopup;
         this.BGBottom = BGBottom;
     }
-    private void Start()
-    {
-        // Debug.Log("Bottom");
-        // Debug.Log(BGBottom.GetComponent<RectTransform>().position);
-        // Debug.Log("Item");
-        // Debug.Log(GetComponent<RectTransform>().position);
-        if (skinData.SkinName == "Hero1")
-        {
-            Debug.Log(skinData.Name);
-            Debug.Log(GetComponent<RectTransform>().position);
-            Debug.Log(GetComponent<RectTransform>().localPosition);
-            Debug.Log(GetComponent<RectTransform>().anchoredPosition);
-        }
+    // private void Start()
+    // {
+    //     // Debug.Log("Bottom");
+    //     // Debug.Log(BGBottom.GetComponent<RectTransform>().position);
+    //     // Debug.Log("Item");
+    //     // Debug.Log(GetComponent<RectTransform>().position);
+    //     if (skinData.SkinName == "Hero1")
+    //     {
+    //         Debug.Log(skinData.Name);
+    //         Debug.Log(GetComponent<RectTransform>().position);
+    //         Debug.Log(GetComponent<RectTransform>().localPosition);
+    //         Debug.Log(GetComponent<RectTransform>().anchoredPosition);
+    //     }
 
-        m_subjectSkinChange = GetComponentInChildren<SubjectSkinChange>();
-        if (m_subjectSkinChange != null)
-        {
-            m_subjectSkinChange.Next(skinData);
-        }
+    //     m_subjectSkinChange = GetComponentInChildren<SubjectSkinChange>();
+    //     if (m_subjectSkinChange != null)
+    //     {
+    //         m_subjectSkinChange.Next(skinData);
+    //     }
 
-    }
-
-    private void Update()
-    {
-        if (skinData.Id == Data.currentSkinHeroId)
-        {
-
-            if (GetComponent<RectTransform>().position.y + GetComponent<RectTransform>().localScale.y > BGBottom.GetComponent<RectTransform>().position.y)
-            {
-                SetActiveFX(false);
-            }
-            else SetActiveFX(true);
-        }
-    }
+    // }
     public void Reset()
     {
         skeletonGraphic.ChangeSkin(skinData.SkinName, skinPopup.EUnitType);
@@ -164,7 +151,7 @@ public class SkinItem : MonoBehaviour
                     {
                         SetActiveDock(true);
                         SetActiveUsedLabel(true);
-                        SetActiveFX(true);
+                        //SetActiveFX(true);
                     }
                     else
                     {
@@ -172,7 +159,7 @@ public class SkinItem : MonoBehaviour
                         {
                             SetActiveDock(true);
                             SetActiveUsedLabel(true);
-                            SetActiveFX(true);
+                            //SetActiveFX(true);
                         }
                     }
                 }
@@ -183,7 +170,7 @@ public class SkinItem : MonoBehaviour
                 {
                     SetActiveDock(true);
                     SetActiveUsedLabel(true);
-                    SetActiveFX(true);
+                    //SetActiveFX(true);
                 }
                 break;
         }
@@ -307,7 +294,7 @@ public class SkinItem : MonoBehaviour
     }
 
     public void OnClick()
-    {
+    {   
         if (skinData.IsUnlocked || Data.IsUnlockAllSkins)
         {
             SetSkin();
@@ -316,12 +303,14 @@ public class SkinItem : MonoBehaviour
         }
 
         skinPopup.ChangeCharacterSkin(skinData);
-
+        
+        skinPopup.ResetUsedLabel();
+        SetActiveUsedLabel(true);
         skinPopup.ResetDock();
         SetActiveDock(true);
 
         skinPopup.ResetFx();
-        SetActiveFX(true);
+        SetActiveFX(false);
     }
 
     public void SetActiveDock(bool active)

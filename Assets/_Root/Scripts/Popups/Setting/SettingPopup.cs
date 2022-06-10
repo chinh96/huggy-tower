@@ -14,7 +14,7 @@ public class SettingPopup : Popup
     [SerializeField] private GameObject updateButton;
     [SerializeField] private GameObject block;
 
-    private void Awake() { purchaseButton.SetActive(false); }
+    // private void Awake() { purchaseButton.SetActive(false); }
 
     protected override void BeforeShow()
     {

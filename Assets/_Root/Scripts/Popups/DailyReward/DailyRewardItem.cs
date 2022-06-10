@@ -51,6 +51,8 @@ public class DailyRewardItem : MonoBehaviour
         }
     }
 
+    public int Day => day;
+
     public void Init(int day, int coin, int dayTotal, bool isDayLoop, DailyRewardPopup dailyRewardPopup)
     {
         this.day = day;
@@ -90,13 +92,13 @@ public class DailyRewardItem : MonoBehaviour
 
     private void CheckDailyCoin()
     {
-        if (day > dayTotal) // after claim DailyRewardCurrent > dayTotal
+        if (day > dayTotal)
         {
-            claimDisableButton.SetActive(true);
+            // claimDisableButton.SetActive(true);
 
             dailyRewardType = DailyRewardType.NotClaimed;
         }
-        else if (day < Data.DailyRewardCurrent) // after claim DailyRewardCurrent > dayTotal
+        else if (day < Data.DailyRewardCurrent)
         {
             doneIcon.SetActive(isUnlocked);
 
@@ -104,22 +106,31 @@ public class DailyRewardItem : MonoBehaviour
         }
         else if (day > Data.DailyRewardCurrent)
         {
-            claimPendingButton.SetActive(true);
+            // claimPendingButton.SetActive(true);
 
             dailyRewardType = DailyRewardType.NotClaimed;
         }
         else
         {
-            claimButton.SetActive(true);
-            dailyRewardPopup.SetCoinCurrent(coin);
+            if (!isUnlocked)
+            {
+                claimButton.SetActive(true);
+                dailyRewardPopup.SetCoinCurrent(coin);
 
+                dailyRewardPopup.SetX5Text(coin);
+            }
+            else
+            {
+                doneIcon.SetActive(true);
+            }
             dailyRewardType = DailyRewardType.Current;
-            dailyRewardPopup.SetX5Text(coin);
+
         }
     }
 
     private void CheckDailySkin()
     {
+        if (isUnlocked) return;
         if (isSkin)
         {
             int index = ResourcesController.DailyReward.DailyRewardsSkin.IndexOf(day);
@@ -142,15 +153,15 @@ public class DailyRewardItem : MonoBehaviour
     {
         switch (dailyRewardType)
         {
-            case DailyRewardType.Claimed:
-                background.sprite = isDay7 ? spriteSkinClaimed : spriteCoinClaimed;
-                break;
+            // case DailyRewardType.Claimed:
+            //     background.sprite = isDay7 ? spriteSkinClaimed : spriteCoinClaimed;
+            //     break;
             case DailyRewardType.Current:
                 background.sprite = isDay7 ? spriteSkinCurrent : spriteCoinCurrent;
                 break;
-            case DailyRewardType.NotClaimed:
-                background.sprite = isDay7 ? spriteSkinNotClaimed : spriteCoinNotClaimed;
-                break;
+                // case DailyRewardType.NotClaimed:
+                //     background.sprite = isDay7 ? spriteSkinNotClaimed : spriteCoinNotClaimed;
+                //     break;
         }
     }
 
@@ -166,6 +177,11 @@ public class DailyRewardItem : MonoBehaviour
         dailyRewardPopup.OnClickClaim(claimButton, isSkin);
         ResourcesController.Achievement.IncreaseByType(AchievementType.ClaimDailyReward);
 
+        isUnlocked = true;
+    }
+
+    public void SetDoneAfterClaimedAds()
+    {
         isUnlocked = true;
     }
 

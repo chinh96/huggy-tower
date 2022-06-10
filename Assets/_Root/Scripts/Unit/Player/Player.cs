@@ -240,12 +240,12 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         Turn = ETurn.None;
 
         effectFadeIn.Play();
-        Skeleton.Play("FadeOut", false);
+        // Skeleton.Play("FadeOut", false); Chưa có anim fadeIn, fadeOut
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
         {
             MoveToSlot(parentRoom);
             effectFadeOut.Play();
-            Skeleton.Play("FadeIn", false);
+            // Skeleton.Play("FadeIn", false);
         });
     }
 
@@ -427,7 +427,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                         SoundController.Instance.PlayOnce(SoundType.BombGoblin);
                                     }
 
-                                    skeleton.Play("Die2", false);
+                                    //skeleton.Play("Die2", false); chưa có anim hurt
+                                    
                                     SoundController.Instance.PlayOnce(SoundType.GoblinKappaAttack);
                                     DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
                                     {
@@ -497,7 +498,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 {
                                     GameController.Instance.OnWinLevel();
                                 });
-                                GiveFlower();
+                                // GiveFlower(); Chưa có anim
                             });
                         }
                     }
@@ -563,7 +564,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 {
                     if (_itemTarget as ItemTeleport != null)
                     {
-                        skeleton.Play("Teleport", false);
+                        //skeleton.Play("Teleport", false);
                         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                         {
                             _itemTarget.Collect(this);
@@ -915,7 +916,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         {
             if (Data.CurrentSkinHero == skinLess)
             {
-                skeleton.Play("Idle2", true);
+                //skeleton.Play("Idle2", true);
+                skeleton.Play("Idle", true);
             }
             else
             {
@@ -987,7 +989,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         {
             case ItemType.SwordJapan:
                 {
-                    skeleton.Play("AttackKiemJapan", false);
+                    // skeleton.Play("AttackKiemJapan", false);
+                    skeleton.Play("Attack", false);
 
                     DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                     {
@@ -1015,7 +1018,9 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 {
                     string[] attacks = { "Attack", "AttackSword", "AttackSword2" };
                     string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
-                    skeleton.Play(attack, false);
+                    //skeleton.Play(attack, false);
+                    skeleton.Play("Attack", false);
+
                     // var snowExpore = I2.Loc.ResourceManager.pInstance.LoadFromResources<UnityEngine.GameObject>("Prefabs/Effect/Snow_Explosion");
 
 
@@ -1044,7 +1049,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Electric:
             case ItemType.Poison:
                 {
-                    skeleton.Play("AttackElemental", false);
+                    //skeleton.Play("AttackElemental", false);
+                    skeleton.Play("Attack2", false);
                     SoundController.Instance.PlayOnce(SoundType.Axe1);
 
                     if (hasBloodEnemy)
@@ -1084,7 +1090,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     break;
                 }
             case ItemType.Bow2:
-                skeleton.Play("AttackBow", false);
+                //skeleton.Play("AttackBow", false);
+                skeleton.Play("Attack", false);
                 SoundController.Instance.PlayOnce(SoundType.Bow2);
                 DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
                 {
@@ -1099,18 +1106,21 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 });
                 break;
             case ItemType.Polllaxe:
-                skeleton.Play("AttackPollaxe", false);
+                //skeleton.Play("AttackPollaxe", false);
+                skeleton.Play("Attack", false);
                 SoundController.Instance.PlayOnce(SoundType.Pollaxe);
                 PlayBloodEnemy();
                 break;
             case ItemType.Mace:
                 {
-                    skeleton.Play("AttackMace", false);
+                    //skeleton.Play("AttackMace", false);
+                    skeleton.Play("Attack", false);
                     SoundController.Instance.PlayOnce(SoundType.Mace);
                     break;
                 }
             case ItemType.SwordBlood:
-                skeleton.Play("AttackSword3", false);
+                //skeleton.Play("AttackSword3", false);
+                skeleton.Play("Attack", false);
                 DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                 {
                     SoundController.Instance.PlayOnce(SoundType.HeroCut3);
@@ -1121,7 +1131,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 });
                 break;
             case ItemType.Shuriken:
-                skeleton.Play("Shuriken", false);
+                //skeleton.Play("Shuriken", false);
+                skeleton.Play("Attack", false);
                 SoundController.Instance.PlayOnce(SoundType.Knife);
                 DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                 {
@@ -1222,7 +1233,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     }
 
                     string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
-                    skeleton.Play(attack, false);
+                    //skeleton.Play(attack, false);
+                    skeleton.Play("Attack", false);
 
                     switch (EquipType)
                     {
@@ -1292,7 +1304,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Mace:
             case ItemType.Bow2:
             case ItemType.Polllaxe:
-                skeleton.Play("RunKiem", true);
+                //skeleton.Play("RunKiem", true);
+                skeleton.Play("Run", true);
                 break;
             default:
                 skeleton.Play("Run", true);
@@ -1304,18 +1317,21 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         if (_target as EnemyIceDragon)
         {
-            skeleton.Play("DieIce", false);
+            //skeleton.Play("DieIce", false);
+            skeleton.Play("Die", false);
         }
         else if (_target as EnemyDragonHead)
         {
-            skeleton.Play("DieFire2", false);
+            //skeleton.Play("DieFire2", false);
+            skeleton.Play("Die", false);
         }
         else
         {
             SoundController.Instance.PlayOnce(SoundType.HeroDie);
             var dies = new string[] { "Die", "Die3" };
             string die = dies[UnityEngine.Random.Range(0, dies.Length)];
-            skeleton.Play(die, false);
+            //skeleton.Play(die, false);
+            skeleton.Play("Die", false);
             IsDie3 = die == "Die3";
         }
 
@@ -1325,7 +1341,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     public void PlayWin(bool isLoop)
     {
         string[] wins = { "Win", "Win2", "Win3" };
-        skeleton.Play(wins[UnityEngine.Random.Range(0, wins.Length)], true);
+        //skeleton.Play(wins[UnityEngine.Random.Range(0, wins.Length)], true);
+        skeleton.Play("Win", true);
         SoundController.Instance.PlayOnce(SoundType.HeroYeah);
     }
 
@@ -1367,24 +1384,24 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Mace:
             case ItemType.Bow2:
             case ItemType.Polllaxe:
-                skeleton.Play("Pick", false);
+                skeleton.Play("PickUp", false);
                 SoundController.Instance.PlayOnce(SoundType.HeroPickSword);
                 break;
             case ItemType.Gloves:
-                skeleton.Play("Pick", false);
+                skeleton.Play("PickUp", false);
                 SoundController.Instance.PlayOnce(SoundType.PickGloves);
                 break;
             case ItemType.Food:
-                skeleton.Play("Pick", false);
+                skeleton.Play("PickUp", false);
                 SoundController.Instance.PlayOnce(SoundType.PickFood);
                 break;
             case ItemType.Shield:
-                skeleton.Play("Pick", false);
+                skeleton.Play("PickUp", false);
                 SoundController.Instance.PlayOnce(SoundType.PickShield);
                 break;
             case ItemType.Key:
                 hasKey = true;
-                skeleton.Play("Pick", false);
+                skeleton.Play("PickUp", false);
                 SoundController.Instance.PlayOnce(SoundType.PickKey);
 
                 var _cacheItemTarget = _itemTarget;
@@ -1410,7 +1427,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 break;
             case ItemType.BrokenBrick:
                 SoundController.Instance.PlayOnce(SoundType.HeroPushWall);
-                skeleton.Play("HitWall", false);
+                //skeleton.Play("HitWall", false);
                 DOTween.Sequence().AppendInterval(.4f).AppendCallback(() =>
                 {
                     ParticleSystem effectHitWall = Instantiate(this.effectHitWall, transform.parent);
@@ -1422,16 +1439,16 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Trap:
                 DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
                 {
-                    skeleton.Play("Die2", false);
+                    //skeleton.Play("Die2", false);
                 });
                 break;
             case ItemType.Bomb:
-                skeleton.Play("DieFire", false);
+                //skeleton.Play("DieFire", false);
                 break;
             case ItemType.Bow:
                 DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                 {
-                    skeleton.Play("Die2", false);
+                    //skeleton.Play("Die2", false);
                 });
                 break;
             default:
@@ -1451,10 +1468,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         case ItemType.Mace:
                         case ItemType.Bow2:
                         case ItemType.Polllaxe:
-                            skeleton.Play("Open1", false);
+                            skeleton.Play("PickUp", false);
                             break;
                         default:
-                            skeleton.Play("Open2", false);
+                            skeleton.Play("PickUp", false);
                             break;
                     }
                     break;

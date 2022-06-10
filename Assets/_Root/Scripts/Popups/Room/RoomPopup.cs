@@ -6,7 +6,7 @@ public class RoomPopup : Popup
 {
     [SerializeField] List<Room> _roomList;
     [SerializeField] List<RoomCollectionItem> _roomColectionItemList;
-
+    [SerializeField] ScrollRectScript scrollRectScript;
     private Room _currentRoom;
     // Start is called before the first frame update
     protected override void AfterInstantiate()
@@ -39,10 +39,12 @@ public class RoomPopup : Popup
         }
     }
 
-    public void OpenNewRoom(){
+    public void OpenNewRoom()
+    {
         for (int idx = 0; idx < _roomColectionItemList.Count; idx++)
         {
-            if(!ResourcesController.Factory.Rooms[idx].IsComplete){
+            if (!ResourcesController.Factory.Rooms[idx].IsComplete)
+            {
                 _roomColectionItemList[idx].Reset(true);
                 break;
             }
@@ -59,6 +61,8 @@ public class RoomPopup : Popup
                _currentRoom = item;
                item.gameObject.SetActive(true);
                item.Init();
+
+               //scrollRectScript.FocusOnCurrentRoom(item.transform.GetSiblingIndex());
            }
            else item.gameObject.SetActive(false);
        });
@@ -67,7 +71,8 @@ public class RoomPopup : Popup
     // Hide Huggy Image on all collections and resetRoomCurrent;
     public void ChangeToAnotherRoom()
     {
-        _roomColectionItemList.ForEach(item=>{
+        _roomColectionItemList.ForEach(item =>
+        {
             item.HideHuggyImage();
         });
         ResetRoomCurent();
@@ -95,8 +100,17 @@ public class RoomPopup : Popup
                 item.Reset();
             }
         });
+
     }
 
+    protected override void AfterShown()
+    {
+        base.AfterShown();
+        for (int idx = 0; idx < _roomColectionItemList.Count; idx++)
+        {
+            if (_roomColectionItemList[idx].GetRoomType() == Data.RoomCurrent) scrollRectScript.FocusOnCurrentRoom(_roomColectionItemList[idx].transform.GetSiblingIndex());
+        }
+    }
     public override void Close()
     {
         if (this._currentRoom.IsUpgrading() == false)

@@ -84,6 +84,12 @@ public class DailyRewardPopup : Popup
                 Data.CoinTotal++;
             }, () =>
             {
+                foreach(var dailyRewardItem in dailyRewardItems){
+                    if(dailyRewardItem.Day == Data.DailyRewardCurrent){
+                        dailyRewardItem.SetDoneAfterClaimedAds();
+                        break;
+                    }
+                }
                 Claim();
                 Data.CoinTotal = coinTotal;
             }, x5Button);
@@ -94,7 +100,7 @@ public class DailyRewardPopup : Popup
 
     public void Claim()
     {
-        Data.DailyRewardCurrent++;
+        //Data.DailyRewardCurrent++;
         Reset();
     }
 

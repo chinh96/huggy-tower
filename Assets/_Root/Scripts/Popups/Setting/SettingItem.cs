@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class SettingItem : MonoBehaviour
 {
     [SerializeField] private SettingType settingType;
-    [SerializeField] private GameObject on;
-    [SerializeField] private GameObject off;
+    [SerializeField] private GameObject _activeIcon;
+    [SerializeField] private GameObject _unActiveIcon;
+
+    // [SerializeField] private GameObject on;
+    // [SerializeField] private GameObject off;
 
     private void Start()
     {
@@ -57,8 +60,8 @@ public class SettingItem : MonoBehaviour
 
     private void SetState(bool state)
     {
-        on.SetActive(state);
-        off.SetActive(!state);
+        _activeIcon.SetActive(state);
+        _unActiveIcon.SetActive(!state);
     }
 }
 

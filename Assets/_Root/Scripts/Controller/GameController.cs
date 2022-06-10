@@ -137,6 +137,7 @@ public class GameController : Singleton<GameController>
 
     public async void LoadLevel(int fakeIndex)
     {
+        EventController.CurrentLevelChanged?.Invoke();
         TGDatas.TotalTurkeyText = TGDatas.TotalTurkey;
         if (fighterOverlay != null)
         {
@@ -164,8 +165,6 @@ public class GameController : Singleton<GameController>
         ZoomOutCamera();
 
         firePaper.gameObject.SetActive(false);
-
-        LoadBackground();
 
         async void LoadNextLevel(int fakeLevelIndex)
         {
@@ -608,12 +607,17 @@ public class GameController : Singleton<GameController>
 
     private void ZoomInCamera()
     {
+        Debug.Log("Zoom in");
         Player.TxtDamage.gameObject.SetActive(false);
 
         Vector2 endValue = new Vector2(Player.transform.position.x, Player.transform.position.y) + zoomOffset;
+        Debug.Log(endValue);
         if (Player.IsDie3)
         {
             endValue -= new Vector2(1f, 0);
+        }
+        else if(GameState == EGameState.Lose){
+            endValue -= new Vector2(.5f, 0);
         }
         Camera.main.transform.DOMove(endValue, zoomCameraDuration);
 
