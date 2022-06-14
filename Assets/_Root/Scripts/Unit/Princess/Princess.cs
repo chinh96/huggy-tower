@@ -32,34 +32,35 @@ public class Princess : Unit, IAnim
     public Image LockObj { get => lockObj; set => lockObj = value; }
     public Image LockObj2 { get => lockObj2; set => lockObj2 = value; }
 
-    public void PlayIdle(bool isLoop) { skeleton.Play("idle", true); }
+    public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
     public void PlayAttack() { }
 
     public void PLayMove(bool isLoop) { }
 
-    public void PlayDead() { skeleton.Play("die", true); }
+    public void PlayDead() { skeleton.Play("Die", true); }
 
     public void PlayWin(bool isLoop)
     {
         canvas.sortingOrder = 130;
-        if (Data.TimeToRescueParty.TotalMilliseconds > 0)
+        // if (Data.TimeToRescueParty.TotalMilliseconds > 0)
+        // {
+        //     Data.TotalGoldMedal++;
+        //     skeleton.Play("GiveCandy", false);
+        //     DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
+        //     {
+        //         skeleton.Play("GiveCandy2", true);
+        //     });
+        // }
+        // else
+        // {
+        skeleton.Play("Win", false);
+        DOTween.Sequence().AppendInterval(.7f).AppendCallback(() =>
         {
-            Data.TotalGoldMedal++;
-            skeleton.Play("GiveCandy", false);
-            DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
-            {
-                skeleton.Play("GiveCandy2", true);
-            });
-        }
-        else
-        {
-            skeleton.Play("win", false);
-            DOTween.Sequence().AppendInterval(.7f).AppendCallback(() =>
-            {
-                skeleton.Play("win 2", true);
-            });
-        }
+            skeleton.Play("Win", true);
+            //skeleton.Play("win 2", true);
+        });
+        //}
 
         SoundController.Instance.PlayOnce(SoundType.RescuePrincess);
         ResourcesController.Achievement.IncreaseByType(AchievementType.Princess);

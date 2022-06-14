@@ -40,14 +40,15 @@ public class Tower : MonoBehaviour
 
     private void Start()
     {
-        slots = GetComponentsInChildren<RoomTower>().ToList();
-        Debug.Log(slots.Count);
-        slots.ForEach(slot => {
-            slot.GetComponent<Image>().SetNativeSize();
-            Debug.Log(slot.name);
-        });
         if (this as VisitTower)
         {
+            slots = GetComponentsInChildren<RoomTower>().ToList();
+            slots.ForEach(slot =>
+            {
+                //slot.GetComponent<Image>().SetNativeSize();
+                slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(560, 278);
+            });
+
             DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
             {
                 NumberedUnits();
@@ -58,6 +59,10 @@ public class Tower : MonoBehaviour
                 GameController.Instance.Root.LevelMap.MoveCameraVertical(slots[0]);
                 GameController.Instance.Root.LevelMap.MoveCameraHorizontal();
             });
+        }
+        else if(this as HomeTower){
+            slots = GetComponentsInChildren<RoomTower>().ToList();
+            slots[0].GetComponent<Image>().SetNativeSize();
         }
 
         if (GameController.Instance.IsJapanBackground)
@@ -143,7 +148,7 @@ public class Tower : MonoBehaviour
         SoundController.Instance.PlayOnce(SoundType.TowerLevelUp);
 
         var newRoom = Instantiate(GameController.Instance.RoomPrefab, transform, false);
-        newRoom.GetComponent<Image>().SetNativeSize();
+        //newRoom.GetComponent<Image>().SetNativeSize();
         slots.Add(newRoom);
 
         newRoom.transform.localScale = Vector3.zero;
@@ -206,16 +211,23 @@ public class Tower : MonoBehaviour
         {
             //slot.transform.Find("Slot1").GetComponent<Image>().DOColor(new Color(1, 1, 1, 1), duration);
             slot.transform.Find("Slot1").gameObject.SetActive(true);
+            slot.GetComponent<Image>().enabled = false;
         });
 
         Image imgVisitFootTage = transform.Find("FootTage").GetComponent<Image>();
+        RectTransform imgVisitFootTageRT = imgVisitFootTage.GetComponent<RectTransform>();
+        Vector2 oldSizeDelta = imgVisitFootTageRT.sizeDelta;
         imgVisitFootTage.sprite = HomeFootTage;
         imgVisitFootTage.SetNativeSize();
+        imgVisitFootTageRT.sizeDelta = new Vector2(oldSizeDelta.x, imgVisitFootTageRT.sizeDelta.y);
         imgVisitFootTage.GetComponent<RectTransform>().localPosition = Vector3.zero;
 
         Image imgVisitRoofTop = transform.Find("RoofTop").GetComponent<Image>();
+        RectTransform imgVisitRoofTopRT = imgVisitRoofTop.GetComponent<RectTransform>();
+        oldSizeDelta = imgVisitRoofTopRT.sizeDelta;
         imgVisitRoofTop.sprite = HomeRoofTop;
         imgVisitRoofTop.SetNativeSize();
+        imgVisitRoofTop.GetComponent<RectTransform>().sizeDelta = new Vector2(oldSizeDelta.x,imgVisitRoofTopRT.sizeDelta.y);
     }
 
     public void PlayExplosion()

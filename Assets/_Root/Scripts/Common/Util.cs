@@ -110,6 +110,7 @@ public static partial class Util
                 else
                 {
                     skeletonGraphic.AnimationState.SetAnimation(0, "Idle", true).MixDuration = 0;
+                    //skeletonGraphic.AnimationState.SetAnimation(0, "Home", true).MixDuration = 0;
                 }
             }
             else if (characterType == EUnitType.Princess)

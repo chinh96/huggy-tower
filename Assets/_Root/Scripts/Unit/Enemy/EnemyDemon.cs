@@ -47,7 +47,7 @@ public class EnemyDemon : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.DemonAttack); }
+    public void PlayAttack() { skeleton.Play("Attack2", false); SoundController.Instance.PlayOnce(SoundType.DemonAttack); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 

@@ -17,7 +17,9 @@ public class EnemyRange : Unit, IAnim
 
     private Action _callbackAttackPlayer;
 
-    private void Start() { attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent); }
+    private void Start() { 
+        attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent); 
+    }
 
     private void OnEndAttackByEvent() { PlayIdle(true); }
 
@@ -51,7 +53,7 @@ public class EnemyRange : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-    public void PlayAttack() { skeleton.Play("AttackArchery", false); SoundController.Instance.PlayOnce(SoundType.EnemyShoot); }
+    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.EnemyShoot); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
