@@ -61,7 +61,7 @@ public class HomeController : Singleton<HomeController>
 #if UNITY_IOS
         fbLoginButton.SetActive(RemoteConfigController.Instance.EnableFbLogin);
 #endif
-        removeAdsButton.SetActive(!Data.IsRemovedAds);
+        //removeAdsButton.SetActive(!Data.IsRemovedAds);
         rescuePartyButton.SetActive(Data.TimeToRescueParty.TotalMilliseconds > 0);
         debugButton.SetActive(ResourcesController.Config.EnableTest);
     }

@@ -23,13 +23,18 @@ public abstract class Unit : MonoBehaviour, IUnit, IAttack
             }
         }
 
-        if (!TGDatas.IsInTG)
+        // if (!TGDatas.IsInTG)
+        // {
+        //     var turkey = GetComponentInChildren<TGTurkey>();
+        //     if (turkey != null)
+        //     {
+        //         Destroy(turkey.gameObject);
+        //     }
+        // }
+        var turkey = GetComponentInChildren<TGTurkey>();
+        if (turkey != null)
         {
-            var turkey = GetComponentInChildren<TGTurkey>();
-            if (turkey != null)
-            {
-                Destroy(turkey.gameObject);
-            }
+            Destroy(turkey.gameObject);
         }
     }
 

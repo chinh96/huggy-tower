@@ -55,7 +55,7 @@ public enum EUnitType
 }
 
 public enum ItemType
-{
+{    
     BrokenBrick,
     Chest,
     Sword,
@@ -64,7 +64,6 @@ public enum ItemType
     Gloves,
     Food,
     Shield,
-    Key,
     Knife,
     Trap,
     HolyWater,
@@ -75,7 +74,13 @@ public enum ItemType
     SwordJapan,
     Shuriken,
     SwordBlood,
+
+    // Huggy
     Claws,
+    Saw,
+    Hammer,
+    Key,
+
     Ice,
     Fire,
     Electric,
@@ -85,6 +90,12 @@ public enum ItemType
     Polllaxe
 }
 
+public enum ItemTypeHuggy{
+    Claws,
+    Hammer,
+    Saw,
+    Key
+}
 public enum ETurn
 {
     None = 0,

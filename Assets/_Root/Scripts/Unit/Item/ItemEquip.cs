@@ -64,6 +64,9 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
                 case ItemType.Polllaxe:
                     player.EquipType = EquipType;
                     break;
+                default:
+                    player.EquipType = EquipType;
+                    break;
             }
             IncreaseDamage(player);
             ChangeSword(player);

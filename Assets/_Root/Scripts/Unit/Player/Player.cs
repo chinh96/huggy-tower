@@ -1158,18 +1158,18 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             {
                                 SoundController.Instance.PlayOnce(SoundType.HeroHit3);
                             });
-                            attacks = new string[] { "AttackClaws2" };
+                            attacks = new string[] { "AttackClaws" };
                             break;
-                        case ItemType.Gloves:
+                        case ItemType.Hammer:
                             DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                             {
                                 SoundController.Instance.PlayOnce(SoundType.Gloves);
                             });
-                            attacks = new string[] { "AttackGlove2" };
+                            attacks = new string[] { "AttackHammer" };
                             break;
-                        case ItemType.Knife:
+                        case ItemType.Saw:
                             SoundController.Instance.PlayOnce(SoundType.Knife);
-                            attacks = new string[] { "AttackKnife", "AttackKnife2" };
+                            attacks = new string[] { "AttackSaw"};
                             break;
                         case ItemType.Axe:
                             {
@@ -1233,8 +1233,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     }
 
                     string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
-                    //skeleton.Play(attack, false);
-                    skeleton.Play("Attack", false);
+                    skeleton.Play(attack, false);
+                    //skeleton.Play("Attack", false);
 
                     switch (EquipType)
                     {
