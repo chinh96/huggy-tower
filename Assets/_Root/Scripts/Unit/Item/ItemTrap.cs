@@ -30,6 +30,10 @@ public class ItemTrap : Item
                     DecreaseDamage(player, damage);
                     SoundController.Instance.PlayOnce(SoundType.BlockWallBreak);
                     break;
+                case ItemType.Electric:
+                    DecreaseDamage(player, damage);
+                    SoundController.Instance.PlayOnce(SoundType.BlockWallBreak);
+                    break;
                 case ItemType.Trap:
                     skeleton.Play("Attack", false);
                     DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
@@ -67,6 +71,7 @@ public class ItemTrap : Item
             {
                 case ItemType.BrokenBrick:
                 case ItemType.Bomb:
+                case ItemType.Electric:
                     gameObject.SetActive(false);
                     break;
             }

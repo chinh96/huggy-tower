@@ -14,7 +14,7 @@ public class EnemyRange : Unit, IAnim
     public SpineAttackHandle attackHandle;
     public RectTransform arrowSpawnPosition;
     public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
-
+    public GameObject skeletonDie;
     private Action _callbackAttackPlayer;
 
     private void Start() { 
@@ -51,16 +51,18 @@ public class EnemyRange : Unit, IAnim
     public override void LightReturn() { }
 
     public SkeletonGraphic Skeleton => skeleton;
-    public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
+    public void PlayIdle(bool isLoop) { skeleton.Play("Idle2", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.EnemyShoot); }
+    public void PlayAttack() { skeleton.Play("Attack2", false); SoundController.Instance.PlayOnce(SoundType.EnemyShoot); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
     public void PlayDead()
     {
-        skeleton.Play("Die", false);
 
+        //skeleton.Play("Die", false);
+        skeletonDie.SetActive(true);
+        skeleton.enabled = false;
         SoundType[] soundTypes = { SoundType.EnemyDie, SoundType.EnemyDie2, SoundType.EnemyDie3 };
         SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
         SoundController.Instance.PlayOnce(soundType);

@@ -307,7 +307,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         }
     }
 
-    public void StartSearchingTurn() { Turn = ETurn.Searching; }
+    public void StartSearchingTurn()
+    {
+        Turn = ETurn.Searching;
+    }
 
     public void StartMoveToItemTurn() { Turn = ETurn.MoveToItem; }
 
@@ -320,7 +323,9 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         if (GameController.Instance.GameState != EGameState.Playing && (Turn == ETurn.Drag || Turn == ETurn.None) || state == EUnitState.Invalid) return;
 
         _countdownAttack = Mathf.Max(0, _countdownAttack - Time.deltaTime);
-        if (_countdownAttack <= 0 && !GameController.Instance.IsOnboarding)
+        //_countdownAttack <= 0 && 
+
+        if (!GameController.Instance.IsOnboarding)
         {
             SearchingTarget();
         }
@@ -343,7 +348,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     private void SearchingTarget()
     {
         if (Turn != ETurn.Searching) return;
-
         _cachedSearchCollider = new List<Collider2D>();
         searchTargetCollider.OverlapCollider(new ContactFilter2D() { layerMask = searchTargetMark.value, useTriggers = true, useLayerMask = true },
             _cachedSearchCollider);
@@ -396,16 +400,16 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             switch (_target.Type)
             {
                 case EUnitType.Enemy:
-                    if (_target is { State: EUnitState.Normal } && _countdownAttack <= 0)
+                    if (_target is { State: EUnitState.Normal })//&& _countdownAttack <= 0)
                     {
                         var distance = Math.Abs((_target.transform.localPosition.x - transform.localPosition.x));
-                        Debug.Log(distance);
-                        if (distance >= 250)
-                        {
-                            PLayMove(true);
-                            transform.DOLocalMoveX(_target.transform.position.x - 20, 0.5f).SetEase(Ease.Linear).OnComplete(() => { AfterMoveToEnemy();});
-                        }
-                        else AfterMoveToEnemy();
+                        // if (distance >= 250)
+                        // {
+                        //     PLayMove(true);
+                        //     transform.DOLocalMoveX(_target.transform.position.x - 20, 0.5f).SetEase(Ease.Linear).OnComplete(() => { AfterMoveToEnemy();});
+                        // }
+                        // else 
+                        AfterMoveToEnemy();
 
                         void AfterMoveToEnemy()
                         {
@@ -441,11 +445,12 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                         //skeleton.Play("Die2", false); chưa có anim hurt
 
                                         SoundController.Instance.PlayOnce(SoundType.GoblinKappaAttack);
-                                        DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
-                                        {
-                                            PlayAttack();
-                                        });
+                                        // DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
+                                        // {
+                                        //     PlayAttack();
+                                        // });
                                     });
+                                    PlayAttack();
 
                                     var cacheDamage = Damage;
                                     Damage -= _target.Damage; // with enemy is either Kappa or Goblin
@@ -469,7 +474,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 _target.OnAttack(damage, BeingAttackedCallback);
                             }
                         }
-
                     }
 
                     break;
@@ -595,7 +599,12 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                     Turn = ETurn.UsingItem;
                     PlayUseItem(_itemTarget.EquipType);
-                    float timeDelay = _itemTarget.EquipType == ItemType.Bow || _itemTarget.EquipType == ItemType.BrokenBrick || _itemTarget.EquipType == ItemType.Trap ? 1.2f : .5f;
+                    float timeDelay = _itemTarget.EquipType == ItemType.Bow || 
+                        _itemTarget.EquipType == ItemType.BrokenBrick || 
+                        _itemTarget.EquipType == ItemType.Trap || 
+                        _itemTarget.EquipType == ItemType.Bomb  || 
+                        _itemTarget.EquipType == ItemType.Electric ? 1.2f : .5f;
+                    // Time delay after collect item
                     DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
                         if (levelMap.condition == condition)
@@ -786,7 +795,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         {
             swordNames.Add(swordName);
         }
-        Debug.Log(swordNames);
         if (swordNames.Count > 0)
         {
             Skeleton.ChangeSword(swordNames);
@@ -1366,21 +1374,23 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     public void GiveFlower()
     {
-        if (Data.TimeToRescueParty.TotalMilliseconds > 0)
-        {
-            skeleton.Play("GetMedal", true);
-        }
-        else
-        {
-            if (Data.CurrentSkinHero == skinLess)
-            {
-                skeleton.Play("Sit2", true);
-            }
-            else
-            {
-                skeleton.Play("Sit", true);
-            }
-        }
+        // Chưa có animation
+        // if (Data.TimeToRescueParty.TotalMilliseconds > 0)
+        // {
+        //     skeleton.Play("GetMedal", true);
+        // }
+        // else
+        // {
+        //     if (Data.CurrentSkinHero == skinLess)
+        //     {
+        //         skeleton.Play("Sit2", true);
+        //     }
+        //     else
+        //     {
+        //         skeleton.Play("Sit", true);
+        //     }
+        // }
+        skeleton.Play("Win", true);
     }
 
     public void PlayLose(bool isLoop) { skeleton.Play("Die", true); }
@@ -1395,7 +1405,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Shuriken:
             case ItemType.SwordJapan:
             case ItemType.SwordBlood:
-            case ItemType.Electric:
             case ItemType.Fire:
             case ItemType.Ice:
             case ItemType.Poison:
@@ -1454,6 +1463,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     effectHitWall.Play();
                 });
                 break;
+
+            case ItemType.Electric:
+                skeleton.Play("LoseElectric", false);
+                break;
+
             case ItemType.Trap:
                 DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
                 {
@@ -1483,7 +1497,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         case ItemType.Shuriken:
                         case ItemType.SwordJapan:
                         case ItemType.SwordBlood:
-                        case ItemType.Electric:
+                        // case ItemType.Electric:
                         case ItemType.Fire:
                         case ItemType.Ice:
                         case ItemType.Poison:

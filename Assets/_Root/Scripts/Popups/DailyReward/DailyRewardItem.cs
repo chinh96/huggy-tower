@@ -33,7 +33,7 @@ public class DailyRewardItem : MonoBehaviour
     private DailyRewardPopup dailyRewardPopup;
     private SkinData skinData;
     private DailyRewardType dailyRewardType = DailyRewardType.NotClaimed;
-
+    
     private bool isDay7 => day % 7 == 6;
     private bool isSkin => !isDayLoop && ResourcesController.DailyReward.DailyRewardsSkin.Contains(day);
     private bool isUnlocked
@@ -185,6 +185,9 @@ public class DailyRewardItem : MonoBehaviour
         isUnlocked = true;
     }
 
+    public string DailyRewardTypeOfItem(){
+        return dailyRewardType.ToString();
+    }
     private enum DailyRewardType
     {
         Claimed,

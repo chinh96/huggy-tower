@@ -32,8 +32,7 @@ public class Onboarding1 : Singleton<Onboarding1>, IHasSkeletonDataAsset
         get
         {
             Data.IdCheckUnlocked = "Onboarding0";
-           //return Data.IsUnlocked;
-           return true;
+            return Data.IsUnlocked;
         }
 
         set

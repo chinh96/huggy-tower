@@ -10,10 +10,10 @@ public class DailyRewardPopup : Popup
     [SerializeField] private TextMeshProUGUI x5Text;
     [SerializeField] private List<DailyRewardItem> dailyRewardItems;
     [SerializeField] private CoinGeneration coinGeneration;
-
+    [SerializeField] private GameObject ClaimButton;
     private int coinCurrent;
     private bool hasCoinCurrent;
-
+    private DailyRewardItem currentDailyRewardItem;
     protected override void BeforeShow()
     {
         base.BeforeShow();
@@ -35,13 +35,13 @@ public class DailyRewardPopup : Popup
         {
             int day = dayStart + dayOffset;
             int coin = isDayLoop ? ResourcesController.DailyReward.DailyRewardsLoop[day % 7] : ResourcesController.DailyReward.DailyRewards[day];
-
             item.Init(day, coin, dayTotal, isDayLoop, this);
             item.Reset();
-
+            if(day == Data.DailyRewardCurrent) currentDailyRewardItem = item;
             dayOffset++;
         });
 
+        if(currentDailyRewardItem.DailyRewardTypeOfItem() != "Claimed") ClaimButton.SetActive(false);
         SetX5ButtonActive(hasCoinCurrent);
     }
 
@@ -51,12 +51,13 @@ public class DailyRewardPopup : Popup
         this.coinCurrent = coinCurrent;
     }
 
+    // old code
     public void OnClickClaim(GameObject claimButton, bool isSkin)
     {
         if (isSkin)
         {
             Claim();
-            Data.CoinTotal = Data.CoinTotal;
+            Data.CoinTotal = Data.CoinTotal; // ?
         }
         else
         {
@@ -70,8 +71,12 @@ public class DailyRewardPopup : Popup
                 Data.CoinTotal = coinTotal;
             }, claimButton);
         }
-        
+        ClaimButton.SetActive(false);
         AnalyticController.AdjustLogEventClaimDailyReward();
+    }
+
+    public void OnClickClaimButton(){
+        currentDailyRewardItem.OnClickClaim();
     }
 
     public void OnClickClaimAds()
@@ -98,6 +103,7 @@ public class DailyRewardPopup : Popup
         });
     }
 
+    
     public void Claim()
     {
         //Data.DailyRewardCurrent++;

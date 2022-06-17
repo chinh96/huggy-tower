@@ -35,8 +35,8 @@ public class Tower : MonoBehaviour
     public List<GameObject> flagHalloweens;
 
     [Header("HOME FOOTAGE AND ROOFTOP")]
-    public Sprite HomeRoofTopImg;
-    public Sprite HomeFootTageImg;
+    public Image HomeRoofTopImg;
+    public Image HomeFootTageImg;
 
     [Header("FOOTAGE AND ROOFTOP")]
     public GameObject FootTage;
@@ -44,9 +44,12 @@ public class Tower : MonoBehaviour
 
     private void Start()
     {
+        int childCount = transform.childCount;
         Rooftop.transform.SetSiblingIndex(0);
+        FootTage.transform.SetSiblingIndex(childCount - 1);
         if (this as VisitTower)
         {
+            homeTower.transform.SetSiblingIndex(1);
             var enemyImg = GetComponent<Image>();
             enemyImg.type = Image.Type.Tiled;
             GetComponent<RectTransform>().sizeDelta = new Vector2(475, 100);
@@ -217,40 +220,45 @@ public class Tower : MonoBehaviour
         DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
         {
             tower.DOColor(new Color(0, 0, 0, 0), duration / 2);
-            GetComponent<Image>().sprite = homeTower.sprite;
 
         });
-        DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
-        {
-            tower.DOColor(new Color(1, 1, 1, 1), duration / 2);
-            ChangeItemsToHome();
-        });
-
-        
+        ChangeItemsToHome(duration);
     }
-    private void ChangeItemsToHome(){
+    private void ChangeItemsToHome(float duration)
+    {
         slots.ForEach(slot =>
         {
-            //slot.transform.Find("Slot1").GetComponent<Image>().DOColor(new Color(1, 1, 1, 1), duration);
             slot.transform.Find("Slot1").gameObject.SetActive(true);
-            slot.GetComponent<Image>().enabled = false;
+            slot.transform.Find("Slot1").GetComponent<Image>().DOColor(new Color(1, 1, 1, 1), duration);
+            DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
+            {
+                slot.GetComponent<Image>().DOColor(new Color(0, 0, 0, 0), duration / 2);
+            });
         });
 
-        // Remain heigh, change width based on the visit tower
-        Image imgVisitFootTage = FootTage.GetComponent<Image>();
-        RectTransform imgVisitFootTageRT = imgVisitFootTage.GetComponent<RectTransform>();
-        Vector2 oldSizeDelta = imgVisitFootTageRT.sizeDelta;
-        imgVisitFootTage.sprite = HomeFootTageImg;
-        imgVisitFootTage.SetNativeSize();
-        imgVisitFootTageRT.sizeDelta = new Vector2(oldSizeDelta.x, imgVisitFootTageRT.sizeDelta.y);
-        imgVisitFootTage.GetComponent<RectTransform>().localPosition = Vector3.zero;
+        HomeFootTageImg.DOColor(new Color(1, 1, 1, 1), duration);
 
-        Image imgVisitRoofTop = transform.Find("RoofTop").GetComponent<Image>();
-        RectTransform imgVisitRoofTopRT = imgVisitRoofTop.GetComponent<RectTransform>();
-        oldSizeDelta = imgVisitRoofTopRT.sizeDelta;
-        imgVisitRoofTop.sprite = HomeRoofTopImg;
-        imgVisitRoofTop.SetNativeSize();
-        imgVisitRoofTop.GetComponent<RectTransform>().sizeDelta = new Vector2(oldSizeDelta.x, imgVisitRoofTopRT.sizeDelta.y);
+        HomeRoofTopImg.DOColor(new Color(1, 1, 1, 1), duration);
+        DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
+        {
+            Rooftop.GetComponent<Image>().DOColor(new Color(0, 0, 0, 0), duration / 2);
+
+        });
+        // // Remain heigh, change width based on the visit tower
+        // Image imgVisitFootTage = FootTage.GetComponent<Image>();
+        // RectTransform imgVisitFootTageRT = imgVisitFootTage.GetComponent<RectTransform>();
+        // Vector2 oldSizeDelta = imgVisitFootTageRT.sizeDelta;
+        // imgVisitFootTage.sprite = HomeFootTageImg;
+        // imgVisitFootTage.SetNativeSize();
+        // imgVisitFootTageRT.sizeDelta = new Vector2(oldSizeDelta.x, imgVisitFootTageRT.sizeDelta.y);
+        // imgVisitFootTage.GetComponent<RectTransform>().localPosition = Vector3.zero;
+
+        // Image imgVisitRoofTop = transform.Find("RoofTop").GetComponent<Image>();
+        // RectTransform imgVisitRoofTopRT = imgVisitRoofTop.GetComponent<RectTransform>();
+        // oldSizeDelta = imgVisitRoofTopRT.sizeDelta;
+        // imgVisitRoofTop.sprite = HomeRoofTopImg;
+        // imgVisitRoofTop.SetNativeSize();
+        // imgVisitRoofTop.GetComponent<RectTransform>().sizeDelta = new Vector2(oldSizeDelta.x, imgVisitRoofTopRT.sizeDelta.y);
     }
 
     public void PlayExplosion()
