@@ -37,7 +37,7 @@ public class ItemLock : Item, IAnim
         });
     }
 
-    public void PlayLose(bool isLoop = false) { skeleton.Play("Fire", isLoop); }
+    public void PlayLose(bool isLoop = false) { skeleton.Play("Idle", isLoop); }
 
     public override void Collect(IUnit affectTarget) { }
 }

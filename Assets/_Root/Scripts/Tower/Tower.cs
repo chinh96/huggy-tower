@@ -35,11 +35,16 @@ public class Tower : MonoBehaviour
     public List<GameObject> flagHalloweens;
 
     [Header("HOME FOOTAGE AND ROOFTOP")]
-    public Sprite HomeRoofTop;
-    public Sprite HomeFootTage;
+    public Sprite HomeRoofTopImg;
+    public Sprite HomeFootTageImg;
+
+    [Header("FOOTAGE AND ROOFTOP")]
+    public GameObject FootTage;
+    public GameObject Rooftop;
 
     private void Start()
     {
+        Rooftop.transform.SetSiblingIndex(0);
         if (this as VisitTower)
         {
             var enemyImg = GetComponent<Image>();
@@ -231,10 +236,11 @@ public class Tower : MonoBehaviour
             slot.GetComponent<Image>().enabled = false;
         });
 
-        Image imgVisitFootTage = transform.Find("FootTage").GetComponent<Image>();
+        // Remain heigh, change width based on the visit tower
+        Image imgVisitFootTage = FootTage.GetComponent<Image>();
         RectTransform imgVisitFootTageRT = imgVisitFootTage.GetComponent<RectTransform>();
         Vector2 oldSizeDelta = imgVisitFootTageRT.sizeDelta;
-        imgVisitFootTage.sprite = HomeFootTage;
+        imgVisitFootTage.sprite = HomeFootTageImg;
         imgVisitFootTage.SetNativeSize();
         imgVisitFootTageRT.sizeDelta = new Vector2(oldSizeDelta.x, imgVisitFootTageRT.sizeDelta.y);
         imgVisitFootTage.GetComponent<RectTransform>().localPosition = Vector3.zero;
@@ -242,7 +248,7 @@ public class Tower : MonoBehaviour
         Image imgVisitRoofTop = transform.Find("RoofTop").GetComponent<Image>();
         RectTransform imgVisitRoofTopRT = imgVisitRoofTop.GetComponent<RectTransform>();
         oldSizeDelta = imgVisitRoofTopRT.sizeDelta;
-        imgVisitRoofTop.sprite = HomeRoofTop;
+        imgVisitRoofTop.sprite = HomeRoofTopImg;
         imgVisitRoofTop.SetNativeSize();
         imgVisitRoofTop.GetComponent<RectTransform>().sizeDelta = new Vector2(oldSizeDelta.x, imgVisitRoofTopRT.sizeDelta.y);
     }
