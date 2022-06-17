@@ -23,7 +23,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     [SerializeField] private LeanSelectableByFinger leanSelectableByFinger;
     [SerializeField] private PlayerDragTranslate dragTranslate;
-    
+
     [SerializeField] private LayerMask searchTargetMark;
     [SerializeField] private SpineAttackHandle attackHandle;
     [SerializeField] private float countdownAttack = 1.25f;
@@ -109,7 +109,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         _defaultRoom = transform.parent.GetComponent<RoomTower>();
     }
 
-    public (bool, int) CheckCorrectArea() 
+    public (bool, int) CheckCorrectArea()
     {
         bool check = false;
         int indexSlot = 0;
@@ -398,65 +398,78 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 case EUnitType.Enemy:
                     if (_target is { State: EUnitState.Normal } && _countdownAttack <= 0)
                     {
-                        Turn = ETurn.Attacking;
-                        _countdownAttack = countdownAttack;
-
-                        // check damage
-                        _flagAttack = damage > _target.Damage;
-                        
-                        if (_flagAttack)
+                        var distance = Math.Abs((_target.transform.localPosition.x - transform.localPosition.x));
+                        Debug.Log(distance);
+                        if (distance >= 250)
                         {
-                            hasBloodEnemy = true;
-                            _target.OnAttack(damage, null); // enemy attack first
-                            // effect of the enemy attack on the player
-                            if (_target as EnemyGoblin || _target as EnemyKappa)
+                            PLayMove(true);
+                            transform.DOLocalMoveX(_target.transform.position.x - 20, 0.5f).SetEase(Ease.Linear).OnComplete(() => { AfterMoveToEnemy();});
+                        }
+                        else AfterMoveToEnemy();
+
+                        void AfterMoveToEnemy()
+                        {
+                            Turn = ETurn.Attacking;
+                            _countdownAttack = countdownAttack;
+
+                            // check damage
+                            _flagAttack = damage > _target.Damage;
+
+                            if (_flagAttack)
                             {
-                                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                                hasBloodEnemy = true;
+                                _target.OnAttack(damage, null); // enemy attack first
+                                                                // effect of the enemy attack on the player
+                                if (_target as EnemyGoblin || _target as EnemyKappa)
                                 {
-                                    if (_target as EnemyKappa)
+                                    DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
                                     {
-                                        effectHitKappa.gameObject.SetActive(true);
-                                        effectHitKappa.Play();
-                                    }
-                                    else
-                                    {
-                                        ParticleSystem bomb = Instantiate(effectBomb, transform.parent);
-                                        bomb.transform.position = transform.position;
-                                        bomb.gameObject.SetActive(true);
-                                        bomb.Play();
-                                        SoundController.Instance.PlayOnce(SoundType.BombGoblin);
-                                    }
+                                        if (_target as EnemyKappa)
+                                        {
+                                            effectHitKappa.gameObject.SetActive(true);
+                                            effectHitKappa.Play();
+                                        }
+                                        else
+                                        {
+                                            ParticleSystem bomb = Instantiate(effectBomb, transform.parent);
+                                            bomb.transform.position = transform.position;
+                                            bomb.gameObject.SetActive(true);
+                                            bomb.Play();
+                                            SoundController.Instance.PlayOnce(SoundType.BombGoblin);
+                                        }
 
-                                    //skeleton.Play("Die2", false); chưa có anim hurt
-                                    
-                                    SoundController.Instance.PlayOnce(SoundType.GoblinKappaAttack);
-                                    DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
-                                    {
-                                        PlayAttack();
+                                        //skeleton.Play("Die2", false); chưa có anim hurt
+
+                                        SoundController.Instance.PlayOnce(SoundType.GoblinKappaAttack);
+                                        DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
+                                        {
+                                            PlayAttack();
+                                        });
                                     });
-                                });
 
-                                var cacheDamage = Damage;
-                                Damage -= _target.Damage; // with enemy is either Kappa or Goblin
-                                _target.TxtDamage.gameObject.SetActive(true);
-                                _target.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
+                                    var cacheDamage = Damage;
+                                    Damage -= _target.Damage; // with enemy is either Kappa or Goblin
+                                    _target.TxtDamage.gameObject.SetActive(true);
+                                    _target.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
+                                    {
+                                        TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
+                                        TxtDamage.DOCounter(cacheDamage, Damage, 0);
+                                        _target.TxtDamage.gameObject.SetActive(false);
+                                    });
+                                }
+                                else
                                 {
-                                    TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
-                                    TxtDamage.DOCounter(cacheDamage, Damage, 0);
-                                    _target.TxtDamage.gameObject.SetActive(false);
-                                });
+                                    PlayAttack();
+                                }
                             }
                             else
                             {
+                                hasBloodEnemy = false;
                                 PlayAttack();
+                                _target.OnAttack(damage, BeingAttackedCallback);
                             }
                         }
-                        else
-                        {
-                            hasBloodEnemy = false;
-                            PlayAttack();
-                            _target.OnAttack(damage, BeingAttackedCallback);
-                        }
+
                     }
 
                     break;
@@ -631,7 +644,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     timeDelay = .5f;
                     switch (_itemTarget.EquipType)
                     {
-                        case ItemType.Sword:
+                        case ItemType.Baseball:
                         case ItemType.SwordBlood:
                             timeDelay = .2f;
                             break;
@@ -773,7 +786,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         {
             swordNames.Add(swordName);
         }
-
+        Debug.Log(swordNames);
         if (swordNames.Count > 0)
         {
             Skeleton.ChangeSword(swordNames);
@@ -788,7 +801,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         {
             DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
             {
-                skeleton.Play("PickClaws", false);
+                skeleton.Play("PickUp", false);
             });
 
             DOTween.Sequence().AppendInterval(.8f).AppendCallback(() =>
@@ -1169,14 +1182,19 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             break;
                         case ItemType.Saw:
                             SoundController.Instance.PlayOnce(SoundType.Knife);
-                            attacks = new string[] { "AttackSaw"};
+                            attacks = new string[] { "AttackSaw" };
                             break;
+                        case ItemType.Baseball:
+                            SoundController.Instance.PlayOnce(SoundType.HeroCut);
+                            attacks = new string[] { "AttackBaseball" };
+                            break;
+
                         case ItemType.Axe:
                             {
                                 SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
                                 SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
                                 SoundController.Instance.PlayOnce(soundType);
-                                attacks = new string[] { "AttackAxe", "AttackAxe2" };
+                                attacks = new string[] { "Attack", "Attack2" };
                                 break;
                             }
                         default:
@@ -1184,7 +1202,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
                                 SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
                                 SoundController.Instance.PlayOnce(soundType);
-                                attacks = new string[] { "AttackHit", "AttackHit2" };
+                                attacks = new string[] { "Attack", "Attack2" };
                                 if (hasBloodEnemy)
                                 {
                                     DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
@@ -1308,7 +1326,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 skeleton.Play("Run", true);
                 break;
             default:
-                skeleton.Play("Run", true);
+                skeleton.Play("Walk", true);
                 break;
         }
     }
@@ -1439,13 +1457,17 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Trap:
                 DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
                 {
-                    //skeleton.Play("Die2", false);
+                    skeleton.Play("LoseTrap", false);
                 });
                 break;
             case ItemType.Bomb:
-                //skeleton.Play("DieFire", false);
+                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+               {
+                   skeleton.Play("LoseBomb", false);
+               });
                 break;
             case ItemType.Bow:
+                break;
                 DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                 {
                     //skeleton.Play("Die2", false);

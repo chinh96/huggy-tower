@@ -80,6 +80,7 @@ public enum ItemType
     Saw,
     Hammer,
     Key,
+    Baseball,
 
     Ice,
     Fire,

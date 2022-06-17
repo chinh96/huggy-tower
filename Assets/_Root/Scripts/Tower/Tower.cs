@@ -42,11 +42,14 @@ public class Tower : MonoBehaviour
     {
         if (this as VisitTower)
         {
+            var enemyImg = GetComponent<Image>();
+            enemyImg.type = Image.Type.Tiled;
+            GetComponent<RectTransform>().sizeDelta = new Vector2(475, 100);
             slots = GetComponentsInChildren<RoomTower>().ToList();
             slots.ForEach(slot =>
             {
-                //slot.GetComponent<Image>().SetNativeSize();
-                slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(560, 278);
+                slot.GetComponent<Image>().SetNativeSize();
+                slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(444, 241);
             });
 
             DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
@@ -60,7 +63,12 @@ public class Tower : MonoBehaviour
                 GameController.Instance.Root.LevelMap.MoveCameraHorizontal();
             });
         }
-        else if(this as HomeTower){
+        else if (this as HomeTower)
+        {
+            var homeImg = GetComponent<Image>();
+            homeImg.type = Image.Type.Sliced;
+            homeImg.SetNativeSize();
+
             slots = GetComponentsInChildren<RoomTower>().ToList();
             slots[0].GetComponent<Image>().SetNativeSize();
         }
@@ -201,12 +209,21 @@ public class Tower : MonoBehaviour
             homeTower.DOColor(new Color(1, 1, 1, 1), duration);
             homeTowerFlag.DOColor(new Color(1, 1, 1, 1), duration);
         }
-
         DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
         {
             tower.DOColor(new Color(0, 0, 0, 0), duration / 2);
+            GetComponent<Image>().sprite = homeTower.sprite;
+
+        });
+        DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
+        {
+            tower.DOColor(new Color(1, 1, 1, 1), duration / 2);
+            ChangeItemsToHome();
         });
 
+        
+    }
+    private void ChangeItemsToHome(){
         slots.ForEach(slot =>
         {
             //slot.transform.Find("Slot1").GetComponent<Image>().DOColor(new Color(1, 1, 1, 1), duration);
@@ -227,7 +244,7 @@ public class Tower : MonoBehaviour
         oldSizeDelta = imgVisitRoofTopRT.sizeDelta;
         imgVisitRoofTop.sprite = HomeRoofTop;
         imgVisitRoofTop.SetNativeSize();
-        imgVisitRoofTop.GetComponent<RectTransform>().sizeDelta = new Vector2(oldSizeDelta.x,imgVisitRoofTopRT.sizeDelta.y);
+        imgVisitRoofTop.GetComponent<RectTransform>().sizeDelta = new Vector2(oldSizeDelta.x, imgVisitRoofTopRT.sizeDelta.y);
     }
 
     public void PlayExplosion()

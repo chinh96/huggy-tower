@@ -46,7 +46,7 @@ public class LoadingController : MonoBehaviour
     {
         if (Data.CurrentSkinHero == "Angel")
         {
-            Data.CurrentSkinHero = "Hero1";
+            Data.CurrentSkinHero = "Skin1";
         }
 
         Addressables.InitializeAsync();
@@ -58,14 +58,14 @@ public class LoadingController : MonoBehaviour
         progress.fillAmount = 0;
         progress.DOFillAmount(5, duration).SetEase(ease).OnComplete(() =>
         {
-            if (Data.IsIntro && RemoteConfigController.Instance.HasIntro)
-            {
-                SceneManager.LoadScene(Constants.INTRO_SCENE);
-            }
-            else
-            {
-                SceneManager.LoadScene(Constants.HOME_SCENE);
-            }
+            // if (Data.IsIntro && RemoteConfigController.Instance.HasIntro)
+            // {
+            //     SceneManager.LoadScene(Constants.INTRO_SCENE);
+            // }
+            // else
+            // {
+            SceneManager.LoadScene(Constants.HOME_SCENE);
+            //}
         });
     }
 }
