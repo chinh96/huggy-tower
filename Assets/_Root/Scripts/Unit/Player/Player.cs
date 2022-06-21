@@ -55,6 +55,9 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private ParticleSystem effectPoison;
     [SerializeField] private ParticleSystem effectFadeIn;
     [SerializeField] private ParticleSystem effectFadeOut;
+    [SerializeField] private ParticleSystem effectPoisonSecretary;
+
+    [SerializeField] private GameObject effectPoisonGroundSecretary;
 
     [SerializeField] private GameObject shuriken;
     [SerializeField] private GameObject bow;
@@ -402,7 +405,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 case EUnitType.Enemy:
                     if (_target is { State: EUnitState.Normal })//&& _countdownAttack <= 0)
                     {
-                        var distance = Math.Abs((_target.transform.localPosition.x - transform.localPosition.x));
+                        // var distance = Math.Abs((_target.transform.localPosition.x - transform.localPosition.x));
                         // if (distance >= 250)
                         // {
                         //     PLayMove(true);
@@ -430,8 +433,13 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                     {
                                         if (_target as EnemyKappa)
                                         {
-                                            effectHitKappa.gameObject.SetActive(true);
-                                            effectHitKappa.Play();
+                                            // effectHitKappa.gameObject.SetActive(true);
+                                            // effectHitKappa.Play();
+                                            effectPoisonSecretary.Play();
+                                            DOTween.Sequence().AppendInterval(.01f).AppendCallback(() =>
+                                            {
+                                                if (effectPoisonGroundSecretary.activeSelf == false) effectPoisonGroundSecretary.SetActive(true);
+                                            });
                                         }
                                         else
                                         {
@@ -445,12 +453,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                         //skeleton.Play("Die2", false); chưa có anim hurt
 
                                         SoundController.Instance.PlayOnce(SoundType.GoblinKappaAttack);
-                                        // DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
-                                        // {
-                                        //     PlayAttack();
-                                        // });
+                                        DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
+                                        {
+                                            PlayAttack();
+                                        });
                                     });
-                                    PlayAttack();
 
                                     var cacheDamage = Damage;
                                     Damage -= _target.Damage; // with enemy is either Kappa or Goblin
@@ -470,6 +477,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             else
                             {
                                 hasBloodEnemy = false;
+                                Turn = ETurn.Lost;
                                 PlayAttack();
                                 _target.OnAttack(damage, BeingAttackedCallback);
                             }
@@ -505,11 +513,13 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 return;
                             }
 
-                            PlayUseItem(ItemType.None);
+                            skeleton.Play("Open", false);
                             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                             {
                                 princess.LockObj?.DOFade(0, .3f);
                                 princess.LockObj2?.DOFade(0, .3f);
+                                if (hasKey && princess.LockObj != null) princess.PlayOpenCage();
+                                else princess.PlayOpen();
                                 princess.PlayWin(true);
                                 DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                 {
@@ -599,10 +609,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                     Turn = ETurn.UsingItem;
                     PlayUseItem(_itemTarget.EquipType);
-                    float timeDelay = _itemTarget.EquipType == ItemType.Bow || 
-                        _itemTarget.EquipType == ItemType.BrokenBrick || 
-                        _itemTarget.EquipType == ItemType.Trap || 
-                        _itemTarget.EquipType == ItemType.Bomb  || 
+                    float timeDelay = _itemTarget.EquipType == ItemType.Bow ||
+                        _itemTarget.EquipType == ItemType.BrokenBrick ||
+                        _itemTarget.EquipType == ItemType.Trap ||
+                        _itemTarget.EquipType == ItemType.Bomb ||
                         _itemTarget.EquipType == ItemType.Electric ? 1.2f : .5f;
                     // Time delay after collect item
                     DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
@@ -735,11 +745,16 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             if (_flagAttack)
             {
                 _cacheTarget.CheckTurkey();
+                Debug.Log("Attack done!!!!");
                 _cacheTarget.OnBeingAttacked();
 
                 if (_cacheTarget as EnemyGoblin || _cacheTarget as EnemyKappa)
                 {
-                    // Damage -= _cacheTarget.Damage;
+                    if (_cacheTarget as EnemyKappa)
+                    {
+                        // Damage -= _cacheTarget.Damage;
+                        effectPoisonGroundSecretary.SetActive(false);
+                    }
                 }
                 else
                 {
@@ -793,6 +808,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         if (swordName != "")
         {
+            swordNames.Clear();
             swordNames.Add(swordName);
         }
         if (swordNames.Count > 0)
@@ -834,25 +850,28 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     private void AttackByEvent()
     {
-        var room = levelMap.visitTower.RoomContainPlayer(this);
-        if (room != null && (!room.IsClearEnemyInRoom() || room.IsContaintItem() || room.IsContaintPrincess()))
+        if (Turn != ETurn.Lost)
         {
-            StartSearchingTurn();
-            SearchingTarget();
-            return;
-        }
-
-        StartDragTurn();
-        if (levelMap.visitTower.IsClearTower())
-        {
-            if (levelMap.hasNewVisitTower)
+            var room = levelMap.visitTower.RoomContainPlayer(this);
+            if (room != null && (!room.IsClearEnemyInRoom() || room.IsContaintItem() || room.IsContaintPrincess()))
             {
-                levelMap.ChangeToNewVisitTower();
+                // If player attack very fast, enemy cannot call event "OnBullet"  
+                StartSearchingTurn();
+                SearchingTarget();
+                return;
             }
-            else if (IsWinCondition(levelMap.condition))
+            StartDragTurn();
+            if (levelMap.visitTower.IsClearTower())
             {
-                PlayWin(true);
-                GameController.Instance.OnWinLevel();
+                if (levelMap.hasNewVisitTower)
+                {
+                    levelMap.ChangeToNewVisitTower();
+                }
+                else if (IsWinCondition(levelMap.condition))
+                {
+                    PlayWin(true);
+                    GameController.Instance.OnWinLevel();
+                }
             }
         }
     }
@@ -884,6 +903,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     private void BeingAttackedCallback()
     {
+        Debug.Log("Player being attacked");
         if (_target as EnemyKappa)
         {
             effectHitKappa.gameObject.SetActive(true);
@@ -1153,16 +1173,16 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 break;
             case ItemType.Shuriken:
                 //skeleton.Play("Shuriken", false);
-                skeleton.Play("Attack", false);
+                skeleton.Play("AttackPipe", false);
                 SoundController.Instance.PlayOnce(SoundType.Knife);
-                DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
-                {
-                    GameObject shuriken1 = Instantiate(shuriken, transform.parent);
-                    shuriken1.transform.position = transform.position + new Vector3(1, 1, 0);
-                    Vector3 endValue = shuriken1.transform.position + new Vector3(5, 0, 0);
-                    shuriken1.transform.DOMove(endValue, 1f).OnComplete(() => Destroy(shuriken1));
-                });
-                PlayBloodEnemy();
+                // DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                // {
+                //     GameObject shuriken1 = Instantiate(shuriken, transform.parent);
+                //     shuriken1.transform.position = transform.position + new Vector3(1, 1, 0);
+                //     Vector3 endValue = shuriken1.transform.position + new Vector3(5, 0, 0);
+                //     shuriken1.transform.DOMove(endValue, 1f).OnComplete(() => Destroy(shuriken1));
+                // });
+                // PlayBloodEnemy();
                 break;
             default:
                 {
@@ -1196,7 +1216,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             SoundController.Instance.PlayOnce(SoundType.HeroCut);
                             attacks = new string[] { "AttackBaseball" };
                             break;
-
+                        case ItemType.Shield:
+                            SoundController.Instance.PlayOnce(SoundType.HeroCut);
+                            attacks = new string[] { "AttackAxe" };
+                            break;
                         case ItemType.Axe:
                             {
                                 SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
@@ -1465,7 +1488,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 break;
 
             case ItemType.Electric:
-                skeleton.Play("LoseElectric", false);
+                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                    {
+                        skeleton.Play("LoseElectric", false);
+                    });
                 break;
 
             case ItemType.Trap:

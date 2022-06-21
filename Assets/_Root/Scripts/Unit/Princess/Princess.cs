@@ -40,6 +40,14 @@ public class Princess : Unit, IAnim
 
     public void PlayDead() { skeleton.Play("Die", true); }
 
+    public void PlayOpen(){
+        skeleton.Play("Open", false);
+    }
+
+    public void PlayOpenCage(){
+        skeleton.Play("OpenCage", false);
+    }
+
     public void PlayWin(bool isLoop)
     {
         canvas.sortingOrder = 130;
@@ -54,12 +62,12 @@ public class Princess : Unit, IAnim
         // }
         // else
         // {
-        skeleton.Play("Win", false);
-        DOTween.Sequence().AppendInterval(.7f).AppendCallback(() =>
-        {
-            skeleton.Play("Win", true);
-            //skeleton.Play("win 2", true);
-        });
+        skeleton.Play("Win", true);
+        // DOTween.Sequence().AppendInterval(.7f).AppendCallback(() =>
+        // {
+        //     skeleton.Play("Win", true);
+        //     //skeleton.Play("win 2", true);
+        // });
         //}
 
         SoundController.Instance.PlayOnce(SoundType.RescuePrincess);

@@ -11,16 +11,18 @@ public class LevelText : MonoBehaviour
     private void Awake()
     {
         ChangeLevel();
+        EventController.CurrentLevelChanged = ChangeLevel;
     }
 
     private void Start()
     {
-        EventController.CurrentLevelChanged = ChangeLevel;
+        
     }
 
     public void ChangeLevel()
     {
         //level.text = $"Level {Data.CurrentLevel + 1}";
-        level.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", (Data.CurrentLevel + 1).ToString(), true);
+        var localizationParamsManager = level.GetComponent<LocalizationParamsManager>();
+        if(localizationParamsManager!= null) localizationParamsManager.SetParameterValue("VALUE", (Data.CurrentLevel + 1).ToString(), true);
     }
 }

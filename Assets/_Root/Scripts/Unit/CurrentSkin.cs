@@ -10,6 +10,7 @@ public class CurrentSkin : MonoBehaviour
 
     private SubjectSkinChange m_subjectSkinChange;
 
+    private bool isHome = false;
     private void Start()
     {
         m_subjectSkinChange = transform.GetComponent<SubjectSkinChange>();
@@ -24,6 +25,16 @@ public class CurrentSkin : MonoBehaviour
                 break;
         }
     }
+    private void Update(){
+        if(isHome == false && GetComponentInParent<HomeController>() != null){
+            isHome = true;
+            character.AnimationState.SetAnimation(0, "Home", true).MixDuration = 0;
+        }
+        else if(isHome == true && GetComponentInParent<HomeController>() == null){
+            isHome = false;
+            character.AnimationState.SetAnimation(0, "Idle", true).MixDuration = 0;
+        }
+    }
 
     private void ChangeCurrentSkin()
     {
@@ -33,6 +44,7 @@ public class CurrentSkin : MonoBehaviour
                 character.ChangeSkin(Data.CurrentSkinHero, eUnitType);
                 var SkinData = ResourcesController.Hero.GetSkinDataById(Data.currentSkinHeroId);
                 if (SkinData != null) m_subjectSkinChange.Next(SkinData);
+                isHome = false;
                 break;
             case EUnitType.Princess:
                 character.ChangeSkin(Data.CurrentSkinPrincess, eUnitType);

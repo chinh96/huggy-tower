@@ -4,7 +4,7 @@ using Spine.Unity;
 using UnityEditor;
 #endif
 using UnityEngine;
-
+using DG.Tweening;
 public class EnemyKappa : Unit, IAnim
 {
     public SkeletonGraphic skeleton;
@@ -48,7 +48,18 @@ public class EnemyKappa : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.DemonAttack); }
+    public void PlayAttack() { 
+        skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.DemonAttack); 
+        // DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+        // {
+        //     fire.gameObject.SetActive(true);
+        //     fire.Play();
+        //     fire.transform.DOMove(GameController.Instance.Player.transform.position + new Vector3(-1, .5f, 0), .3f).SetEase(Ease.Linear).OnComplete(() =>
+        //     {
+        //         Destroy(fire.gameObject);
+        //     });
+        // });
+    }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 

@@ -26,7 +26,6 @@ public class PopupController : Singleton<PopupController>
 
     public void Initialize()
     {
-        Debug.Log("Initilaize Popup");
         if (initialized) return;
 
         popupDict = new Dictionary<Type, Popup>();

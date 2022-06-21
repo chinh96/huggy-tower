@@ -72,7 +72,7 @@ public class GameController : Singleton<GameController>
     {
         base.Awake();
         AdController.Instance.ShowBanner();
-        overlay.DOFade(1, 0);
+        overlay.DOFade(0, 0);
         SetEnableLeanTouch(false);
     }
 
@@ -92,7 +92,6 @@ public class GameController : Singleton<GameController>
 
     private void Start()
     {
-
         MoveInAnim();
         SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
         CheckRadioCamera();
@@ -138,6 +137,7 @@ public class GameController : Singleton<GameController>
     public async void LoadLevel(int fakeIndex)
     {
         EventController.CurrentLevelChanged?.Invoke();
+
         TGDatas.TotalTurkeyText = TGDatas.TotalTurkey;
         if (fighterOverlay != null)
         {
@@ -150,7 +150,6 @@ public class GameController : Singleton<GameController>
         }
         AdController.Instance.JustShowReward = false;
         AdController.Instance.Request();
-
         MoveInAnim();
 
         SoundController.Instance.PlayOnce(SoundType.EnemyStart);
@@ -175,7 +174,6 @@ public class GameController : Singleton<GameController>
                 DataBridge.Instance.NextLevelLoaded.SetLevelLoaded(go.Item2, fakeLevelIndex + 1); // fakeLevelIndex + 1, fakeLevelIndex + 1
             }
         }
-
         void SavePreviousLevel(LevelMap localLevelMap)
         {
             DataBridge.Instance.PreviousLevelLoaded = localLevelMap;
@@ -607,11 +605,9 @@ public class GameController : Singleton<GameController>
 
     private void ZoomInCamera()
     {
-        Debug.Log("Zoom in");
         Player.TxtDamage.gameObject.SetActive(false);
 
         Vector2 endValue = new Vector2(Player.transform.position.x, Player.transform.position.y) + zoomOffset;
-        Debug.Log(endValue);
         if (Player.IsDie3)
         {
             endValue -= new Vector2(1f, 0);
@@ -683,7 +679,11 @@ public class GameController : Singleton<GameController>
 
     public void MoveInAnim()
     {
-        moveOutAnimations.ForEach(item => item.Reset());
+        // moveOutAnimations.ForEach(item => {item.Reset());
+        
+        foreach(var item in moveOutAnimations){
+            if(item!=null) item.Reset();
+        }
     }
 
     public void ShowFighterOverlay()

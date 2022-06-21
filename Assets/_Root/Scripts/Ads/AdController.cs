@@ -53,7 +53,7 @@ public class AdController : Singleton<AdController>
     {
         DontDestroyOnLoad(gameObject);
 #if UNITY_EDITOR
-        Init();
+        // Init();
 #elif UNITY_IOS
         // if (ATTrackingStatusBinding.GetAuthorizationTrackingStatus() == ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED)
         // {

@@ -29,7 +29,7 @@ public class EnemySpider2 : Unit, IAnim
 
     public override void OnBeingAttacked() { OnDead(); }
 
-    private void OnAttackByEvent() { _callbackAttackPlayer?.Invoke(); }
+    private void OnAttackByEvent() { _callbackAttackPlayer?.Invoke(); Debug.Log("Spider2 attack");}
 
     private void OnEndAttackByEvent() { PlayIdle(true); }
 

@@ -62,7 +62,7 @@ public class Tower : MonoBehaviour
 
             DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
             {
-                NumberedUnits();
+                // NumberedUnits();
             });
 
             DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>

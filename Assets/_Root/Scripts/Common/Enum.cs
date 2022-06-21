@@ -106,6 +106,8 @@ public enum ETurn
     UsingItem = 4,
     MoveToItem = 5,
     SavingPrincess = 6,
+
+    Lost = 7
 }
 
 public enum ELevelCondition

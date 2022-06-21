@@ -41,7 +41,7 @@ public class DailyRewardPopup : Popup
             dayOffset++;
         });
 
-        if(currentDailyRewardItem.DailyRewardTypeOfItem() != "Claimed") ClaimButton.SetActive(false);
+        if(currentDailyRewardItem.DailyRewardTypeOfItem() != "Current") ClaimButton.SetActive(false);
         SetX5ButtonActive(hasCoinCurrent);
     }
 

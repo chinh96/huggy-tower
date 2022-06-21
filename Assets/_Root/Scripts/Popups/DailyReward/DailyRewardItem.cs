@@ -110,7 +110,7 @@ public class DailyRewardItem : MonoBehaviour
 
             dailyRewardType = DailyRewardType.NotClaimed;
         }
-        else
+        else // current day
         {
             if (!isUnlocked)
             {
@@ -118,13 +118,14 @@ public class DailyRewardItem : MonoBehaviour
                 dailyRewardPopup.SetCoinCurrent(coin);
 
                 dailyRewardPopup.SetX5Text(coin);
+                dailyRewardType = DailyRewardType.Current;
             }
             else
             {
+                claimButton.SetActive(false);
                 doneIcon.SetActive(true);
+                dailyRewardType = DailyRewardType.Claimed;
             }
-            dailyRewardType = DailyRewardType.Current;
-
         }
     }
 
