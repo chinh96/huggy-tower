@@ -13,7 +13,38 @@ public class FactoryResources : ScriptableObject
     public RoomResources RoomDefault => Rooms.Find(item => item.isDefaultRoom);
 
     public List<RoomResources> RoomsNotCurrent => Rooms.FindAll(item => item.roomType != Data.RoomCurrent);
-    
+
+    public bool HasNotiRoom
+    {
+        get
+        {
+            foreach (var funiture in RoomCurrent.Funitures)
+            {
+                if (!funiture.FurnitureLevels[1].IsUnlocked && Data.CoinTotal >= funiture.FurnitureLevels[1].Cost)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+
+    public bool IsNoti(WorldResources worldResources)
+    {
+        foreach (var castle in worldResources.Castles)
+        {
+            foreach (var data in castle.Castles)
+            {
+                if (!data.IsUnlocked && Data.CoinTotal >= data.Cost)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
     public string ConvertData()
     {
         DataModel[] models = new DataModel[Rooms.Count];
@@ -29,10 +60,10 @@ public class FactoryResources : ScriptableObject
     public void TransformData(string raw)
     {
         DataModel[] models = JsonHelper.FromJson<DataModel>(raw);
-        
+
         int count = models.Length;
         if (count > Rooms.Count) count = Rooms.Count;
-        
+
         for (int i = 0; i < count; i++)
         {
             Rooms[i].TransformData(models[i].data);

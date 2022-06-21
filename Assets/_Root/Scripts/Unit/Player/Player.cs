@@ -61,7 +61,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     [SerializeField] private GameObject shuriken;
     [SerializeField] private GameObject bow;
-
+    [SerializeField] private GameObject keyObject;
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
     public ETurn Turn { get => turn; private set => turn = value; }
 
@@ -450,7 +450,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                             SoundController.Instance.PlayOnce(SoundType.BombGoblin);
                                         }
 
-                                        //skeleton.Play("Die2", false); chưa có anim hurt
+                                        skeleton.Play("Die2", false);
 
                                         SoundController.Instance.PlayOnce(SoundType.GoblinKappaAttack);
                                         DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
@@ -471,7 +471,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 }
                                 else
                                 {
-                                    PlayAttack();
+                                    //PlayAttack();
+                                    DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
+                                    {
+                                        PlayAttack();
+                                    });
                                 }
                             }
                             else
@@ -512,24 +516,48 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 AddJumpAnimation();
                                 return;
                             }
-
-                            skeleton.Play("Open", false);
-                            DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+                            // Save the kissy
+                            if (princess.LockObj == null)
                             {
-                                princess.LockObj?.DOFade(0, .3f);
-                                princess.LockObj2?.DOFade(0, .3f);
-                                if (hasKey && princess.LockObj != null) princess.PlayOpenCage();
-                                else princess.PlayOpen();
-                                princess.PlayWin(true);
+                                skeleton.Play("Open", false);
                                 DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                 {
-                                    GameController.Instance.OnWinLevel();
+                                    princess.PlayOpen();
+                                    princess.PlayWin(true);
+                                    DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+                                    {
+                                        GameController.Instance.OnWinLevel();
+                                    });
+                                    GiveFlower();
                                 });
-                                GiveFlower();
-                            });
+                            }
+                            else
+                            {
+                                skeleton.Play("Yawn", false);
+                                DontUseSwordAnymore();
+                                keyObject.SetActive(true);
+                                keyObject.transform.DOMove(princess.LockObj.transform.position, 1).OnComplete(() =>
+                                {
+                                    keyObject.transform.DOLocalRotate(Vector3.zero, .5f).OnComplete(() =>
+                                    {
+                                        keyObject.transform.DOScale(new Vector3(.1f, .1f, 1f), .5f).OnComplete(() =>
+                                        {
+                                            keyObject.gameObject.SetActive(false);
+                                            princess.LockObj?.DOFade(0, .3f);
+                                            princess.LockObj2?.DOFade(0, .3f);
+                                            princess.PlayOpenCage();
+                                            princess.PlayWin(true);
+                                            DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+                                            {
+                                                GameController.Instance.OnWinLevel();
+                                            });
+                                            GiveFlower();
+                                        });
+                                    });
+                                });
+                            }
                         }
                     }
-
                     break;
             }
         }
@@ -608,7 +636,23 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     }
 
                     Turn = ETurn.UsingItem;
-                    PlayUseItem(_itemTarget.EquipType);
+                    if (_itemTarget.EquipType == ItemType.Chest)
+                    {
+                        keyObject.SetActive(true);
+                        skeleton.Play("See", false);
+                        keyObject.transform.DOMove(_itemTarget.transform.position, 1).OnComplete(() =>
+                        {
+                            keyObject.transform.DOLocalRotate(Vector3.zero, .5f).OnComplete(() =>
+                            {
+                                keyObject.transform.DOScale(new Vector3(.1f, .1f, 1f), .5f).OnComplete(() =>
+                                {
+                                    keyObject.gameObject.SetActive(false);
+                                    // PlayUseItem(_itemTarget.EquipType);
+                                }
+                                );
+                            });
+                        });
+                    }else PlayUseItem(_itemTarget.EquipType);
                     float timeDelay = _itemTarget.EquipType == ItemType.Bow ||
                         _itemTarget.EquipType == ItemType.BrokenBrick ||
                         _itemTarget.EquipType == ItemType.Trap ||
@@ -745,7 +789,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             if (_flagAttack)
             {
                 _cacheTarget.CheckTurkey();
-                Debug.Log("Attack done!!!!");
                 _cacheTarget.OnBeingAttacked();
 
                 if (_cacheTarget as EnemyGoblin || _cacheTarget as EnemyKappa)
@@ -808,13 +851,18 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         if (swordName != "")
         {
-            swordNames.Clear();
             swordNames.Add(swordName);
         }
         if (swordNames.Count > 0)
         {
             Skeleton.ChangeSword(swordNames);
         }
+    }
+
+    private void DontUseSwordAnymore()
+    {
+        swordNames.Clear();
+        Skeleton.ChangeSword(swordNames);
     }
 
     private void OnEndAttackByEvent()
@@ -903,7 +951,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     private void BeingAttackedCallback()
     {
-        Debug.Log("Player being attacked");
         if (_target as EnemyKappa)
         {
             effectHitKappa.gameObject.SetActive(true);
@@ -1475,6 +1522,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     });
                 }
                 break;
+
             case ItemType.BrokenBrick:
                 SoundController.Instance.PlayOnce(SoundType.HeroPushWall);
                 //skeleton.Play("HitWall", false);
@@ -1510,7 +1558,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 break;
                 DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                 {
-                    //skeleton.Play("Die2", false);
+                    skeleton.Play("Die2", false);
                 });
                 break;
             default:

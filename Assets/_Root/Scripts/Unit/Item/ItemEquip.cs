@@ -62,9 +62,10 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
                 case ItemType.Mace:
                 case ItemType.Bow2:
                 case ItemType.Polllaxe:
-                    player.EquipType = EquipType;
-                    break;
-                default:
+                case ItemType.Shield:
+                case ItemType.Claws:
+                case ItemType.Baseball:
+                case ItemType.Hammer:
                     player.EquipType = EquipType;
                     break;
             }

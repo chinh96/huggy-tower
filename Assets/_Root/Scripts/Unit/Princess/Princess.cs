@@ -11,7 +11,7 @@ public class Princess : Unit, IAnim
     [SerializeField] private Collider2D coll2D;
     [SerializeField] private Image lockObj;
     [SerializeField] private Image lockObj2;
-    [SerializeField] private Canvas canvas;
+    // [SerializeField] private Canvas canvas;
 
     private void Start()
     {
@@ -50,7 +50,9 @@ public class Princess : Unit, IAnim
 
     public void PlayWin(bool isLoop)
     {
-        canvas.sortingOrder = 130;
+        //canvas.sortingOrder = 130;
+
+        // Old code : check thankgiving and giving candy
         // if (Data.TimeToRescueParty.TotalMilliseconds > 0)
         // {
         //     Data.TotalGoldMedal++;
@@ -62,14 +64,13 @@ public class Princess : Unit, IAnim
         // }
         // else
         // {
-        skeleton.Play("Win", true);
         // DOTween.Sequence().AppendInterval(.7f).AppendCallback(() =>
         // {
         //     skeleton.Play("Win", true);
         //     //skeleton.Play("win 2", true);
         // });
         //}
-
+        skeleton.Play("Win", true);
         SoundController.Instance.PlayOnce(SoundType.RescuePrincess);
         ResourcesController.Achievement.IncreaseByType(AchievementType.Princess);
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Princess);

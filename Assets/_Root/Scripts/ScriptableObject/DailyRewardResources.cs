@@ -13,5 +13,11 @@ public class DailyRewardResources : ScriptableObject
 
     public List<int> DailyRewardsSkin;
 
-    public bool HasNoti => Data.DailyRewardCurrent < Data.TotalDays;
+    public bool HasNoti {
+        get{
+            Data.IdCheckUnlocked = Constants.DAILY_REWARD + Data.DailyRewardCurrent;
+            return !Data.IsUnlocked;
+            // Data.DailyRewardCurrent < Data.TotalDays;
+        }
+    }
 }

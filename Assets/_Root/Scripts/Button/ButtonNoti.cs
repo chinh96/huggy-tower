@@ -35,6 +35,9 @@ public class ButtonNoti : MonoBehaviour
             case NotiType.Build:
                 hasNoti = ResourcesController.Universe.HasNotiBuild;
                 break;
+            case NotiType.Factory:
+                hasNoti = ResourcesController.Factory.HasNotiRoom;
+                break;
             case NotiType.Skin:
                 hasNoti = ResourcesController.Hero.HasNoti;
                 break;

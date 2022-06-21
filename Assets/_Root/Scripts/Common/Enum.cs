@@ -21,7 +21,8 @@ public enum NotiType
     RescueParty,
     LuckySpin,
     ThanksGiving,
-    ThanksGiving2
+    ThanksGiving2,
+    Factory
 }
 
 public enum EGameState
@@ -114,7 +115,7 @@ public enum ELevelCondition
 {
     KillAll,
     CollectChest,
-    SavePrincess,
+    SaveKissy,
     CollectGold,
     KillDemon,
     KillDragon,
