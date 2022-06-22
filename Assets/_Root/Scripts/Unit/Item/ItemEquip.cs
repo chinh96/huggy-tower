@@ -66,6 +66,7 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
                 case ItemType.Claws:
                 case ItemType.Baseball:
                 case ItemType.Hammer:
+                case ItemType.Saw:
                     player.EquipType = EquipType;
                     break;
             }

@@ -52,12 +52,12 @@ public class Tower : MonoBehaviour
             homeTower.transform.SetSiblingIndex(1);
             var enemyImg = GetComponent<Image>();
             enemyImg.type = Image.Type.Tiled;
-            GetComponent<RectTransform>().sizeDelta = new Vector2(475, 100);
+            GetComponent<RectTransform>().sizeDelta = new Vector2(570, 100);
             slots = GetComponentsInChildren<RoomTower>().ToList();
             slots.ForEach(slot =>
             {
                 slot.GetComponent<Image>().SetNativeSize();
-                slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(444, 241);
+                slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(541, 366);
             });
 
             DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
@@ -73,12 +73,22 @@ public class Tower : MonoBehaviour
         }
         else if (this as HomeTower)
         {
+            GetComponent<RectTransform>().sizeDelta = new Vector2(470, 100);
+            slots = GetComponentsInChildren<RoomTower>().ToList();
+            slots.ForEach(slot =>
+            {
+                slot.GetComponent<Image>().SetNativeSize();
+                slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(444, 366);
+            });
+
             var homeImg = GetComponent<Image>();
             homeImg.type = Image.Type.Sliced;
-            homeImg.SetNativeSize();
+            // var homeImg = GetComponent<Image>();
+            // homeImg.type = Image.Type.Sliced;
+            // homeImg.SetNativeSize();
 
-            slots = GetComponentsInChildren<RoomTower>().ToList();
-            slots[0].GetComponent<Image>().SetNativeSize();
+            // slots = GetComponentsInChildren<RoomTower>().ToList();
+            // slots[0].GetComponent<Image>().SetNativeSize();
         }
 
         if (GameController.Instance.IsJapanBackground)
@@ -237,6 +247,11 @@ public class Tower : MonoBehaviour
         });
 
         HomeFootTageImg.DOColor(new Color(1, 1, 1, 1), duration);
+        DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
+        {
+            FootTage.GetComponent<Image>().DOColor(new Color(0, 0, 0, 0), duration / 2);
+
+        });
 
         HomeRoofTopImg.DOColor(new Color(1, 1, 1, 1), duration);
         DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>

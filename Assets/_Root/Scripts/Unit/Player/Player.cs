@@ -38,6 +38,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private ParticleSystem effectBlood;
     [SerializeField] private ParticleSystem effectBlood2;
     [SerializeField] private ParticleSystem effectBlood3;
+    [SerializeField] private ParticleSystem effectBloodSaw;
     [SerializeField] private ParticleSystem effectHitWall;
     [SerializeField] private ParticleSystem effectPickSword;
     [SerializeField] private ParticleSystem effectHit;
@@ -56,6 +57,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private ParticleSystem effectFadeIn;
     [SerializeField] private ParticleSystem effectFadeOut;
     [SerializeField] private ParticleSystem effectPoisonSecretary;
+    [SerializeField] private ParticleSystem effectClaws;
 
     [SerializeField] private GameObject effectPoisonGroundSecretary;
 
@@ -471,8 +473,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 }
                                 else
                                 {
-                                    //PlayAttack();
-                                    DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
+                                    DOTween.Sequence().AppendInterval(0.1f).AppendCallback(() =>
                                     {
                                         PlayAttack();
                                     });
@@ -538,15 +539,16 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 keyObject.SetActive(true);
                                 keyObject.transform.DOMove(princess.LockObj.transform.position, 1).OnComplete(() =>
                                 {
-                                    keyObject.transform.DOLocalRotate(Vector3.zero, .5f).OnComplete(() =>
+                                    keyObject.transform.DOLocalRotate(new Vector3(0, 0, 180), .5f).OnComplete(() =>
                                     {
-                                        keyObject.transform.DOScale(new Vector3(.1f, .1f, 1f), .5f).OnComplete(() =>
+                                        keyObject.transform.DOScale(new Vector3(.3f, .3f, 3f), .5f).OnComplete(() =>
                                         {
                                             keyObject.gameObject.SetActive(false);
-                                            princess.LockObj?.DOFade(0, .3f);
+                                            princess.LockObj?.gameObject.SetActive(true);
                                             princess.LockObj2?.DOFade(0, .3f);
                                             princess.PlayOpenCage();
                                             princess.PlayWin(true);
+                                            princess.LockObj?.gameObject.SetActive(false);
                                             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                             {
                                                 GameController.Instance.OnWinLevel();
@@ -652,7 +654,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 );
                             });
                         });
-                    }else PlayUseItem(_itemTarget.EquipType);
+                    }
+                    else PlayUseItem(_itemTarget.EquipType);
                     float timeDelay = _itemTarget.EquipType == ItemType.Bow ||
                         _itemTarget.EquipType == ItemType.BrokenBrick ||
                         _itemTarget.EquipType == ItemType.Trap ||
@@ -1018,7 +1021,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         if (!hasBloodEnemy) return;
 
-        float timeDelay = attack == "AttackSword" ? .8f : .5f;
+        float timeDelay = attack == "AttackSword" ? .8f : .3f;
         if (!(_target as EnemyGhost))
         {
             DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
@@ -1033,44 +1036,110 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 main.startColor = _target.ColorBlood;
 
                 effectBlood.transform.position = _target.transform.position;
+                effectBloodSaw.transform.position = _target.transform.position;
                 if (_target as EnemyDragonHead)
                 {
                     effectBlood.transform.localPosition += new Vector3(-250, 400, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
                 }
                 else if (_target as EnemyKraken)
                 {
                     effectBlood.transform.localPosition += new Vector3(-200, 50, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
                 }
                 else if (_target as EnemyKraken2)
                 {
                     effectBlood.transform.localPosition += new Vector3(60, -85, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
                 }
                 else if (_target as EnemyKraken3)
                 {
                     effectBlood.transform.localPosition += new Vector3(100, 180, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
                 }
                 else if (_target as EnemyKraken4)
                 {
                     effectBlood.transform.localPosition += new Vector3(20, -45, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
                 }
                 else if (_target as EnemyKraken5)
                 {
                     effectBlood.transform.localPosition += new Vector3(200, -355, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
                 }
                 else if (_target as EnemyKraken6)
                 {
                     effectBlood.transform.localPosition += new Vector3(100, -500, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
                 }
                 else
                 {
                     effectBlood.transform.localPosition += new Vector3(0, 40, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
                 }
-                effectBlood.gameObject.SetActive(true);
-                effectBlood.Play();
+                if (EquipType == ItemType.Saw)
+                {
+                    effectBloodSaw.gameObject.SetActive(true);
+                    effectBloodSaw.Play();
+                }
+                else
+                {
+                    effectBlood.gameObject.SetActive(true);
+                    effectBlood.Play();
+                }
             });
         }
     }
 
+    private void PlayHitEnemy()
+    {
+        ParticleSystem hitEnemy;
+        if (EquipType == ItemType.Claws)
+        {
+            hitEnemy = Instantiate(effectClaws, transform.parent);
+            hitEnemy.transform.position = _target.transform.position;
+        }
+        else
+        {
+            hitEnemy = Instantiate(effectHitEnemy, transform.parent);
+            hitEnemy.transform.position = _target.transform.position;
+        }
+
+        if (_target as EnemyDragonHead)
+        {
+            hitEnemy.transform.position += new Vector3(0, 6, 0);
+        }
+        else if (_target as EnemyKraken)
+        {
+            hitEnemy.transform.position += new Vector3(-2, 1, 0);
+        }
+        else if (_target as EnemyKraken2)
+        {
+            hitEnemy.transform.position += new Vector3(0, -1, 0);
+        }
+        else if (_target as EnemyKraken3)
+        {
+            hitEnemy.transform.position += new Vector3(0, -1, 0);
+        }
+        else if (_target as EnemyKraken4)
+        {
+            hitEnemy.transform.position += new Vector3(0, -1, 0);
+        }
+        else if (_target as EnemyKraken5)
+        {
+            hitEnemy.transform.position += new Vector3(0, -6, 0);
+        }
+        else if (_target as EnemyKraken6)
+        {
+            hitEnemy.transform.position += new Vector3(0, -6, 0);
+        }
+        else
+        {
+            hitEnemy.transform.position += new Vector3(0, 1, 0);
+        }
+        hitEnemy.gameObject.SetActive(true);
+        hitEnemy.Play();
+    }
     public void PlayAttack()
     {
         switch (EquipType)
@@ -1222,6 +1291,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 //skeleton.Play("Shuriken", false);
                 skeleton.Play("AttackPipe", false);
                 SoundController.Instance.PlayOnce(SoundType.Knife);
+                PlayHitEnemy();
                 // DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                 // {
                 //     GameObject shuriken1 = Instantiate(shuriken, transform.parent);
@@ -1229,25 +1299,44 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 //     Vector3 endValue = shuriken1.transform.position + new Vector3(5, 0, 0);
                 //     shuriken1.transform.DOMove(endValue, 1f).OnComplete(() => Destroy(shuriken1));
                 // });
-                // PlayBloodEnemy();
+                // DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                // {
+                //     PlayBloodEnemy();
+                // });
+                break;
+            case ItemType.Saw:
+                skeleton.Play("AttackSaw", false);
+                DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                {
+                    PlayBloodEnemy();
+                });
+                break;
+            case ItemType.Shield:
+                SoundController.Instance.PlayOnce(SoundType.HeroCut);
+                skeleton.Play("AttackAxe", false);
+                DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
+                {
+                    PlayBloodEnemy();
+                });
+                break;
+            case ItemType.Claws:
+                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                {
+                    PlayHitEnemy();
+                    PlayBloodEnemy();
+                });
+
+                DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                {
+                    SoundController.Instance.PlayOnce(SoundType.HeroHit3);
+                });
+                skeleton.Play("AttackClaws", false);
                 break;
             default:
                 {
                     string[] attacks;
                     switch (EquipType)
                     {
-                        case ItemType.Claws:
-                            DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
-                            {
-                                PlayBloodEnemy();
-                            });
-
-                            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
-                            {
-                                SoundController.Instance.PlayOnce(SoundType.HeroHit3);
-                            });
-                            attacks = new string[] { "AttackClaws" };
-                            break;
                         case ItemType.Hammer:
                             DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                             {
@@ -1255,17 +1344,9 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             });
                             attacks = new string[] { "AttackHammer" };
                             break;
-                        case ItemType.Saw:
-                            SoundController.Instance.PlayOnce(SoundType.Knife);
-                            attacks = new string[] { "AttackSaw" };
-                            break;
                         case ItemType.Baseball:
                             SoundController.Instance.PlayOnce(SoundType.HeroCut);
                             attacks = new string[] { "AttackBaseball" };
-                            break;
-                        case ItemType.Shield:
-                            SoundController.Instance.PlayOnce(SoundType.HeroCut);
-                            attacks = new string[] { "AttackAxe" };
                             break;
                         case ItemType.Axe:
                             {
@@ -1281,56 +1362,19 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
                                 SoundController.Instance.PlayOnce(soundType);
                                 attacks = new string[] { "Attack", "Attack2" };
-                                if (hasBloodEnemy)
-                                {
-                                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
-                                    {
-                                        ParticleSystem hitEnemy = Instantiate(effectHitEnemy, transform.parent);
-                                        hitEnemy.transform.position = _target.transform.position;
-                                        if (_target as EnemyDragonHead)
-                                        {
-                                            hitEnemy.transform.position += new Vector3(0, 6, 0);
-                                        }
-                                        else if (_target as EnemyKraken)
-                                        {
-                                            hitEnemy.transform.position += new Vector3(-2, 1, 0);
-                                        }
-                                        else if (_target as EnemyKraken2)
-                                        {
-                                            hitEnemy.transform.position += new Vector3(0, -1, 0);
-                                        }
-                                        else if (_target as EnemyKraken3)
-                                        {
-                                            hitEnemy.transform.position += new Vector3(0, -1, 0);
-                                        }
-                                        else if (_target as EnemyKraken4)
-                                        {
-                                            hitEnemy.transform.position += new Vector3(0, -1, 0);
-                                        }
-                                        else if (_target as EnemyKraken5)
-                                        {
-                                            hitEnemy.transform.position += new Vector3(0, -6, 0);
-                                        }
-                                        else if (_target as EnemyKraken6)
-                                        {
-                                            hitEnemy.transform.position += new Vector3(0, -6, 0);
-                                        }
-                                        else
-                                        {
-                                            hitEnemy.transform.position += new Vector3(0, 1, 0);
-                                        }
-                                        hitEnemy.gameObject.SetActive(true);
-                                        hitEnemy.Play();
-
-                                    });
-                                }
                                 break;
                             }
                     }
 
                     string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
                     skeleton.Play(attack, false);
-                    //skeleton.Play("Attack", false);
+                    if (hasBloodEnemy)
+                    {
+                        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                        {
+                            PlayHitEnemy();
+                        });
+                    }
 
                     switch (EquipType)
                     {
