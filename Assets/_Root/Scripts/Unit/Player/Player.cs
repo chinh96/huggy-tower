@@ -1045,37 +1045,37 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 else if (_target as EnemyKraken)
                 {
                     effectBlood.transform.localPosition += new Vector3(-200, 50, 0);
-                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(-200, 50, 0);
                 }
                 else if (_target as EnemyKraken2)
                 {
                     effectBlood.transform.localPosition += new Vector3(60, -85, 0);
-                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(60, -85, 0);
                 }
                 else if (_target as EnemyKraken3)
                 {
                     effectBlood.transform.localPosition += new Vector3(100, 180, 0);
-                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(100, 180, 0);
                 }
                 else if (_target as EnemyKraken4)
                 {
                     effectBlood.transform.localPosition += new Vector3(20, -45, 0);
-                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(20, -45, 0);
                 }
                 else if (_target as EnemyKraken5)
                 {
                     effectBlood.transform.localPosition += new Vector3(200, -355, 0);
-                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(200, -355, 0);
                 }
                 else if (_target as EnemyKraken6)
                 {
                     effectBlood.transform.localPosition += new Vector3(100, -500, 0);
-                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(100, -500, 0);
                 }
                 else
                 {
                     effectBlood.transform.localPosition += new Vector3(0, 40, 0);
-                    effectBloodSaw.transform.localPosition += new Vector3(-250, 400, 0);
+                    effectBloodSaw.transform.localPosition += new Vector3(0, 40, 0);
                 }
                 if (EquipType == ItemType.Saw)
                 {
@@ -1306,7 +1306,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 break;
             case ItemType.Saw:
                 skeleton.Play("AttackSaw", false);
-                DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
                 {
                     PlayBloodEnemy();
                 });
@@ -1320,7 +1320,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 });
                 break;
             case ItemType.Claws:
-                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                 {
                     PlayHitEnemy();
                     PlayBloodEnemy();

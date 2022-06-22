@@ -11,6 +11,7 @@ public class Princess : Unit, IAnim
     [SerializeField] private Collider2D coll2D;
     [SerializeField] private Image lockObj;
     [SerializeField] private Image lockObj2;
+    [SerializeField] private GameObject groundLock;
     // [SerializeField] private Canvas canvas;
 
     private void Start()
@@ -70,6 +71,7 @@ public class Princess : Unit, IAnim
         //     //skeleton.Play("win 2", true);
         // });
         //}
+        groundLock.SetActive(false);
         skeleton.Play("Win", true);
         SoundController.Instance.PlayOnce(SoundType.RescuePrincess);
         ResourcesController.Achievement.IncreaseByType(AchievementType.Princess);
