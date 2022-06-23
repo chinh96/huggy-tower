@@ -79,7 +79,7 @@ public class HomeController : Singleton<HomeController>
         AdController.Instance.Request();
         AdController.Instance.HideBanner();
 
-        ResetBackground();
+        //ResetBackground();
         // CheckLanguage();
     }
 

@@ -25,6 +25,7 @@ public class SkinItem : MonoBehaviour
     [SerializeField] private GameObject dockActive;
     [SerializeField] private GameObject usedLabel;
     [SerializeField] private GameObject fx;
+    [SerializeField] private GameObject doneIcon;
     private GameObject BGBottom;
     private SkinData skinData;
     private SkinPopup skinPopup;
@@ -133,6 +134,8 @@ public class SkinItem : MonoBehaviour
                     }
                     break;
             }
+        }else{
+            doneIcon.SetActive(true);
         }
 
         CheckCurrent();

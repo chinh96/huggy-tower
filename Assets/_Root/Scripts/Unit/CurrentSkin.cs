@@ -25,16 +25,16 @@ public class CurrentSkin : MonoBehaviour
                 break;
         }
     }
-    private void Update(){
-        if(isHome == false && GetComponentInParent<HomeController>() != null){
-            isHome = true;
-            character.AnimationState.SetAnimation(0, "Home", true).MixDuration = 0;
-        }
-        else if(isHome == true && GetComponentInParent<HomeController>() == null){
-            isHome = false;
-            character.AnimationState.SetAnimation(0, "Idle", true).MixDuration = 0;
-        }
-    }
+    // private void Update(){
+    //     if(isHome == false && GetComponentInParent<HomeController>() != null){
+    //         isHome = true;
+    //         character.AnimationState.SetAnimation(0, "Home", true).MixDuration = 0;
+    //     }
+    //     else if(isHome == true && GetComponentInParent<HomeController>() == null){
+    //         isHome = false;
+    //         character.AnimationState.SetAnimation(0, "Idle", true).MixDuration = 0;
+    //     }
+    // }
 
     private void ChangeCurrentSkin()
     {

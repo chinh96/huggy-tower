@@ -125,7 +125,7 @@ public class RoomPopup : Popup
             {
                 SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
             }
-            HomeController.Instance.ResetBackground();
+            //HomeController.Instance.ResetBackground();
         }
     }
 }
