@@ -51,13 +51,14 @@ public class Tower : MonoBehaviour
         {
             homeTower.transform.SetSiblingIndex(1);
             var enemyImg = GetComponent<Image>();
-            enemyImg.type = Image.Type.Tiled;
-            GetComponent<RectTransform>().sizeDelta = new Vector2(570, 100);
+            // enemyImg.SetNativeSize();
+            enemyImg.type = Image.Type.Simple;
+            // GetComponent<RectTransform>().sizeDelta = new Vector2(570, 100);
             slots = GetComponentsInChildren<RoomTower>().ToList();
             slots.ForEach(slot =>
             {
                 slot.GetComponent<Image>().SetNativeSize();
-                slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(541, 366);
+                slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(520, 289);
             });
 
             DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
@@ -73,19 +74,18 @@ public class Tower : MonoBehaviour
         }
         else if (this as HomeTower)
         {
-            GetComponent<RectTransform>().sizeDelta = new Vector2(470, 100);
+            GetComponent<RectTransform>().localPosition = new Vector2(-350,GetComponent<RectTransform>().localPosition.y);
+            // GetComponent<RectTransform>().sizeDelta = new Vector2(470, 100);
             slots = GetComponentsInChildren<RoomTower>().ToList();
             slots.ForEach(slot =>
             {
                 slot.GetComponent<Image>().SetNativeSize();
-                slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(444, 366);
+                // slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(444, 366);
             });
 
             var homeImg = GetComponent<Image>();
-            homeImg.type = Image.Type.Sliced;
-            // var homeImg = GetComponent<Image>();
-            // homeImg.type = Image.Type.Sliced;
-            // homeImg.SetNativeSize();
+            homeImg.type = Image.Type.Simple;
+            homeImg.SetNativeSize();
 
             // slots = GetComponentsInChildren<RoomTower>().ToList();
             // slots[0].GetComponent<Image>().SetNativeSize();
@@ -227,19 +227,21 @@ public class Tower : MonoBehaviour
             homeTower.DOColor(new Color(1, 1, 1, 1), duration);
             homeTowerFlag.DOColor(new Color(1, 1, 1, 1), duration);
         }
-        DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
-        {
-            tower.DOColor(new Color(0, 0, 0, 0), duration / 2);
+        // DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
+        // {
+        //     tower.DOColor(new Color(0, 0, 0, 0), duration / 2);
 
-        });
+        // });
         ChangeItemsToHome(duration);
     }
     private void ChangeItemsToHome(float duration)
     {
         slots.ForEach(slot =>
         {
-            slot.transform.Find("Slot1").gameObject.SetActive(true);
-            slot.transform.Find("Slot1").GetComponent<Image>().DOColor(new Color(1, 1, 1, 1), duration);
+            var slot1 = slot.transform.Find("Slot1");
+            slot1.gameObject.SetActive(true);
+            slot1.GetComponent<Image>().DOColor(new Color(1, 1, 1, 1), duration);
+            slot1.transform.SetSiblingIndex(0);
             DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
             {
                 slot.GetComponent<Image>().DOColor(new Color(0, 0, 0, 0), duration / 2);
@@ -257,23 +259,7 @@ public class Tower : MonoBehaviour
         DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
         {
             Rooftop.GetComponent<Image>().DOColor(new Color(0, 0, 0, 0), duration / 2);
-
         });
-        // // Remain heigh, change width based on the visit tower
-        // Image imgVisitFootTage = FootTage.GetComponent<Image>();
-        // RectTransform imgVisitFootTageRT = imgVisitFootTage.GetComponent<RectTransform>();
-        // Vector2 oldSizeDelta = imgVisitFootTageRT.sizeDelta;
-        // imgVisitFootTage.sprite = HomeFootTageImg;
-        // imgVisitFootTage.SetNativeSize();
-        // imgVisitFootTageRT.sizeDelta = new Vector2(oldSizeDelta.x, imgVisitFootTageRT.sizeDelta.y);
-        // imgVisitFootTage.GetComponent<RectTransform>().localPosition = Vector3.zero;
-
-        // Image imgVisitRoofTop = transform.Find("RoofTop").GetComponent<Image>();
-        // RectTransform imgVisitRoofTopRT = imgVisitRoofTop.GetComponent<RectTransform>();
-        // oldSizeDelta = imgVisitRoofTopRT.sizeDelta;
-        // imgVisitRoofTop.sprite = HomeRoofTopImg;
-        // imgVisitRoofTop.SetNativeSize();
-        // imgVisitRoofTop.GetComponent<RectTransform>().sizeDelta = new Vector2(oldSizeDelta.x, imgVisitRoofTopRT.sizeDelta.y);
     }
 
     public void PlayExplosion()
