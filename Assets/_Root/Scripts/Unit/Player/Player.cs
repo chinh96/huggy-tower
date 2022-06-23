@@ -642,6 +642,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     {
                         keyObject.SetActive(true);
                         skeleton.Play("See", false);
+                        DontUseSwordAnymore();
                         keyObject.transform.DOMove(_itemTarget.transform.position, 1).OnComplete(() =>
                         {
                             keyObject.transform.DOLocalRotate(Vector3.zero, .5f).OnComplete(() =>
@@ -649,7 +650,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 keyObject.transform.DOScale(new Vector3(.1f, .1f, 1f), .5f).OnComplete(() =>
                                 {
                                     keyObject.gameObject.SetActive(false);
-                                    // PlayUseItem(_itemTarget.EquipType);
                                 }
                                 );
                             });

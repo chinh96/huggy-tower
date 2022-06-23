@@ -105,6 +105,17 @@ public class Tower : MonoBehaviour
         }
     }
 
+    [ContextMenu("Execute")]
+    public void Execute()
+    {
+        slots = GetComponentsInChildren<RoomTower>().ToList();
+        for (int i = 0; i < slots.Count; i++)
+        {
+            var slot = slots[i];
+            slot.GetComponent<Image>().SetNativeSize();
+            slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(520, 289);
+        }
+    }
     private void NumberedUnits()
     {
         int index = 0;
