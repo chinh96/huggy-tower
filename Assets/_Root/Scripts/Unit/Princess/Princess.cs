@@ -72,7 +72,8 @@ public class Princess : Unit, IAnim
         // });
         //}
         if(groundLock != null) groundLock.SetActive(false);
-        skeleton.Play("Win", true);
+        string[] wins = { "Win", "Win2", "Win3" };
+        skeleton.Play(wins[UnityEngine.Random.Range(0, wins.Length)], true);
         SoundController.Instance.PlayOnce(SoundType.RescuePrincess);
         ResourcesController.Achievement.IncreaseByType(AchievementType.Princess);
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Princess);

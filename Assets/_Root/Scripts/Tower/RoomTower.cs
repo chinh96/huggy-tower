@@ -17,7 +17,10 @@ public class RoomTower : MonoBehaviour
 
     private bool isMousePress;
 
-    private void Start() { UpdateUnitCollection(); }
+    private void Awake(){
+        UpdateUnitCollection();
+    }
+    // private void Start() { UpdateUnitCollection(); }
 
     private void OnMouseDown()
     {
@@ -58,6 +61,19 @@ public class RoomTower : MonoBehaviour
         items = GetComponentsInChildren<Item>().ToList();
     }
 
+    public void ChangeEnemyAnchorsAndPosition()
+    {
+        foreach (var enemy in units)
+        {
+            RectTransform uitransform = enemy.GetComponent<RectTransform>();
+            uitransform.anchorMin = new Vector2(0.5f, 0);
+            uitransform.anchorMax = new Vector2(0.5f, 0);
+            uitransform.pivot = Vector2.zero;
+
+            Debug.Log(uitransform.anchoredPosition);
+            uitransform.anchoredPosition = new Vector3(uitransform.anchoredPosition.x, 0.7f, 0);
+        }
+    }
     public bool IsClearEnemyInRoom()
     {
         foreach (var unit in units)

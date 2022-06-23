@@ -671,7 +671,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 case ELevelCondition.CollectChest:
                                     if (_itemTarget as ItemChest != null)
                                     {
-                                        DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+                                        DOTween.Sequence().AppendInterval(2).AppendCallback(() =>
                                         {
                                             GameController.Instance.OnWinLevel();
                                         });
@@ -716,6 +716,9 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             break;
                         case ItemType.Bow:
                             timeDelay = 0;
+                            break;
+                        case ItemType.Chest:
+                            timeDelay = 2;
                             break;
                     }
                     DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
@@ -1481,8 +1484,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     public void PlayWin(bool isLoop)
     {
         string[] wins = { "Win", "Win2", "Win3" };
-        //skeleton.Play(wins[UnityEngine.Random.Range(0, wins.Length)], true);
-        skeleton.Play("Win", true);
+        skeleton.Play(wins[UnityEngine.Random.Range(0, wins.Length)], true);
         SoundController.Instance.PlayOnce(SoundType.HeroYeah);
     }
 

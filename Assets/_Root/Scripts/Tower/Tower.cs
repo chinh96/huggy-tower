@@ -59,6 +59,7 @@ public class Tower : MonoBehaviour
             {
                 slot.GetComponent<Image>().SetNativeSize();
                 slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(520, 289);
+                slot.ChangeEnemyAnchorsAndPosition();
             });
 
             DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
@@ -80,6 +81,7 @@ public class Tower : MonoBehaviour
             slots.ForEach(slot =>
             {
                 slot.GetComponent<Image>().SetNativeSize();
+                slot.ChangeEnemyAnchorsAndPosition();
                 // slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(444, 366);
             });
 
