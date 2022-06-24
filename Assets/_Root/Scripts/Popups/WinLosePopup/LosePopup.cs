@@ -7,7 +7,7 @@ public class LosePopup : Popup
 {
     [SerializeField] private ProgressGift progressGift;
     [SerializeField] private GameObject tapToReplayButton;
-
+    [SerializeField] private GameObject huggy;
     protected override void BeforeShow()
     {
         base.BeforeShow();
@@ -19,7 +19,7 @@ public class LosePopup : Popup
     protected override void AfterShown()
     {
         base.AfterShown();
-
+        huggy.GetComponent<HeroWinLoseController>().PlayLose();
         DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
         {
             tapToReplayButton.SetActive(true);

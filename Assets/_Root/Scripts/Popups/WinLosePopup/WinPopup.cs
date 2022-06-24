@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Spine.Unity;
 public class WinPopup : Popup
 {
     [SerializeField] private ProgressGift progressGift;
@@ -11,6 +11,7 @@ public class WinPopup : Popup
     [SerializeField] private CoinGeneration coinGeneration;
     [SerializeField] private Image iconCrossAds;
     [SerializeField] private Sprite[] imgIconCrossAds;
+    [SerializeField] private GameObject huggy;
 
     private string[] UrlData = new string[2] { "market://details?id=com.gamee.huggytimepin", "market://details?id=com.GameeStudio.PoppyPin3D" };
     private int idCrossCurrent = 0;
@@ -37,7 +38,7 @@ public class WinPopup : Popup
     protected override void AfterShown()
     {
         base.AfterShown();
-
+        huggy.GetComponent<HeroWinLoseController>().PlayWin();
         Data.CoinTotal += ResourcesController.Config.CoinBonusPerLevel;
 
         progressGift.Move(() =>

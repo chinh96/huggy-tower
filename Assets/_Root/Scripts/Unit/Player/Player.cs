@@ -524,7 +524,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                 {
                                     princess.PlayOpen();
-                                    princess.PlayWin(true);
+                                    // princess.PlayWin(true);
                                     DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                     {
                                         GameController.Instance.OnWinLevel();
@@ -547,7 +547,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                             princess.LockObj?.gameObject.SetActive(true);
                                             princess.LockObj2?.DOFade(0, .3f);
                                             princess.PlayOpenCage();
-                                            princess.PlayWin(true);
+                                            // princess.PlayWin(true);
                                             princess.LockObj?.gameObject.SetActive(false);
                                             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                             {
@@ -675,7 +675,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                         {
                                             GameController.Instance.OnWinLevel();
                                         });
-                                        PlayWin(true);
+                                        // PlayWin(true);
                                     }
                                     else
                                     {
@@ -687,7 +687,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                     {
                                         GameController.Instance.OnWinLevel();
                                     });
-                                    PlayWin(true);
+                                    // PlayWin(true);
                                     break;
                             }
                         }
@@ -923,7 +923,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 }
                 else if (IsWinCondition(levelMap.condition))
                 {
-                    PlayWin(true);
+                    // PlayWin(true);
                     GameController.Instance.OnWinLevel();
                 }
             }

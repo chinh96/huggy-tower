@@ -52,7 +52,7 @@ public class Tower : MonoBehaviour
             homeTower.transform.SetSiblingIndex(1);
             var enemyImg = GetComponent<Image>();
             // enemyImg.SetNativeSize();
-            enemyImg.type = Image.Type.Simple;
+            enemyImg.type = Image.Type.Sliced;
             // GetComponent<RectTransform>().sizeDelta = new Vector2(570, 100);
             slots = GetComponentsInChildren<RoomTower>().ToList();
             slots.ForEach(slot =>
@@ -86,7 +86,7 @@ public class Tower : MonoBehaviour
             });
 
             var homeImg = GetComponent<Image>();
-            homeImg.type = Image.Type.Simple;
+            homeImg.type = Image.Type.Sliced;
             homeImg.SetNativeSize();
 
             // slots = GetComponentsInChildren<RoomTower>().ToList();
