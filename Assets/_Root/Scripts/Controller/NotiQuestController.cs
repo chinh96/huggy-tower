@@ -16,16 +16,16 @@ public class NotiQuestController : Singleton<NotiQuestController>
 
     public void Show()
     {
-        if (item != null && Data.CurrentLevel > 2)
-        {
-            item.IsShownNoti = true;
+        // if (item != null && Data.CurrentLevel > 2)
+        // {
+        //     item.IsShownNoti = true;
 
-            NotiQuest notiQuest = Instantiate(this.notiQuest, this.notiQuest.transform.parent);
-            notiQuest.transform.position = this.notiQuest.transform.position;
-            notiQuest.Init(item);
-            notiQuest.MoveIn();
+        //     NotiQuest notiQuest = Instantiate(this.notiQuest, this.notiQuest.transform.parent);
+        //     notiQuest.transform.position = this.notiQuest.transform.position;
+        //     notiQuest.Init(item);
+        //     notiQuest.MoveIn();
 
-            item = null;
-        }
+        //     item = null;
+        // }
     }
 }

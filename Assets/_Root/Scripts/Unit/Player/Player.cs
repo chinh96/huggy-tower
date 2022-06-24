@@ -529,7 +529,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                     {
                                         GameController.Instance.OnWinLevel();
                                     });
-                                    GiveFlower();
+                                    // GiveFlower();
                                 });
                             }
                             else
@@ -553,7 +553,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                             {
                                                 GameController.Instance.OnWinLevel();
                                             });
-                                            GiveFlower();
+                                            // GiveFlower();
                                         });
                                     });
                                 });

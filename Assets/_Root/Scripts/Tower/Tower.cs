@@ -75,6 +75,10 @@ public class Tower : MonoBehaviour
         }
         else if (this as HomeTower)
         {
+            var homeImg = GetComponent<Image>();
+            homeImg.type = Image.Type.Sliced;
+            homeImg.SetNativeSize();
+            
             GetComponent<RectTransform>().localPosition = new Vector2(-350,GetComponent<RectTransform>().localPosition.y);
             // GetComponent<RectTransform>().sizeDelta = new Vector2(470, 100);
             slots = GetComponentsInChildren<RoomTower>().ToList();
@@ -85,9 +89,6 @@ public class Tower : MonoBehaviour
                 // slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(444, 366);
             });
 
-            var homeImg = GetComponent<Image>();
-            homeImg.type = Image.Type.Sliced;
-            homeImg.SetNativeSize();
 
             // slots = GetComponentsInChildren<RoomTower>().ToList();
             // slots[0].GetComponent<Image>().SetNativeSize();
