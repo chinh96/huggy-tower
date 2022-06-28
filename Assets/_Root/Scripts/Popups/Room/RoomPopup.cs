@@ -7,6 +7,15 @@ public class RoomPopup : Popup
     [SerializeField] List<Room> _roomList;
     [SerializeField] List<RoomCollectionItem> _roomColectionItemList;
     [SerializeField] ScrollRectScript scrollRectScript;
+    [SerializeField] GameObject spanner;
+    [SerializeField] ParticleSystem smokeUpgrade;
+    
+    public GameObject Spanner {
+        get {return spanner;}
+    }
+    public ParticleSystem Smoke{
+        get {return smokeUpgrade;}
+    }
     private Room _currentRoom;
     // Start is called before the first frame update
     protected override void AfterInstantiate()

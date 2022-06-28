@@ -20,7 +20,7 @@ public class Room : MonoBehaviour
     public void Init(){
         RoomResources currentRoom = ResourcesController.Factory.RoomCurrent;
         foreach(var furniture in _furnitureList){
-            furniture.Init(currentRoom, this);
+            furniture.Init(currentRoom, this, _roomPopup);
         }
     }
 

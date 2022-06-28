@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using DG.Tweening;
 public class Furniture : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _priceTextCanFix;
@@ -19,14 +20,17 @@ public class Furniture : MonoBehaviour
     private FurnitureResources _furnitureResources;
 
     private Room _room;
-    public bool IsUpgrading{get; set;}
+    private RoomPopup _roomPopup;
+    public bool IsUpgrading { get; set; }
 
-    public void Init(RoomResources roomCurrent, Room room){
+    public void Init(RoomResources roomCurrent, Room room, RoomPopup roomPopup)
+    {
         IsUpgrading = false;
         HideAll();
         _furnitureResources = roomCurrent.Funitures[_furnitureIndex - 1];
 
         this._room = room;
+        this._roomPopup = roomPopup;
         /*
         for(int idx = 1; idx < _furnitureResources.FurnitureLevels.Count; idx++){
              FurnitureData item = _furnitureResources.FurnitureLevels[idx];
@@ -36,45 +40,53 @@ public class Furniture : MonoBehaviour
         _furnitureResources.FurnitureLevels[0].IsUnlocked = true;
         Reset();
     }
-    public void Reset(){ // Trong trường hợp có thể upgrade nhiều lần
+    public void Reset()
+    { // Trong trường hợp có thể upgrade nhiều lần
         bool done = true;
-        for(int idx = 1; idx < _furnitureResources.FurnitureLevels.Count; idx++){ // Vì idx = 0 luôn luôn unlocked
+        for (int idx = 1; idx < _furnitureResources.FurnitureLevels.Count; idx++)
+        { // Vì idx = 0 luôn luôn unlocked
             FurnitureData item = _furnitureResources.FurnitureLevels[idx];
-            if(!item.IsUnlocked){
+            if (!item.IsUnlocked)
+            {
                 done = false;
 
-                _currentFurnitureData =  _furnitureResources.FurnitureLevels[idx - 1];
+                _currentFurnitureData = _furnitureResources.FurnitureLevels[idx - 1];
                 _nextFurnitureData = item;
-                
-                if(Data.CoinTotal >= _nextFurnitureData.Cost) SwitchFixButtonActive(true);
+
+                if (Data.CoinTotal >= _nextFurnitureData.Cost) SwitchFixButtonActive(true);
                 else SwitchFixButtonActive(false);
 
                 CorrectPriceText();
                 break;
             }
         }
-        if(done){
+        if (done)
+        {
             HideAll();
-            _currentFurnitureData = _furnitureResources.FurnitureLevels[_furnitureResources.FurnitureLevels.Count-1];
+            _currentFurnitureData = _furnitureResources.FurnitureLevels[_furnitureResources.FurnitureLevels.Count - 1];
         }
         UpdateFurnitureImage();
     }
 
-    private void UpdateFurnitureImage(){
+    private void UpdateFurnitureImage()
+    {
         _furnitureImage.sprite = _currentFurnitureData.Sprite;
-        if(transform.GetSiblingIndex() != 0) _furnitureImage.SetNativeSize();
+        if (transform.GetSiblingIndex() != 0) _furnitureImage.SetNativeSize();
     }
 
-    private void HideAll(){
+    private void HideAll()
+    {
         _spanner.SetActive(false);
         _canFixButton.SetActive(false);
         _cantFixButton.SetActive(false);
     }
-    private void SwitchFixButtonActive(bool isCanFix){
+    private void SwitchFixButtonActive(bool isCanFix)
+    {
         _canFixButton.SetActive(isCanFix);
         _cantFixButton.SetActive(!isCanFix);
     }
-    private void CorrectPriceText(){
+    private void CorrectPriceText()
+    {
         _priceTextCanFix.SetText(_nextFurnitureData.Cost.ToString());
         _priceTextCantFix.SetText(_nextFurnitureData.Cost.ToString());
     }
@@ -83,18 +95,34 @@ public class Furniture : MonoBehaviour
         Note: Khi đang upgrade mà chuyển sang room mới, trước khi code kịp chạy dòng lệnh _furnitureResources.Upgrade();
               thì furniture chưa kịp upgrade
     */
-    public void OnClickFixButton(){
+    public void OnClickFixButton()
+    {
         IsUpgrading = true;
         Data.CoinTotal -= _nextFurnitureData.Cost;
         _furnitureResources.Upgrade();
-        
-        _room.Reset(); // Reset all furniture
-        // _spanner.transform.position = _canFixButton.transform.position;
-        // _spanner.SetActive(true);
-        IsUpgrading = false;
+
+        HideAll();
+        _roomPopup.Spanner.transform.position = _canFixButton.transform.position;
+
+        _roomPopup.Spanner.SetActive(true);
+
+        DOTween.Sequence().AppendInterval(2.2f).AppendCallback(() =>
+        {
+            _roomPopup.Spanner.SetActive(false);
+            // _roomPopup.
+            // _roomPopup. = castles[castleIndex].transform.position;
+            // smoke.transform.localPosition += new Vector3(0, 100, 0);
+            _roomPopup.Smoke.transform.position = _canFixButton.transform.position;
+            _roomPopup.Smoke.Play();
+            Reset();
+            SoundController.Instance.PlayOnce(SoundType.BuildItemDone);
+            _room.Reset(); // Reset all furniture
+            IsUpgrading = false;
+        });
     }
 
-    public void SetBackground(){
+    public void SetBackground()
+    {
         HideAll();
     }
 }

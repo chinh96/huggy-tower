@@ -24,6 +24,7 @@ public class RoomCollectionItem : MonoBehaviour
         _roomResources = roomResources;
 
         _roomTitle.SetText(_roomResources.roomType.ToString());
+        if(_roomResources.roomType == RoomType.ProductionLine) _roomTitle.SetText("Production \n Line");
         _activeRoom.GetComponent<Image>().sprite = _roomResources.upgradedFrame;
 
         _activeRoom.SetActive(isActive);
