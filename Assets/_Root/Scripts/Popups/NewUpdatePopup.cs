@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
+using I2.Loc;
 public class NewUpdatePopup : Popup
 {
     [SerializeField] private GameObject checkIcon;
     [SerializeField] private Text description;
-
+    [SerializeField] private GameObject versionText;
     protected override void BeforeShow()
     {
         base.BeforeShow();
-
+        versionText.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", Application.version.ToString(), true);
         CheckIcon();
         description.text = RemoteConfigController.Instance.UpdateDescription.Replace("<br>", "\n");
     }

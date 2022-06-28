@@ -13,6 +13,7 @@ public class Princess : Unit, IAnim
     [SerializeField] private Image lockObj2;
     [SerializeField] private GameObject groundLock;
     // [SerializeField] private Canvas canvas;
+    [SerializeField] private GameObject helpIcon;
 
     private void Start()
     {
@@ -42,10 +43,12 @@ public class Princess : Unit, IAnim
     public void PlayDead() { skeleton.Play("Die", true); }
 
     public void PlayOpen(){
+        helpIcon.SetActive(false);
         skeleton.Play("Open", false);
     }
 
     public void PlayOpenCage(){
+        helpIcon.SetActive(false);
         skeleton.Play("OpenCage", false);
     }
 

@@ -245,12 +245,12 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         Turn = ETurn.None;
 
         effectFadeIn.Play();
-        // Skeleton.Play("FadeOut", false); Chưa có anim fadeIn, fadeOut
+        Skeleton.Play("FadeOut", false);
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
         {
             MoveToSlot(parentRoom);
             effectFadeOut.Play();
-            // Skeleton.Play("FadeIn", false);
+            Skeleton.Play("FadeIn", false);
         });
     }
 
@@ -524,9 +524,9 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                 {
                                     princess.PlayOpen();
-                                    princess.PlayIdle(true);
                                     DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                     {
+                                        princess.PlayWin(true);
                                         GameController.Instance.OnWinLevel();
                                     });
                                     GiveFlower();
@@ -547,10 +547,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                             princess.LockObj?.gameObject.SetActive(true);
                                             princess.LockObj2?.DOFade(0, .3f);
                                             princess.PlayOpenCage();
-                                            princess.PlayIdle(true);
                                             princess.LockObj?.gameObject.SetActive(false);
                                             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                             {
+                                                princess.PlayWin(true);
                                                 GameController.Instance.OnWinLevel();
                                             });
                                             GiveFlower();
