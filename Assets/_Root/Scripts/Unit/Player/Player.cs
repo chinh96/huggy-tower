@@ -524,12 +524,12 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                 {
                                     princess.PlayOpen();
-                                    // princess.PlayWin(true);
+                                    princess.PlayIdle(true);
                                     DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                     {
                                         GameController.Instance.OnWinLevel();
                                     });
-                                    // GiveFlower();
+                                    GiveFlower();
                                 });
                             }
                             else
@@ -547,13 +547,13 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                             princess.LockObj?.gameObject.SetActive(true);
                                             princess.LockObj2?.DOFade(0, .3f);
                                             princess.PlayOpenCage();
-                                            // princess.PlayWin(true);
+                                            princess.PlayIdle(true);
                                             princess.LockObj?.gameObject.SetActive(false);
                                             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                             {
                                                 GameController.Instance.OnWinLevel();
                                             });
-                                            // GiveFlower();
+                                            GiveFlower();
                                         });
                                     });
                                 });
@@ -675,7 +675,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                         {
                                             GameController.Instance.OnWinLevel();
                                         });
-                                        // PlayWin(true);
+                                        PlayIdle(true);
                                     }
                                     else
                                     {
@@ -687,7 +687,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                     {
                                         GameController.Instance.OnWinLevel();
                                     });
-                                    // PlayWin(true);
+                                    PlayWin(true);
                                     break;
                             }
                         }
@@ -923,7 +923,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 }
                 else if (IsWinCondition(levelMap.condition))
                 {
-                    // PlayWin(true);
+                    PlayWin(true);
                     GameController.Instance.OnWinLevel();
                 }
             }
@@ -1483,9 +1483,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     public void PlayWin(bool isLoop)
     {
-        string[] wins = { "Win", "Win2", "Win3" };
-        skeleton.Play(wins[UnityEngine.Random.Range(0, wins.Length)], true);
-        SoundController.Instance.PlayOnce(SoundType.HeroYeah);
+        // string[] wins = { "Win", "Win2", "Win3" };
+        // skeleton.Play(wins[UnityEngine.Random.Range(0, wins.Length)], true);
+        // SoundController.Instance.PlayOnce(SoundType.HeroYeah);
+        PlayIdle(true);
     }
 
     public void GiveFlower()
@@ -1506,7 +1507,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         //         skeleton.Play("Sit", true);
         //     }
         // }
-        skeleton.Play("Win", true);
+        PlayWin(true);
     }
 
     public void PlayLose(bool isLoop) { skeleton.Play("Die", true); }

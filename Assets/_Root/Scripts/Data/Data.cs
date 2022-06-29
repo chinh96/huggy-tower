@@ -120,7 +120,7 @@ public static class Data
     public static string DateTimeStart { get => GetString(Constants.DATE_TIME_START, ""); set => SetString(Constants.DATE_TIME_START, value); }
 
     public static int DailyRewardCurrent { get => GetInt(Constants.DAILY_REWARD_CURRENT, 0); set => SetInt(Constants.DAILY_REWARD_CURRENT, value); }
-
+    public static int LastDayClaimedReward {get => GetInt(Constants.LASTDAY_CLAIMED_REWARD, -1); set => SetInt(Constants.LASTDAY_CLAIMED_REWARD, value);}
     public static int DailyRewardEventCurrent { get => GetInt(Constants.DAILY_REWARD_EVENT_CURRENT, 0); set => SetInt(Constants.DAILY_REWARD_EVENT_CURRENT, value); }
     public static string lastTimeClaimDailyEvent { get => GetString(Constants.LAST_TIME_CLAIM_DAILY_EVENT, ""); set => SetString(Constants.LAST_TIME_CLAIM_DAILY_EVENT, value); }
     public static string IdCheckUnlocked = "";

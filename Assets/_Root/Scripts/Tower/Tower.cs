@@ -51,7 +51,7 @@ public class Tower : MonoBehaviour
         {
             homeTower.transform.SetSiblingIndex(1);
             var enemyImg = GetComponent<Image>();
-            // enemyImg.SetNativeSize();
+            enemyImg.SetNativeSize();
             enemyImg.type = Image.Type.Sliced;
             // GetComponent<RectTransform>().sizeDelta = new Vector2(570, 100);
             slots = GetComponentsInChildren<RoomTower>().ToList();
@@ -78,7 +78,8 @@ public class Tower : MonoBehaviour
             var homeImg = GetComponent<Image>();
             homeImg.type = Image.Type.Sliced;
             homeImg.SetNativeSize();
-            
+
+            // Set position of hometower
             GetComponent<RectTransform>().localPosition = new Vector2(-350,GetComponent<RectTransform>().localPosition.y);
             // GetComponent<RectTransform>().sizeDelta = new Vector2(470, 100);
             slots = GetComponentsInChildren<RoomTower>().ToList();
@@ -88,8 +89,7 @@ public class Tower : MonoBehaviour
                 slot.ChangeEnemyAnchorsAndPosition();
                 // slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(444, 366);
             });
-
-
+            GetComponent<VerticalLayoutGroup>().padding.left = 20;
             // slots = GetComponentsInChildren<RoomTower>().ToList();
             // slots[0].GetComponent<Image>().SetNativeSize();
         }
@@ -241,11 +241,11 @@ public class Tower : MonoBehaviour
             homeTower.DOColor(new Color(1, 1, 1, 1), duration);
             homeTowerFlag.DOColor(new Color(1, 1, 1, 1), duration);
         }
-        // DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
-        // {
-        //     tower.DOColor(new Color(0, 0, 0, 0), duration / 2);
+        DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
+        {
+            tower.DOColor(new Color(0, 0, 0, 0), duration / 2);
 
-        // });
+        });
         ChangeItemsToHome(duration);
     }
     private void ChangeItemsToHome(float duration)

@@ -31,7 +31,7 @@ public class GameController : Singleton<GameController>
     [SerializeField] private GameObject opacity;
     public LeanTouch LeanTouch;
     [SerializeField] private GameObject rescuePartyButton;
-
+    [SerializeField] private LevelText levelText;
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
 
@@ -136,8 +136,8 @@ public class GameController : Singleton<GameController>
 
     public async void LoadLevel(int fakeIndex)
     {
-        EventController.CurrentLevelChanged?.Invoke();
-
+        // EventController.CurrentLevelChanged?.Invoke();
+        levelText.ChangeLevel();
         TGDatas.TotalTurkeyText = TGDatas.TotalTurkey;
         if (fighterOverlay != null)
         {
@@ -553,7 +553,7 @@ public class GameController : Singleton<GameController>
             MoveOutAnim();
         });
 
-        firePaper.gameObject.SetActive(true);
+        // firePaper.gameObject.SetActive(true); don't use it anymore because we have win scene.
 
         Data.CurrentLevel++;
         Data.CountPlayLevel++;

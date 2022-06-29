@@ -16,7 +16,6 @@ public class LevelText : MonoBehaviour
 
     private void Start()
     {
-        
     }
 
     public void ChangeLevel()
@@ -24,5 +23,10 @@ public class LevelText : MonoBehaviour
         //level.text = $"Level {Data.CurrentLevel + 1}";
         var localizationParamsManager = level.GetComponent<LocalizationParamsManager>();
         if(localizationParamsManager!= null) localizationParamsManager.SetParameterValue("VALUE", (Data.CurrentLevel + 1).ToString(), true);
+    }
+
+    public void ChangeLevelMinusOne(){
+        var localizationParamsManager = level.GetComponent<LocalizationParamsManager>();
+        if(localizationParamsManager!= null) localizationParamsManager.SetParameterValue("VALUE", (Data.CurrentLevel).ToString(), true);
     }
 }

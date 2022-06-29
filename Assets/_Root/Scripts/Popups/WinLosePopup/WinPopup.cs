@@ -12,6 +12,7 @@ public class WinPopup : Popup
     [SerializeField] private Image iconCrossAds;
     [SerializeField] private Sprite[] imgIconCrossAds;
     [SerializeField] private GameObject huggy;
+    [SerializeField] private LevelText levelText;
 
     private string[] UrlData = new string[2] { "market://details?id=com.gamee.huggytimepin", "market://details?id=com.GameeStudio.PoppyPin3D" };
     private int idCrossCurrent = 0;
@@ -19,6 +20,8 @@ public class WinPopup : Popup
     {
 
         base.BeforeShow();
+        
+        levelText.ChangeLevelMinusOne();
 
         claimX5Button.SetActive(true);
         tapToContinueButton.SetActive(false);

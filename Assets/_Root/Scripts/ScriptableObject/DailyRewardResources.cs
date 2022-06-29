@@ -15,9 +15,9 @@ public class DailyRewardResources : ScriptableObject
 
     public bool HasNoti {
         get{
-            Data.IdCheckUnlocked = Constants.DAILY_REWARD + Data.DailyRewardCurrent;
-            return !Data.IsUnlocked;
-            // Data.DailyRewardCurrent < Data.TotalDays;
+            // Data.IdCheckUnlocked = Constants.DAILY_REWARD + Data.DailyRewardCurrent;
+            // return !Data.IsUnlocked;
+            return Data.LastDayClaimedReward < Data.TotalDays;
         }
     }
 }

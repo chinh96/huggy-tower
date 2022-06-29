@@ -8,9 +8,11 @@ public class LosePopup : Popup
     [SerializeField] private ProgressGift progressGift;
     [SerializeField] private GameObject tapToReplayButton;
     [SerializeField] private GameObject huggy;
+    [SerializeField] private LevelText levelText;
     protected override void BeforeShow()
     {
         base.BeforeShow();
+        levelText.ChangeLevel();
 
         tapToReplayButton.SetActive(false);
         progressGift.Reset();
