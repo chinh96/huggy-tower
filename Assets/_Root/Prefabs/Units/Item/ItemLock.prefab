@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1424063521958486115}
   - component: {fileID: 408952834412049820}
   - component: {fileID: 2350852740159203860}
-  - component: {fileID: 5701107886214965161}
   m_Layer: 10
   m_Name: Skeleton
   m_TagString: Untagged
@@ -93,27 +92,6 @@ MonoBehaviour:
       calculateTangents: 0
       addNormals: 0
       immutableTriangles: 0
---- !u!223 &5701107886214965161
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2799302555785399635}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 110
-  m_TargetDisplay: 0
 --- !u!1 &5051002624021179828
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,6 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5051002624021179829}
   - component: {fileID: 7120665727269161645}
+  - component: {fileID: 261923036781566148}
   m_Layer: 10
   m_Name: ItemLock
   m_TagString: Untagged
@@ -168,6 +147,27 @@ MonoBehaviour:
   EquipType: 14
   skeleton: {fileID: 2350852740159203860}
   lockPosition: {fileID: 5169146293592853549}
+--- !u!223 &261923036781566148
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5051002624021179828}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 1
+  m_TargetDisplay: 0
 --- !u!1 &5169146293592853549
 GameObject:
   m_ObjectHideFlags: 0

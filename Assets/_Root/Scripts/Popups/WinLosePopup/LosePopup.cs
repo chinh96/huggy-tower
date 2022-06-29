@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class LosePopup : Popup
 {
-    [SerializeField] private ProgressGift progressGift;
+    // [SerializeField] private ProgressGift progressGift;
     [SerializeField] private GameObject tapToReplayButton;
     [SerializeField] private GameObject huggy;
     [SerializeField] private LevelText levelText;
@@ -15,7 +15,7 @@ public class LosePopup : Popup
         levelText.ChangeLevel();
 
         tapToReplayButton.SetActive(false);
-        progressGift.Reset();
+        // progressGift.Reset();
     }
 
     protected override void AfterShown()

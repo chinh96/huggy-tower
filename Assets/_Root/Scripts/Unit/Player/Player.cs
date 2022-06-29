@@ -640,20 +640,24 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     Turn = ETurn.UsingItem;
                     if (_itemTarget.EquipType == ItemType.Chest)
                     {
-                        keyObject.SetActive(true);
-                        skeleton.Play("See", false);
                         DontUseSwordAnymore();
-                        keyObject.transform.DOMove(_itemTarget.transform.position, 1).OnComplete(() =>
+                        if (GameController.Instance.ItemLock != null) skeleton.Play("Open", false);
+                        else
                         {
-                            keyObject.transform.DOLocalRotate(Vector3.zero, .5f).OnComplete(() =>
+                            keyObject.SetActive(true);
+                            skeleton.Play("See", true);
+                            keyObject.transform.DOMove(_itemTarget.transform.position, 1).OnComplete(() =>
                             {
-                                keyObject.transform.DOScale(new Vector3(.1f, .1f, 1f), .5f).OnComplete(() =>
+                                keyObject.transform.DOLocalRotate(Vector3.zero, .5f).OnComplete(() =>
                                 {
-                                    keyObject.gameObject.SetActive(false);
-                                }
-                                );
+                                    keyObject.transform.DOScale(new Vector3(.1f, .1f, 1f), .5f).OnComplete(() =>
+                                    {
+                                        keyObject.gameObject.SetActive(false);
+                                    }
+                                    );
+                                });
                             });
-                        });
+                        }
                     }
                     else PlayUseItem(_itemTarget.EquipType);
                     float timeDelay = _itemTarget.EquipType == ItemType.Bow ||
@@ -671,7 +675,9 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 case ELevelCondition.CollectChest:
                                     if (_itemTarget as ItemChest != null)
                                     {
-                                        DOTween.Sequence().AppendInterval(2).AppendCallback(() =>
+                                        float timeDelay = 0.7f;
+                                        if (GameController.Instance.ItemLock == null) timeDelay = 1.7f;
+                                        DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                                         {
                                             GameController.Instance.OnWinLevel();
                                         });
@@ -718,7 +724,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             timeDelay = 0;
                             break;
                         case ItemType.Chest:
-                            timeDelay = 2;
+                            if (GameController.Instance.ItemLock != null) timeDelay = .5f;
+                            else timeDelay = 2;
                             break;
                     }
                     DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
@@ -857,6 +864,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         if (swordName != "")
         {
+            swordNames.Clear();
+            if (hasKey) swordNames.Add("Key");
             swordNames.Add(swordName);
         }
         if (swordNames.Count > 0)
@@ -874,7 +883,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     private void OnEndAttackByEvent()
     {
         PlayIdle(true);
-
+        _target.gameObject.SetActive(false);
         if (_target as EnemyWolfGhost)
         {
             DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
@@ -885,6 +894,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             DOTween.Sequence().AppendInterval(.8f).AppendCallback(() =>
             {
                 EquipType = ItemType.Claws;
+
                 ChangeSword(skinWolfGhost);
                 PlayIdle(true);
                 AttackByEvent();
