@@ -21,7 +21,6 @@ public class PopupController : Singleton<PopupController>
         Debug.Log(cameraUi.aspect + "cam");
         canvasScaler.matchWidthOrHeight = cameraUi.aspect > .6f ? 1 : 0;
         Initialize();
-
     }
 
     public void Initialize()

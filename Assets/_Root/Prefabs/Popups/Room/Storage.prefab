@@ -94,7 +94,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _priceTextCanFix: {fileID: 4100730369968957367}
   _priceTextCantFix: {fileID: 1999217708514020405}
-  _spanner: {fileID: 2230318677666682597}
   _canFixButton: {fileID: 2337569635047305750}
   _cantFixButton: {fileID: 6517422323206366283}
   _furnitureImage: {fileID: 8498154455706170844}
@@ -269,7 +268,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _priceTextCanFix: {fileID: 4949460304909051161}
   _priceTextCantFix: {fileID: 810992649810376406}
-  _spanner: {fileID: 5544566043934046575}
   _canFixButton: {fileID: 6640571210895470776}
   _cantFixButton: {fileID: 5371973566770896552}
   _furnitureImage: {fileID: 4932222160806714279}
@@ -414,7 +412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -444,7 +442,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _priceTextCanFix: {fileID: 5144888238883464165}
   _priceTextCantFix: {fileID: 5533441674336129049}
-  _spanner: {fileID: 4814233162297930248}
   _canFixButton: {fileID: 6917070676862432836}
   _cantFixButton: {fileID: 938603706812299367}
   _furnitureImage: {fileID: 3807142913838360454}
@@ -467,7 +464,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &128222167093352338
 RectTransform:
   m_ObjectHideFlags: 0
@@ -557,6 +554,7 @@ MonoBehaviour:
   - {fileID: 3980357006706559311}
   - {fileID: 8553711464996787399}
   _originalParentTransform: {fileID: 0}
+  character: {fileID: 897946579715486170}
 --- !u!1 &4814233162297930248
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,7 +666,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 45, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3885922004288728170
@@ -955,7 +953,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _priceTextCanFix: {fileID: 4742633363100470603}
   _priceTextCantFix: {fileID: 8211802281345979188}
-  _spanner: {fileID: 1469497462114212378}
   _canFixButton: {fileID: 6433735472892680426}
   _cantFixButton: {fileID: 3475092609923431242}
   _furnitureImage: {fileID: 6080351909890133768}
@@ -1054,7 +1051,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _priceTextCanFix: {fileID: 5488436146204033951}
   _priceTextCantFix: {fileID: 93370358086603061}
-  _spanner: {fileID: 5581713551522009910}
   _canFixButton: {fileID: 6103178082795640382}
   _cantFixButton: {fileID: 4649855715094116683}
   _furnitureImage: {fileID: 6810014263026194411}
@@ -1153,7 +1149,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _priceTextCanFix: {fileID: 1450865018059165081}
   _priceTextCantFix: {fileID: 4441397643466434489}
-  _spanner: {fileID: 6200066754818869949}
   _canFixButton: {fileID: 917201286031022136}
   _cantFixButton: {fileID: 8966437453495685063}
   _furnitureImage: {fileID: 8679017537801235468}
@@ -1405,7 +1400,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _priceTextCanFix: {fileID: 3034752888124455204}
   _priceTextCantFix: {fileID: 7019587005885235617}
-  _spanner: {fileID: 7606492737986058331}
   _canFixButton: {fileID: 3640478694107229317}
   _cantFixButton: {fileID: 2352772138402867679}
   _furnitureImage: {fileID: 1543315883656146562}
@@ -2499,6 +2493,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7526cfc79b25d6e49a713b286dbced62, type: 3}
+--- !u!114 &897946579715486170 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6702167283415075754, guid: 7526cfc79b25d6e49a713b286dbced62, type: 3}
+  m_PrefabInstance: {fileID: 5869531763310901872}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85b887af7e6c3f45a2e2d2920d641bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2002020043276549884 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5385283249254777996, guid: 7526cfc79b25d6e49a713b286dbced62, type: 3}
@@ -2577,7 +2582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 132909266596195918, guid: 2d96084ac0dc52d43a8fc2173ea749a1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 132909266596195918, guid: 2d96084ac0dc52d43a8fc2173ea749a1, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3073,7 +3078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 623324840798556897, guid: d0c2a324a1d60ce439904e1473acbef3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 623324840798556897, guid: d0c2a324a1d60ce439904e1473acbef3, type: 3}
       propertyPath: m_AnchoredPosition.y

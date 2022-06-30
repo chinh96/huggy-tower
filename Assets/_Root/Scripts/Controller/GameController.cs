@@ -72,7 +72,7 @@ public class GameController : Singleton<GameController>
     {
         base.Awake();
         AdController.Instance.ShowBanner();
-        overlay.DOFade(0, 0);
+        overlay.DOFade(1, 0);
         SetEnableLeanTouch(false);
     }
 
@@ -205,7 +205,7 @@ public class GameController : Singleton<GameController>
             }
         }
         else
-        {   
+        {
             // Next level
             if (DataBridge.Instance.NextLevelLoaded != null && DataBridge.Instance.NextLevelLoaded.CurrentFakeLevelIndex == fakeIndex)
             {
@@ -399,7 +399,6 @@ public class GameController : Singleton<GameController>
             Camera.main.transform.position = positionCameraOrigin;
             Instance.LoadLevel(Data.CurrentLevel);
 
-
             AdController.Instance.ShowInterstitial(() =>
             {
 
@@ -450,7 +449,6 @@ public class GameController : Singleton<GameController>
     {
         AnalyticController.CompleteLevel();
         TGDatas.TotalTurkey = TGDatas.TotalTurkeyText;
-
         switch (Data.CurrentLevel)
         {
             case 0:
@@ -542,33 +540,28 @@ public class GameController : Singleton<GameController>
 
                 break;
         }
-
-
         root.LevelMap.visitTower.ChangeToHomeTower();
-
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LevelPassed);
 
-        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
-        {
-            MoveOutAnim();
-        });
-
+        MoveOutAnim();
+        
         // firePaper.gameObject.SetActive(true); don't use it anymore because we have win scene.
-
-        Data.CurrentLevel++;
-        Data.CountPlayLevel++;
-        if (Data.MaxLevel < Data.CurrentLevel) Data.MaxLevel = Data.CurrentLevel;
-
         GameState = EGameState.Win;
         SoundController.Instance.PlayOnce(SoundType.Win);
 
-        sequence = DOTween.Sequence().AppendInterval(delayWinLose).AppendCallback(() =>
+        sequence = DOTween.Sequence().AppendInterval(delayWinLose / 2).AppendCallback(() =>
         {
-            ShowPopupWin();
-            if (Data.CurrentLevel == ResourcesController.Config.LevelShowRate)
+            FadeInOverlay(() =>
             {
-                PopupController.Instance.Show<RatingPopup>(null, ShowAction.DoNothing);
-            }
+                Data.CurrentLevel++;
+                Data.CountPlayLevel++;
+                if (Data.MaxLevel < Data.CurrentLevel) Data.MaxLevel = Data.CurrentLevel;
+                ShowPopupWin();
+                if (Data.CurrentLevel == ResourcesController.Config.LevelShowRate)
+                {
+                    PopupController.Instance.Show<RatingPopup>(null, ShowAction.DoNothing);
+                }
+            });
         });
     }
 
@@ -612,7 +605,8 @@ public class GameController : Singleton<GameController>
         {
             endValue -= new Vector2(1f, 0);
         }
-        else if(GameState == EGameState.Lose){
+        else if (GameState == EGameState.Lose)
+        {
             endValue -= new Vector2(.5f, 0);
         }
         Camera.main.transform.DOMove(endValue, zoomCameraDuration);
@@ -635,36 +629,47 @@ public class GameController : Singleton<GameController>
 
     private void FadeInOverlay(Action action = null)
     {
-        if (ResourcesController.Config.EnableTest)
+        // if (ResourcesController.Config.EnableTest)
+        // {
+        //     action?.Invoke();
+        // }
+        // else
+        // {
+        //     overlay.gameObject.SetActive(true);
+        //     overlay.DOFade(1, .3f).SetEase(Ease.InCubic).OnComplete(() =>
+        //     {
+        //         action?.Invoke();
+        //     });
+        // }
+        overlay.gameObject.SetActive(true);
+        overlay.DOFade(1, .3f).SetEase(Ease.InCubic).OnComplete(() =>
         {
             action?.Invoke();
-        }
-        else
-        {
-            overlay.gameObject.SetActive(true);
-            overlay.DOFade(1, .3f).SetEase(Ease.InCubic).OnComplete(() =>
-            {
-                action?.Invoke();
-            });
-        }
+        });
     }
 
     private void FadeOutOverlay(Action action)
     {
-        if (ResourcesController.Config.EnableTest)
+        // if (ResourcesController.Config.EnableTest)
+        // {
+        //     overlay.gameObject.SetActive(false);
+        //     NotiQuestController.Instance.Show();
+        // }
+        // else
+        // {
+        //     overlay.DOFade(0, 1f).SetEase(Ease.InCubic).OnComplete(() =>
+        //     {
+        //         overlay.gameObject.SetActive(false);
+        //         NotiQuestController.Instance.Show();
+        //         action?.Invoke();
+        //     });
+        // }
+        overlay.DOFade(0, 1f).SetEase(Ease.InCubic).OnComplete(() =>
         {
             overlay.gameObject.SetActive(false);
             NotiQuestController.Instance.Show();
-        }
-        else
-        {
-            overlay.DOFade(0, 1f).SetEase(Ease.InCubic).OnComplete(() =>
-            {
-                overlay.gameObject.SetActive(false);
-                NotiQuestController.Instance.Show();
-                action?.Invoke();
-            });
-        }
+            action?.Invoke();
+        });
     }
 
     public void OnClickCastleButton()
@@ -680,9 +685,10 @@ public class GameController : Singleton<GameController>
     public void MoveInAnim()
     {
         // moveOutAnimations.ForEach(item => {item.Reset());
-        
-        foreach(var item in moveOutAnimations){
-            if(item!=null) item.Reset();
+
+        foreach (var item in moveOutAnimations)
+        {
+            if (item != null) item.Reset();
         }
     }
 

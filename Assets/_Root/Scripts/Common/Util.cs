@@ -116,7 +116,7 @@ public static partial class Util
             }
             else if (characterType == EUnitType.Princess)
             {
-                skeletonGraphic.AnimationState.SetAnimation(0, "Idle2", true).MixDuration = 0;
+                skeletonGraphic.AnimationState.SetAnimation(0, "Idle", true).MixDuration = 0;
             }
         }
     }

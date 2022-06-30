@@ -72,10 +72,10 @@ public class HomeController : Singleton<HomeController>
         SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
         FadeOutOverlay();
         CheckNewUpdatePopup();
-        CheckAchievementDailyQuest();
-        CheckRescueParty();
-        CheckTG();
-        checkAllEvent();
+        // CheckAchievementDailyQuest();
+        // CheckRescueParty();
+        // CheckTG();
+        // checkAllEvent();
         AdController.Instance.Request();
         AdController.Instance.HideBanner();
 

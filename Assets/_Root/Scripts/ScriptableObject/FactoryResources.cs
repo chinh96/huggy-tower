@@ -9,6 +9,7 @@ public class FactoryResources : ScriptableObject
     public List<RoomResources> Rooms;
 
     public RoomResources RoomCurrent => Rooms.Find(item => item.roomType == Data.RoomCurrent);
+    public RoomResources RoomLatest => Rooms.Find(item => !item.IsComplete);
 
     public RoomResources RoomDefault => Rooms.Find(item => item.isDefaultRoom);
 
@@ -18,12 +19,16 @@ public class FactoryResources : ScriptableObject
     {
         get
         {
-            foreach (var funiture in RoomCurrent.Funitures)
+            if (RoomLatest)
             {
-                if (!funiture.FurnitureLevels[1].IsUnlocked && Data.CoinTotal >= funiture.FurnitureLevels[1].Cost)
+                foreach (var funiture in RoomLatest.Funitures)
                 {
-                    return true;
+                    if (!funiture.FurnitureLevels[1].IsUnlocked && Data.CoinTotal >= funiture.FurnitureLevels[1].Cost)
+                    {
+                        return true;
+                    }
                 }
+                return false;
             }
             return false;
         }

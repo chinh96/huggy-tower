@@ -36,7 +36,7 @@ public class ScrollRectScript : MonoBehaviour
             mouseDown = false;
             buttonLeft = false;
         }else{
-            scrollRect.horizontalNormalizedPosition -= 0.01f;
+            if(scrollRect.horizontalNormalizedPosition > 0)scrollRect.horizontalNormalizedPosition -= 0.02f;
         }
     }
 
@@ -45,7 +45,7 @@ public class ScrollRectScript : MonoBehaviour
             mouseDown = false;
             buttonRight = false;
         }else{
-            scrollRect.horizontalNormalizedPosition += 0.01f;
+            if(scrollRect.horizontalNormalizedPosition < 1) scrollRect.horizontalNormalizedPosition += 0.02f;
         }
     }
 

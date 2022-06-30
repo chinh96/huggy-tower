@@ -54,8 +54,8 @@ public class ResourcesController : Singleton<ResourcesController>
             Data.DateTimeStartRescueParty = DateTime.Now.ToString();
         }
 
-        GetSkinRescueParty();
-        GetSkinsTG();
+        // GetSkinRescueParty();
+        // GetSkinsTG();
     }
 
     private void Start()

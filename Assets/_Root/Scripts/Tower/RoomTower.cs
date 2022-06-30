@@ -19,6 +19,7 @@ public class RoomTower : MonoBehaviour
 
     private void Awake()
     {
+        selectedObject?.gameObject.transform.SetAsFirstSibling();
         UpdateUnitCollection();
     }
     // private void Start() { UpdateUnitCollection(); }
@@ -66,7 +67,16 @@ public class RoomTower : MonoBehaviour
     {
         foreach (var enemy in units)
         {
-            if (enemy as EnemySpider == null && enemy as EnemySpider2 == null)
+            if(enemy as Princess != null && (enemy as Princess).LockObj != null){
+                Debug.Log("Princess Lock!!");
+                RectTransform uitransform = enemy.GetComponent<RectTransform>();
+                uitransform.anchorMin = new Vector2(0.5f, 0);
+                uitransform.anchorMax = new Vector2(0.5f, 0);
+                uitransform.pivot = Vector2.zero;
+
+                uitransform.anchoredPosition = new Vector3(uitransform.anchoredPosition.x, 35f, 0);
+            }
+            else if (enemy as EnemySpider == null && enemy as EnemySpider2 == null)
             {
                 RectTransform uitransform = enemy.GetComponent<RectTransform>();
                 uitransform.anchorMin = new Vector2(0.5f, 0);

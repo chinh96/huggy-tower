@@ -9,7 +9,9 @@ public class RoomPopup : Popup
     [SerializeField] ScrollRectScript scrollRectScript;
     [SerializeField] GameObject spanner;
     [SerializeField] ParticleSystem smokeUpgrade;
-    
+    [SerializeField] ParticleSystem firePaper;
+
+    public ParticleSystem FirePaper => firePaper;
     public GameObject Spanner {
         get {return spanner;}
     }
@@ -50,10 +52,12 @@ public class RoomPopup : Popup
 
     public void OpenNewRoom()
     {
-        for (int idx = 0; idx < _roomColectionItemList.Count; idx++)
+        for (int idx = 1; idx < _roomColectionItemList.Count; idx++)
         {
             if (!ResourcesController.Factory.Rooms[idx].IsComplete)
             {
+                FirePaper.gameObject.SetActive(true);
+                _currentRoom.Character.Play("Win", true);
                 _roomColectionItemList[idx].Reset(true);
                 break;
             }
@@ -70,7 +74,6 @@ public class RoomPopup : Popup
                _currentRoom = item;
                item.gameObject.SetActive(true);
                item.Init();
-
                //scrollRectScript.FocusOnCurrentRoom(item.transform.GetSiblingIndex());
            }
            else item.gameObject.SetActive(false);
@@ -106,10 +109,9 @@ public class RoomPopup : Popup
         {
             if (item.RoomType == Data.RoomCurrent)
             {
-                item.Reset();
+                item.Init();
             }
         });
-
     }
 
     protected override void AfterShown()
@@ -124,6 +126,8 @@ public class RoomPopup : Popup
     {
         if (this._currentRoom.IsUpgrading() == false)
         {
+            FirePaper.gameObject.SetActive(false);
+            _currentRoom.Character.Play("Idle", true);
             base.Close();
 
             if (GameController.Instance != null)

@@ -174,6 +174,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         searchTargetCollider.enabled = false;
 
         GameController.Instance.SetSlicerActive(true);
+        GetComponent<Canvas>().overrideSorting = true;
     }
 
     public void OnDeSelected()
@@ -185,6 +186,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         searchTargetCollider.enabled = true;
 
         GameController.Instance.SetSlicerActive(false);
+        GetComponent<Canvas>().overrideSorting = false;
     }
 
     public void OnMouseDown() // => can drag player even by its searching collider.
@@ -864,8 +866,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         if (swordName != "")
         {
-            swordNames.Clear();
-            if (hasKey) swordNames.Add("Key");
+            if (swordName != "Key")
+            {
+                swordNames.Clear();
+                if (hasKey && GameController.Instance.ItemLock == null) swordNames.Add("Key");
+            }
             swordNames.Add(swordName);
         }
         if (swordNames.Count > 0)
@@ -883,7 +888,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     private void OnEndAttackByEvent()
     {
         PlayIdle(true);
-        _target.gameObject.SetActive(false);
         if (_target as EnemyWolfGhost)
         {
             DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
@@ -916,27 +920,31 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         if (Turn != ETurn.Lost)
         {
-            var room = levelMap.visitTower.RoomContainPlayer(this);
-            if (room != null && (!room.IsClearEnemyInRoom() || room.IsContaintItem() || room.IsContaintPrincess()))
+            DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
             {
-                // If player attack very fast, enemy cannot call event "OnBullet"  
-                StartSearchingTurn();
-                SearchingTarget();
-                return;
-            }
-            StartDragTurn();
-            if (levelMap.visitTower.IsClearTower())
-            {
-                if (levelMap.hasNewVisitTower)
+                _target.gameObject.SetActive(false);
+                var room = levelMap.visitTower.RoomContainPlayer(this);
+                if (room != null && (!room.IsClearEnemyInRoom() || room.IsContaintItem() || room.IsContaintPrincess()))
                 {
-                    levelMap.ChangeToNewVisitTower();
+                    // If player attack very fast, enemy cannot call event "OnBullet"  
+                    StartSearchingTurn();
+                    SearchingTarget();
+                    return;
                 }
-                else if (IsWinCondition(levelMap.condition))
+                StartDragTurn();
+                if (levelMap.visitTower.IsClearTower())
                 {
-                    PlayWin(true);
-                    GameController.Instance.OnWinLevel();
+                    if (levelMap.hasNewVisitTower)
+                    {
+                        levelMap.ChangeToNewVisitTower();
+                    }
+                    else if (IsWinCondition(levelMap.condition))
+                    {
+                        PlayWin(true);
+                        GameController.Instance.OnWinLevel();
+                    }
                 }
-            }
+            });
         }
     }
 

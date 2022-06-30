@@ -8,13 +8,15 @@ public class Furniture : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _priceTextCanFix;
     [SerializeField] private TextMeshProUGUI _priceTextCantFix;
-    [SerializeField] private GameObject _spanner; // chưa tối ưu(mỗi furniture có 1 spanner riêng => có thể dùng chung)
+    // [SerializeField] private GameObject _spanner; // chưa tối ưu(mỗi furniture có 1 spanner riêng => có thể dùng chung)
     [SerializeField] private GameObject _canFixButton;
     [SerializeField] private GameObject _cantFixButton;
     [SerializeField] private Image _furnitureImage;
 
     [SerializeField] private int _furnitureIndex;
 
+    private ParticleSystem _smoke;
+    private GameObject _spanner;
     private FurnitureData _nextFurnitureData;
     private FurnitureData _currentFurnitureData;
     private FurnitureResources _furnitureResources;
@@ -26,11 +28,14 @@ public class Furniture : MonoBehaviour
     public void Init(RoomResources roomCurrent, Room room, RoomPopup roomPopup)
     {
         IsUpgrading = false;
-        HideAll();
         _furnitureResources = roomCurrent.Funitures[_furnitureIndex - 1];
 
         this._room = room;
         this._roomPopup = roomPopup;
+        _smoke = Instantiate(roomPopup.Smoke, transform);
+        _spanner = Instantiate(roomPopup.Spanner, transform);
+        _spanner.GetComponent<RectTransform>().pivot = new Vector2(0, 0.5f);
+        HideAll();
         /*
         for(int idx = 1; idx < _furnitureResources.FurnitureLevels.Count; idx++){
              FurnitureData item = _furnitureResources.FurnitureLevels[idx];
@@ -42,6 +47,7 @@ public class Furniture : MonoBehaviour
     }
     public void Reset()
     { // Trong trường hợp có thể upgrade nhiều lần
+        if(IsUpgrading) return;
         bool done = true;
         for (int idx = 1; idx < _furnitureResources.FurnitureLevels.Count; idx++)
         { // Vì idx = 0 luôn luôn unlocked
@@ -76,7 +82,7 @@ public class Furniture : MonoBehaviour
 
     private void HideAll()
     {
-        _spanner.SetActive(false);
+        _spanner.SetActive(IsUpgrading);
         _canFixButton.SetActive(false);
         _cantFixButton.SetActive(false);
     }
@@ -97,28 +103,32 @@ public class Furniture : MonoBehaviour
     */
     public void OnClickFixButton()
     {
-        IsUpgrading = true;
-        Data.CoinTotal -= _nextFurnitureData.Cost;
-        _furnitureResources.Upgrade();
+        if(Data.CoinTotal >= _nextFurnitureData.Cost){
+            IsUpgrading = true;
+            _furnitureResources.Upgrade();
+            Data.CoinTotal -= _nextFurnitureData.Cost; // call noti
 
-        HideAll();
-        _roomPopup.Spanner.transform.position = _canFixButton.transform.position;
+            _room.Reset(); // Reset all furniture except funiture is upgrading
 
-        _roomPopup.Spanner.SetActive(true);
+            HideAll();
+            _spanner.transform.position = _canFixButton.transform.position;
 
-        DOTween.Sequence().AppendInterval(2.2f).AppendCallback(() =>
-        {
-            _roomPopup.Spanner.SetActive(false);
-            // _roomPopup.
-            // _roomPopup. = castles[castleIndex].transform.position;
-            // smoke.transform.localPosition += new Vector3(0, 100, 0);
-            _roomPopup.Smoke.transform.position = _canFixButton.transform.position;
-            _roomPopup.Smoke.Play();
-            Reset();
-            SoundController.Instance.PlayOnce(SoundType.BuildItemDone);
-            _room.Reset(); // Reset all furniture
-            IsUpgrading = false;
-        });
+            _spanner.SetActive(true);
+
+            DOTween.Sequence().AppendInterval(2.2f).AppendCallback(() =>
+            {
+                _spanner.SetActive(false);
+                // _roomPopup.
+                // _roomPopup. = castles[castleIndex].transform.position;
+                // smoke.transform.localPosition += new Vector3(0, 100, 0);
+                _smoke.transform.position = _canFixButton.transform.position;
+                _smoke.Play();
+                IsUpgrading = false;
+                Reset();
+                _room.Reset();
+                SoundController.Instance.PlayOnce(SoundType.BuildItemDone);
+            });
+        }
     }
 
     public void SetBackground()

@@ -61,9 +61,8 @@ public class SkinItem : MonoBehaviour
     // }
     public void Reset()
     {
+        Debug.Log("Skin Item: " + skinData.SkinName);
         skeletonGraphic.ChangeSkin(skinData.SkinName, skinPopup.EUnitType);
-
-
         cost.text = skinData.Coin.ToString();
         costDisable.text = skinData.Coin.ToString();
 
@@ -81,15 +80,15 @@ public class SkinItem : MonoBehaviour
                     buttonAds.SetActive(true);
                     break;
                 case SkinType.Daily:
-                    if (Data.TotalDays > skinData.DayDaily)
-                    {
-                        buttonBuy.SetActive(Data.CoinTotal >= skinData.Coin);
-                        buttonDisableBuy.SetActive(Data.CoinTotal < skinData.Coin);
-                    }
-                    else
-                    {
+                    // if (Data.TotalDays > skinData.DayDaily)
+                    // {
+                    //     buttonBuy.SetActive(Data.CoinTotal >= skinData.Coin);
+                    //     buttonDisableBuy.SetActive(Data.CoinTotal < skinData.Coin);
+                    // }
+                    // else
+                    // {
                         buttonDailyReward.SetActive(true);
-                    }
+                    // }
                     break;
                 case SkinType.Facebook:
                     buttonFacebook.SetActive(true);

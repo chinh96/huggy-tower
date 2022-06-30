@@ -114,7 +114,7 @@ public class DailyRewardItem : MonoBehaviour
         else // current daily reward
         {
             if(Data.LastDayClaimedReward < Data.TotalDays){
-                 claimButton.SetActive(true);
+                claimButton.SetActive(true);
                 dailyRewardPopup.SetCoinCurrent(coin);
 
                 dailyRewardPopup.SetX5Text(coin);
@@ -136,12 +136,11 @@ public class DailyRewardItem : MonoBehaviour
         {
             int index = ResourcesController.DailyReward.DailyRewardsSkin.IndexOf(day);
             skinData = ResourcesController.Hero.SkinsDailyReward[index];
-
             hero.ChangeSkin(skinData.SkinName);
             hero.gameObject.SetActive(true);
 
             skinName.text = skinData.Name;
-            skinName.gameObject.SetActive(true);
+            if(isDay7) skinName.gameObject.SetActive(true);
         }
         else
         {
@@ -175,6 +174,7 @@ public class DailyRewardItem : MonoBehaviour
             skinData.IsUnlocked = true;
             EventController.SkinPopupReseted?.Invoke();
         }
+        Debug.Log("Done Claimed Skin");
         dailyRewardPopup.OnClickClaim(claimButton, isSkin);
         ResourcesController.Achievement.IncreaseByType(AchievementType.ClaimDailyReward);
 

@@ -23,13 +23,12 @@ public class SkinPopup : Popup
         {
             case EUnitType.Hero:
                 skinResources = ResourcesController.Hero;
+                EventController.SkinPopupReseted += Reset; // Because Princess Skinpopup doesn't have enough skin
                 break;
             case EUnitType.Princess:
                 skinResources = ResourcesController.Princess;
                 break;
         }
-
-        EventController.SkinPopupReseted += Reset;
 
         if (!m_subjectSkinChange)
         {
