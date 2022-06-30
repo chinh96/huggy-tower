@@ -174,7 +174,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         searchTargetCollider.enabled = false;
 
         GameController.Instance.SetSlicerActive(true);
-        GetComponent<Canvas>().overrideSorting = true;
+        // GetComponent<Canvas>().overrideSorting = true;
     }
 
     public void OnDeSelected()
@@ -186,7 +186,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         searchTargetCollider.enabled = true;
 
         GameController.Instance.SetSlicerActive(false);
-        GetComponent<Canvas>().overrideSorting = false;
+        // GetComponent<Canvas>().overrideSorting = false;
     }
 
     public void OnMouseDown() // => can drag player even by its searching collider.
