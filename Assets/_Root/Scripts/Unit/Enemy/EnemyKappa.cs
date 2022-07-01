@@ -49,7 +49,7 @@ public class EnemyKappa : Unit, IAnim
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
     public void PlayAttack() { 
-        skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.DemonAttack); 
+        skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.SecretaryAttack); 
         // DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
         // {
         //     fire.gameObject.SetActive(true);

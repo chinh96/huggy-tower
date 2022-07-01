@@ -18,7 +18,7 @@ public class WinPopup : Popup
     private int idCrossCurrent = 0;
     protected override void BeforeShow()
     {
-
+        AdController.Instance.HideBanner();
         base.BeforeShow();
         
         levelText.ChangeLevelMinusOne();

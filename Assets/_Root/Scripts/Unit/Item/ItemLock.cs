@@ -26,7 +26,7 @@ public class ItemLock : Item, IAnim
     public void PlayWin(bool isLoop = false)
     {
         skeleton.Play("Open", isLoop);
-        SoundController.Instance.PlayOnce(SoundType.OpenChest);
+        SoundController.Instance.PlayOnce(SoundType.ChainUnlocking);
         DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
         {
             skeleton.DOColor(new Color(0, 0, 0, 0), .5f).OnComplete(() =>

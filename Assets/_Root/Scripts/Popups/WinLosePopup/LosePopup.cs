@@ -11,6 +11,7 @@ public class LosePopup : Popup
     [SerializeField] private LevelText levelText;
     protected override void BeforeShow()
     {
+        AdController.Instance.HideBanner();
         base.BeforeShow();
         levelText.ChangeLevel();
 

@@ -47,7 +47,7 @@ public class EnemyDemon : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle2", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack2", false); SoundController.Instance.PlayOnce(SoundType.DemonAttack); }
+    public void PlayAttack() { skeleton.Play("Attack2", false); SoundController.Instance.PlayOnce(SoundType.EnemyGunAttack); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
@@ -55,7 +55,7 @@ public class EnemyDemon : Unit, IAnim
     {
         skeleton.Play("Die", false);
 
-        SoundType[] soundTypes = { SoundType.EnemyDie, SoundType.EnemyDie2, SoundType.EnemyDie3 };
+        SoundType[] soundTypes = {SoundType.EnemyDie2, SoundType.EnemyDie3 };
         SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
         SoundController.Instance.PlayOnce(soundType);
     }

@@ -185,7 +185,7 @@ public class Tower : MonoBehaviour
 
     public void AddSlot()
     {
-        SoundController.Instance.PlayOnce(SoundType.TowerLevelUp);
+        // SoundController.Instance.PlayOnce(SoundType.TowerLevelUp);
 
         var newRoom = Instantiate(GameController.Instance.RoomPrefab, transform, false);
         //newRoom.GetComponent<Image>().SetNativeSize();

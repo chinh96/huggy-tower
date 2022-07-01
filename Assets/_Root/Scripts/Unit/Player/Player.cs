@@ -977,8 +977,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         if (_target as EnemyKappa)
         {
-            effectHitKappa.gameObject.SetActive(true);
-            effectHitKappa.Play();
+            effectPoisonSecretary.Play();
+            DOTween.Sequence().AppendInterval(.01f).AppendCallback(() =>
+            {
+                if (effectPoisonGroundSecretary.activeSelf == false) effectPoisonGroundSecretary.SetActive(true);
+            });
         }
         else if (_target as EnemyGoblin)
         {
@@ -1326,6 +1329,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 // });
                 break;
             case ItemType.Saw:
+                SoundController.Instance.PlayOnce(SoundType.HuggyAttackSaw);
                 skeleton.Play("AttackSaw", false);
                 DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
                 {
@@ -1341,6 +1345,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 });
                 break;
             case ItemType.Claws:
+                SoundController.Instance.PlayOnce(SoundType.HuggyAttackClaws);
                 DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                 {
                     PlayHitEnemy();
@@ -1361,12 +1366,12 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         case ItemType.Hammer:
                             DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                             {
-                                SoundController.Instance.PlayOnce(SoundType.Gloves);
+                                SoundController.Instance.PlayOnce(SoundType.HuggyAttackBaseball);
                             });
                             attacks = new string[] { "AttackHammer" };
                             break;
                         case ItemType.Baseball:
-                            SoundController.Instance.PlayOnce(SoundType.HeroCut);
+                            SoundController.Instance.PlayOnce(SoundType.HuggyAttackBaseball);
                             attacks = new string[] { "AttackBaseball" };
                             break;
                         case ItemType.Axe:
@@ -1379,7 +1384,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             }
                         default:
                             {
-                                SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
+                                SoundType[] soundTypes = { SoundType.HuggyAttackNormal, SoundType.HuggyAttackNormal2};
                                 SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
                                 SoundController.Instance.PlayOnce(soundType);
                                 attacks = new string[] { "Attack", "Attack2" };

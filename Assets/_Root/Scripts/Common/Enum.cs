@@ -238,6 +238,7 @@ public enum SoundType
     LuckySpinRotate,
     LuckySpinHit,
     TurkeyJump,
+    // Huggy Kissy Tower
     ElectricTrap,
     ChainUnlocking,
     KissyHelpMe,
@@ -250,6 +251,13 @@ public enum SoundType
     PigDie,
     SecretaryAttack,
     SecretaryDie,
+    HuggyAttackBaseball, // Pipe
+    HuggyAttackClaws,
+    HuggyAttackNormal,
+    HuggyAttackNormal2,
+    HuggyAttackSaw,
+    EnemyHandAttack,
+    EnemyGunAttack
 }
 
 public enum WorldType

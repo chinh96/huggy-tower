@@ -67,7 +67,7 @@ public class EnemyMelee : Unit, IAnim
     {
         skeleton.Play("Die", false);
 
-        SoundType[] soundTypes = { SoundType.EnemyDie, SoundType.EnemyDie2, SoundType.EnemyDie3 };
+        SoundType[] soundTypes = { SoundType.EnemyDie2, SoundType.EnemyDie3 };
         SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
         SoundController.Instance.PlayOnce(soundType);
     }

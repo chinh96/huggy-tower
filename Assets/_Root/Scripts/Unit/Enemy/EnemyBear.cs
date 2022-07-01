@@ -51,15 +51,14 @@ public class EnemyBear : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.DemonAttack); }
+    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.EnemyHandAttack); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
     public void PlayDead()
     {
+        SoundController.Instance.PlayOnce(SoundType.SecretaryDie);
         skeleton.Play("Die", false);
-
-        SoundController.Instance.PlayOnce(SoundType.BearDie);
     }
 
     public void PlayWin(bool isLoop) { }
