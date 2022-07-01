@@ -152,7 +152,7 @@ public class GameController : Singleton<GameController>
         AdController.Instance.Request();
         MoveInAnim();
 
-        SoundController.Instance.PlayOnce(SoundType.EnemyStart);
+        // SoundController.Instance.PlayOnce(SoundType.EnemyStart);
 
         FadeOutOverlay(() =>
         {

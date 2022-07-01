@@ -257,7 +257,9 @@ public enum SoundType
     HuggyAttackNormal2,
     HuggyAttackSaw,
     EnemyHandAttack,
-    EnemyGunAttack
+    EnemyGunAttack,
+    FixingRoom,
+    PickWeapon
 }
 
 public enum WorldType

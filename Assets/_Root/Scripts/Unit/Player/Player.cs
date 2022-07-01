@@ -211,7 +211,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         if (GameController.Instance.GameState == EGameState.Playing && Turn == ETurn.Drag)
         {
-            SoundController.Instance.PlayOnce(SoundType.HeroDrop);
+            // SoundController.Instance.PlayOnce(SoundType.HeroDrop);
             if (!dragTranslate.DragTranslateFlag)
             {
                 _isMouseUpDragDetected = false;
@@ -1552,19 +1552,19 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Bow2:
             case ItemType.Polllaxe:
                 skeleton.Play("PickUp", false);
-                SoundController.Instance.PlayOnce(SoundType.HeroPickSword);
+                SoundController.Instance.PlayOnce(SoundType.PickWeapon);
                 break;
             case ItemType.Gloves:
                 skeleton.Play("PickUp", false);
-                SoundController.Instance.PlayOnce(SoundType.PickGloves);
+                SoundController.Instance.PlayOnce(SoundType.PickWeapon);
                 break;
             case ItemType.Food:
                 skeleton.Play("PickUp", false);
-                SoundController.Instance.PlayOnce(SoundType.PickFood);
+                SoundController.Instance.PlayOnce(SoundType.PickWeapon);
                 break;
             case ItemType.Shield:
                 skeleton.Play("PickUp", false);
-                SoundController.Instance.PlayOnce(SoundType.PickShield);
+                SoundController.Instance.PlayOnce(SoundType.PickWeapon);
                 break;
             case ItemType.Key:
                 hasKey = true;

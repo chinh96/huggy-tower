@@ -126,7 +126,7 @@ public class Furniture : MonoBehaviour
                 IsUpgrading = false;
                 Reset();
                 _room.Reset();
-                SoundController.Instance.PlayOnce(SoundType.BuildItemDone);
+                SoundController.Instance.PlayOnce(SoundType.FixingRoom);
             });
         }
     }
