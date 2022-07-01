@@ -87,7 +87,7 @@ public class DailyRewardItem : MonoBehaviour
     {
         CheckDailyCoin();
         CheckDailySkin();
-        // CheckBackground();
+        CheckBackground();
     }
 
     private void CheckDailyCoin()
@@ -113,7 +113,8 @@ public class DailyRewardItem : MonoBehaviour
         }
         else // current daily reward
         {
-            if(Data.LastDayClaimedReward < Data.TotalDays){
+            if (Data.LastDayClaimedReward < Data.TotalDays)
+            {
                 claimButton.SetActive(true);
                 dailyRewardPopup.SetCoinCurrent(coin);
 
@@ -125,6 +126,13 @@ public class DailyRewardItem : MonoBehaviour
                 claimButton.SetActive(false);
                 // doneIcon.SetActive(true);
                 dailyRewardType = DailyRewardType.NotClaimed;
+            }
+            background.sprite = spriteCoinCurrent;
+            if (isDay7)
+            {
+                skinName.color = new Color(0,0.2980392f, 0.6f, 1);
+                dayText.color = new Color(0, 0.2980392f, 0.6f, 1);
+                coinText.color = new Color(0, 0.2980392f, 0.6f, 1);
             }
         }
     }
@@ -140,7 +148,7 @@ public class DailyRewardItem : MonoBehaviour
             hero.gameObject.SetActive(true);
 
             skinName.text = skinData.Name;
-            if(isDay7) skinName.gameObject.SetActive(true);
+            if (isDay7) skinName.gameObject.SetActive(true);
         }
         else
         {
@@ -154,14 +162,20 @@ public class DailyRewardItem : MonoBehaviour
         switch (dailyRewardType)
         {
             case DailyRewardType.Claimed:
-                background.sprite = isDay7 ? spriteSkinClaimed : spriteCoinClaimed;
+                background.sprite = spriteCoinClaimed;
                 break;
-            case DailyRewardType.Current:
-                background.sprite = isDay7 ? spriteSkinCurrent : spriteCoinCurrent;
-                break;
-            case DailyRewardType.NotClaimed:
-                background.sprite = isDay7 ? spriteSkinNotClaimed : spriteCoinNotClaimed;
-                break;
+            // case DailyRewardType.Current:
+            //     background.sprite = spriteCoinCurrent;
+            //     if (isDay7)
+            //     {
+            //         skinName.color = new Color(0, 0, 102, 1);
+            //         dayText.color = new Color(0, 0, 102, 1);
+            //         coinText.color = new Color(0, 0, 102, 1);
+            //     }
+            //     break;
+                // case DailyRewardType.NotClaimed:
+                //     background.sprite = isDay7 ? spriteSkinNotClaimed : spriteCoinNotClaimed;
+                //     break;
         }
     }
 

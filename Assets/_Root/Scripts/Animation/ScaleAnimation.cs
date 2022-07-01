@@ -9,6 +9,10 @@ public class ScaleAnimation : MonoBehaviour
     [SerializeField] private float duration = 1f;
     [SerializeField] private Vector3 endValue = new Vector3(1.1f, 1.1f, 1.1f);
     [SerializeField] private bool isLoop = true;
+    public bool IsLoop {
+        get {return isLoop;}
+        set {isLoop = value;}
+    }
     [SerializeField] private bool loopOnAwake = true;
     private Vector3 startValue;
 
@@ -43,7 +47,7 @@ public class ScaleAnimation : MonoBehaviour
         }
         else
         {
-            transform.DOScale(endValue, duration).SetEase(ease);
+            transform.DOScale(startValue, duration).SetEase(ease).OnComplete(() => ResetScale());
         }
     }
 
