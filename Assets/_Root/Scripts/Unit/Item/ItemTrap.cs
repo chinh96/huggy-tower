@@ -32,7 +32,7 @@ public class ItemTrap : Item
                     break;
                 case ItemType.Electric:
                     DecreaseDamage(player, damage);
-                    SoundController.Instance.PlayOnce(SoundType.BlockWallBreak);
+                    // SoundController.Instance.PlayOnce(SoundType.BlockWallBreak);
                     break;
                 case ItemType.Trap:
                     skeleton.Play("Attack", false);

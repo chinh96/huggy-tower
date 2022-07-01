@@ -67,7 +67,7 @@ public class EnemyKappa : Unit, IAnim
     {
         skeleton.Play("Die", false);
 
-        SoundController.Instance.PlayOnce(SoundType.KappaDie);
+        SoundController.Instance.PlayOnce(SoundType.SecretaryDie);
     }
 
     public void PlayWin(bool isLoop) { }

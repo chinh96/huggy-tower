@@ -17,7 +17,7 @@ public class Princess : Unit, IAnim
 
     private void Start()
     {
-        SoundController.Instance.PlayOnce(SoundType.PrincessStart);
+        SoundController.Instance.PlayOnce(SoundType.KissyHelpMe);
     }
 
     public override EUnitType Type { get; protected set; } = EUnitType.Princess;
@@ -77,7 +77,9 @@ public class Princess : Unit, IAnim
         if(groundLock != null) groundLock.SetActive(false);
         string[] wins = { "Win", "Win2", "Win3" };
         skeleton.Play(wins[UnityEngine.Random.Range(0, wins.Length)], true);
-        SoundController.Instance.PlayOnce(SoundType.RescuePrincess);
+
+        SoundType[] soundWins = {SoundType.KissyWin, SoundType.KissyWin2};
+        SoundController.Instance.PlayOnce(soundWins[UnityEngine.Random.Range(0, soundWins.Length)]);
         ResourcesController.Achievement.IncreaseByType(AchievementType.Princess);
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Princess);
     }

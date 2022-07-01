@@ -58,7 +58,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private ParticleSystem effectFadeOut;
     [SerializeField] private ParticleSystem effectPoisonSecretary;
     [SerializeField] private ParticleSystem effectClaws;
-
+    [SerializeField] private ParticleSystem effectElectricHuggy;
     [SerializeField] private GameObject effectPoisonGroundSecretary;
 
     [SerializeField] private GameObject shuriken;
@@ -456,7 +456,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                                         skeleton.Play("Die2", false);
 
-                                        SoundController.Instance.PlayOnce(SoundType.GoblinKappaAttack);
+                                        SoundController.Instance.PlayOnce(SoundType.SecretaryAttack);
                                         DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
                                         {
                                             PlayAttack();
@@ -1488,7 +1488,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         }
         else
         {
-            SoundController.Instance.PlayOnce(SoundType.HeroDie);
+            SoundController.Instance.PlayOnce(SoundType.HuggyDie);
             var dies = new string[] { "Die", "Die3" };
             string die = dies[UnityEngine.Random.Range(0, dies.Length)];
             //skeleton.Play(die, false);
@@ -1603,6 +1603,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Electric:
                 DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
                     {
+                        SoundController.Instance.PlayOnce(SoundType.ElectricTrap);
+                        effectElectricHuggy.gameObject.SetActive(true);
                         skeleton.Play("LoseElectric", false);
                     });
                 break;

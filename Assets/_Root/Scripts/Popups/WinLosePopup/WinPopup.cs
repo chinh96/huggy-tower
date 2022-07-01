@@ -40,6 +40,8 @@ public class WinPopup : Popup
 
     protected override void AfterShown()
     {
+        SoundType[] soundWins = {SoundType.HuggyWin, SoundType.HuggyWin2};
+        SoundController.Instance.PlayOnce(soundWins[UnityEngine.Random.Range(0, soundWins.Length)]);
         base.AfterShown();
         huggy.GetComponent<HeroWinLoseController>().PlayWin();
         Data.CoinTotal += ResourcesController.Config.CoinBonusPerLevel;

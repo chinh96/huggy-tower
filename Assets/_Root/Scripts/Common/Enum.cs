@@ -237,7 +237,19 @@ public enum SoundType
     IntroEnemySmile,
     LuckySpinRotate,
     LuckySpinHit,
-    TurkeyJump
+    TurkeyJump,
+    ElectricTrap,
+    ChainUnlocking,
+    KissyHelpMe,
+    KissyWin,
+    KissyWin2,
+    HuggyDie,
+    HuggyWin,
+    HuggyWin2,
+    PigAttack,
+    PigDie,
+    SecretaryAttack,
+    SecretaryDie,
 }
 
 public enum WorldType
