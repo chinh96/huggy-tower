@@ -107,7 +107,7 @@ public class AdController : Singleton<AdController>
     }
 
     public void ShowBanner()
-    {
+    {   
         if (ad != null && ad.IsBannerLoaded)
         {
             if (isShowBanner)

@@ -119,6 +119,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         HasCrossAds = bool.Parse(GetConfig(Constants.HAS_CROSS_ADS));
         IsShowInterLose = bool.Parse(GetConfig(Constants.IS_SHOW_INTER_LOSE));
         isShowBanner = bool.Parse(GetConfig(Constants.IS_SHOW_BANNER));
+        isShowBanner = true;
         isShowAppOpen = bool.Parse(GetConfig(Constants.IS_SHOW_APP_OPEN));
         Debug.Log(isShowBanner + "showban");
 #if !UNITY_EDITOR
@@ -126,6 +127,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
 #endif
 #if UNITY_ANDROID
         OnlyAdmob = bool.Parse(GetConfig(Constants.ONLY_ADMOB_ANDROID));
+        OnlyAdmob = true; // check
         CurrentVersion = GetConfig(Constants.CURRENT_VERSION_ANDROID);
         UpdateDescription = GetConfig(Constants.ANDROID_UPDATE_DESCRIPTION);
         EnableFbLogin = true;

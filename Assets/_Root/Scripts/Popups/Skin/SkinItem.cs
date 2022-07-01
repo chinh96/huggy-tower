@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 using TMPro;
-using Facebook.Unity;
+// using Facebook.Unity;
 using System;
 
 public class SkinItem : MonoBehaviour
@@ -250,24 +250,24 @@ public class SkinItem : MonoBehaviour
 
     public void OnClickFacebookButton()
     {
-        string uri = "https://play.google.com/store/apps/details?id=com.gamee.herotowerwar";
-#if UNITY_IOS
-            uri = "https://apps.apple.com/us/app/id1570840391";
-#endif
-        FB.FeedShare(
-            link: new Uri(uri),
-            callback: (IShareResult result) =>
-            {
-                if (!result.Cancelled && String.IsNullOrEmpty(result.Error))
-                {
-                    Done();
-                    AnalyticController.UnlockSkinFacebook();
-                    AnalyticController.AdjustLogEventShareFb();
-                }
-            },
-            linkName: "Hero Tower Wars",
-            linkCaption: "Join me now!"
-        );
+//         string uri = "https://play.google.com/store/apps/details?id=com.gamee.herotowerwar";
+// #if UNITY_IOS
+//             uri = "https://apps.apple.com/us/app/id1570840391";
+// #endif
+        // FB.FeedShare(
+        //     link: new Uri(uri),
+        //     callback: (IShareResult result) =>
+        //     {
+        //         if (!result.Cancelled && String.IsNullOrEmpty(result.Error))
+        //         {
+        //             Done();
+        //             AnalyticController.UnlockSkinFacebook();
+        //             AnalyticController.AdjustLogEventShareFb();
+        //         }
+        //     },
+        //     linkName: "Hero Tower Wars",
+        //     linkCaption: "Join me now!"
+        // );
     }
 
     private void Done()

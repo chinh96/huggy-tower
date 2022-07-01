@@ -109,11 +109,9 @@ public class ResourcesController : Singleton<ResourcesController>
 
     public static void ReceiveSkinRescueParty(Action action)
     {
-        Debug.Log("Start");
         if (Data.TimeToRescueParty.TotalMilliseconds <= 0)
         {
             SkinData data = SkinRescuePartys.Find(data => data.RescuePartyType == RescuePartyType.Top100);
-            Debug.Log("2");
             if (!data.IsUnlocked)
             {
                 LeaderboardRescuePartyController.Instance.IsTop100(() =>

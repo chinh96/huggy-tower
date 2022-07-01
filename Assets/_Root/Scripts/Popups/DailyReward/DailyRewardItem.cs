@@ -64,8 +64,9 @@ public class DailyRewardItem : MonoBehaviour
 
     public void Reset()
     {
-        //dayText.text = $"Day {day + 1}";
-        dayText.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", (day + 1).ToString(), true);
+        dayText.text = $"Day {day + 1}";
+        if(isDay7) dayText.text = $"Day\n{day+1}";
+        // dayText.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", (day + 1).ToString(), true);
         coinText.text = $"{coin}";
         Hide();
         Check();

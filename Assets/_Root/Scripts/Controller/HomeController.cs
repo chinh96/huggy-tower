@@ -76,7 +76,7 @@ public class HomeController : Singleton<HomeController>
         // CheckRescueParty();
         // CheckTG();
         // checkAllEvent();
-        AdController.Instance.Request();
+        //AdController.Instance.Request();
         AdController.Instance.HideBanner();
 
         //ResetBackground();

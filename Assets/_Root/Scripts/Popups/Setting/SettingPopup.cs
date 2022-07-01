@@ -302,36 +302,36 @@ public class SettingPopup : Popup
             return;
         }
 
-        if (FacebookController.Instance.IsLoggedIn)
-        {
-            SetActiveBlock(true);
-            LoginWithFacebook(FacebookController.Instance.Token,
-                ChangeLogin,
-                false,
-                () => { PopupController.Instance.Show<NotificationPopup>("Restore data success!"); });
-        }
-        else
-        {
-            SetActiveBlock(true);
+        // if (FacebookController.Instance.IsLoggedIn)
+        // {
+        //     SetActiveBlock(true);
+        //     LoginWithFacebook(FacebookController.Instance.Token,
+        //         ChangeLogin,
+        //         false,
+        //         () => { PopupController.Instance.Show<NotificationPopup>("Restore data success!"); });
+        // }
+        // else
+        // {
+        //     SetActiveBlock(true);
 
-            FacebookController.Instance.Login(() =>
-                {
-                    LoginWithFacebook(FacebookController.Instance.Token,
-                        ChangeLogin,
-                        false,
-                        () => { PopupController.Instance.Show<NotificationPopup>("Restore data success!"); });
-                },
-                () =>
-                {
-                    SetActiveBlock(false);
-                    PopupController.Instance.Show<NotificationPopup>("Error when login Facebook!\nPlease try again!");
-                },
-                () =>
-                {
-                    SetActiveBlock(false);
-                    PopupController.Instance.Show<NotificationPopup>("Error when login Facebook!\nPlease try again!");
-                });
-        }
+        //     FacebookController.Instance.Login(() =>
+        //         {
+        //             LoginWithFacebook(FacebookController.Instance.Token,
+        //                 ChangeLogin,
+        //                 false,
+        //                 () => { PopupController.Instance.Show<NotificationPopup>("Restore data success!"); });
+        //         },
+        //         () =>
+        //         {
+        //             SetActiveBlock(false);
+        //             PopupController.Instance.Show<NotificationPopup>("Error when login Facebook!\nPlease try again!");
+        //         },
+        //         () =>
+        //         {
+        //             SetActiveBlock(false);
+        //             PopupController.Instance.Show<NotificationPopup>("Error when login Facebook!\nPlease try again!");
+        //         });
+        // }
     }
 
     public void OnButtonBackupPressed()
@@ -342,33 +342,33 @@ public class SettingPopup : Popup
             return;
         }
 
-        if (FacebookController.Instance.IsLoggedIn)
-        {
-            SetActiveBlock(true);
-            LoginWithFacebook(FacebookController.Instance.Token, ChangeLogin, true, () => { PopupController.Instance.Show<NotificationPopup>("Backup data success!"); });
-        }
-        else
-        {
-            SetActiveBlock(true);
+        // if (FacebookController.Instance.IsLoggedIn)
+        // {
+        //     SetActiveBlock(true);
+        //     LoginWithFacebook(FacebookController.Instance.Token, ChangeLogin, true, () => { PopupController.Instance.Show<NotificationPopup>("Backup data success!"); });
+        // }
+        // else
+        // {
+        //     SetActiveBlock(true);
 
-            FacebookController.Instance.Login(() =>
-                {
-                    LoginWithFacebook(FacebookController.Instance.Token,
-                        ChangeLogin,
-                        true,
-                        () => { PopupController.Instance.Show<NotificationPopup>("Backup data success!"); });
-                },
-                () =>
-                {
-                    SetActiveBlock(false);
-                    PopupController.Instance.Show<NotificationPopup>("Faild to login Facebook!\nPlease try again!");
-                },
-                () =>
-                {
-                    SetActiveBlock(false);
-                    PopupController.Instance.Show<NotificationPopup>("Error when login Facebook!\nPlease try again!");
-                });
-        }
+        //     FacebookController.Instance.Login(() =>
+        //         {
+        //             LoginWithFacebook(FacebookController.Instance.Token,
+        //                 ChangeLogin,
+        //                 true,
+        //                 () => { PopupController.Instance.Show<NotificationPopup>("Backup data success!"); });
+        //         },
+        //         () =>
+        //         {
+        //             SetActiveBlock(false);
+        //             PopupController.Instance.Show<NotificationPopup>("Faild to login Facebook!\nPlease try again!");
+        //         },
+        //         () =>
+        //         {
+        //             SetActiveBlock(false);
+        //             PopupController.Instance.Show<NotificationPopup>("Error when login Facebook!\nPlease try again!");
+        //         });
+        // }
     }
 
     #endregion

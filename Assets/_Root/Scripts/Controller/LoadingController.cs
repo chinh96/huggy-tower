@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.UI;
-using Facebook.Unity;
+// using Facebook.Unity;
 
 public class LoadingController : MonoBehaviour
 {
