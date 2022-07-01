@@ -7,7 +7,7 @@ using I2.Loc;
 public class NewUpdatePopup : Popup
 {
     [SerializeField] private GameObject checkIcon;
-    [SerializeField] private Text description;
+    [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private GameObject versionText;
     protected override void BeforeShow()
     {

@@ -9,6 +9,7 @@ public class SkinPopup : Popup
     [SerializeField] private Transform content;
     [SerializeField] private SkinRow skinRow;
     [SerializeField] private SkeletonGraphic character;
+    [SerializeField] private LevelText levelText;
     private SubjectSkinChange m_subjectSkinChange;
 
     private SkinResources skinResources;
@@ -54,7 +55,7 @@ public class SkinPopup : Popup
     protected override void BeforeShow()
     {
         base.BeforeShow();
-
+        levelText.ChangeLevel();
         Reset();
     }
 
