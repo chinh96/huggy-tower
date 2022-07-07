@@ -41,7 +41,6 @@ public class PopupController : Singleton<PopupController>
             var type = popup.GetType();
             popupDict.Add(type, popup);
         }
-        Debug.Log(popupDict);
         initialized = true;
     }
 

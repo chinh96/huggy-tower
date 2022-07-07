@@ -228,7 +228,7 @@ public class GameController : Singleton<GameController>
             }
         }
 
-        if (levelInstall == null)
+        while (levelInstall == null)
         {
             DataBridge.Instance.MakeCacheLevel();
             DataBridge.Instance.NextLevelLoaded = null;

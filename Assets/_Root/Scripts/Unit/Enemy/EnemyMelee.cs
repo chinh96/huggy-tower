@@ -57,7 +57,7 @@ public class EnemyMelee : Unit, IAnim
         }
         else
         {
-            SoundController.Instance.PlayOnce(SoundType.EnemyShoot);
+            SoundController.Instance.PlayOnce(SoundType.HeroHit);
         }
     }
 
