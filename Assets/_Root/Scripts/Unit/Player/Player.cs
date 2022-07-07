@@ -1314,7 +1314,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Shuriken:
                 //skeleton.Play("Shuriken", false);
                 skeleton.Play("AttackPipe", false);
-                SoundController.Instance.PlayOnce(SoundType.Knife);
+                SoundController.Instance.PlayOnce(SoundType.HuggyAttackBaseball);
                 PlayHitEnemy();
                 // DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                 // {

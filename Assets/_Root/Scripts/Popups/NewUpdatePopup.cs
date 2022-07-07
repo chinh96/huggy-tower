@@ -31,7 +31,7 @@ public class NewUpdatePopup : Popup
     public void OnClickUpdateButton()
     {
 #if UNITY_ANDROID
-        Application.OpenURL("market://details?id=com.gamee.herotowerwar");
+        Application.OpenURL("market://details?id=com.gamee.wuggykissytower");
 #else
         Application.OpenURL("itms-apps://itunes.apple.com/app/id1570840391");
 #endif

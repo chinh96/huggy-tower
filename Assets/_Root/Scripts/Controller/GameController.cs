@@ -375,6 +375,7 @@ public class GameController : Singleton<GameController>
         PopupController.Instance.DismissAll();
         FadeInOverlay(() =>
         {
+            KillSequence();
             AdController.Instance.ShowInterstitial(() =>
             {
                 Instance.root.Clear();

@@ -115,7 +115,7 @@ public class DataBridge : Singleton<DataBridge>
         // }
         if (levelIndex > ResourcesController.Config.MaxLevelCanReach - 1)
         {
-            levelIndex = Random.Range(50, ResourcesController.Config.MaxLevelCanReach);
+            levelIndex = Random.Range(0, ResourcesController.Config.MaxLevelCanReach);
         }
 
         var levelObject = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, levelIndex + 1)).Task;

@@ -107,7 +107,6 @@ public class DailyRewardItem : MonoBehaviour
             doneIcon.SetActive(isUnlocked);
 
             dailyRewardType = DailyRewardType.Claimed;
-            if (Data.LastDayClaimedReward == Data.TotalDays && day == Data.DailyRewardCurrent - 1) background.sprite = spriteCoinCurrent;
         }
         else if (day > Data.DailyRewardCurrent)
         {
