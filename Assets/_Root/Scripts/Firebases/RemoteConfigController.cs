@@ -27,7 +27,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-
+        Debug.Log("App version: " + Application.version);
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
         {
             Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
@@ -115,6 +115,8 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
 
         FirstOpenCountLevelWinTurnOnAds = int.Parse(GetConfig(Constants.FIRST_OPEN_COUNT_LEVEL_WIN_TURN_ON_ADS));
         CountLevelWinShowAds = int.Parse(GetConfig(Constants.COUNT_LEVEL_WIN_SHOW_ADS));
+        Debug.Log("Cont Level win show Ads: " + CountLevelWinShowAds);
+        
         InterstitalTimeLevelCompleted = int.Parse(GetConfig(Constants.INTERSTITIAL_TIME_LEVEL_COMPLETED));
         InterstitalTimeOnLoseCompleted = int.Parse(GetConfig(Constants.INTERSTITIAL_TIME_LEVEL_ON_LOSE_COMPLETED));
         HasCrossAds = bool.Parse(GetConfig(Constants.HAS_CROSS_ADS));
@@ -130,6 +132,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         OnlyAdmob = bool.Parse(GetConfig(Constants.ONLY_ADMOB_ANDROID));
         Debug.Log(OnlyAdmob + " only admod");
         CurrentVersion = GetConfig(Constants.CURRENT_VERSION_ANDROID);
+        Debug.Log("Current version firebase: " + CurrentVersion);
         UpdateDescription = GetConfig(Constants.ANDROID_UPDATE_DESCRIPTION);
         EnableFbLogin = true;
 #elif UNITY_IOS
@@ -139,7 +142,7 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         EnableFbLogin = bool.Parse(GetConfig(Constants.ENABLE_FB_LOGIN_IOS));
 #endif
 
-        AdController.Instance.Init();
+        DOTween.Sequence().SetDelay(0.1f).OnComplete(() => {AdController.Instance.Init();}); 
     }
 
     public string GetConfig(string name)

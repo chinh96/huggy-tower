@@ -80,7 +80,7 @@ public class ProgressGift : MonoBehaviour
             }
             else if (Data.PercentProgressGift % 5 == 0)
             {
-                gift.Play("Open", true);
+                gift.Play("Open", false);
                 int coinTotal = Data.CoinTotal + giftCoin;
                 coinGeneration.GenerateCoin(() =>
                 {

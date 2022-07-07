@@ -20,6 +20,17 @@ public class ButtonAd : MonoBehaviour
         EventController.AdsRewardRequested += ShowLoading;
     }
 
+    private void Update(){
+        if (AdController.Instance.IsRewardLoaded)
+        {
+            HideLoading();
+        }
+        else
+        {
+            ShowLoading();
+        }
+    }
+
     private void ShowLoading()
     {
         loadingImage.SetActive(true);

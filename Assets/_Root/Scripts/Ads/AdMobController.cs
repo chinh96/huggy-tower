@@ -35,20 +35,22 @@ public class AdMobController : MonoBehaviour, IAd
 
     public void Init(Action OnInterClosed, Action OnInterLoaded, Action OnRewardLoaded, Action OnRewardClosed, Action OnRewardEarned)
     {
-        MobileAds.Initialize(initStatus => { });
+        Debug.Log("Start Init Admob!!");
+       try{
+         MobileAds.Initialize(initStatus => {
+        
+         });
+       }
+       catch(Exception e){
+        Debug.Log(e.Message); 
+       }
 
         this.OnInterClosed = OnInterClosed;
         this.OnInterLoaded = OnInterLoaded;
         this.OnRewardLoaded = OnRewardLoaded;
         this.OnRewardClosed = OnRewardClosed;
         this.OnRewardEarned = OnRewardEarned;
-
-#if UNITY_ANDROID
-        AndroidJavaClass myClass = new AndroidJavaClass("com.companyName.productName.MyClass");
-
-        myClass.Call("testMethod", new object[] { "testString" });
-#endif
-
+        Debug.Log("Init Admob");
     }
 
     public AdRequest GetAdRequest()
@@ -59,6 +61,7 @@ public class AdMobController : MonoBehaviour, IAd
     public void RequestBanner()
     {
         var type = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
+        if(bannerView != null) HideBanner();
         bannerView = new BannerView(bannerId, type, AdPosition.Bottom);
         bannerView.OnPaidEvent += (sender, args) => HandleAdPaidEvent(sender, args, bannerId);
         bannerView.LoadAd(GetAdRequest());
@@ -73,7 +76,11 @@ public class AdMobController : MonoBehaviour, IAd
     public void HideBanner()
     {
         bannerView.Destroy();
-        bannerView = null;
+        if(bannerView != null)
+        {
+            bannerView.Hide();
+            bannerView = null;
+        }
     }
 
     public void RequestInterstitial()

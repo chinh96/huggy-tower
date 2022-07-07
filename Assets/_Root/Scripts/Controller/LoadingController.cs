@@ -11,32 +11,13 @@ public class LoadingController : MonoBehaviour
     [SerializeField] private float duration;
     [SerializeField] private Ease ease;
     [SerializeField] private Image progressNormal;
-    [SerializeField] private Image progressHalloween;
-    [SerializeField] private Image progressTG;
-    [SerializeField] private GameObject backgroundHalloween;
-    [SerializeField] private GameObject backgroundTG;
     [SerializeField] private CanvasScaler canvasScaler;
 
     private Image progress;
 
     private void Awake()
     {
-        if (Data.TimeToRescueParty.TotalMilliseconds > 0)
-        {
-            backgroundHalloween.SetActive(true);
-            progress = progressHalloween;
-        }
-        else if (TGDatas.IsInTG)
-        {
-            backgroundTG.SetActive(true);
-            progress = progressTG;
-        }
-        else
-        {
-            backgroundHalloween.SetActive(false);
-            progress = progressNormal;
-        }
-
+        progress = progressNormal;
         canvasScaler.matchWidthOrHeight = Camera.main.aspect > .7f ? 1 : 0;
     }
 

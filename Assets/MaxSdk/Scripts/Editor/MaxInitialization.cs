@@ -34,7 +34,6 @@ namespace AppLovinMax.Scripts.Editor
             "Maio",
             "Mintegral",
             "MyTarget",
-            "MoPub",
             "Nend",
             "Ogury",
             "Smaato",

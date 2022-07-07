@@ -167,6 +167,10 @@ public class AdController : Singleton<AdController>
                     GameController.Instance.Root.ResetTotalTimesPlay();
                     GameController.Instance.Root.RestTotalTimesLose();
                     GameController.Instance.Root.ResetTotalLevelWin();
+                    Debug.Log("Total Level Win: " + GameController.Instance.Root.GetTotalLevelWin());
+                    Debug.Log("Total Time Lose: " + GameController.Instance.Root.GetTotalTimesLose());
+                    Debug.Log("Total Time Play: " + GameController.Instance.Root.GetTotalTimesPlay());
+
                     inShowAds = true;
                 }
                 else
@@ -237,7 +241,8 @@ public class AdController : Singleton<AdController>
 #else
         if (ResourcesController.Config.EnableTest)
         {
-            action?.Invoke();
+            // action?.Invoke();
+            Show();
         }
         else
         {
@@ -248,8 +253,8 @@ public class AdController : Singleton<AdController>
 
     public void OnInterClosed()
     {
-        ad.RequestInterstitial();
         DOTween.Sequence().AppendInterval(.1f).AppendCallback(() => handleInterAfterClosed?.Invoke());
+        ad.RequestInterstitial();
     }
 
     public void OnInterLoaded()
@@ -259,16 +264,16 @@ public class AdController : Singleton<AdController>
 
     public void OnRewardClosed()
     {
-        RequestRewarded();
-
         DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
         {
             if (isRewardEarned)
             {
                 isRewardEarned = false;
+                Debug.Log("OnRewardClosed....");
                 handleRewardAfterEarned?.Invoke();
             }
         });
+        RequestRewarded();
     }
 
     public void OnRewardLoaded()
@@ -278,6 +283,7 @@ public class AdController : Singleton<AdController>
 
     public void OnRewardEarned()
     {
+        Debug.Log("On reward earned!!");
         JustShowReward = true;
         isRewardEarned = true;
 

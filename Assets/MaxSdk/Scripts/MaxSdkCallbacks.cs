@@ -3,8 +3,10 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
+using AppLovinMax.ThirdParty.MiniJson; 
 
 public class MaxSdkCallbacks : MonoBehaviour
 {
@@ -141,6 +143,10 @@ public class MaxSdkCallbacks : MonoBehaviour
             }
         }
 
+        /// <summary>
+        /// Fired when an interstitial ad impression was validated and revenue will be paid.
+        /// Executed on a background thread to avoid any delays in execution.
+        /// </summary>
         public static event Action<string, MaxSdkBase.AdInfo> OnAdRevenuePaidEvent
         {
             add
@@ -254,6 +260,10 @@ public class MaxSdkCallbacks : MonoBehaviour
             }
         }
 
+        /// <summary>
+        /// Fired when a rewarded ad impression was validated and revenue will be paid.
+        /// Executed on a background thread to avoid any delays in execution.
+        /// </summary>
         public static event Action<string, MaxSdkBase.AdInfo> OnAdRevenuePaidEvent
         {
             add
@@ -381,6 +391,10 @@ public class MaxSdkCallbacks : MonoBehaviour
             }
         }
 
+        /// <summary>
+        /// Fired when a rewarded interstitial ad impression was validated and revenue will be paid.
+        /// Executed on a background thread to avoid any delays in execution.
+        /// </summary>
         public static event Action<string, MaxSdkBase.AdInfo> OnAdRevenuePaidEvent
         {
             add
@@ -712,7 +726,7 @@ public class MaxSdkCallbacks : MonoBehaviour
     private static Action<string> _onBannerAdExpandedEvent;
     private static Action<string> _onBannerAdCollapsedEvent;
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Banner.OnAdLoadedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Banner.OnAdLoadedEvent` instead.")]
     public static event Action<string> OnBannerAdLoadedEvent
     {
         add
@@ -727,7 +741,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Banner.OnAdLoadFailedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Banner.OnAdLoadFailedEvent` instead.")]
     public static event Action<string, int> OnBannerAdLoadFailedEvent
     {
         add
@@ -742,7 +756,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Banner.OnAdClickedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Banner.OnAdClickedEvent` instead.")]
     public static event Action<string> OnBannerAdClickedEvent
     {
         add
@@ -757,7 +771,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Banner.OnAdExpandedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Banner.OnAdExpandedEvent` instead.")]
     public static event Action<string> OnBannerAdExpandedEvent
     {
         add
@@ -772,7 +786,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Banner.OnAdCollapsedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Banner.OnAdCollapsedEvent` instead.")]
     public static event Action<string> OnBannerAdCollapsedEvent
     {
         add
@@ -793,7 +807,7 @@ public class MaxSdkCallbacks : MonoBehaviour
     private static Action<string> _onMRecAdExpandedEvent;
     private static Action<string> _onMRecAdCollapsedEvent;
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.MRec.OnAdLoadedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.MRec.OnAdLoadedEvent` instead.")]
     public static event Action<string> OnMRecAdLoadedEvent
     {
         add
@@ -808,7 +822,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.MRec.OnAdLoadFailedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.MRec.OnAdLoadFailedEvent` instead.")]
     public static event Action<string, int> OnMRecAdLoadFailedEvent
     {
         add
@@ -823,7 +837,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.MRec.OnAdClickedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.MRec.OnAdClickedEvent` instead.")]
     public static event Action<string> OnMRecAdClickedEvent
     {
         add
@@ -838,7 +852,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.MRec.OnAdExpandedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.MRec.OnAdExpandedEvent` instead.")]
     public static event Action<string> OnMRecAdExpandedEvent
     {
         add
@@ -853,7 +867,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.MRec.OnAdCollapsedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.MRec.OnAdCollapsedEvent` instead.")]
     public static event Action<string> OnMRecAdCollapsedEvent
     {
         add
@@ -875,7 +889,7 @@ public class MaxSdkCallbacks : MonoBehaviour
     private static Action<string> _onInterstitialAdClickedEvent;
     private static Action<string> _onInterstitialAdHiddenEvent;
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Interstitial.OnAdLoadedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Interstitial.OnAdLoadedEvent` instead.")]
     public static event Action<string> OnInterstitialLoadedEvent
     {
         add
@@ -890,7 +904,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Interstitial.OnAdLoadFailedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Interstitial.OnAdLoadFailedEvent` instead.")]
     public static event Action<string, int> OnInterstitialLoadFailedEvent
     {
         add
@@ -905,7 +919,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Interstitial.OnAdHiddenEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Interstitial.OnAdHiddenEvent` instead.")]
     public static event Action<string> OnInterstitialHiddenEvent
     {
         add
@@ -921,7 +935,7 @@ public class MaxSdkCallbacks : MonoBehaviour
     }
 
     // Fired when an interstitial ad is displayed (may not be received by Unity until the interstitial closes)
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Interstitial.OnAdDisplayedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Interstitial.OnAdDisplayedEvent` instead.")]
     public static event Action<string> OnInterstitialDisplayedEvent
     {
         add
@@ -936,7 +950,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Interstitial.OnAdDisplayFailedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Interstitial.OnAdDisplayFailedEvent` instead.")]
     public static event Action<string, int> OnInterstitialAdFailedToDisplayEvent
     {
         add
@@ -951,7 +965,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Interstitial.OnAdClickedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Interstitial.OnAdClickedEvent` instead.")]
     public static event Action<string> OnInterstitialClickedEvent
     {
         add
@@ -974,7 +988,7 @@ public class MaxSdkCallbacks : MonoBehaviour
     private static Action<string, MaxSdkBase.Reward> _onRewardedAdReceivedRewardEvent;
     private static Action<string> _onRewardedAdHiddenEvent;
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdLoadedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdLoadedEvent` instead.")]
     public static event Action<string> OnRewardedAdLoadedEvent
     {
         add
@@ -989,7 +1003,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdLoadFailedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdLoadFailedEvent` instead.")]
     public static event Action<string, int> OnRewardedAdLoadFailedEvent
     {
         add
@@ -1005,7 +1019,7 @@ public class MaxSdkCallbacks : MonoBehaviour
     }
 
     // Fired when an rewarded ad is displayed (may not be received by Unity until the rewarded ad closes)
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdDisplayedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdDisplayedEvent` instead.")]
     public static event Action<string> OnRewardedAdDisplayedEvent
     {
         add
@@ -1020,7 +1034,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdHiddenEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdHiddenEvent` instead.")]
     public static event Action<string> OnRewardedAdHiddenEvent
     {
         add
@@ -1035,7 +1049,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdClickedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdClickedEvent` instead.")]
     public static event Action<string> OnRewardedAdClickedEvent
     {
         add
@@ -1050,7 +1064,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdDisplayFailedEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdDisplayFailedEvent` instead.")]
     public static event Action<string, int> OnRewardedAdFailedToDisplayEvent
     {
         add
@@ -1065,7 +1079,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         }
     }
 
-    [System.Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdReceivedRewardEvent` instead.")]
+    [Obsolete("This callback has been deprecated. Please use `MaxSdkCallbacks.Rewarded.OnAdReceivedRewardEvent` instead.")]
     public static event Action<string, MaxSdkBase.Reward> OnRewardedAdReceivedRewardEvent
     {
         add
@@ -1091,9 +1105,14 @@ public class MaxSdkCallbacks : MonoBehaviour
 
     public void ForwardEvent(string eventPropsStr)
     {
-        var eventProps = MaxSdkUtils.PropsStringToDict(eventPropsStr);
+        var eventProps = Json.Deserialize(eventPropsStr) as Dictionary<string, object>;
+        if (eventProps == null)
+        {
+            MaxSdkLogger.E("Failed to forward event for serialized event data: " + eventPropsStr);
+            return;
+        }
 
-        var eventName = eventProps["name"];
+        var eventName = MaxSdkUtils.GetStringFromDictionary(eventProps, "name", "");
         if (eventName == "OnSdkInitializedEvent")
         {
             var sdkConfiguration = MaxSdkBase.SdkConfiguration.Create(eventProps);
@@ -1111,7 +1130,7 @@ public class MaxSdkCallbacks : MonoBehaviour
         else
         {
             var adInfo = new MaxSdkBase.AdInfo(eventProps);
-            var adUnitIdentifier = eventProps["adUnitId"];
+            var adUnitIdentifier = MaxSdkUtils.GetStringFromDictionary(eventProps, "adUnitId", "");
             if (eventName == "OnBannerAdLoadedEvent")
             {
                 InvokeEvent(_onBannerAdLoadedEvent, adUnitIdentifier);
@@ -1119,8 +1138,7 @@ public class MaxSdkCallbacks : MonoBehaviour
             }
             else if (eventName == "OnBannerAdLoadFailedEvent")
             {
-                var errorCode = -1;
-                int.TryParse(eventProps["errorCode"], out errorCode);
+                var errorCode = MaxSdkUtils.GetIntFromDictionary(eventProps, "errorCode", -1);
                 InvokeEvent(_onBannerAdLoadFailedEvent, adUnitIdentifier, errorCode);
 
                 var errorInfo = new MaxSdkBase.ErrorInfo(eventProps);
@@ -1152,8 +1170,7 @@ public class MaxSdkCallbacks : MonoBehaviour
             }
             else if (eventName == "OnMRecAdLoadFailedEvent")
             {
-                var errorCode = -1;
-                int.TryParse(eventProps["errorCode"], out errorCode);
+                var errorCode = MaxSdkUtils.GetIntFromDictionary(eventProps, "errorCode", -1);
                 InvokeEvent(_onMRecAdLoadFailedEvent, adUnitIdentifier, errorCode);
 
                 var errorInfo = new MaxSdkBase.ErrorInfo(eventProps);
@@ -1184,8 +1201,6 @@ public class MaxSdkCallbacks : MonoBehaviour
             }
             else if (eventName == "OnCrossPromoAdLoadFailedEvent")
             {
-                var errorCode = -1;
-                int.TryParse(eventProps["errorCode"], out errorCode);
                 var errorInfo = new MaxSdkBase.ErrorInfo(eventProps);
 
                 InvokeEvent(_onCrossPromoAdLoadFailedEvent, adUnitIdentifier, errorInfo);
@@ -1213,8 +1228,7 @@ public class MaxSdkCallbacks : MonoBehaviour
             }
             else if (eventName == "OnInterstitialLoadFailedEvent")
             {
-                var errorCode = -1;
-                int.TryParse(eventProps["errorCode"], out errorCode);
+                var errorCode = MaxSdkUtils.GetIntFromDictionary(eventProps, "errorCode", -1);
                 InvokeEvent(_onInterstitialLoadFailedEvent, adUnitIdentifier, errorCode);
 
                 var errorInfo = new MaxSdkBase.ErrorInfo(eventProps);
@@ -1232,8 +1246,7 @@ public class MaxSdkCallbacks : MonoBehaviour
             }
             else if (eventName == "OnInterstitialAdFailedToDisplayEvent")
             {
-                var errorCode = -1;
-                int.TryParse(eventProps["errorCode"], out errorCode);
+                var errorCode = MaxSdkUtils.GetIntFromDictionary(eventProps, "errorCode", -1);
                 InvokeEvent(_onInterstitialAdFailedToDisplayEvent, adUnitIdentifier, errorCode);
 
                 var errorInfo = new MaxSdkBase.ErrorInfo(eventProps);
@@ -1255,9 +1268,7 @@ public class MaxSdkCallbacks : MonoBehaviour
             }
             else if (eventName == "OnRewardedAdLoadFailedEvent")
             {
-                var errorCode = -1;
-                int.TryParse(eventProps["errorCode"], out errorCode);
-
+                var errorCode = MaxSdkUtils.GetIntFromDictionary(eventProps, "errorCode", -1);
                 InvokeEvent(_onRewardedAdLoadFailedEvent, adUnitIdentifier, errorCode);
 
                 var errorInfo = new MaxSdkBase.ErrorInfo(eventProps);
@@ -1284,8 +1295,7 @@ public class MaxSdkCallbacks : MonoBehaviour
             }
             else if (eventName == "OnRewardedAdFailedToDisplayEvent")
             {
-                var errorCode = -1;
-                int.TryParse(eventProps["errorCode"], out errorCode);
+                var errorCode = MaxSdkUtils.GetIntFromDictionary(eventProps, "errorCode", -1);
                 InvokeEvent(_onRewardedAdFailedToDisplayEvent, adUnitIdentifier, errorCode);
 
                 var errorInfo = new MaxSdkBase.ErrorInfo(eventProps);
@@ -1293,9 +1303,11 @@ public class MaxSdkCallbacks : MonoBehaviour
             }
             else if (eventName == "OnRewardedAdReceivedRewardEvent")
             {
-                var reward = new MaxSdkBase.Reward {Label = eventProps["rewardLabel"]};
-
-                int.TryParse(eventProps["rewardAmount"], out reward.Amount);
+                var reward = new MaxSdkBase.Reward
+                {
+                    Label = MaxSdkUtils.GetStringFromDictionary(eventProps, "rewardLabel", ""),
+                    Amount = MaxSdkUtils.GetIntFromDictionary(eventProps, "rewardAmount", 0)
+                };
 
                 InvokeEvent(_onRewardedAdReceivedRewardEvent, adUnitIdentifier, reward);
                 InvokeEvent(_onRewardedAdReceivedRewardEventV2, adUnitIdentifier, reward, adInfo);
@@ -1306,8 +1318,6 @@ public class MaxSdkCallbacks : MonoBehaviour
             }
             else if (eventName == "OnRewardedInterstitialAdLoadFailedEvent")
             {
-                var errorCode = -1;
-                int.TryParse(eventProps["errorCode"], out errorCode);
                 var errorInfo = new MaxSdkBase.ErrorInfo(eventProps);
 
                 InvokeEvent(_onRewardedInterstitialAdLoadFailedEvent, adUnitIdentifier, errorInfo);
@@ -1330,17 +1340,17 @@ public class MaxSdkCallbacks : MonoBehaviour
             }
             else if (eventName == "OnRewardedInterstitialAdFailedToDisplayEvent")
             {
-                var errorCode = -1;
-                int.TryParse(eventProps["errorCode"], out errorCode);
                 var errorInfo = new MaxSdkBase.ErrorInfo(eventProps);
 
                 InvokeEvent(_onRewardedInterstitialAdFailedToDisplayEvent, adUnitIdentifier, errorInfo, adInfo);
             }
             else if (eventName == "OnRewardedInterstitialAdReceivedRewardEvent")
             {
-                var reward = new MaxSdkBase.Reward {Label = eventProps["rewardLabel"]};
-
-                int.TryParse(eventProps["rewardAmount"], out reward.Amount);
+                var reward = new MaxSdkBase.Reward
+                {
+                    Label = MaxSdkUtils.GetStringFromDictionary(eventProps, "rewardLabel", ""),
+                    Amount = MaxSdkUtils.GetIntFromDictionary(eventProps, "rewardAmount", 0)
+                };
 
                 InvokeEvent(_onRewardedInterstitialAdReceivedRewardEvent, adUnitIdentifier, reward, adInfo);
             }
@@ -1354,7 +1364,10 @@ public class MaxSdkCallbacks : MonoBehaviour
 #if UNITY_EDITOR
     public static void EmitSdkInitializedEvent()
     {
+        if(_onSdkInitializedEvent == null) return;
+
         var sdkConfiguration = new MaxSdkBase.SdkConfiguration();
+        sdkConfiguration.IsSuccessfullyInitialized = true;
         sdkConfiguration.ConsentDialogState = MaxSdkBase.ConsentDialogState.Unknown;
         sdkConfiguration.AppTrackingStatus = MaxSdkBase.AppTrackingStatus.Authorized;
         var currentRegion = RegionInfo.CurrentRegion;

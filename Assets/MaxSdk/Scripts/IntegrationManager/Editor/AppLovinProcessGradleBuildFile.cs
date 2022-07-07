@@ -30,7 +30,7 @@ namespace AppLovinMax.Scripts.IntegrationManager.Editor
     /// </summary>
     public abstract class AppLovinProcessGradleBuildFile
     {
-        private static readonly Regex TokenBuildScriptRepositories = new Regex(".*jcenter().*");
+        private static readonly Regex TokenBuildScriptRepositories = new Regex(".*repositories.*");
         private static readonly Regex TokenBuildScriptDependencies = new Regex(".*classpath \'com.android.tools.build:gradle.*");
         private static readonly Regex TokenApplicationPlugin = new Regex(".*apply plugin: \'com.android.application\'.*");
         private static readonly Regex TokenApiKey = new Regex(".*apiKey.*");

@@ -56,6 +56,7 @@ public class WinPopup : Popup
     {
         AdController.Instance.ShowRewardedAd(() =>
         {
+            Debug.Log("X5 Coin....");
             claimX5Button.SetActive(false);
 
             int coinTotal = Data.CoinTotal + ResourcesController.Config.CoinBonusPerLevel * 5;

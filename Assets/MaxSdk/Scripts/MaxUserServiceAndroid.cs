@@ -10,6 +10,16 @@ public class MaxUserServiceAndroid
         get { return _instance; }
     }
 
+
+    /// <summary>
+    /// Preload the user consent dialog. You have the option to call this so the consent dialog appears
+    /// more quickly when you call <see cref="MaxUserServiceAndroid.ShowConsentDialog"/>.
+    /// </summary>
+    public void PreloadConsentDialog()
+    {
+        _maxUnityPluginClass.CallStatic("preloadConsentDialog");
+    }
+
     /// <summary>
     /// Show the user consent dialog to the user using one from AppLovin's SDK. You should check that you actually need to show the consent dialog
     /// by checking <see cref="SdkConfiguration.ConsentDialogState"/> in the completion block of <see cref="MaxSdkCallbacks.OnSdkInitializedEvent"/>.

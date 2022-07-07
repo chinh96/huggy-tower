@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
+using AppLovinMax.ThirdParty.MiniJson;
 using UnityEngine;
 
 public abstract class MaxSdkBase
 {
     // Shared Properties
     protected static readonly MaxUserSegment SharedUserSegment = new MaxUserSegment();
+    protected static readonly MaxTargetingData SharedTargetingData = new MaxTargetingData();
 
     /// <summary>
     /// This enum represents whether or not the consent dialog should be shown for this user.
@@ -94,6 +97,11 @@ public abstract class MaxSdkBase
     public class SdkConfiguration
     {
         /// <summary>
+        /// Whether or not the SDK has been initialized successfully.
+        /// </summary>
+        public bool IsSuccessfullyInitialized;
+
+        /// <summary>
         /// Get the consent dialog state for this user. If no such determination could be made, `ALConsentDialogStateUnknown` will be returned.
         /// </summary>
         public ConsentDialogState ConsentDialogState;
@@ -110,14 +118,14 @@ public abstract class MaxSdkBase
         public AppTrackingStatus AppTrackingStatus;
 #endif
 
-        public static SdkConfiguration Create(IDictionary<string, string> eventProps)
+        public static SdkConfiguration Create(IDictionary<string, object> eventProps)
         {
             var sdkConfiguration = new SdkConfiguration();
 
-            string countryCode = eventProps.TryGetValue("countryCode", out countryCode) ? countryCode : "";
-            sdkConfiguration.CountryCode = countryCode;
+            sdkConfiguration.IsSuccessfullyInitialized = MaxSdkUtils.GetBoolFromDictionary(eventProps, "isSuccessfullyInitialized");
+            sdkConfiguration.CountryCode = MaxSdkUtils.GetStringFromDictionary(eventProps, "countryCode", "");
 
-            string consentDialogStateStr = eventProps.TryGetValue("consentDialogState", out consentDialogStateStr) ? consentDialogStateStr : "";
+            var consentDialogStateStr = MaxSdkUtils.GetStringFromDictionary(eventProps, "consentDialogState", "");
             if ("1".Equals(consentDialogStateStr))
             {
                 sdkConfiguration.ConsentDialogState = ConsentDialogState.Applies;
@@ -132,7 +140,7 @@ public abstract class MaxSdkBase
             }
 
 #if UNITY_IPHONE || UNITY_IOS
-            string appTrackingStatusStr = eventProps.TryGetValue("appTrackingStatus", out appTrackingStatusStr) ? appTrackingStatusStr : "-1";
+            var appTrackingStatusStr = MaxSdkUtils.GetStringFromDictionary(eventProps, "appTrackingStatus", "-1");
             if ("-1".Equals(appTrackingStatusStr))
             {
                 sdkConfiguration.AppTrackingStatus = AppTrackingStatus.Unavailable;
@@ -153,7 +161,6 @@ public abstract class MaxSdkBase
             {
                 sdkConfiguration.AppTrackingStatus = AppTrackingStatus.Authorized;
             }
-
 #endif
 
             return sdkConfiguration;
@@ -197,6 +204,11 @@ public abstract class MaxSdkBase
         AdLoadFailed = -5001,
 
         /// <summary>
+        /// This error code represents an error that was encountered when showing an ad.
+        /// </summary>
+        AdDisplayFailed = -4205,
+
+        /// <summary>
         /// This error code indicates that the ad request failed due to a generic network error. See the message field in the error object for more details.
         /// </summary>
         NetworkError = -1000,
@@ -234,58 +246,145 @@ public abstract class MaxSdkBase
 #endif
     }
 
+    /**
+     * This enum contains possible states of an ad in the waterfall the adapter response info could represent.
+     */
+    public enum MaxAdLoadState
+    {
+        /// <summary>
+        /// The AppLovin Max SDK did not attempt to load an ad from this network in the waterfall because an ad higher
+        /// in the waterfall loaded successfully.
+        /// </summary>
+        AdLoadNotAttempted,
+
+        /// <summary>
+        /// An ad successfully loaded from this network.
+        /// </summary>
+        AdLoaded,
+
+        /// <summary>
+        /// An ad failed to load from this network.
+        /// </summary>
+        FailedToLoad
+    }
+
     public class AdInfo
     {
         public string AdUnitIdentifier { get; private set; }
+        public string AdFormat { get; private set; }
         public string NetworkName { get; private set; }
         public string NetworkPlacement { get; private set; }
         public string Placement { get; private set; }
         public string CreativeIdentifier { get; private set; }
         public double Revenue { get; private set; }
+        public string RevenuePrecision { get; private set; }
+        public WaterfallInfo WaterfallInfo { get; private set; }
+        public string DspName { get; private set; }
 
-        public AdInfo(IDictionary<string, string> adInfoDictionary)
+        public AdInfo(IDictionary<string, object> adInfoDictionary)
         {
-            string adUnitIdentifier;
-            string networkName;
-            string networkPlacement;
-            string creativeIdentifier;
-            string placement;
-            string revenue;
-
-            // NOTE: Unity Editor creates empty string
-            AdUnitIdentifier = adInfoDictionary.TryGetValue("adUnitId", out adUnitIdentifier) ? adUnitIdentifier : "";
-            NetworkName = adInfoDictionary.TryGetValue("networkName", out networkName) ? networkName : "";
-            NetworkPlacement = adInfoDictionary.TryGetValue("networkPlacement", out networkPlacement) ? networkPlacement : "";
-            CreativeIdentifier = adInfoDictionary.TryGetValue("creativeId", out creativeIdentifier) ? creativeIdentifier : "";
-            Placement = adInfoDictionary.TryGetValue("placement", out placement) ? placement : "";
-
-            if (adInfoDictionary.TryGetValue("revenue", out revenue))
-            {
-                try
-                {
-                    // InvariantCulture guarantees the decimal is used for the separator even in regions that use commas as the separator
-                    Revenue = double.Parse(revenue, NumberStyles.Any, CultureInfo.InvariantCulture);
-                }
-                catch (Exception exception)
-                {
-                    MaxSdkLogger.E("Failed to parse double (" + revenue + ") with exception: " + exception);
-                    Revenue = -1;
-                }
-            }
-            else
-            {
-                Revenue = -1;
-            }
+            AdUnitIdentifier = MaxSdkUtils.GetStringFromDictionary(adInfoDictionary, "adUnitId");
+            AdFormat = MaxSdkUtils.GetStringFromDictionary(adInfoDictionary, "adFormat");
+            NetworkName = MaxSdkUtils.GetStringFromDictionary(adInfoDictionary, "networkName");
+            NetworkPlacement = MaxSdkUtils.GetStringFromDictionary(adInfoDictionary, "networkPlacement");
+            CreativeIdentifier = MaxSdkUtils.GetStringFromDictionary(adInfoDictionary, "creativeId");
+            Placement = MaxSdkUtils.GetStringFromDictionary(adInfoDictionary, "placement");
+            Revenue = MaxSdkUtils.GetDoubleFromDictionary(adInfoDictionary, "revenue", -1);
+            RevenuePrecision = MaxSdkUtils.GetStringFromDictionary(adInfoDictionary, "revenuePrecision");
+            WaterfallInfo = new WaterfallInfo(MaxSdkUtils.GetDictionaryFromDictionary(adInfoDictionary, "waterfallInfo", new Dictionary<string, object>()));
+            DspName = MaxSdkUtils.GetStringFromDictionary(adInfoDictionary, "dspName");
         }
 
         public override string ToString()
         {
             return "[AdInfo adUnitIdentifier: " + AdUnitIdentifier +
+                   ", adFormat: " + AdFormat +
                    ", networkName: " + NetworkName +
                    ", networkPlacement: " + NetworkPlacement +
                    ", creativeIdentifier: " + CreativeIdentifier +
                    ", placement: " + Placement +
-                   ", revenue: " + Revenue + "]";
+                   ", revenue: " + Revenue +
+                   ", revenuePrecision: " + RevenuePrecision +
+                   ", dspName: " + DspName + "]";
+        }
+    }
+
+    /// <summary>
+    /// Returns information about the ad response in a waterfall.
+    /// </summary>
+    public class WaterfallInfo
+    {
+        public String Name { get; private set; }
+        public String TestName { get; private set; }
+        public List<NetworkResponseInfo> NetworkResponses { get; private set; }
+        public long LatencyMillis { get; private set; }
+
+        public WaterfallInfo(IDictionary<string, object> waterfallInfoDict)
+        {
+            Name = MaxSdkUtils.GetStringFromDictionary(waterfallInfoDict, "name");
+            TestName = MaxSdkUtils.GetStringFromDictionary(waterfallInfoDict, "testName");
+
+            var networkResponsesList = MaxSdkUtils.GetListFromDictionary(waterfallInfoDict, "networkResponses", new List<object>());
+            NetworkResponses = new List<NetworkResponseInfo>();
+            foreach (var networkResponseObject in networkResponsesList)
+            {
+                var networkResponseDict = networkResponseObject as Dictionary<string, object>;
+                if (networkResponseDict == null) continue;
+
+                var networkResponse = new NetworkResponseInfo(networkResponseDict);
+                NetworkResponses.Add(networkResponse);
+            }
+
+            LatencyMillis = MaxSdkUtils.GetLongFromDictionary(waterfallInfoDict, "latencyMillis");
+        }
+
+        public override string ToString()
+        {
+            return "[MediatedNetworkInfo: name = " + Name +
+                   ", testName = " + TestName +
+                   ", latency = " + LatencyMillis +
+                   ", networkResponse = " + NetworkResponses + "]";
+        }
+    }
+
+    public class NetworkResponseInfo
+    {
+        public MaxAdLoadState AdLoadState { get; private set; }
+        public MediatedNetworkInfo MediatedNetwork { get; private set; }
+        public Dictionary<string, object> Credentials { get; private set; }
+        public long LatencyMillis { get; private set; }
+        public ErrorInfo Error { get; private set; }
+
+        public NetworkResponseInfo(IDictionary<string, object> networkResponseInfoDict)
+        {
+            var mediatedNetworkInfoDict = MaxSdkUtils.GetDictionaryFromDictionary(networkResponseInfoDict, "mediatedNetwork");
+            MediatedNetwork = mediatedNetworkInfoDict != null ? new MediatedNetworkInfo(mediatedNetworkInfoDict) : null;
+
+            Credentials = MaxSdkUtils.GetDictionaryFromDictionary(networkResponseInfoDict, "credentials", new Dictionary<string, object>());
+            LatencyMillis = MaxSdkUtils.GetLongFromDictionary(networkResponseInfoDict, "latencyMillis");
+            AdLoadState = (MaxAdLoadState) MaxSdkUtils.GetIntFromDictionary(networkResponseInfoDict, "adLoadState");
+
+            var errorInfoDict = MaxSdkUtils.GetDictionaryFromDictionary(networkResponseInfoDict, "error");
+            Error = errorInfoDict != null ? new ErrorInfo(errorInfoDict) : null;
+        }
+
+        public override string ToString()
+        {
+            var stringBuilder = new StringBuilder("[NetworkResponseInfo: adLoadState = ").Append(AdLoadState);
+            stringBuilder.Append(", mediatedNetwork = ").Append(MediatedNetwork);
+            stringBuilder.Append(", credentials = ").Append(Credentials);
+
+            switch (AdLoadState)
+            {
+                case MaxAdLoadState.FailedToLoad:
+                    stringBuilder.Append(", error = ").Append(Error);
+                    break;
+                case MaxAdLoadState.AdLoaded:
+                    stringBuilder.Append(", latency = ").Append(LatencyMillis);
+                    break;
+            }
+
+            return stringBuilder.Append("]").ToString();
         }
     }
 
@@ -296,19 +395,13 @@ public abstract class MaxSdkBase
         public string AdapterVersion { get; private set; }
         public string SdkVersion { get; private set; }
 
-        public MediatedNetworkInfo(string networkInfoString)
+        public MediatedNetworkInfo(IDictionary<string, object> mediatedNetworkDictionary)
         {
-            string name;
-            string adapterClassName;
-            string adapterVersion;
-            string sdkVersion;
-
             // NOTE: Unity Editor creates empty string
-            var mediatedNetworkObject = MaxSdkUtils.PropsStringToDict(networkInfoString);
-            Name = mediatedNetworkObject.TryGetValue("name", out name) ? name : "";
-            AdapterClassName = mediatedNetworkObject.TryGetValue("adapterClassName", out adapterClassName) ? adapterClassName : "";
-            AdapterVersion = mediatedNetworkObject.TryGetValue("adapterVersion", out adapterVersion) ? adapterVersion : "";
-            SdkVersion = mediatedNetworkObject.TryGetValue("sdkVersion", out sdkVersion) ? sdkVersion : "";
+            Name = MaxSdkUtils.GetStringFromDictionary(mediatedNetworkDictionary, "name", "");
+            AdapterClassName = MaxSdkUtils.GetStringFromDictionary(mediatedNetworkDictionary, "adapterClassName", "");
+            AdapterVersion = MaxSdkUtils.GetStringFromDictionary(mediatedNetworkDictionary, "adapterVersion", "");
+            SdkVersion = MaxSdkUtils.GetStringFromDictionary(mediatedNetworkDictionary, "sdkVersion", "");
         }
 
         public override string ToString()
@@ -324,40 +417,33 @@ public abstract class MaxSdkBase
     {
         public ErrorCode Code { get; private set; }
         public string Message { get; private set; }
+        public int MediatedNetworkErrorCode { get; private set; }
+        public string MediatedNetworkErrorMessage { get; private set; }
         public string AdLoadFailureInfo { get; private set; }
+        public WaterfallInfo WaterfallInfo { get; private set; }
 
-        public ErrorInfo(IDictionary<string, string> errorInfoDictionary)
+        public ErrorInfo(IDictionary<string, object> errorInfoDictionary)
         {
-            string code;
-            string message;
-            string adLoadFailureInfo;
-
-            Message = errorInfoDictionary.TryGetValue("errorMessage", out message) ? message : "";
-            AdLoadFailureInfo = errorInfoDictionary.TryGetValue("adLoadFailureInfo", out adLoadFailureInfo) ? adLoadFailureInfo : "";
-
-            if (errorInfoDictionary.TryGetValue("errorCode", out code))
-            {
-                try
-                {
-                    Code = (ErrorCode) int.Parse(code);
-                }
-                catch (Exception exception)
-                {
-                    MaxSdkLogger.E("Failed to parse int (" + code + ") with exception: " + exception);
-                    Code = ErrorCode.Unspecified;
-                }
-            }
-            else
-            {
-                Code = ErrorCode.Unspecified;
-            }
+            Code = (ErrorCode) MaxSdkUtils.GetIntFromDictionary(errorInfoDictionary, "errorCode", -1);
+            Message = MaxSdkUtils.GetStringFromDictionary(errorInfoDictionary, "errorMessage", "");
+            MediatedNetworkErrorCode = MaxSdkUtils.GetIntFromDictionary(errorInfoDictionary, "mediatedNetworkErrorCode", (int) ErrorCode.Unspecified);
+            MediatedNetworkErrorMessage = MaxSdkUtils.GetStringFromDictionary(errorInfoDictionary, "mediatedNetworkErrorMessage", "");
+            AdLoadFailureInfo = MaxSdkUtils.GetStringFromDictionary(errorInfoDictionary, "adLoadFailureInfo", "");
+            WaterfallInfo = new WaterfallInfo(MaxSdkUtils.GetDictionaryFromDictionary(errorInfoDictionary, "waterfallInfo", new Dictionary<string, object>()));
         }
 
         public override string ToString()
         {
-            return "[ErrorInfo code: " + Code +
-                   ", message: " + Message +
-                   ", adLoadFailureInfo: " + AdLoadFailureInfo + "]";
+            var stringbuilder = new StringBuilder("[ErrorInfo code: ").Append(Code);
+            stringbuilder.Append(", message: ").Append(Message);
+
+            if (Code == ErrorCode.AdDisplayFailed)
+            {
+                stringbuilder.Append(", mediatedNetworkCode: ").Append(MediatedNetworkErrorCode);
+                stringbuilder.Append(", mediatedNetworkMessage: ").Append(MediatedNetworkErrorMessage);
+            }
+
+            return stringbuilder.Append(", adLoadFailureInfo: ").Append(AdLoadFailureInfo).Append("]").ToString();
         }
     }
 
@@ -393,7 +479,7 @@ public abstract class MaxSdkBase
         var graphicsMemorySize = SystemInfo.graphicsMemorySize;
         metaData.Add("GraphicsMemorySizeMegabytes", graphicsMemorySize.ToString());
 
-        return MaxSdkUtils.DictToPropsString(metaData);
+        return Json.Serialize(metaData);
     }
 
     /// <summary>
@@ -403,24 +489,11 @@ public abstract class MaxSdkBase
     /// <returns>A <see cref="Rect"/> the prop string represents.</returns>
     protected static Rect GetRectFromString(string rectPropString)
     {
-        var rectDict = MaxSdkUtils.PropsStringToDict(rectPropString);
-        float originX;
-        float originY;
-        float width;
-        float height;
-        string output;
-
-        rectDict.TryGetValue("origin_x", out output);
-        float.TryParse(output, out originX);
-
-        rectDict.TryGetValue("origin_y", out output);
-        float.TryParse(output, out originY);
-
-        rectDict.TryGetValue("width", out output);
-        float.TryParse(output, out width);
-
-        rectDict.TryGetValue("height", out output);
-        float.TryParse(output, out height);
+        var rectDict = Json.Deserialize(rectPropString) as Dictionary<string, object>;
+        var originX = MaxSdkUtils.GetFloatFromDictionary(rectDict, "origin_x", 0);
+        var originY = MaxSdkUtils.GetFloatFromDictionary(rectDict, "origin_y", 0);
+        var width = MaxSdkUtils.GetFloatFromDictionary(rectDict, "width", 0);
+        var height = MaxSdkUtils.GetFloatFromDictionary(rectDict, "height", 0);
 
         return new Rect(originX, originY, width, height);
     }

@@ -6,7 +6,7 @@ public class AdApplovinController : MonoBehaviour, IAd
 {
     public bool IsBannerLoaded => true;
     public bool IsInterLoaded => true;
-    public bool IsRewardLoaded => true;
+    public bool IsRewardLoaded => ad != null && ad.IsRewardedReady();
     public Action OnInterClosed { get; set; }
     public Action OnInterLoaded { get; set; }
     public Action OnRewardClosed { get; set; }
@@ -26,7 +26,7 @@ public class AdApplovinController : MonoBehaviour, IAd
     }
     public void RequestBanner()
     {
-
+        ShowBanner();
     }
     public void ShowBanner()
     {
@@ -51,7 +51,8 @@ public class AdApplovinController : MonoBehaviour, IAd
     public void ShowRewardedAd()
     {
         ad.ShowReward((isShow) =>
-        {
+        {   
+            Debug.Log("isShow applovin : " + isShow);
             if (isShow)
             {
                 this.OnRewardEarned?.Invoke();

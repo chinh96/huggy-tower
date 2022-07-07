@@ -76,6 +76,7 @@ public class HomeController : Singleton<HomeController>
         // CheckRescueParty();
         // CheckTG();
         // checkAllEvent();
+        
         //AdController.Instance.Request();
         AdController.Instance.HideBanner();
 
@@ -88,9 +89,9 @@ public class HomeController : Singleton<HomeController>
         NotificationController.Instance.CheckDailyQuestRepeat();
         NotificationController.Instance.CheckDailyRewardRepeat();
 
-        ResourcesController.Achievement.IncreaseByType(AchievementType.PlayToLevel);
+        // ResourcesController.Achievement.IncreaseByType(AchievementType.PlayToLevel);
 
-        ResourcesController.Achievement.CheckCompleteCastle();
+        // ResourcesController.Achievement.CheckCompleteCastle();
         ResourcesController.DailyQuest.CheckCompleteCastle();
     }
 
@@ -123,7 +124,7 @@ public class HomeController : Singleton<HomeController>
         SoundController.Instance.PlayOnce(SoundType.ButtonStart);
         overlay.gameObject.SetActive(true);
 
-        PopupController.Instance.GetPopup<RoomPopup>().gameObject.GetComponent<RoomPopup>().ReturnCurrentRoomToOriginalPosition();
+        // PopupController.Instance.GetPopup<RoomPopup>().gameObject.GetComponent<RoomPopup>().ReturnCurrentRoomToOriginalPosition();
         
         FadeInOverlay(() =>
         {
@@ -237,12 +238,12 @@ public class HomeController : Singleton<HomeController>
     private void checkAllEvent()
     {
         // var haveTime = Util.GetStateItemDaily(Data.DailyRewardEventCurrent, Data.DailyRewardEventCurrent);
-        var data = ResourcesController.DailyEventReward.EventCollectRewards;
-        for (int i = 0; i < data.Count; i++)
-        {
-            var itemData = data[i];
-            checkHaveItem(itemData);
-        }
+        // var data = ResourcesController.DailyEventReward.EventCollectRewards;
+        // for (int i = 0; i < data.Count; i++)
+        // {
+        //     var itemData = data[i];
+        //     checkHaveItem(itemData);
+        // }
     }
     
     // the player doesn't need to claim the skin but still has it.

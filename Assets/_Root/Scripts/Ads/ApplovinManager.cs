@@ -137,6 +137,8 @@ public class ApplovinManager : MonoBehaviour
     public string rewardAdUnit = "e2ca96221a19fc79";
     private int _rewardRetryAttempt;
 
+    private bool _isLoadedRewardAds = false;
+    public bool IsLoadedRewardAds => _isLoadedRewardAds;
     public void InitializeRewardedAds()
     {
         // Attach callback
@@ -168,6 +170,7 @@ public class ApplovinManager : MonoBehaviour
 
         // Reset retry attempt
         _rewardRetryAttempt = 0;
+        _isLoadedRewardAds = true;
     }
 
     private void OnRewardedAdLoadFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
@@ -180,6 +183,7 @@ public class ApplovinManager : MonoBehaviour
 
         Invoke("LoadRewardedAd", (float)retryDelay);
         Debug.Log("[Max] reward load fail!");
+        _isLoadedRewardAds = false;
     }
 
     private void OnRewardedAdDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo) { }
@@ -195,6 +199,7 @@ public class ApplovinManager : MonoBehaviour
     private void OnRewardedAdHiddenEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
     {
         // Rewarded ad is hidden. Pre-load the next ad
+        _acRewarded?.Invoke(true);
         LoadRewardedAd();
     }
 
