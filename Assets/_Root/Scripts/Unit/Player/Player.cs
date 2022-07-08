@@ -1363,10 +1363,24 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     SoundController.Instance.PlayOnce(SoundType.HuggyAttackBaseball);
                 });
                 skeleton.Play("AttackHammer", false);
+                if (hasBloodEnemy)
+                {
+                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    {
+                        PlayHitEnemy();
+                    });
+                }
                 break;
             case ItemType.Baseball:
                 SoundController.Instance.PlayOnce(SoundType.HuggyAttackBaseball);
                 skeleton.Play("AttackBaseball", false);
+                if (hasBloodEnemy)
+                {
+                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    {
+                        PlayHitEnemy();
+                    });
+                }
                 break;
             default:
                 {
