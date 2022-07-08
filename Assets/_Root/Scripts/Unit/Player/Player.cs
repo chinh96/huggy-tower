@@ -455,7 +455,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                         }
 
                                         skeleton.Play("Die2", false);
-                                        
+
                                         DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
                                         {
                                             PlayAttack();
@@ -1357,22 +1357,22 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 });
                 skeleton.Play("AttackClaws", false);
                 break;
+            case ItemType.Hammer:
+                DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                {
+                    SoundController.Instance.PlayOnce(SoundType.HuggyAttackBaseball);
+                });
+                skeleton.Play("AttackHammer", false);
+                break;
+            case ItemType.Baseball:
+                SoundController.Instance.PlayOnce(SoundType.HuggyAttackBaseball);
+                skeleton.Play("AttackBaseball", false);
+                break;
             default:
                 {
                     string[] attacks;
                     switch (EquipType)
                     {
-                        case ItemType.Hammer:
-                            DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
-                            {
-                                SoundController.Instance.PlayOnce(SoundType.HuggyAttackBaseball);
-                            });
-                            attacks = new string[] { "AttackHammer" };
-                            break;
-                        case ItemType.Baseball:
-                            SoundController.Instance.PlayOnce(SoundType.HuggyAttackBaseball);
-                            attacks = new string[] { "AttackBaseball" };
-                            break;
                         case ItemType.Axe:
                             {
                                 SoundType[] soundTypes = { SoundType.HeroHit, SoundType.HeroHit2, SoundType.HeroHit3 };
@@ -1383,301 +1383,319 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             }
                         default:
                             {
-                                attacks = new string[] { "Attack", "Attack2" };
+                                if(hasBloodEnemy) attacks = new string[] { "Attack", "Attack2", "Attack3" };
+                                else attacks = new string[]{"Attack", "Attack3"};
                                 break;
                             }
                     }
 
                     string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
-                    if(attack == "Attack") SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal);
-                    else SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal2);
-                
-                    skeleton.Play(attack, false);
-                    if (hasBloodEnemy)
+                    attack = "Attack2";
+                    if (attack != "Attack2")
                     {
-                        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                        if (attack == "Attack") SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal);
+                        else SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal2);
+
+                        skeleton.Play(attack, false);
+                        if (hasBloodEnemy)
                         {
-                            PlayHitEnemy();
+                            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                            {
+                                PlayHitEnemy();
+                            });
+                        }
+                    }
+                    else
+                    {
+                        skeleton.Play(attack, false);
+                        _target.transform.DOMove(gameObject.transform.position + new Vector3(20,20,0), 0.5f).OnComplete(() =>
+                        {
+                            _target.transform.DOScale(new Vector3(.3f, .3f, 3f), .3f).OnComplete(() =>
+                            {
+                                _target.gameObject.SetActive(false);
+                            });
                         });
                     }
 
-                    switch (EquipType)
-                    {
-                        case ItemType.Axe:
-                            {
-                                float delay = .7f;
-                                ParticleSystem particlePrefab = effectThunder1;
-                                Vector3 offset = Vector3.zero;
 
-                                if (attack == "AttackAxe2")
-                                {
-                                    delay = .3f;
-                                    particlePrefab = effectThunder2;
-                                    offset = new Vector3(0, .5f, 0);
-                                }
+                   switch (EquipType)
+                                       {
+                                           case ItemType.Axe:
+                                               {
+                                                   float delay = .7f;
+                                                   ParticleSystem particlePrefab = effectThunder1;
+                                                   Vector3 offset = Vector3.zero;
 
-                                DOTween.Sequence().AppendInterval(delay).AppendCallback(() =>
-                                {
-                                    ParticleSystem particle = Instantiate(particlePrefab);
-                                    particle.transform.position = _target.transform.position + offset;
+                                                   if (attack == "AttackAxe2")
+                                                   {
+                                                       delay = .3f;
+                                                       particlePrefab = effectThunder2;
+                                                       offset = new Vector3(0, .5f, 0);
+                                                   }
 
-                                    if (attack == "AttackAxe")
-                                    {
-                                        SoundController.Instance.PlayOnce(SoundType.Axe1);
-                                    }
-                                    else
-                                    {
-                                        SoundController.Instance.PlayOnce(SoundType.Axe2);
-                                    }
-                                });
-                                break;
-                            }
+                                                   DOTween.Sequence().AppendInterval(delay).AppendCallback(() =>
+                                                    {
+                                   ParticleSystem particle = Instantiate(particlePrefab);
+                                   particle.transform.position = _target.transform.position + offset;
 
-                        case ItemType.Knife:
-                            PlayBloodEnemy(attack);
-                            break;
-                    }
+                                   if (attack == "AttackAxe")
+                                   {
+                                       SoundController.Instance.PlayOnce(SoundType.Axe1);
+                                   }
+                                   else
+                                   {
+                                       SoundController.Instance.PlayOnce(SoundType.Axe2);
+                                   }
+                               });
+                                                   break;
+                                               }
 
-                    break;
-                }
-        }
+                                           case ItemType.Knife:
+                                               PlayBloodEnemy(attack);
+                                               break;
+                                       }
+
+                                       break;
+                                   }
+
+       }
 
 
         if (Data.VibrateState)
-        {
-            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
-            {
-                Vibration.VibratePeek();
-            });
-        }
-    }
-
-    public void PLayMove(bool isLoop)
-    {
-        switch (EquipType)
-        {
-            case ItemType.Sword:
-            case ItemType.Knife:
-            case ItemType.Axe:
-            case ItemType.Shuriken:
-            case ItemType.SwordJapan:
-            case ItemType.SwordBlood:
-            case ItemType.Electric:
-            case ItemType.Fire:
-            case ItemType.Ice:
-            case ItemType.Poison:
-            case ItemType.Mace:
-            case ItemType.Bow2:
-            case ItemType.Polllaxe:
-                //skeleton.Play("RunKiem", true);
-                skeleton.Play("Run", true);
-                break;
-            default:
-                skeleton.Play("Walk", true);
-                break;
-        }
-    }
-
-    public void PlayDead()
-    {
-        if (_target as EnemyIceDragon)
-        {
-            //skeleton.Play("DieIce", false);
-            skeleton.Play("Die", false);
-        }
-        else if (_target as EnemyDragonHead)
-        {
-            //skeleton.Play("DieFire2", false);
-            skeleton.Play("Die", false);
-        }
-        else
-        {
-            SoundController.Instance.PlayOnce(SoundType.HuggyDie);
-            var dies = new string[] { "Die", "Die3" };
-            string die = dies[UnityEngine.Random.Range(0, dies.Length)];
-            //skeleton.Play(die, false);
-            skeleton.Play("Die", false);
-            IsDie3 = die == "Die3";
-        }
-
-        IsDie = true;
-    }
-
-    public void PlayWin(bool isLoop)
-    {
-        // string[] wins = { "Win", "Win2", "Win3" };
-        // skeleton.Play(wins[UnityEngine.Random.Range(0, wins.Length)], true);
-        // SoundController.Instance.PlayOnce(SoundType.HeroYeah);
-        PlayIdle(true);
-    }
-
-    public void GiveFlower()
-    {
-        // Chưa có animation
-        // if (Data.TimeToRescueParty.TotalMilliseconds > 0)
-        // {
-        //     skeleton.Play("GetMedal", true);
-        // }
-        // else
-        // {
-        //     if (Data.CurrentSkinHero == skinLess)
-        //     {
-        //         skeleton.Play("Sit2", true);
-        //     }
-        //     else
-        //     {
-        //         skeleton.Play("Sit", true);
-        //     }
-        // }
-        PlayWin(true);
-    }
-
-    public void PlayLose(bool isLoop) { skeleton.Play("Die", true); }
-
-    public void PlayUseItem(ItemType type)
-    {
-        switch (type)
-        {
-            case ItemType.Sword:
-            case ItemType.Knife:
-            case ItemType.Axe:
-            case ItemType.Shuriken:
-            case ItemType.SwordJapan:
-            case ItemType.SwordBlood:
-            case ItemType.Fire:
-            case ItemType.Ice:
-            case ItemType.Poison:
-            case ItemType.Mace:
-            case ItemType.Bow2:
-            case ItemType.Polllaxe:
-                skeleton.Play("PickUp", false);
-                SoundController.Instance.PlayOnce(SoundType.PickWeapon);
-                break;
-            case ItemType.Gloves:
-                skeleton.Play("PickUp", false);
-                SoundController.Instance.PlayOnce(SoundType.PickWeapon);
-                break;
-            case ItemType.Food:
-                skeleton.Play("PickUp", false);
-                SoundController.Instance.PlayOnce(SoundType.PickWeapon);
-                break;
-            case ItemType.Shield:
-                skeleton.Play("PickUp", false);
-                SoundController.Instance.PlayOnce(SoundType.PickWeapon);
-                break;
-            case ItemType.Key:
-                hasKey = true;
-                skeleton.Play("PickUp", false);
-                SoundController.Instance.PlayOnce(SoundType.PickKey);
-
-                var _cacheItemTarget = _itemTarget;
-                var itemLock = GameController.Instance.ItemLock;
-                if (itemLock == null)
-                {
-                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
-                    {
-                        _cacheItemTarget.gameObject.SetActive(false);
-                    });
-                }
-                else
-                {
-                    DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
-                    {
-                        _cacheItemTarget.transform.DOMove(itemLock.LockPosition.transform.position, 1).OnComplete(() =>
                         {
-                            _cacheItemTarget.gameObject.SetActive(false);
-                            itemLock.PlayWin();
-                        });
-                    });
-                }
-                break;
-
-            case ItemType.BrokenBrick:
-                SoundController.Instance.PlayOnce(SoundType.HeroPushWall);
-                //skeleton.Play("HitWall", false);
-                DOTween.Sequence().AppendInterval(.4f).AppendCallback(() =>
-                {
-                    ParticleSystem effectHitWall = Instantiate(this.effectHitWall, transform.parent);
-                    effectHitWall.transform.position = this.effectHitWall.transform.position;
-                    effectHitWall.gameObject.SetActive(true);
-                    effectHitWall.Play();
-                });
-                break;
-
-            case ItemType.Electric:
-                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
-                    {
-                        SoundController.Instance.PlayOnce(SoundType.ElectricTrap);
-                        effectElectricHuggy.gameObject.SetActive(true);
-                        skeleton.Play("LoseElectric", false);
-                    });
-                break;
-
-            case ItemType.Trap:
-                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
-                {
-                    skeleton.Play("LoseTrap", false);
-                });
-                break;
-            case ItemType.Bomb:
-                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
-               {
-                   skeleton.Play("LoseBomb", false);
-               });
-                break;
-            case ItemType.Bow:
-                break;
-                DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
-                {
-                    skeleton.Play("Die2", false);
-                });
-                break;
-            default:
-                {
-                    switch (EquipType)
-                    {
-                        case ItemType.Sword:
-                        case ItemType.Knife:
-                        case ItemType.Axe:
-                        case ItemType.Shuriken:
-                        case ItemType.SwordJapan:
-                        case ItemType.SwordBlood:
-                        // case ItemType.Electric:
-                        case ItemType.Fire:
-                        case ItemType.Ice:
-                        case ItemType.Poison:
-                        case ItemType.Mace:
-                        case ItemType.Bow2:
-                        case ItemType.Polllaxe:
-                            skeleton.Play("PickUp", false);
-                            break;
-                        default:
-                            skeleton.Play("PickUp", false);
-                            break;
+                            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                            {
+                                Vibration.VibratePeek();
+                            });
+                        }
                     }
-                    break;
+
+                    public void PLayMove(bool isLoop)
+                    {
+                        switch (EquipType)
+                        {
+                            case ItemType.Sword:
+                            case ItemType.Knife:
+                            case ItemType.Axe:
+                            case ItemType.Shuriken:
+                            case ItemType.SwordJapan:
+                            case ItemType.SwordBlood:
+                            case ItemType.Electric:
+                            case ItemType.Fire:
+                            case ItemType.Ice:
+                            case ItemType.Poison:
+                            case ItemType.Mace:
+                            case ItemType.Bow2:
+                            case ItemType.Polllaxe:
+                                //skeleton.Play("RunKiem", true);
+                                skeleton.Play("Run", true);
+                                break;
+                            default:
+                                skeleton.Play("Walk", true);
+                                break;
+                        }
+                    }
+
+                    public void PlayDead()
+                    {
+                        if (_target as EnemyIceDragon)
+                        {
+                            //skeleton.Play("DieIce", false);
+                            skeleton.Play("Die", false);
+                        }
+                        else if (_target as EnemyDragonHead)
+                        {
+                            //skeleton.Play("DieFire2", false);
+                            skeleton.Play("Die", false);
+                        }
+                        else
+                        {
+                            SoundController.Instance.PlayOnce(SoundType.HuggyDie);
+                            var dies = new string[] { "Die", "Die3" };
+                            string die = dies[UnityEngine.Random.Range(0, dies.Length)];
+                            //skeleton.Play(die, false);
+                            skeleton.Play("Die", false);
+                            IsDie3 = die == "Die3";
+                        }
+
+                        IsDie = true;
+                    }
+
+                    public void PlayWin(bool isLoop)
+                    {
+                        // string[] wins = { "Win", "Win2", "Win3" };
+                        // skeleton.Play(wins[UnityEngine.Random.Range(0, wins.Length)], true);
+                        // SoundController.Instance.PlayOnce(SoundType.HeroYeah);
+                        PlayIdle(true);
+                    }
+
+                    public void GiveFlower()
+                    {
+                        // Chưa có animation
+                        // if (Data.TimeToRescueParty.TotalMilliseconds > 0)
+                        // {
+                        //     skeleton.Play("GetMedal", true);
+                        // }
+                        // else
+                        // {
+                        //     if (Data.CurrentSkinHero == skinLess)
+                        //     {
+                        //         skeleton.Play("Sit2", true);
+                        //     }
+                        //     else
+                        //     {
+                        //         skeleton.Play("Sit", true);
+                        //     }
+                        // }
+                        PlayWin(true);
+                    }
+
+                    public void PlayLose(bool isLoop) { skeleton.Play("Die", true); }
+
+                    public void PlayUseItem(ItemType type)
+                    {
+                        switch (type)
+                        {
+                            case ItemType.Sword:
+                            case ItemType.Knife:
+                            case ItemType.Axe:
+                            case ItemType.Shuriken:
+                            case ItemType.SwordJapan:
+                            case ItemType.SwordBlood:
+                            case ItemType.Fire:
+                            case ItemType.Ice:
+                            case ItemType.Poison:
+                            case ItemType.Mace:
+                            case ItemType.Bow2:
+                            case ItemType.Polllaxe:
+                                skeleton.Play("PickUp", false);
+                                SoundController.Instance.PlayOnce(SoundType.PickWeapon);
+                                break;
+                            case ItemType.Gloves:
+                                skeleton.Play("PickUp", false);
+                                SoundController.Instance.PlayOnce(SoundType.PickWeapon);
+                                break;
+                            case ItemType.Food:
+                                skeleton.Play("PickUp", false);
+                                SoundController.Instance.PlayOnce(SoundType.PickWeapon);
+                                break;
+                            case ItemType.Shield:
+                                skeleton.Play("PickUp", false);
+                                SoundController.Instance.PlayOnce(SoundType.PickWeapon);
+                                break;
+                            case ItemType.Key:
+                                hasKey = true;
+                                skeleton.Play("PickUp", false);
+                                SoundController.Instance.PlayOnce(SoundType.PickKey);
+
+                                var _cacheItemTarget = _itemTarget;
+                                var itemLock = GameController.Instance.ItemLock;
+                                if (itemLock == null)
+                                {
+                                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                                    {
+                                        _cacheItemTarget.gameObject.SetActive(false);
+                                    });
+                                }
+                                else
+                                {
+                                    DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+                                    {
+                                        _cacheItemTarget.transform.DOMove(itemLock.LockPosition.transform.position, 1).OnComplete(() =>
+                                        {
+                                            _cacheItemTarget.gameObject.SetActive(false);
+                                            itemLock.PlayWin();
+                                        });
+                                    });
+                                }
+                                break;
+
+                            case ItemType.BrokenBrick:
+                                SoundController.Instance.PlayOnce(SoundType.HeroPushWall);
+                                //skeleton.Play("HitWall", false);
+                                DOTween.Sequence().AppendInterval(.4f).AppendCallback(() =>
+                                {
+                                    ParticleSystem effectHitWall = Instantiate(this.effectHitWall, transform.parent);
+                                    effectHitWall.transform.position = this.effectHitWall.transform.position;
+                                    effectHitWall.gameObject.SetActive(true);
+                                    effectHitWall.Play();
+                                });
+                                break;
+
+                            case ItemType.Electric:
+                                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                                    {
+                                        SoundController.Instance.PlayOnce(SoundType.ElectricTrap);
+                                        effectElectricHuggy.gameObject.SetActive(true);
+                                        skeleton.Play("LoseElectric", false);
+                                    });
+                                break;
+
+                            case ItemType.Trap:
+                                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                                {
+                                    skeleton.Play("LoseTrap", false);
+                                });
+                                break;
+                            case ItemType.Bomb:
+                                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                               {
+                                   skeleton.Play("LoseBomb", false);
+                               });
+                                break;
+                            case ItemType.Bow:
+                                break;
+                                DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                                {
+                                    skeleton.Play("Die2", false);
+                                });
+                                break;
+                            default:
+                                {
+                                    switch (EquipType)
+                                    {
+                                        case ItemType.Sword:
+                                        case ItemType.Knife:
+                                        case ItemType.Axe:
+                                        case ItemType.Shuriken:
+                                        case ItemType.SwordJapan:
+                                        case ItemType.SwordBlood:
+                                        // case ItemType.Electric:
+                                        case ItemType.Fire:
+                                        case ItemType.Ice:
+                                        case ItemType.Poison:
+                                        case ItemType.Mace:
+                                        case ItemType.Bow2:
+                                        case ItemType.Polllaxe:
+                                            skeleton.Play("PickUp", false);
+                                            break;
+                                        default:
+                                            skeleton.Play("PickUp", false);
+                                            break;
+                                    }
+                                    break;
+                                }
+                        }
+                    }
                 }
-        }
-    }
-}
 
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(Player))]
-public class PlayerEditor : UnityEditor.Editor
-{
-    private Player _player;
-
-    private void OnEnable() { _player = (Player)target; }
-
-    public override void OnInspectorGUI()
+                [CustomEditor(typeof(Player))]
+                public class PlayerEditor : UnityEditor.Editor
     {
-        base.OnInspectorGUI();
+        private Player _player;
 
-        _player.TxtDamage.text = _player.Damage.ToString();
+        private void OnEnable() { _player = (Player)target; }
 
-        serializedObject.Update();
-        serializedObject.ApplyModifiedProperties();
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            _player.TxtDamage.text = _player.Damage.ToString();
+
+            serializedObject.Update();
+            serializedObject.ApplyModifiedProperties();
+        }
     }
-}
 #endif

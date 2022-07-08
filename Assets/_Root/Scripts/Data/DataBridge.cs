@@ -13,7 +13,7 @@ public class DataBridge : Singleton<DataBridge>
     public LevelMap NextLevelLoaded;
 
     private int[] _cacheLevels;
-
+    private int _countGetLevel = 0;
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -114,11 +114,20 @@ public class DataBridge : Singleton<DataBridge>
         //     var obj = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, _cacheLevels[temp] + 1)).Task;
         //     return (obj, _cacheLevels[temp], levelIndex);
         // }
+        _countGetLevel ++;
         if (levelIndex > ResourcesController.Config.MaxLevelCanReach - 1)
         {
-            levelIndex = Random.Range(0, ResourcesController.Config.MaxLevelCanReach);
+            if(Data.CurrentLoopLevel == -1 || (Data.CurrentLoopLevel != -1 && Data.IsWinCurrentLoopLevel) ){
+                levelIndex = Random.Range(0, ResourcesController.Config.MaxLevelCanReach);
+                Data.CurrentLoopLevel = levelIndex;
+                Data.IsWinCurrentLoopLevel = false;
+            }
+            else
+            {
+                if(_countGetLevel != 1) levelIndex = Random.Range(0, ResourcesController.Config.MaxLevelCanReach);
+                else levelIndex = Data.CurrentLoopLevel;
+            }
         }
-
         var levelObject = await Addressables.LoadAssetAsync<GameObject>(string.Format(Constants.LEVEL_FORMAT, levelIndex + 1)).Task;
 
         return (levelObject, levelIndex, levelIndex);

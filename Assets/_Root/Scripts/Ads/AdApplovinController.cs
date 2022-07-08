@@ -26,7 +26,7 @@ public class AdApplovinController : MonoBehaviour, IAd
     }
     public void RequestBanner()
     {
-        ShowBanner();
+
     }
     public void ShowBanner()
     {

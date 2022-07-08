@@ -98,7 +98,7 @@ public class GameController : Singleton<GameController>
         CheckRadioCamera();
         positionCameraOrigin = Camera.main.transform.position;
         LoadLevel(Data.CurrentLevel);
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LogIntoTheGame);
+        // ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LogIntoTheGame);
         rescuePartyButton.SetActive(Data.TimeToRescueParty.TotalMilliseconds > 0);
     }
 
@@ -151,6 +151,8 @@ public class GameController : Singleton<GameController>
         }
         AdController.Instance.JustShowReward = false;
         AdController.Instance.Request();
+        AdController.Instance.ShowBanner();
+
         MoveInAnim();
 
         // SoundController.Instance.PlayOnce(SoundType.EnemyStart);
@@ -172,6 +174,7 @@ public class GameController : Singleton<GameController>
             if (go.Item1 != null)
             {
                 DataBridge.Instance.NextLevelLoaded = go.Item1.GetComponent<LevelMap>();
+                if(DataBridge.Instance.NextLevelLoaded != DataBridge.Instance.PreviousLevelLoaded)
                 DataBridge.Instance.NextLevelLoaded.SetLevelLoaded(go.Item2, fakeLevelIndex + 1); // fakeLevelIndex + 1, fakeLevelIndex + 1
             }
         }
@@ -207,15 +210,20 @@ public class GameController : Singleton<GameController>
         }
         else
         {
-            // Next level
+            // Next level || Home to GamePlay and Next = Previous (random)
             if (DataBridge.Instance.NextLevelLoaded != null && DataBridge.Instance.NextLevelLoaded.CurrentFakeLevelIndex == fakeIndex)
             {
                 levelInstall = DataBridge.Instance.NextLevelLoaded;
                 LoadNextLevel(fakeIndex);
             }
+            // Home to Play and Previousloaded
+            else if(DataBridge.Instance.PreviousLevelLoaded != null && DataBridge.Instance.PreviousLevelLoaded.CurrentFakeLevelIndex == fakeIndex){
+                levelInstall = DataBridge.Instance.PreviousLevelLoaded;
+                LoadNextLevel(fakeIndex);
+            }
             else
             {
-                // start game
+                // start game || loop
                 DataBridge.Instance.NextLevelLoaded = null;
                 var level = await DataBridge.Instance.GetLevel(fakeIndex);
                 if (level.Item1 != null)
@@ -389,8 +397,8 @@ public class GameController : Singleton<GameController>
     {
         SetEnableLeanTouch(false);
 
-        ResourcesController.Achievement.ResetNumberTemp();
-        ResourcesController.DailyQuest.ResetNumberTemp();
+        // ResourcesController.Achievement.ResetNumberTemp();
+        // ResourcesController.DailyQuest.ResetNumberTemp();
 
         PopupController.Instance.DismissAll();
 
@@ -409,11 +417,11 @@ public class GameController : Singleton<GameController>
                 Root.IncreaseTotalLevelWin();
 
         });
-
     }
 
     public void OnSkipLevel()
     {
+        FadeInOverlay();
         OnSkipLevel(null);
     }
 
@@ -426,6 +434,7 @@ public class GameController : Singleton<GameController>
         AdController.Instance.ShowRewardedAd(() =>
         {
             Data.CurrentLevel++;
+            if(Data.CurrentLoopLevel != -1) Data.IsWinCurrentLoopLevel = true;
             OnNextLevel();
             onAdCompleted?.Invoke();
         });
@@ -435,6 +444,7 @@ public class GameController : Singleton<GameController>
     {
         FadeInOverlay(() =>
         {
+            AdController.Instance.HideBanner();
             PopupController.Instance.DismissAll();
             KillSequence();
             SceneManager.LoadScene(Constants.HOME_SCENE);
@@ -543,7 +553,7 @@ public class GameController : Singleton<GameController>
                 break;
         }
         root.LevelMap.visitTower.ChangeToHomeTower();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LevelPassed);
+        // ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LevelPassed);
 
         MoveOutAnim();
         
@@ -557,6 +567,7 @@ public class GameController : Singleton<GameController>
             {
                 Data.CurrentLevel++;
                 Data.CountPlayLevel++;
+                if(Data.CurrentLoopLevel != -1) Data.IsWinCurrentLoopLevel = true;
                 if (Data.MaxLevel < Data.CurrentLevel) Data.MaxLevel = Data.CurrentLevel;
                 ShowPopupWin();
                 // if (Data.CurrentLevel == ResourcesController.Config.LevelShowRate)
@@ -580,7 +591,10 @@ public class GameController : Singleton<GameController>
 
             sequence = DOTween.Sequence().AppendInterval(delayWinLose / 2).AppendCallback(() =>
             {
-                ShowPopupLose();
+                FadeInOverlay(() =>
+                {
+                    ShowPopupLose();
+                });
             });
         });
     }
@@ -588,13 +602,11 @@ public class GameController : Singleton<GameController>
     private void ShowPopupWin()
     {
         PopupController.Instance.DismissAll();
-        ZoomInCamera();
         PopupController.Instance.Show<WinPopup>();
     }
 
     private void ShowPopupLose()
     {
-        ZoomInCamera();
         PopupController.Instance.Show<LosePopup>();
     }
 
@@ -669,7 +681,7 @@ public class GameController : Singleton<GameController>
         overlay.DOFade(0, 1f).SetEase(Ease.InCubic).OnComplete(() =>
         {
             overlay.gameObject.SetActive(false);
-            NotiQuestController.Instance.Show();
+            // NotiQuestController.Instance.Show();
             action?.Invoke();
         });
     }

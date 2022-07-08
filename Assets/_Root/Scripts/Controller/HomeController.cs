@@ -77,8 +77,8 @@ public class HomeController : Singleton<HomeController>
         // CheckTG();
         // checkAllEvent();
         
-        //AdController.Instance.Request();
-        AdController.Instance.HideBanner();
+        // AdController.Instance.Request();
+        // AdController.Instance.HideBanner();
 
         //ResetBackground();
         // CheckLanguage();

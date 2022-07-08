@@ -25,6 +25,8 @@ public class Constants
     public const string IS_SHOW_APP_OPEN = "IS_SHOW_APP_OPEN";
     // Data
     public const string CURRENT_LEVEL = "CURRENT_LEVEL";
+    public const string CURRENT_LOOP_LEVEL = "CURRENT_LOOP_LEVEL";
+    public const string IS_WIN_CURRENT_LOOP_LEVEL = "IS_WIN_CURRENT_LOOP_LEVEL";
     public const string MAX_LEVEL = "MAX_LEVEL";
     public const string CURRENT_SKIN_HERO = "CURRENT_SKIN_HERO";
     public const string CURRENT_SKIN_HERO_Id = "CURRENT_SKIN_HERO_Id";

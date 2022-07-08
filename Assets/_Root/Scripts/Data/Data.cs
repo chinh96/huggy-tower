@@ -37,6 +37,23 @@ public static class Data
         }
     }
 
+    public static int CurrentLoopLevel
+    {
+        get => GetInt(Constants.CURRENT_LOOP_LEVEL, -1);
+        set
+        {
+            SetInt(Constants.CURRENT_LOOP_LEVEL, value);
+        }
+    }
+
+    public static bool IsWinCurrentLoopLevel
+    {
+        get => GetBool(Constants.IS_WIN_CURRENT_LOOP_LEVEL, false);
+        set
+        {
+            SetBool(Constants.IS_WIN_CURRENT_LOOP_LEVEL, value);
+        }
+    }
     public static int MaxLevel { get => GetInt(Constants.MAX_LEVEL, 0); set => SetInt(Constants.MAX_LEVEL, value); }
 
     public static string CurrentSkinHero
@@ -120,7 +137,7 @@ public static class Data
     public static string DateTimeStart { get => GetString(Constants.DATE_TIME_START, ""); set => SetString(Constants.DATE_TIME_START, value); }
 
     public static int DailyRewardCurrent { get => GetInt(Constants.DAILY_REWARD_CURRENT, 0); set => SetInt(Constants.DAILY_REWARD_CURRENT, value); }
-    public static int LastDayClaimedReward {get => GetInt(Constants.LASTDAY_CLAIMED_REWARD, -1); set => SetInt(Constants.LASTDAY_CLAIMED_REWARD, value);}
+    public static int LastDayClaimedReward { get => GetInt(Constants.LASTDAY_CLAIMED_REWARD, -1); set => SetInt(Constants.LASTDAY_CLAIMED_REWARD, value); }
     public static int DailyRewardEventCurrent { get => GetInt(Constants.DAILY_REWARD_EVENT_CURRENT, 0); set => SetInt(Constants.DAILY_REWARD_EVENT_CURRENT, value); }
     public static string lastTimeClaimDailyEvent { get => GetString(Constants.LAST_TIME_CLAIM_DAILY_EVENT, ""); set => SetString(Constants.LAST_TIME_CLAIM_DAILY_EVENT, value); }
     public static string IdCheckUnlocked = "";
@@ -129,7 +146,7 @@ public static class Data
     public static int PercentProgressGift { get => GetInt(Constants.PERCENT_PROGRESS_GIFT, 0); set => SetInt(Constants.PERCENT_PROGRESS_GIFT, value); }
 
     public static WorldType WorldCurrent { get => (WorldType)GetInt(Constants.WORLD_CURRENT, (int)(ResourcesController.Universe.WorldDefault.WorldType)); set => SetInt(Constants.WORLD_CURRENT, (int)value); }
-    public static RoomType RoomCurrent  { get => (RoomType)GetInt(Constants.ROOM_CURRENT, (int)(ResourcesController.Factory.RoomDefault.roomType)); set => SetInt(Constants.ROOM_CURRENT, (int)value); }
+    public static RoomType RoomCurrent { get => (RoomType)GetInt(Constants.ROOM_CURRENT, (int)(ResourcesController.Factory.RoomDefault.roomType)); set => SetInt(Constants.ROOM_CURRENT, (int)value); }
     public static SkinData SkinGift;
 
     public static int JoinFbProgress { get => GetInt(Constants.JOIN_FB_PROGRESS, 0); set => SetInt(Constants.JOIN_FB_PROGRESS, value); }

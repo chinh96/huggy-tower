@@ -56,7 +56,7 @@ public class EnemyYeti : Unit, IAnim
 
     public void PlayDead()
     {
-        skeleton.Play("Die", false);
+        skeleton.Play("Swoon", false);
 
         SoundController.Instance.PlayOnce(SoundType.YetiDie);
     }
