@@ -455,8 +455,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                         }
 
                                         skeleton.Play("Die2", false);
-
-                                        SoundController.Instance.PlayOnce(SoundType.SecretaryAttack);
+                                        
                                         DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
                                         {
                                             PlayAttack();

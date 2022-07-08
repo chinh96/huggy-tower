@@ -21,7 +21,6 @@ public class EnemySpider : Unit, IAnim
     private void Start()
     {
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
-        SoundController.Instance.PlayOnce(SoundType.BearStart);
     }
 
     public override void OnAttack(int damage, Action callback)

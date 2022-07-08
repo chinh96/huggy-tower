@@ -17,8 +17,9 @@ public class DataBridge : Singleton<DataBridge>
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        // CheckCacheLevel();
-        InitialzieIAP();
+        // CheckCacheLevel(); Old
+
+        // InitialzieIAP(); PhucVH
     }
 
     private void InitialzieIAP()
