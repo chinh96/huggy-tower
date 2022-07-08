@@ -235,5 +235,9 @@ public class ApplovinManager : MonoBehaviour
     {
         return MaxSdk.IsRewardedAdReady(rewardAdUnit);
     }
+
+    public bool IsInterstitialReady(){
+        return MaxSdk.IsInterstitialReady(intertitialAdUnit);
+    }
     #endregion
 }

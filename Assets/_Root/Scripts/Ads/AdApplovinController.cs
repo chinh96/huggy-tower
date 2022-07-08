@@ -5,7 +5,7 @@ using System;
 public class AdApplovinController : MonoBehaviour, IAd
 {
     public bool IsBannerLoaded => true;
-    public bool IsInterLoaded => true;
+    public bool IsInterLoaded => ad != null && ad.IsInterstitialReady();
     public bool IsRewardLoaded => ad != null && ad.IsRewardedReady();
     public Action OnInterClosed { get; set; }
     public Action OnInterLoaded { get; set; }
