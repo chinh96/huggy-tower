@@ -259,7 +259,10 @@ public enum SoundType
     EnemyHandAttack,
     EnemyGunAttack,
     FixingRoom,
-    PickWeapon
+    PickWeapon,
+    EnemyVenomAttack,
+    EnemyVenomDie,
+    HuggyAttackHammer,
 }
 
 public enum WorldType

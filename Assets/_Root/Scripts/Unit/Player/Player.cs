@@ -1360,7 +1360,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Hammer:
                 DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                 {
-                    SoundController.Instance.PlayOnce(SoundType.HuggyAttackBaseball);
+                    SoundController.Instance.PlayOnce(SoundType.HuggyAttackHammer);
                 });
                 skeleton.Play("AttackHammer", false);
                 if (hasBloodEnemy)
