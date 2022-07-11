@@ -104,8 +104,7 @@ public class GameController : Singleton<GameController>
 
     private void CheckRadioCamera()
     {
-        float ratio = ((1.0f*Screen.height / Screen.width) - (1920 / 1080f)) * 12;
-        Camera.main.orthographicSize += 0.3f;
+        float ratio = ((Screen.height / Screen.width) - (1920 / 1080f)) * 12;
         if (ratio > 0)
         {
             Camera.main.transform.position += new Vector3(0, ratio, 0);
@@ -114,8 +113,6 @@ public class GameController : Singleton<GameController>
             UICamera.orthographicSize = Camera.main.orthographicSize;
             UICamera.transform.position = Camera.main.transform.position;
         }
-        cameraSizeOrigin = Camera.main.orthographicSize;
-        Debug.Log("Original Size: " + cameraSizeOrigin);
     }
 
     private void ResetFlagNextLevel() { }
@@ -382,7 +379,6 @@ public class GameController : Singleton<GameController>
             {
                 Instance.root.Clear();
                 Camera.main.transform.position = positionCameraOrigin;
-                Camera.main.orthographicSize = cameraSizeOrigin;
                 Instance.LoadLevel(Data.CurrentLevel);
             });
         });
@@ -402,7 +398,6 @@ public class GameController : Singleton<GameController>
             KillSequence();
             _isReplay = true;
             Camera.main.transform.position = positionCameraOrigin;
-            Camera.main.orthographicSize = cameraSizeOrigin;
             Instance.LoadLevel(Data.CurrentLevel);
 
             AdController.Instance.ShowInterstitial(() =>
@@ -617,7 +612,7 @@ public class GameController : Singleton<GameController>
         }
         Camera.main.transform.DOMove(endValue, zoomCameraDuration);
 
-        zoomOrthoSizeOrigin = cameraSizeOrigin;
+        zoomOrthoSizeOrigin = Camera.main.orthographicSize;
         Camera.main.DOOrthoSize(zoomOrthoSize, zoomCameraDuration);
 
         isZoomIn = true;

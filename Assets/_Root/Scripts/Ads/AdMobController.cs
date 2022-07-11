@@ -62,6 +62,7 @@ public class AdMobController : MonoBehaviour, IAd
         bannerView = new BannerView(bannerId, type, AdPosition.Bottom);
         bannerView.OnPaidEvent += (sender, args) => HandleAdPaidEvent(sender, args, bannerId);
         bannerView.LoadAd(GetAdRequest());
+        bannerView.OnAdLoaded += (sender, args) => { Debug.Log("Banner Loaded");};
     }
 
     public void ShowBanner()

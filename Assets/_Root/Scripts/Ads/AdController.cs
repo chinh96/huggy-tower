@@ -75,16 +75,20 @@ public class AdController : Singleton<AdController>
 #if UNITY_EDITOR
         ad = GetComponent<AdMobController>();
 #else
+        Debug.Log("Init Ad Controller");
         if (RemoteConfigController.Instance.OnlyAdmob)
         {
             ad = GetComponent<AdMobController>();
+            Debug.Log("Ad : " + ad.GetType());
         }
         else
         {
+            Debug.Log("MAX ads");
             ad = (IAd)GetComponent<AdApplovinController>();
+            Debug.Log("Ad : " + ad.GetType());
         }
+        
 #endif
-
         ad.Init(OnInterClosed, OnInterLoaded, OnRewardLoaded, OnRewardClosed, OnRewardEarned);
 
         Request();
@@ -250,7 +254,7 @@ public class AdController : Singleton<AdController>
 
     public void OnInterLoaded()
     {
-
+        Debug.Log("Inter loaded");
     }
 
     public void OnRewardClosed()

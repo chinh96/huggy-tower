@@ -1384,15 +1384,15 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             }
                         default:
                             {
-                                SoundType[] soundTypes = { SoundType.HuggyAttackNormal, SoundType.HuggyAttackNormal2};
-                                SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
-                                SoundController.Instance.PlayOnce(soundType);
                                 attacks = new string[] { "Attack", "Attack2" };
                                 break;
                             }
                     }
 
                     string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
+                    if(attack == "Attack") SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal);
+                    else SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal2);
+                
                     skeleton.Play(attack, false);
                     if (hasBloodEnemy)
                     {

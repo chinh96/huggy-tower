@@ -68,38 +68,39 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         defaults.Add(Constants.IS_SHOW_INTER_LOSE, false);
         defaults.Add(Constants.IS_SHOW_BANNER, true);
         defaults.Add(Constants.IS_SHOW_APP_OPEN, true);
-        Firebase.RemoteConfig.FirebaseRemoteConfig.SetDefaults(defaults);
+        Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults);
     }
 
     public Task FetchDataAsync()
     {
-        Task fetchTask = Firebase.RemoteConfig.FirebaseRemoteConfig.FetchAsync(TimeSpan.Zero);
+        Task fetchTask = Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.FetchAsync(TimeSpan.Zero);
         return fetchTask.ContinueWith(FetchComplete);
     }
 
     private void FetchComplete(Task fetchTask)
     {
-        var info = Firebase.RemoteConfig.FirebaseRemoteConfig.Info;
+        var info = Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.Info;
         switch (info.LastFetchStatus)
         {
             case Firebase.RemoteConfig.LastFetchStatus.Success:
-                Firebase.RemoteConfig.FirebaseRemoteConfig.ActivateFetched();
-                break;
-            case Firebase.RemoteConfig.LastFetchStatus.Failure:
-                switch (info.LastFetchFailureReason)
-                {
-                    case Firebase.RemoteConfig.FetchFailureReason.Error:
-                        Debug.LogError("Fetch failed for unknown reason");
-                        break;
-                    case Firebase.RemoteConfig.FetchFailureReason.Throttled:
-                        Debug.LogError("Fetch throttled until " + info.ThrottledEndTime);
-                        break;
-                }
-
-                break;
-            case Firebase.RemoteConfig.LastFetchStatus.Pending:
-                Debug.LogError("Latest Fetch call still pending.");
-                break;
+                    Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.ActivateAsync();
+                    Debug.Log(String.Format("Remote data loaded and ready (last fetch time {0}).",
+                    info.FetchTime));
+                    break;
+                case Firebase.RemoteConfig.LastFetchStatus.Failure:
+                    switch (info.LastFetchFailureReason)
+                    {
+                        case Firebase.RemoteConfig.FetchFailureReason.Error:
+                            Debug.Log("Fetch failed for unknown reason");
+                            break;
+                        case Firebase.RemoteConfig.FetchFailureReason.Throttled:
+                            Debug.Log("Fetch throttled until " + info.ThrottledEndTime);
+                            break;
+                    }
+                    break;
+                case Firebase.RemoteConfig.LastFetchStatus.Pending:
+                    Debug.Log("Latest Fetch call still pending.");
+                    break;
         }
 
         if (fetchTask.IsCanceled)
@@ -120,11 +121,14 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
         IsShowInterLose = bool.Parse(GetConfig(Constants.IS_SHOW_INTER_LOSE));
         isShowBanner = bool.Parse(GetConfig(Constants.IS_SHOW_BANNER));
         isShowAppOpen = bool.Parse(GetConfig(Constants.IS_SHOW_APP_OPEN));
+        Debug.Log(isShowBanner + "showban");
+        Debug.Log(IsShowInterLose + "show interlose");
 #if !UNITY_EDITOR
         HasIntro = bool.Parse(GetConfig(Constants.HAS_INTRO));
 #endif
 #if UNITY_ANDROID
         OnlyAdmob = bool.Parse(GetConfig(Constants.ONLY_ADMOB_ANDROID));
+        Debug.Log(OnlyAdmob + " only admod");
         CurrentVersion = GetConfig(Constants.CURRENT_VERSION_ANDROID);
         UpdateDescription = GetConfig(Constants.ANDROID_UPDATE_DESCRIPTION);
         EnableFbLogin = true;
@@ -140,6 +144,6 @@ public class RemoteConfigController : Singleton<RemoteConfigController>
 
     public string GetConfig(string name)
     {
-        return Firebase.RemoteConfig.FirebaseRemoteConfig.GetValue(name).StringValue;
+        return Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue(name).StringValue;
     }
 }
