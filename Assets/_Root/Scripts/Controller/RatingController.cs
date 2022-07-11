@@ -49,7 +49,7 @@ public class RatingController : Singleton<RatingController>
     {
         if (playReviewInfo == null)
         {
-            Application.OpenURL("market://details?id=com.gamee.herotowerwar");
+            Application.OpenURL("market://details?id=com.gamee.wuggykissytower");
             yield break;
         }
 

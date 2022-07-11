@@ -55,6 +55,7 @@ public class GameController : Singleton<GameController>
     [NonSerialized] public bool IsSeaBackground;
     [NonSerialized] public bool IsHalloweenBackground;
     [NonSerialized] public Vector3 positionCameraOrigin;
+    private float cameraSizeOrigin;
     [NonSerialized] public List<GameObject> Kraken0s = new List<GameObject>();
 
     public void RemoveKraken0()
@@ -103,7 +104,8 @@ public class GameController : Singleton<GameController>
 
     private void CheckRadioCamera()
     {
-        float ratio = ((Screen.height / Screen.width) - (1920 / 1080f)) * 12;
+        float ratio = ((1.0f*Screen.height / Screen.width) - (1920 / 1080f)) * 12;
+        Camera.main.orthographicSize += 0.3f;
         if (ratio > 0)
         {
             Camera.main.transform.position += new Vector3(0, ratio, 0);
@@ -112,6 +114,8 @@ public class GameController : Singleton<GameController>
             UICamera.orthographicSize = Camera.main.orthographicSize;
             UICamera.transform.position = Camera.main.transform.position;
         }
+        cameraSizeOrigin = Camera.main.orthographicSize;
+        Debug.Log("Original Size: " + cameraSizeOrigin);
     }
 
     private void ResetFlagNextLevel() { }
@@ -338,7 +342,7 @@ public class GameController : Singleton<GameController>
                 break;
         }
 
-        opacity.SetActive(Root.LevelMap.DurationMoveCamera > 0);
+        // opacity.SetActive(Root.LevelMap.DurationMoveCamera > 0);
     }
 
     public void UpdateDislayCurrentLevel(int level, ELevelCondition condition)
@@ -378,6 +382,7 @@ public class GameController : Singleton<GameController>
             {
                 Instance.root.Clear();
                 Camera.main.transform.position = positionCameraOrigin;
+                Camera.main.orthographicSize = cameraSizeOrigin;
                 Instance.LoadLevel(Data.CurrentLevel);
             });
         });
@@ -397,6 +402,7 @@ public class GameController : Singleton<GameController>
             KillSequence();
             _isReplay = true;
             Camera.main.transform.position = positionCameraOrigin;
+            Camera.main.orthographicSize = cameraSizeOrigin;
             Instance.LoadLevel(Data.CurrentLevel);
 
             AdController.Instance.ShowInterstitial(() =>
@@ -557,10 +563,10 @@ public class GameController : Singleton<GameController>
                 Data.CountPlayLevel++;
                 if (Data.MaxLevel < Data.CurrentLevel) Data.MaxLevel = Data.CurrentLevel;
                 ShowPopupWin();
-                if (Data.CurrentLevel == ResourcesController.Config.LevelShowRate)
-                {
-                    PopupController.Instance.Show<RatingPopup>(null, ShowAction.DoNothing);
-                }
+                // if (Data.CurrentLevel == ResourcesController.Config.LevelShowRate)
+                // {
+                //     PopupController.Instance.Show<RatingPopup>(null, ShowAction.DoNothing);
+                // }
             });
         });
     }
@@ -611,7 +617,7 @@ public class GameController : Singleton<GameController>
         }
         Camera.main.transform.DOMove(endValue, zoomCameraDuration);
 
-        zoomOrthoSizeOrigin = Camera.main.orthographicSize;
+        zoomOrthoSizeOrigin = cameraSizeOrigin;
         Camera.main.DOOrthoSize(zoomOrthoSize, zoomCameraDuration);
 
         isZoomIn = true;

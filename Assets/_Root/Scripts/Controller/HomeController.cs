@@ -29,7 +29,7 @@ public class HomeController : Singleton<HomeController>
         base.Awake();
 
         CheckButton();
-        overlay.DOFade(1, 0);
+        overlay.DOFade(0, 0);
 
     }
 

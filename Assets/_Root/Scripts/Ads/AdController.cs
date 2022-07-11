@@ -188,6 +188,7 @@ public class AdController : Singleton<AdController>
         if (ResourcesController.Config.EnableTest)
         {
             action?.Invoke();
+            Show();
         }
         else
         {

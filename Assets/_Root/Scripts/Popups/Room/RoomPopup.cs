@@ -61,6 +61,11 @@ public class RoomPopup : Popup
                 _roomColectionItemList[idx].Reset(true);
                 break;
             }
+            else if(idx == _roomColectionItemList.Count-1){
+                 FirePaper.gameObject.SetActive(true);
+                _currentRoom.Character.Play("Win", true);
+                break;
+            }
         }
     }
 

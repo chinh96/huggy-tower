@@ -241,11 +241,6 @@ public class Tower : MonoBehaviour
             homeTower.DOColor(new Color(1, 1, 1, 1), duration);
             homeTowerFlag.DOColor(new Color(1, 1, 1, 1), duration);
         }
-        DOTween.Sequence().AppendInterval(duration / 2).OnComplete(() =>
-        {
-            tower.DOColor(new Color(0, 0, 0, 0), duration / 2);
-
-        });
         ChangeItemsToHome(duration);
     }
     private void ChangeItemsToHome(float duration)

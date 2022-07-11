@@ -73,6 +73,11 @@ public class LevelMap : MonoBehaviour
         // a position between 2 visitTowers.
         float endValue = (visitTowers[indexVisitTower].transform.position.x + visitTowers[indexVisitTower - 1].transform.position.x) / 2;
         Camera.main.transform.DOMoveX(endValue, 2).SetEase(Ease.Linear);
+        if(indexVisitTower == 1){
+           float endSize = Camera.main.orthographicSize + 1.5f;
+           Camera.main.DOOrthoSize(endSize, 1);
+        }
+            
     }
 
     public void SetLevelLoaded(int realLevelIndex, int fakeLevelIndex)

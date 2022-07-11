@@ -65,7 +65,7 @@ public class DailyRewardItem : MonoBehaviour
     public void Reset()
     {
         dayText.text = $"Day {day + 1}";
-        if(isDay7) dayText.text = $"Day\n{day+1}";
+        if (isDay7) dayText.text = $"Day\n{day + 1}";
         // dayText.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", (day + 1).ToString(), true);
         coinText.text = $"{coin}";
         Hide();
@@ -82,13 +82,15 @@ public class DailyRewardItem : MonoBehaviour
         coinText.gameObject.SetActive(false);
         hero.gameObject.SetActive(false);
         skinName.gameObject.SetActive(false);
+
+        background.sprite = spriteCoinClaimed;
     }
 
     private void Check()
     {
         CheckDailyCoin();
         CheckDailySkin();
-        CheckBackground();
+        // CheckBackground();
     }
 
     private void CheckDailyCoin()
@@ -105,6 +107,7 @@ public class DailyRewardItem : MonoBehaviour
             doneIcon.SetActive(isUnlocked);
 
             dailyRewardType = DailyRewardType.Claimed;
+            if (Data.LastDayClaimedReward == Data.TotalDays && day == Data.DailyRewardCurrent - 1) background.sprite = spriteCoinCurrent;
         }
         else if (day > Data.DailyRewardCurrent)
         {
@@ -121,6 +124,15 @@ public class DailyRewardItem : MonoBehaviour
 
                 dailyRewardPopup.SetX5Text(coin);
                 dailyRewardType = DailyRewardType.Current;
+
+                background.sprite = spriteCoinCurrent;
+
+                if (isDay7)
+                {
+                    skinName.color = new Color(0, 0.2980392f, 0.6f, 1);
+                    dayText.color = new Color(0, 0.2980392f, 0.6f, 1);
+                    coinText.color = new Color(0, 0.2980392f, 0.6f, 1);
+                }
             }
             else
             {
@@ -128,13 +140,7 @@ public class DailyRewardItem : MonoBehaviour
                 // doneIcon.SetActive(true);
                 dailyRewardType = DailyRewardType.NotClaimed;
             }
-            background.sprite = spriteCoinCurrent;
-            if (isDay7)
-            {
-                skinName.color = new Color(0,0.2980392f, 0.6f, 1);
-                dayText.color = new Color(0, 0.2980392f, 0.6f, 1);
-                coinText.color = new Color(0, 0.2980392f, 0.6f, 1);
-            }
+
         }
     }
 
@@ -165,15 +171,15 @@ public class DailyRewardItem : MonoBehaviour
             case DailyRewardType.Claimed:
                 background.sprite = spriteCoinClaimed;
                 break;
-            // case DailyRewardType.Current:
-            //     background.sprite = spriteCoinCurrent;
-            //     if (isDay7)
-            //     {
-            //         skinName.color = new Color(0, 0, 102, 1);
-            //         dayText.color = new Color(0, 0, 102, 1);
-            //         coinText.color = new Color(0, 0, 102, 1);
-            //     }
-            //     break;
+                // case DailyRewardType.Current:
+                //     background.sprite = spriteCoinCurrent;
+                //     if (isDay7)
+                //     {
+                //         skinName.color = new Color(0, 0, 102, 1);
+                //         dayText.color = new Color(0, 0, 102, 1);
+                //         coinText.color = new Color(0, 0, 102, 1);
+                //     }
+                //     break;
                 // case DailyRewardType.NotClaimed:
                 //     background.sprite = isDay7 ? spriteSkinNotClaimed : spriteCoinNotClaimed;
                 //     break;
@@ -181,7 +187,8 @@ public class DailyRewardItem : MonoBehaviour
     }
 
     public void OnClickClaim()
-    {
+    {   
+        isUnlocked = true;
         if (isSkin)
         {
             Data.currentSkinHeroId = skinData.Id;
@@ -192,8 +199,6 @@ public class DailyRewardItem : MonoBehaviour
         Debug.Log("Done Claimed Skin");
         dailyRewardPopup.OnClickClaim(claimButton, isSkin);
         ResourcesController.Achievement.IncreaseByType(AchievementType.ClaimDailyReward);
-
-        isUnlocked = true;
     }
 
     public void SetDoneAfterClaimedAds()
