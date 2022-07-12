@@ -11,16 +11,29 @@ public class WinPopup : Popup
     [SerializeField] private CoinGeneration coinGeneration;
     [SerializeField] private Image iconCrossAds;
     [SerializeField] private Sprite[] imgIconCrossAds;
-    [SerializeField] private GameObject huggy;
+
+    [SerializeField] private GameObject huggy_1;
+    [SerializeField] private GameObject huggy_2;
+    [SerializeField] private GameObject princess;
+
     [SerializeField] private LevelText levelText;
 
     private string[] UrlData = new string[2] { "market://details?id=com.gamee.huggytimepin", "market://details?id=com.GameeStudio.PoppyPin3D" };
     private int idCrossCurrent = 0;
+
+    private bool havePrincess = false;
+
     protected override void BeforeShow()
     {
+        if (GameController.Instance.Princess != null) havePrincess = true;
+        else havePrincess = false;
+        huggy_1.SetActive(!havePrincess);
+        huggy_2.SetActive(havePrincess);
+        princess.SetActive(havePrincess);
+
         AdController.Instance.HideBanner();
         base.BeforeShow();
-        
+
         levelText.ChangeLevelMinusOne();
 
         claimX5Button.SetActive(true);
@@ -40,10 +53,18 @@ public class WinPopup : Popup
 
     protected override void AfterShown()
     {
-        SoundType[] soundWins = {SoundType.HuggyWin, SoundType.HuggyWin2};
+        SoundType[] soundWins = { SoundType.HuggyWin, SoundType.HuggyWin2 };
         SoundController.Instance.PlayOnce(soundWins[UnityEngine.Random.Range(0, soundWins.Length)]);
         base.AfterShown();
+
+        GameObject huggy = havePrincess ? huggy_2 : huggy_1;
         huggy.GetComponent<HeroWinLoseController>().PlayWin();
+
+        if (havePrincess)
+        {
+            string[] princessWinList = { "Win", "Win2", "Win3" };
+            princess.GetComponent<SkeletonGraphic>().Play(princessWinList[UnityEngine.Random.Range(0, princessWinList.Length)],true);
+        }
         Data.CoinTotal += ResourcesController.Config.CoinBonusPerLevel;
 
         progressGift.Move(() =>

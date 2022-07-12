@@ -34,7 +34,7 @@ public class GameController : Singleton<GameController>
     [SerializeField] private LevelText levelText;
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
-
+    public Princess Princess => FindObjectOfType<Princess>();
     private ItemLock itemLock;
     public ItemLock ItemLock => itemLock ? itemLock : itemLock = FindObjectOfType<ItemLock>();
 
