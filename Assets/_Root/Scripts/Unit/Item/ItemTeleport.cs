@@ -30,13 +30,13 @@ public class ItemTeleport : Item
                         itemTeleport.State = EUnitState.Invalid;
                         itemTeleport.gameObject.SetActive(false);
 
-                        transform.parent.GetComponent<RoomTower>().UpdateUnitCollection();
+                        //transform.parent.GetComponent<RoomTower>().UpdateUnitCollection();
 
-                        var parentRoom = itemTeleport.transform.parent.GetComponent<RoomTower>();
-                        parentRoom.UpdateUnitCollection();
+                        //var parentRoom = itemTeleport.transform.parent.GetComponent<RoomTower>();
+                        //parentRoom.UpdateUnitCollection();
 
-                        player.SetParentRoom(parentRoom);
-                        player.StartSearchingTurn();
+                        //player.SetParentRoom(parentRoom);
+                        //player.StartSearchingTurn();
                     });
                 });
             });

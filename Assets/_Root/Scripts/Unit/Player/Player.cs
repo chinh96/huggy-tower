@@ -65,7 +65,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private GameObject bow;
     [SerializeField] private GameObject keyObject;
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
-    public ETurn Turn { get => turn; private set => turn = value; }
+    public ETurn Turn { get => turn; set => turn = value; }
 
     private Vector3 _defaultPosition;
     private RoomTower _defaultRoom = null;
@@ -335,6 +335,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         if (!GameController.Instance.IsOnboarding)
         {
             SearchingTarget();
+            FightingBoss();
         }
     }
 
@@ -352,6 +353,31 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         }
     }
 
+    private void FightingBoss()
+    {
+        if (Turn == ETurn.FightingBoss)
+        {
+            Debug.Log("Start Fighting Boss");
+            RaycastHit2D hit;
+            LayerMask mask = LayerMask.GetMask("Enemy");
+            Debug.DrawRay(transform.position, Vector2.right * 20, Color.red);
+            hit = Physics2D.Raycast(transform.position, Vector2.right, distance: 20f, layerMask: mask);
+            if (hit.collider != null)
+            {
+                Debug.Log("Layer: " + hit.collider.gameObject.layer);
+                if (hit.distance >= 3)
+                {
+                    Turn = ETurn.MoveToEnemy;
+                    skeleton.Play("Run", true);
+                    transform.DOLocalMoveX(-200, 2f).SetEase(Ease.Linear).OnComplete(() =>
+                    {
+                        skeleton.Play("Idle", true);
+                    });
+                }
+            }
+        }
+        else return;
+    }
     private void SearchingTarget()
     {
         if (Turn != ETurn.Searching) return;
@@ -626,6 +652,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                         {
                             _itemTarget.Collect(this);
+                            DOTween.Sequence().AppendInterval(1.2f).AppendCallback(() =>
+                            {
+                                GameController.Instance.FightingBoss();
+                            });
                         });
                         return;
                     }

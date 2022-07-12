@@ -108,7 +108,9 @@ public enum ETurn
     MoveToItem = 5,
     SavingPrincess = 6,
 
-    Lost = 7
+    Lost = 7,
+    FightingBoss = 8,
+    MoveToEnemy = 9
 }
 
 public enum ELevelCondition

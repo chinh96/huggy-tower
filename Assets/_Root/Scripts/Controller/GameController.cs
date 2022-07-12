@@ -32,6 +32,12 @@ public class GameController : Singleton<GameController>
     public LeanTouch LeanTouch;
     [SerializeField] private GameObject rescuePartyButton;
     [SerializeField] private LevelText levelText;
+    [SerializeField] private GameObject bloodVsBoss;
+    public GameObject BloodVsBoss
+    {
+        get { return bloodVsBoss; }
+        set { bloodVsBoss = value; }
+    }
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
     public Princess Princess => FindObjectOfType<Princess>();
@@ -121,22 +127,25 @@ public class GameController : Singleton<GameController>
     {
         List<GameObject> backgrounds = backgroundsNormal;
 
-        if (Data.TimeToRescueParty.TotalMilliseconds > 0)
-        {
-            backgrounds = backgroundsHalloween;
-        }
+        //if (Data.TimeToRescueParty.TotalMilliseconds > 0)
+        //{
+        //    backgrounds = backgroundsHalloween;
+        //}
 
         backgrounds.ForEach(item => item.SetActive(false));
         int random = UnityEngine.Random.Range(0, backgrounds.Count);
         backgrounds[random].SetActive(true);
 
-        IsJapanBackground = backgrounds[random].name == "Jav";
-        IsSeaBackground = backgrounds[random].name == "Sea";
-        IsHalloweenBackground = Data.TimeToRescueParty.TotalMilliseconds > 0 && UnityEngine.Random.Range(0, 2) == 0;
+        //IsJapanBackground = backgrounds[random].name == "Jav";
+        //IsSeaBackground = backgrounds[random].name == "Sea";
+        //IsHalloweenBackground = Data.TimeToRescueParty.TotalMilliseconds > 0 && UnityEngine.Random.Range(0, 2) == 0;
+
+
     }
 
     public async void LoadLevel(int fakeIndex)
     {
+        bloodVsBoss.SetActive(false);
         // EventController.CurrentLevelChanged?.Invoke();
         levelText.ChangeLevel();
         TGDatas.TotalTurkeyText = TGDatas.TotalTurkey;
@@ -167,15 +176,15 @@ public class GameController : Singleton<GameController>
         ZoomOutCamera();
 
         firePaper.gameObject.SetActive(false);
-
+        LoadBackground();
         async void LoadNextLevel(int fakeLevelIndex)
         {
             var go = await DataBridge.Instance.GetLevel(fakeLevelIndex + 1);
             if (go.Item1 != null)
             {
                 DataBridge.Instance.NextLevelLoaded = go.Item1.GetComponent<LevelMap>();
-                if(DataBridge.Instance.NextLevelLoaded != DataBridge.Instance.PreviousLevelLoaded)
-                DataBridge.Instance.NextLevelLoaded.SetLevelLoaded(go.Item2, fakeLevelIndex + 1); // fakeLevelIndex + 1, fakeLevelIndex + 1
+                if (DataBridge.Instance.NextLevelLoaded != DataBridge.Instance.PreviousLevelLoaded)
+                    DataBridge.Instance.NextLevelLoaded.SetLevelLoaded(go.Item2, fakeLevelIndex + 1); // fakeLevelIndex + 1, fakeLevelIndex + 1
             }
         }
         void SavePreviousLevel(LevelMap localLevelMap)
@@ -217,7 +226,8 @@ public class GameController : Singleton<GameController>
                 LoadNextLevel(fakeIndex);
             }
             // Home to Play and Previousloaded
-            else if(DataBridge.Instance.PreviousLevelLoaded != null && DataBridge.Instance.PreviousLevelLoaded.CurrentFakeLevelIndex == fakeIndex){
+            else if (DataBridge.Instance.PreviousLevelLoaded != null && DataBridge.Instance.PreviousLevelLoaded.CurrentFakeLevelIndex == fakeIndex)
+            {
                 levelInstall = DataBridge.Instance.PreviousLevelLoaded;
                 LoadNextLevel(fakeIndex);
             }
@@ -434,7 +444,7 @@ public class GameController : Singleton<GameController>
         AdController.Instance.ShowRewardedAd(() =>
         {
             Data.CurrentLevel++;
-            if(Data.CurrentLoopLevel != -1) Data.IsWinCurrentLoopLevel = true;
+            if (Data.CurrentLoopLevel != -1) Data.IsWinCurrentLoopLevel = true;
             OnNextLevel();
             onAdCompleted?.Invoke();
         });
@@ -556,7 +566,7 @@ public class GameController : Singleton<GameController>
         // ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LevelPassed);
 
         MoveOutAnim();
-        
+
         // firePaper.gameObject.SetActive(true); don't use it anymore because we have win scene.
         GameState = EGameState.Win;
         SoundController.Instance.PlayOnce(SoundType.Win);
@@ -567,7 +577,7 @@ public class GameController : Singleton<GameController>
             {
                 Data.CurrentLevel++;
                 Data.CountPlayLevel++;
-                if(Data.CurrentLoopLevel != -1) Data.IsWinCurrentLoopLevel = true;
+                if (Data.CurrentLoopLevel != -1) Data.IsWinCurrentLoopLevel = true;
                 if (Data.MaxLevel < Data.CurrentLevel) Data.MaxLevel = Data.CurrentLevel;
                 ShowPopupWin();
                 // if (Data.CurrentLevel == ResourcesController.Config.LevelShowRate)
@@ -711,4 +721,23 @@ public class GameController : Singleton<GameController>
         fighterOverlay = Instantiate(ResourcesController.Config.FighterOverlay, Root.transform.parent);
     }
 
+    public void FightingBoss()
+    {
+        FadeInOverlay(() =>
+        {
+            float endValue = Player.transform.position.x +5;
+            Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, 0);
+            FadeOutOverlay(() =>
+            {
+                SetEnableLeanTouch(false);
+                //float endValue = (Player.transform.position.x + visitTowers[indexVisitTower + 1].transform.position.x) / 2;
+                SetEnableLeanTouch(true);
+                DOTween.Sequence().AppendInterval(0.5f).OnComplete(() =>
+                {
+                    player.Turn = ETurn.FightingBoss;
+                });
+            });
+
+        });
+    }
 }

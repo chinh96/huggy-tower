@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 8184525609321079891}
   - component: {fileID: 1418824080785081728}
   - component: {fileID: 4963301141379412914}
+  - component: {fileID: 7400437269713973354}
   m_Layer: 10
   m_Name: ItemTrap
   m_TagString: BrokenBrick
@@ -145,7 +146,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 7.2289886, y: 65.66229}
+  m_Offset: {x: -2.1389618, y: 19.51648}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -156,7 +157,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 316.19974, y: 131.32458}
+  m_Size: {x: 125.37131, y: 39.03296}
   m_EdgeRadius: 0
 --- !u!114 &4963301141379412914
 MonoBehaviour:
@@ -175,6 +176,27 @@ MonoBehaviour:
   particle: {fileID: 0}
   txtDamage: {fileID: 7064491979227378680}
   damage: 30
+--- !u!50 &7400437269713973354
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4187147576266128863}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &4374148554989690856
 GameObject:
   m_ObjectHideFlags: 0
