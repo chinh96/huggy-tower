@@ -263,6 +263,8 @@ public enum SoundType
     EnemyVenomAttack,
     EnemyVenomDie,
     HuggyAttackHammer,
+    HuggyAttackNormal3,
+    HuggyAttackNormal4
 }
 
 public enum WorldType

@@ -1397,14 +1397,14 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             }
                         default:
                             {
-                                // if(hasBloodEnemy) attacks = new string[] { "Attack", "Attack2", "Attack3" };
-                                // else 
-                                attacks = new string[] { "Attack", "Attack3" };
+                                if (hasBloodEnemy) attacks = new string[] { "Attack", "Attack2", "Attack3" };
+                                else attacks = new string[] { "Attack", "Attack3" };
                                 break;
                             }
                     }
 
                     string attack = attacks[UnityEngine.Random.Range(0, attacks.Length)];
+                    //attack = "Attack2"; test
                     if (attack != "Attack2")
                     {
                         if (attack == "Attack") SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal);
@@ -1419,18 +1419,26 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             });
                         }
                     }
-                    // else
-                    // {
-                    //     _target.gameObject.AddComponent<Canvas>();
-                    //     _target.gameObject.GetComponent<Canvas>().overrideSorting = true;
-                    //     _target.gameObject.GetComponent<Canvas>().sortingOrder = 121;
+                    else
+                    {
+                        _target.gameObject.AddComponent<Canvas>();
+                        _target.gameObject.AddComponent<CanvasRenderer>();
+                        _target.gameObject.GetComponent<Canvas>().overrideSorting = true;
+                        _target.gameObject.GetComponent<Canvas>().sortingOrder = 121;
 
-                    //     skeleton.Play(attack, false);
-                    //     Sequence s = DOTween.Sequence();
-                    //     s.Append(_target.transform.DOMove(gameObject.transform.position + new Vector3(1,1,0), 0.1f));
-                    //     s.Join( _target.transform.DOScale(new Vector3(.2f, .2f, .2f), .1f));
-                    //      _target.gameObject.SetActive(false);
-                    // }
+                        SoundType[] soundAttack2 = {SoundType.HuggyAttackNormal3, SoundType.HuggyAttackNormal4};
+                        SoundController.Instance.PlayOnce(soundAttack2[UnityEngine.Random.Range(0, soundAttack2.Length)]);
+
+                        skeleton.Play(attack, false);
+                        Sequence s = DOTween.Sequence();
+                        s.Append(_target.transform.DOMove(gameObject.transform.position + new Vector3(1.5f, 1, 0), 0.4f));
+                        int sign = _target.transform.localScale.x > 0 ? 1 : -1;
+                        s.Join(_target.transform.DOScale(new Vector3(sign * .3f, .3f, 1), .4f)).AppendCallback(
+                        () => {
+                                _target.gameObject.SetActive(false);
+                            }
+                        );
+                    };
 
 
                     switch (EquipType)

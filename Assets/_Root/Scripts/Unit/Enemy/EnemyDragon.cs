@@ -46,34 +46,37 @@ public class EnemyDragon : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.DragonEnemy);
-        ResourcesController.Achievement.IncreaseByType(AchievementType.DragonEnemy);
+        //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.DragonEnemy);
+        //ResourcesController.Achievement.IncreaseByType(AchievementType.DragonEnemy);
     }
 
     public SkeletonGraphic Skeleton => skeleton;
-    public void PlayIdle(bool isLoop) { skeleton.Play("idle", true); }
+    public void PlayIdle(bool isLoop) {
+        string[] idleList = {"Idle", "Idle2", "Idle3"};
+        skeleton.Play(idleList[UnityEngine.Random.Range(0, idleList.Length)], true); 
+    }
 
     public void PlayAttack()
     {
-        skeleton.Play("attack", false);
+        skeleton.Play("Attack", false);
         SoundController.Instance.PlayOnce(SoundType.DemonAttack);
 
-        DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
-        {
-            fire.gameObject.SetActive(true);
-            fire.Play();
-            fire.transform.DOMove(GameController.Instance.Player.transform.position + new Vector3(-1, .5f, 0), .3f).SetEase(Ease.Linear).OnComplete(() =>
-            {
-                Destroy(fire.gameObject);
-            });
-        });
+        //DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+        //{
+        //    fire.gameObject.SetActive(true);
+        //    fire.Play();
+        //    fire.transform.DOMove(GameController.Instance.Player.transform.position + new Vector3(-1, .5f, 0), .3f).SetEase(Ease.Linear).OnComplete(() =>
+        //    {
+        //        Destroy(fire.gameObject);
+        //    });
+        //});
     }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
     public void PlayDead()
     {
-        skeleton.Play("die", false);
+        skeleton.Play("Swoon", false);
 
         SoundController.Instance.PlayOnce(SoundType.DragonDie);
     }

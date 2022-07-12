@@ -25,16 +25,16 @@ public class LoadingController : MonoBehaviour
 
     private async void Start()
     {
-        if (Data.CurrentSkinHero == "Angel")
-        {
-            Data.CurrentSkinHero = "Skin1";
-        }
+        //if (Data.CurrentSkinHero == "Angel")
+        //{
+        //    Data.CurrentSkinHero = "Skin1";
+        //}
 
         Addressables.InitializeAsync();
 
         Vibration.Init();
 
-        var obj = await DataBridge.Instance.GetLevel(Data.CurrentLevel);
+        //var obj = await DataBridge.Instance.GetLevel(Data.CurrentLevel);
         progress.fillAmount = 0;
         progress.DOFillAmount(5, duration).SetEase(ease).OnComplete(() =>
         {
