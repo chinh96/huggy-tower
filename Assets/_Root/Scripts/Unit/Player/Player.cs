@@ -1398,7 +1398,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         default:
                             {
                                 if (hasBloodEnemy) attacks = new string[] { "Attack", "Attack2" };
-                                else attacks = new string[] { "Attack", "Attack3" };
+                                else attacks = new string[] { "Attack"};
                                 break;
                             }
                     }
