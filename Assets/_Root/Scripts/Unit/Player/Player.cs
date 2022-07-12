@@ -1397,7 +1397,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             }
                         default:
                             {
-                                if (hasBloodEnemy) attacks = new string[] { "Attack", "Attack2", "Attack3" };
+                                if (hasBloodEnemy) attacks = new string[] { "Attack", "Attack2" };
                                 else attacks = new string[] { "Attack", "Attack3" };
                                 break;
                             }
@@ -1407,8 +1407,9 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     //attack = "Attack2"; test
                     if (attack != "Attack2")
                     {
-                        if (attack == "Attack") SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal);
-                        else SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal2);
+                        //if (attack == "Attack") 
+                        SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal);
+                        //else SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal2);
 
                         skeleton.Play(attack, false);
                         if (hasBloodEnemy)

@@ -20,7 +20,6 @@ public class EnemyDragon : Unit, IAnim
     private void Start()
     {
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
-        SoundController.Instance.PlayOnce(SoundType.DragonStart);
     }
 
     public override void OnAttack(int damage, Action callback)

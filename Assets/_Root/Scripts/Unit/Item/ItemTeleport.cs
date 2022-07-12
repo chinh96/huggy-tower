@@ -16,7 +16,7 @@ public class ItemTeleport : Item
             {
                 player.transform.position = itemTeleport.transform.position;
                 player.transform.SetParent(itemTeleport.transform.parent);
-                // This is an error because it didn't use UpdateDefault() method of the player
+                // This is an error because it didn't use UpdateDefault() method of the player PhucVH
                 player.Skeleton.DOColor(new Color(1, 1, 1, 1), .5f).OnComplete(() =>
                 {
                     player.PlayIdle(true);
