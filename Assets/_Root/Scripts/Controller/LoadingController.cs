@@ -34,7 +34,7 @@ public class LoadingController : MonoBehaviour
 
         Vibration.Init();
 
-        //var obj = await DataBridge.Instance.GetLevel(Data.CurrentLevel);
+        var obj = DataBridge.Instance.GetLevel(Data.CurrentLevel);
         progress.fillAmount = 0;
         progress.DOFillAmount(5, duration).SetEase(ease).OnComplete(() =>
         {

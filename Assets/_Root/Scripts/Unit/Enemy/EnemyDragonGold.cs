@@ -42,33 +42,36 @@ public class EnemyDragonGold : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.DragonGold);
+        //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.DragonGold);
     }
 
     public SkeletonGraphic Skeleton => skeleton;
-    public void PlayIdle(bool isLoop) { skeleton.Play("Idle2", true); }
+    public void PlayIdle(bool isLoop) {
+        string[] idleList = {"Idle", "Idle2", "Idle3" };
+        skeleton.Play(idleList[UnityEngine.Random.Range(0, idleList.Length)], true); 
+    }
 
     public void PlayAttack()
     {
-        skeleton.Play("Attack2", false);
+        skeleton.Play("Attack", false);
         SoundController.Instance.PlayOnce(SoundType.DragonGoldAttack);
 
-        DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
-        {
-            fire.gameObject.SetActive(true);
-            fire.Play();
-            fire.transform.DOMove(GameController.Instance.Player.transform.position + new Vector3(-1, .5f, 0), .3f).SetEase(Ease.Linear).OnComplete(() =>
-            {
-                Destroy(fire.gameObject);
-            });
-        });
+        //DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
+        //{
+        //    fire.gameObject.SetActive(true);
+        //    fire.Play();
+        //    fire.transform.DOMove(GameController.Instance.Player.transform.position + new Vector3(-1, .5f, 0), .3f).SetEase(Ease.Linear).OnComplete(() =>
+        //    {
+        //        Destroy(fire.gameObject);
+        //    });
+        //});
     }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
     public void PlayDead()
     {
-        skeleton.Play("Die2", false);
+        skeleton.Play("Swoon", false);
         SoundController.Instance.PlayOnce(SoundType.DragonGoldDie);
     }
 
