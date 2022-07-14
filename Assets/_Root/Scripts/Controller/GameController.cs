@@ -32,6 +32,8 @@ public class GameController : Singleton<GameController>
     public LeanTouch LeanTouch;
     [SerializeField] private GameObject rescuePartyButton;
     [SerializeField] private LevelText levelText;
+
+    [SerializeField] private GameObject backgroundBoss;
     [SerializeField] private GameObject bloodVsBoss;
     public GameObject BloodVsBoss
     {
@@ -131,6 +133,7 @@ public class GameController : Singleton<GameController>
         //{
         //    backgrounds = backgroundsHalloween;
         //}
+        backgroundBoss.SetActive(false);
 
         backgrounds.ForEach(item => item.SetActive(false));
         int random = UnityEngine.Random.Range(0, backgrounds.Count);
@@ -145,7 +148,6 @@ public class GameController : Singleton<GameController>
 
     public async void LoadLevel(int fakeIndex)
     {
-        bloodVsBoss.SetActive(false);
         // EventController.CurrentLevelChanged?.Invoke();
         levelText.ChangeLevel();
         TGDatas.TotalTurkeyText = TGDatas.TotalTurkey;
@@ -725,6 +727,7 @@ public class GameController : Singleton<GameController>
     {
         FadeInOverlay(() =>
         {
+            backgroundBoss.SetActive(true);
             float endValue = Player.transform.position.x +5;
             Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, 0);
             FadeOutOverlay(() =>
@@ -732,7 +735,7 @@ public class GameController : Singleton<GameController>
                 SetEnableLeanTouch(false);
                 //float endValue = (Player.transform.position.x + visitTowers[indexVisitTower + 1].transform.position.x) / 2;
                 SetEnableLeanTouch(true);
-                DOTween.Sequence().AppendInterval(0.5f).OnComplete(() =>
+                DOTween.Sequence().AppendInterval(0.2f).OnComplete(() =>
                 {
                     player.Turn = ETurn.FightingBoss;
                 });

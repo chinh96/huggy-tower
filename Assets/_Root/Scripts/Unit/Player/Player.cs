@@ -652,7 +652,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                         {
                             _itemTarget.Collect(this);
-                            DOTween.Sequence().AppendInterval(1.2f).AppendCallback(() =>
+                            DOTween.Sequence().AppendInterval(0.5f).AppendCallback(() =>
                             {
                                 GameController.Instance.FightingBoss();
                             });
