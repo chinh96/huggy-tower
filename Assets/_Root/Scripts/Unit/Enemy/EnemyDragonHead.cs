@@ -8,10 +8,11 @@ using DG.Tweening;
 
 public class EnemyDragonHead : Unit, IAnim
 {
+    public Sprite bossFace;
     public SkeletonGraphic skeleton;
     public Collider2D coll2D;
     public SpineAttackHandle attackHandle;
-    public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
+    public override EUnitType Type { get; protected set; } = EUnitType.Boss;
     public ParticleSystem fire;
 
     private Action _callbackAttackPlayer;
@@ -34,7 +35,10 @@ public class EnemyDragonHead : Unit, IAnim
         PlayAttack();
     }
 
-    public override void OnBeingAttacked() { OnDead(); }
+    public override void OnBeingAttacked() {
+        skeleton.Play("Hurt", false);
+        //OnDead(); 
+    }
 
     private void OnAttackByEvent() { _callbackAttackPlayer?.Invoke(); }
 

@@ -35,6 +35,8 @@ public class GameController : Singleton<GameController>
 
     [SerializeField] private GameObject backgroundBoss;
     [SerializeField] private GameObject bloodVsBoss;
+    [SerializeField] private Image bossFaceBlood;
+    [SerializeField] private GameObject skipButton;
     public GameObject BloodVsBoss
     {
         get { return bloodVsBoss; }
@@ -43,6 +45,17 @@ public class GameController : Singleton<GameController>
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
     public Princess Princess => FindObjectOfType<Princess>();
+    public GameObject Boss()
+    {
+        foreach(Unit obj in FindObjectsOfType<Unit>())
+        {
+            if(obj.Type == EUnitType.Boss)
+            {
+                return obj.gameObject;
+            }
+        }
+        return null;
+    } 
     private ItemLock itemLock;
     public ItemLock ItemLock => itemLock ? itemLock : itemLock = FindObjectOfType<ItemLock>();
 
@@ -727,8 +740,11 @@ public class GameController : Singleton<GameController>
     {
         FadeInOverlay(() =>
         {
+            skipButton.SetActive(false);
+            if(Boss().GetComponent<Unit>() as EnemyDragonHead) bossFaceBlood.sprite = Boss().GetComponent<EnemyDragonHead>().bossFace;
+            bossFaceBlood.SetNativeSize();
             backgroundBoss.SetActive(true);
-            float endValue = Player.transform.position.x +5;
+            float endValue = (Player.transform.position.x + Boss().transform.position.x)/2.0f;
             Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, 0);
             FadeOutOverlay(() =>
             {

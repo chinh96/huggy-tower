@@ -76,7 +76,7 @@ public class RoomTower : MonoBehaviour
 
                 uitransform.anchoredPosition = new Vector3(uitransform.anchoredPosition.x, 35f, 0);
             }
-            else if (enemy as EnemySpider == null && enemy as EnemySpider2 == null)
+            else if ( (enemy as EnemySpider == null) && (enemy as EnemySpider2 == null) && (enemy as EnemyGhost == null))
             {
                 RectTransform uitransform = enemy.GetComponent<RectTransform>();
                 uitransform.anchorMin = new Vector2(0.5f, 0);

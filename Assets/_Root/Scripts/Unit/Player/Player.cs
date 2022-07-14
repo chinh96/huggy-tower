@@ -86,6 +86,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     private bool hasBloodEnemy;
     private Sequence sequence;
 
+    private bool isAttackingBoss = false;
     public void SetParentRoom(RoomTower parentRoom)
     {
         _parentRoom = parentRoom;
@@ -353,26 +354,45 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         }
     }
 
+    private GameObject Boss;
     private void FightingBoss()
     {
         if (Turn == ETurn.FightingBoss)
         {
-            Debug.Log("Start Fighting Boss");
             RaycastHit2D hit;
             LayerMask mask = LayerMask.GetMask("Enemy");
-            Debug.DrawRay(transform.position, Vector2.right * 20, Color.red);
-            hit = Physics2D.Raycast(transform.position, Vector2.right, distance: 20f, layerMask: mask);
+            Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 2, 0), Vector2.right * 20, Color.red);
+            hit = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y + 2, 0), Vector2.right, distance: 20f, layerMask: mask);
             if (hit.collider != null)
             {
-                Debug.Log("Layer: " + hit.collider.gameObject.layer);
                 if (hit.distance >= 3)
                 {
                     Turn = ETurn.MoveToEnemy;
                     skeleton.Play("Run", true);
-                    transform.DOLocalMoveX(-200, 2f).SetEase(Ease.Linear).OnComplete(() =>
+
+                    float endPoint = (transform.localPosition.x + hit.transform.localPosition.x) / 2.0f;
+                    transform.DOLocalMoveX(endPoint - 150f, 1f)
+                        .SetEase(Ease.Linear).OnComplete(() =>
                     {
-                        skeleton.Play("Idle", true);
+                        PlayIdle(true);
                     });
+                    Boss = GameController.Instance.Boss();
+                    Boss.GetComponent<SkeletonGraphic>().Play("Run", true);
+                    Boss.transform.DOLocalMoveX(endPoint + 230f, 1f)
+                        .SetEase(Ease.Linear).OnComplete(() =>
+                        {
+                            Boss.GetComponent<SkeletonGraphic>().Play("Idle", true);
+                            Turn = ETurn.FightingBoss;
+                            _target = Boss.GetComponent<Unit>();
+                        });
+                }
+                else
+                {
+                    if (Input.GetMouseButtonDown(0) && !isAttackingBoss)
+                    {
+                        isAttackingBoss = true;
+                        PlayAttack();
+                    }
                 }
             }
         }
@@ -652,6 +672,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                         {
                             _itemTarget.Collect(this);
+                            TxtDamage.gameObject.SetActive(false);
                             DOTween.Sequence().AppendInterval(0.5f).AppendCallback(() =>
                             {
                                 GameController.Instance.FightingBoss();
@@ -826,43 +847,47 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     private void OnAttackByEvent()
     {
+        isAttackingBoss = false;
         if (_target != null)
         {
-            var _cacheTarget = _target;
-            var cacheDamage = Damage;
-            if (_flagAttack)
+            if (Turn != ETurn.FightingBoss)
             {
-                _cacheTarget.CheckTurkey();
-                _cacheTarget.OnBeingAttacked();
-
-                if (_cacheTarget as EnemyGoblin || _cacheTarget as EnemyKappa)
+                var _cacheTarget = _target;
+                var cacheDamage = Damage;
+                if (_flagAttack)
                 {
-                    if (_cacheTarget as EnemyKappa)
+                    _cacheTarget.CheckTurkey();
+                    _cacheTarget.OnBeingAttacked();
+
+                    if (_cacheTarget as EnemyGoblin || _cacheTarget as EnemyKappa)
                     {
-                        // Damage -= _cacheTarget.Damage;
-                        effectPoisonGroundSecretary.SetActive(false);
+                        if (_cacheTarget as EnemyKappa)
+                        {
+                            // Damage -= _cacheTarget.Damage;
+                            effectPoisonGroundSecretary.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+                        Damage += _cacheTarget.Damage;
+                        DOTween.Sequence().AppendInterval(.05f).AppendCallback(() =>
+                        {
+                            effectIncreaseDamge.gameObject.SetActive(true);
+                            effectIncreaseDamge.Play();
+                        });
+
+                        _cacheTarget.TxtDamage.transform.SetParent(transform);
+                        _cacheTarget.TxtDamage.gameObject.SetActive(true);
+                        _cacheTarget.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
+                        {
+                            TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
+                            TxtDamage.DOCounter(cacheDamage, Damage, 0);
+                            _cacheTarget.TxtDamage.gameObject.SetActive(false);
+                        });
                     }
                 }
-                else
-                {
-                    Damage += _cacheTarget.Damage;
-                    DOTween.Sequence().AppendInterval(.05f).AppendCallback(() =>
-                    {
-                        effectIncreaseDamge.gameObject.SetActive(true);
-                        effectIncreaseDamge.Play();
-                    });
-
-                    _cacheTarget.TxtDamage.transform.SetParent(transform);
-                    _cacheTarget.TxtDamage.gameObject.SetActive(true);
-                    _cacheTarget.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
-                    {
-                        TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
-                        TxtDamage.DOCounter(cacheDamage, Damage, 0);
-                        _cacheTarget.TxtDamage.gameObject.SetActive(false);
-                    });
-                }
-
             }
+            else if (Turn == ETurn.FightingBoss) _target.OnBeingAttacked();
         }
     }
 
@@ -949,31 +974,34 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         if (Turn != ETurn.Lost)
         {
-            DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
+            if (Turn != ETurn.FightingBoss)
             {
-                _target.gameObject.SetActive(false);
-                var room = levelMap.visitTower.RoomContainPlayer(this);
-                if (room != null && (!room.IsClearEnemyInRoom() || room.IsContaintItem() || room.IsContaintPrincess()))
+                DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
                 {
-                    // If player attack very fast, enemy cannot call event "OnBullet"  
-                    StartSearchingTurn();
-                    SearchingTarget();
-                    return;
-                }
-                StartDragTurn();
-                if (levelMap.visitTower.IsClearTower())
-                {
-                    if (levelMap.hasNewVisitTower)
+                    _target.gameObject.SetActive(false);
+                    var room = levelMap.visitTower.RoomContainPlayer(this);
+                    if (room != null && (!room.IsClearEnemyInRoom() || room.IsContaintItem() || room.IsContaintPrincess()))
                     {
-                        levelMap.ChangeToNewVisitTower();
+                        // If player attack very fast, enemy cannot call event "OnBullet"  
+                        StartSearchingTurn();
+                        SearchingTarget();
+                        return;
                     }
-                    else if (IsWinCondition(levelMap.condition))
+                    StartDragTurn();
+                    if (levelMap.visitTower.IsClearTower())
                     {
-                        PlayWin(true);
-                        GameController.Instance.OnWinLevel();
+                        if (levelMap.hasNewVisitTower)
+                        {
+                            levelMap.ChangeToNewVisitTower();
+                        }
+                        else if (IsWinCondition(levelMap.condition))
+                        {
+                            PlayWin(true);
+                            GameController.Instance.OnWinLevel();
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -1427,8 +1455,13 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             }
                         default:
                             {
-                                if (hasBloodEnemy) attacks = new string[] { "Attack", "Attack2" };
-                                else attacks = new string[] { "Attack"};
+                                if (hasBloodEnemy)
+                                {
+                                    if (Turn != ETurn.FightingBoss) attacks = new string[] { "Attack", "Attack2" };
+                                    //else attacks = new string[] { "Attack", "Attack3" };
+                                    else attacks = new string[] { "Attack3" };
+                                }
+                                else attacks = new string[] { "Attack" };
                                 break;
                             }
                     }
@@ -1457,7 +1490,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         _target.gameObject.GetComponent<Canvas>().overrideSorting = true;
                         _target.gameObject.GetComponent<Canvas>().sortingOrder = 121;
 
-                        SoundType[] soundAttack2 = {SoundType.HuggyAttackNormal3, SoundType.HuggyAttackNormal4};
+                        SoundType[] soundAttack2 = { SoundType.HuggyAttackNormal3, SoundType.HuggyAttackNormal4 };
                         SoundController.Instance.PlayOnce(soundAttack2[UnityEngine.Random.Range(0, soundAttack2.Length)]);
 
                         skeleton.Play(attack, false);
@@ -1465,9 +1498,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         s.Append(_target.transform.DOMove(gameObject.transform.position + new Vector3(1.5f, 1, 0), 0.4f));
                         int sign = _target.transform.localScale.x > 0 ? 1 : -1;
                         s.Join(_target.transform.DOScale(new Vector3(sign * .3f, .3f, 1), .4f)).AppendCallback(
-                        () => {
-                                _target.gameObject.SetActive(false);
-                            }
+                        () =>
+                        {
+                            _target.gameObject.SetActive(false);
+                        }
                         );
                     };
 

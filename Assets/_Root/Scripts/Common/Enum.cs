@@ -53,6 +53,7 @@ public enum EUnitType
     Item,
     Gem,
     Princess,
+    Boss
 }
 
 public enum ItemType

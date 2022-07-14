@@ -62,8 +62,8 @@ public class WinPopup : Popup
 
         if (havePrincess)
         {
-            string[] princessWinList = { "Win", "Win2", "Win3" };
-            princess.GetComponent<SkeletonGraphic>().Play(princessWinList[UnityEngine.Random.Range(0, princessWinList.Length)],true);
+            //string[] princessWinList = { "Win", "Win2", "Win3" }; princessWinList[UnityEngine.Random.Range(0, princessWinList.Length)]
+            princess.GetComponent<SkeletonGraphic>().Play("Win3",true);
         }
         Data.CoinTotal += ResourcesController.Config.CoinBonusPerLevel;
 

@@ -75,7 +75,7 @@ public class Princess : Unit, IAnim
         // });
         //}
         if(groundLock != null) groundLock.SetActive(false);
-        string[] wins = { "Win", "Win2", "Win3" };
+        string[] wins = { "Win", "Win2"};
         skeleton.Play(wins[UnityEngine.Random.Range(0, wins.Length)], true);
 
         SoundType[] soundWins = {SoundType.KissyWin, SoundType.KissyWin2};

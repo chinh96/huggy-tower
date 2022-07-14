@@ -18,7 +18,6 @@ public class EnemyPoliceStick : Unit, IAnim
     private void Start()
     {
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
-        SoundController.Instance.PlayOnce(SoundType.BearStart);
     }
 
     public override void OnAttack(int damage, Action callback)
@@ -48,15 +47,15 @@ public class EnemyPoliceStick : Unit, IAnim
     }
 
     public SkeletonGraphic Skeleton => skeleton;
-    public void PlayIdle(bool isLoop) { skeleton.Play("Idle2", true); }
+    public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack2", false); SoundController.Instance.PlayOnce(SoundType.PoliceStickAttack); }
+    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.PoliceStickAttack); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
     public void PlayDead()
     {
-        skeleton.Play("Die2", false);
+        skeleton.Play("Die", false);
 
         SoundController.Instance.PlayOnce(SoundType.PoliceStickDie);
     }

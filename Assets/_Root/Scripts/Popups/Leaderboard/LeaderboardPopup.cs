@@ -10,7 +10,7 @@ public class LeaderboardPopup : Popup
     [SerializeField] private GameObject bg2;
     [SerializeField] private LeaderboardTab worldTab;
     [SerializeField] private LeaderboardTab countryTab;
-    [SerializeField] private TextMeshProUGUI name;
+    //[SerializeField] private TextMeshProUGUI name;
     [SerializeField] private TextMeshProUGUI rank;
     [SerializeField] private GameObject previousButton;
     [SerializeField] private GameObject nextButton;
@@ -56,7 +56,7 @@ public class LeaderboardPopup : Popup
         page = 0;
 
         LeaderboardController.Instance.GetUserInfoCurrent();
-        name.text = LeaderboardData.UserInfoCurrent.Name;
+        //name.text = LeaderboardData.UserInfoCurrent.Name;
 
         //string textTab = LeaderboardData.IsWorldTab ? "World rank" : "Country rank";
         string term = LeaderboardData.IsWorldTab ? "LeaderBoard_txtWorldRank rank" : "LeaderBoard_txtCountryRank";
