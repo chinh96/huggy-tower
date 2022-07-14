@@ -17,12 +17,12 @@ public class LosePopup : Popup
 
         tapToReplayButton.SetActive(false);
         // progressGift.Reset();
+        huggy.GetComponent<HeroWinLoseController>().PlayLose();
     }
 
     protected override void AfterShown()
     {
         base.AfterShown();
-        huggy.GetComponent<HeroWinLoseController>().PlayLose();
         DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
         {
             tapToReplayButton.SetActive(true);

@@ -25,12 +25,6 @@ public class WinPopup : Popup
 
     protected override void BeforeShow()
     {
-        if (GameController.Instance.Princess != null) havePrincess = true;
-        else havePrincess = false;
-        huggy_1.SetActive(!havePrincess);
-        huggy_2.SetActive(havePrincess);
-        princess.SetActive(havePrincess);
-
         AdController.Instance.HideBanner();
         base.BeforeShow();
 
@@ -43,6 +37,23 @@ public class WinPopup : Popup
         idCrossCurrent = idCrossCurrent == 0 ? 1 : 0;
         iconCrossAds.sprite = imgIconCrossAds[idCrossCurrent];
         checkCrossAds();
+
+        if (GameController.Instance.Princess != null) havePrincess = true;
+        else havePrincess = false;
+        huggy_1.SetActive(!havePrincess);
+        huggy_2.SetActive(havePrincess);
+        princess.SetActive(havePrincess);
+
+        GameObject huggy = havePrincess ? huggy_2 : huggy_1;
+        huggy.GetComponent<HeroWinLoseController>().PlayWin();
+
+        if (havePrincess)
+        {
+            string[] princessWinList = { "Win", "Win2", "Win3" };
+            string princessWin = princessWinList[UnityEngine.Random.Range(0, princessWinList.Length)];
+            if (princessWin == "Win3") huggy_2.GetComponent<SkeletonGraphic>().Play("Win3", true);
+            princess.GetComponent<SkeletonGraphic>().Play(princessWin, true);
+        }
     }
 
     void checkCrossAds()
@@ -57,14 +68,6 @@ public class WinPopup : Popup
         SoundController.Instance.PlayOnce(soundWins[UnityEngine.Random.Range(0, soundWins.Length)]);
         base.AfterShown();
 
-        GameObject huggy = havePrincess ? huggy_2 : huggy_1;
-        huggy.GetComponent<HeroWinLoseController>().PlayWin();
-
-        if (havePrincess)
-        {
-            //string[] princessWinList = { "Win", "Win2", "Win3" }; princessWinList[UnityEngine.Random.Range(0, princessWinList.Length)]
-            princess.GetComponent<SkeletonGraphic>().Play("Win3",true);
-        }
         Data.CoinTotal += ResourcesController.Config.CoinBonusPerLevel;
 
         progressGift.Move(() =>
