@@ -36,6 +36,16 @@ public class GameController : Singleton<GameController>
     [SerializeField] private GameObject backgroundBoss;
     [SerializeField] private GameObject bloodVsBoss;
     [SerializeField] private Image bossFaceBlood;
+    [SerializeField] private RectTransform huggyBlood;
+    [SerializeField] private RectTransform bossBlood;
+    [SerializeField] private int huggyDameVsBoss;
+    [SerializeField] private int bossDameVsHuggy;
+
+    private float huggyBloodWidthInitial;
+    private float huggyBloodXPositionInitial;
+    private float bossBloodWidthInitial;
+    private float bossBloodXPositionInitial;
+    
     [SerializeField] private GameObject skipButton;
     public GameObject BloodVsBoss
     {
@@ -96,6 +106,11 @@ public class GameController : Singleton<GameController>
         AdController.Instance.ShowBanner();
         overlay.DOFade(1, 0);
         SetEnableLeanTouch(false);
+
+        huggyBloodWidthInitial = huggyBlood.sizeDelta.x;
+        huggyBloodXPositionInitial = huggyBlood.localPosition.x;
+        bossBloodWidthInitial = bossBlood.sizeDelta.x;
+        bossBloodXPositionInitial = bossBlood.localPosition.x;
     }
 
     private void Update()
@@ -152,11 +167,13 @@ public class GameController : Singleton<GameController>
         int random = UnityEngine.Random.Range(0, backgrounds.Count);
         backgrounds[random].SetActive(true);
 
+        if (backgroundBoss.transform.transform.GetComponentInChildren<Player>())
+        {
+            DestroyImmediate(backgroundBoss.transform.transform.GetComponentInChildren<Player>().gameObject);
+        };
         //IsJapanBackground = backgrounds[random].name == "Jav";
         //IsSeaBackground = backgrounds[random].name == "Sea";
         //IsHalloweenBackground = Data.TimeToRescueParty.TotalMilliseconds > 0 && UnityEngine.Random.Range(0, 2) == 0;
-
-
     }
 
     public async void LoadLevel(int fakeIndex)
@@ -192,6 +209,7 @@ public class GameController : Singleton<GameController>
 
         firePaper.gameObject.SetActive(false);
         LoadBackground();
+        ResetBlood();
         async void LoadNextLevel(int fakeLevelIndex)
         {
             var go = await DataBridge.Instance.GetLevel(fakeLevelIndex + 1);
@@ -744,6 +762,8 @@ public class GameController : Singleton<GameController>
             if(Boss().GetComponent<Unit>() as EnemyDragonHead) bossFaceBlood.sprite = Boss().GetComponent<EnemyDragonHead>().bossFace;
             bossFaceBlood.SetNativeSize();
             backgroundBoss.SetActive(true);
+            Player.transform.Find("Renderer0").GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1);
+
             float endValue = (Player.transform.position.x + Boss().transform.position.x)/2.0f;
             Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, 0);
             FadeOutOverlay(() =>
@@ -758,5 +778,56 @@ public class GameController : Singleton<GameController>
             });
 
         });
+    }
+
+    public void UpdateBlood(bool huggyIsAttacked)
+    {
+        if (!huggyIsAttacked && bossBlood.sizeDelta.x > 60)
+        {
+            huggyBlood.sizeDelta = new Vector2(huggyBlood.sizeDelta.x + huggyDameVsBoss, huggyBlood.sizeDelta.y);
+            huggyBlood.localPosition = new Vector3(huggyBlood.localPosition.x + huggyDameVsBoss, huggyBlood.localPosition.y, 0);
+
+            bossBlood.sizeDelta = new Vector2(Math.Max(bossBlood.sizeDelta.x - huggyDameVsBoss, 60), huggyBlood.sizeDelta.y);
+            bossBlood.localPosition = new Vector3(bossBlood.localPosition.x + huggyDameVsBoss, bossBlood.localPosition.y, 0);
+
+            if (bossBlood.sizeDelta.x == 60)
+            {
+                Player.Turn = ETurn.Win;
+                Player.KillSequence();
+                Player.PlayIdle(true);
+                Boss().GetComponent<SkeletonGraphic>().Play("Swoon", false);
+                DOTween.Sequence().AppendInterval(.3f).OnComplete(()=> { Player.SavePrincessVsBoss(); });
+            }
+        }
+        else if (huggyBlood.sizeDelta.x > 60)
+        {
+            huggyBlood.sizeDelta = new Vector2(Math.Max(huggyBlood.sizeDelta.x - bossDameVsHuggy, 60), huggyBlood.sizeDelta.y);
+            huggyBlood.localPosition = new Vector3(huggyBlood.localPosition.x - bossDameVsHuggy, huggyBlood.localPosition.y, 0);
+
+            bossBlood.sizeDelta = new Vector2(bossBlood.sizeDelta.x + bossDameVsHuggy, huggyBlood.sizeDelta.y);
+            bossBlood.localPosition = new Vector3(bossBlood.localPosition.x - bossDameVsHuggy, bossBlood.localPosition.y, 0);
+
+            if (huggyBlood.sizeDelta.x == 60)
+            {
+                Player.KillSequence();
+                Player.Turn = ETurn.Lost;
+                Boss().GetComponent<SkeletonGraphic>().Play("Idle", true);
+                Player.PlayDead();
+                Player.State = EUnitState.Invalid;
+                sequence = DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
+                {
+                    OnLoseLevel();
+                });
+            }
+        }
+    }
+
+    public void ResetBlood()
+    {
+        huggyBlood.sizeDelta = new Vector2(huggyBloodWidthInitial, huggyBlood.sizeDelta.y);
+        huggyBlood.localPosition = new Vector2(huggyBloodXPositionInitial, huggyBlood.localPosition.y);
+
+        bossBlood.sizeDelta = new Vector2(bossBloodWidthInitial, bossBlood.sizeDelta.y);
+        bossBlood.localPosition = new Vector2(bossBloodXPositionInitial, bossBlood.localPosition.y);
     }
 }

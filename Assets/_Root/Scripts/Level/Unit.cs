@@ -8,6 +8,8 @@ public abstract class Unit : MonoBehaviour, IUnit, IAttack
     [SerializeField] protected EUnitState state;
     [SerializeField] protected TextMeshProUGUI txtDamage;
     [SerializeField] protected int damage;
+    public bool isAttacking = false;
+    public bool isAttacked = false;
 
     private void Awake()
     {

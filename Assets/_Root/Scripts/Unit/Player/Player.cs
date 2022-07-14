@@ -86,7 +86,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     private bool hasBloodEnemy;
     private Sequence sequence;
 
-    private bool isAttackingBoss = false;
     public void SetParentRoom(RoomTower parentRoom)
     {
         _parentRoom = parentRoom;
@@ -355,6 +354,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     }
 
     private GameObject Boss;
+    private int cache = 0;
     private void FightingBoss()
     {
         if (Turn == ETurn.FightingBoss)
@@ -388,15 +388,51 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 }
                 else
                 {
-                    if (Input.GetMouseButtonDown(0) && !isAttackingBoss)
+                    if (Turn != ETurn.Lost && Turn != ETurn.Win)
                     {
-                        isAttackingBoss = true;
-                        PlayAttack();
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            _target.OnBeingAttacked();
+                            cache = 1;
+                            if (!isAttacking && !isAttacked)
+                            {
+                                cache = 0;
+                                isAttacking = true;
+                                PlayAttack();
+                            }
+                        }
+                        else
+                        {
+                            if (cache != 0)
+                            {
+                                if (!isAttacking && !isAttacked)
+                                {
+                                    cache = 0;
+                                    isAttacking = true;
+                                    PlayAttack();
+                                }
+                            }
+                            else _target.OnAttack(0, null);
+                        }
                     }
                 }
             }
         }
         else return;
+    }
+    
+    public void SavePrincessVsBoss()
+    {
+        effectFadeIn.Play();
+        Skeleton.Play("FadeOut", false);
+        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+        {
+            transform.SetParent(GameController.Instance.Princess.transform.parent);
+            transform.localPosition = new Vector2(GameController.Instance.Princess.transform.localPosition.x - 357, GameController.Instance.Princess.transform.localPosition.y);
+            effectFadeOut.Play();
+            Skeleton.Play("FadeIn", false);
+            Turn = ETurn.Searching;
+        });
     }
     private void SearchingTarget()
     {
@@ -547,7 +583,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         if (distance >= 80)
                         {
                             PLayMove(true);
-                            transform.DOLocalMoveX(0, 0.5f).SetEase(Ease.Linear).OnComplete(() => { SavePrincess(); });
+                            transform.DOLocalMoveX(_target.transform.localPosition.x - 143, 1f).SetEase(Ease.Linear).OnComplete(() => { SavePrincess(); });
                         }
                         else
                         {
@@ -847,7 +883,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     private void OnAttackByEvent()
     {
-        isAttackingBoss = false;
+        isAttacking = false;
+        GameController.Instance.UpdateBlood(false);
         if (_target != null)
         {
             if (Turn != ETurn.FightingBoss)
@@ -887,7 +924,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     }
                 }
             }
-            else if (Turn == ETurn.FightingBoss) _target.OnBeingAttacked();
+            else if (Turn == ETurn.FightingBoss)
+            {
+                if (_target as EnemyDragonHead) (_target as EnemyDragonHead).skeleton.Play("Hurt", false);
+            }
         }
     }
 
@@ -1002,6 +1042,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     }
                 });
             }
+            else if (Turn == ETurn.FightingBoss)
+            {
+                _target.isAttacked = false;
+            }
         }
     }
 
@@ -1076,7 +1120,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     private void OnTriggerEnter2D(Collider2D other) { }
 
     public override void OnAttack(int damage, Action callback) { }
-    public override void OnBeingAttacked() { }
+    public override void OnBeingAttacked()
+    {
+        isAttacked = true;
+        isAttacking = false;
+    }
 
     public override void DarknessRise() { }
 
@@ -1100,6 +1148,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     private void PlayBloodEnemy(string attack = "")
     {
+        if (Turn == ETurn.FightingBoss)
+        {
+            PlayHitEnemy();
+            return;
+        }
         if (!hasBloodEnemy) return;
 
         float timeDelay = attack == "AttackSword" ? .8f : .3f;
@@ -1188,7 +1241,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
         if (_target as EnemyDragonHead)
         {
-            hitEnemy.transform.position += new Vector3(0, 6, 0);
+            hitEnemy.transform.position += new Vector3(0, 2, 0);
         }
         else if (_target as EnemyKraken)
         {
@@ -1458,8 +1511,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 if (hasBloodEnemy)
                                 {
                                     if (Turn != ETurn.FightingBoss) attacks = new string[] { "Attack", "Attack2" };
-                                    //else attacks = new string[] { "Attack", "Attack3" };
-                                    else attacks = new string[] { "Attack3" };
+                                    else attacks = new string[] { "Attack", "Attack3" };
                                 }
                                 else attacks = new string[] { "Attack" };
                                 break;

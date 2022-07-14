@@ -21,7 +21,6 @@ public class EnemyDragonHead : Unit, IAnim
     private void Start()
     {
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
-        SoundController.Instance.PlayOnce(SoundType.DragonStart);
 
         DOTween.Sequence().AppendInterval(UnityEngine.Random.Range(0, .5f)).AppendCallback(() =>
         {
@@ -35,14 +34,26 @@ public class EnemyDragonHead : Unit, IAnim
         PlayAttack();
     }
 
-    public override void OnBeingAttacked() {
-        skeleton.Play("Hurt", false);
+    public override void OnBeingAttacked()
+    {
+        isAttacking = false;
+        isAttacked = true;
         //OnDead(); 
     }
 
-    private void OnAttackByEvent() { _callbackAttackPlayer?.Invoke(); }
+    private void OnAttackByEvent() { 
+        _callbackAttackPlayer?.Invoke(); 
+        GameController.Instance.Player.Skeleton.Play("Die2", false); 
+        GameController.Instance.UpdateBlood(true); 
+    }
 
-    private void OnEndAttackByEvent() { PlayIdle(true); }
+    private void OnEndAttackByEvent()
+    {
+        GameController.Instance.Player.isAttacked = false;
+        isAttacking = false;
+        PlayIdle(true);
+        GameController.Instance.Player.PlayIdle(true);
+    }
 
     public override void DarknessRise() { }
 
@@ -61,22 +72,28 @@ public class EnemyDragonHead : Unit, IAnim
 
     public void PlayAttack()
     {
-        skeleton.Play("Attack", false);
-        SoundController.Instance.PlayOnce(SoundType.DemonAttack);
-
-        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+        if (!isAttacking && !isAttacked)
         {
-            if (!isDead)
-            {
-                fire.gameObject.SetActive(true);
-                fire.Play();
-                DOTween.Sequence().AppendInterval(2.2f).AppendCallback(() =>
-                {
-                    fire.gameObject.SetActive(false);
-                    fire.Stop();
-                });
-            }
-        });
+            GameController.Instance.Player.OnBeingAttacked();
+            isAttacking = true;
+            skeleton.Play("Attack", false);
+            SoundController.Instance.PlayOnce(SoundType.DemonAttack);
+        }
+
+
+        //DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+        //{
+        //    if (!isDead)
+        //    {
+        //        fire.gameObject.SetActive(true);
+        //        fire.Play();
+        //        DOTween.Sequence().AppendInterval(2.2f).AppendCallback(() =>
+        //        {
+        //            fire.gameObject.SetActive(false);
+        //            fire.Stop();
+        //        });
+        //    }
+        //});
     }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }

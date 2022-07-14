@@ -111,7 +111,8 @@ public enum ETurn
 
     Lost = 7,
     FightingBoss = 8,
-    MoveToEnemy = 9
+    MoveToEnemy = 9,
+    Win = 10
 }
 
 public enum ELevelCondition
