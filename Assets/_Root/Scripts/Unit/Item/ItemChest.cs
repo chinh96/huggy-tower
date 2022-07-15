@@ -23,6 +23,7 @@ public class ItemChest : Item, IAnim
     public override void Collect(IUnit affectTarget)
     {
         PlayWin();
+        State = EUnitState.Invalid;
         ResourcesController.Achievement.IncreaseByType(AchievementType.Chest);
         ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Chest);
     }

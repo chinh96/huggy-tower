@@ -61,6 +61,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private ParticleSystem effectClaws;
     [SerializeField] private ParticleSystem effectElectricHuggy;
     [SerializeField] private GameObject effectPoisonGroundSecretary;
+    [SerializeField] private ParticleSystem effectAttack2;
 
     [SerializeField] private GameObject shuriken;
     [SerializeField] private GameObject bow;
@@ -1600,6 +1601,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         () =>
                         {
                             _target.gameObject.SetActive(false);
+                            effectAttack2.Play();
                         }
                         );
                     };
