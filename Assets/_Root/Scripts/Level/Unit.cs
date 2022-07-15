@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public abstract class Unit : MonoBehaviour, IUnit, IAttack
 {
+    public Sprite bossFace;
     [SerializeField] protected EUnitState state;
     [SerializeField] protected TextMeshProUGUI txtDamage;
     [SerializeField] protected int damage;
@@ -67,5 +68,9 @@ public abstract class Unit : MonoBehaviour, IUnit, IAttack
         {
             turkey.Move();
         }
+    }
+    public virtual void PlayHurt()
+    {
+
     }
 }

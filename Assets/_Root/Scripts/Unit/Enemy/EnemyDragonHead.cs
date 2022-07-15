@@ -8,7 +8,6 @@ using DG.Tweening;
 
 public class EnemyDragonHead : Unit, IAnim
 {
-    public Sprite bossFace;
     public SkeletonGraphic skeleton;
     public Collider2D coll2D;
     public SpineAttackHandle attackHandle;
@@ -24,7 +23,7 @@ public class EnemyDragonHead : Unit, IAnim
 
         DOTween.Sequence().AppendInterval(UnityEngine.Random.Range(0, .5f)).AppendCallback(() =>
         {
-            PlayIdle(true);
+            skeleton.Play("Idle3", true);
         });
     }
 
@@ -100,33 +99,37 @@ public class EnemyDragonHead : Unit, IAnim
 
     public void PlayDead()
     {
-        isDead = true;
-        fire.gameObject.SetActive(false);
+        //isDead = true;
+        //fire.gameObject.SetActive(false);
 
-        ItemType equipType = GameController.Instance.Player.EquipType;
-        if (equipType == ItemType.Sword || equipType == ItemType.SwordBlood)
-        {
-            skeleton.Play("Die2", false);
-            // DOTween.Sequence().AppendInterval(.75f).AppendCallback(() =>
-            // {
-            //     skeleton.DOFade(0, .2f);
-            // });
-        }
-        else
-        {
-            skeleton.Play("Die", false);
-            DOTween.Sequence().AppendInterval(1.85f).AppendCallback(() =>
-            {
-                skeleton.DOFade(0, .2f);
-            });
-        }
-
+        //ItemType equipType = GameController.Instance.Player.EquipType;
+        //if (equipType == ItemType.Sword || equipType == ItemType.SwordBlood)
+        //{
+        //    skeleton.Play("Die2", false);
+        //    // DOTween.Sequence().AppendInterval(.75f).AppendCallback(() =>
+        //    // {
+        //    //     skeleton.DOFade(0, .2f);
+        //    // });
+        //}
+        //else
+        //{
+        //    skeleton.Play("Die", false);
+        //    DOTween.Sequence().AppendInterval(1.85f).AppendCallback(() =>
+        //    {
+        //        skeleton.DOFade(0, .2f);
+        //    });
+        //}
+        skeleton.Play("Swoon", false);
         SoundController.Instance.PlayOnce(SoundType.DragonDie);
     }
 
     public void PlayWin(bool isLoop) { }
 
     public void PlayLose(bool isLoop) { }
+    public override void PlayHurt()
+    {
+        skeleton.Play("Hurt", false);
+    }
 }
 
 #if UNITY_EDITOR

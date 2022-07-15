@@ -25,7 +25,7 @@ public class ItemTeleport : Item
                         State = EUnitState.Invalid;
                         gameObject.SetActive(false);
                     });
-                    itemTeleport.canvasGroup.DOFade(0, .5f).OnComplete(() =>
+                    itemTeleport.canvasGroup.DOFade(0, 2f).OnComplete(() =>
                     {
                         itemTeleport.State = EUnitState.Invalid;
                         itemTeleport.gameObject.SetActive(false);
@@ -37,7 +37,8 @@ public class ItemTeleport : Item
 
                         //player.SetParentRoom(parentRoom);
                         //player.StartSearchingTurn();
-                    });
+                    }
+                    );
                 });
             });
         }

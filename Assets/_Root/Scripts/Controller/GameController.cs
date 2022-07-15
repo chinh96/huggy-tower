@@ -41,6 +41,11 @@ public class GameController : Singleton<GameController>
     [SerializeField] private int huggyDameVsBoss;
     [SerializeField] private int bossDameVsHuggy;
 
+    [SerializeField] private ParticleSystem huggyBloodEffect;
+    [SerializeField] private ParticleSystem bossBloodEffect;
+    [SerializeField] private ParticleSystem centerBloodEffect;
+    public Image overlayFightingBoss;
+
     private float huggyBloodWidthInitial;
     private float huggyBloodXPositionInitial;
     private float bossBloodWidthInitial;
@@ -760,13 +765,17 @@ public class GameController : Singleton<GameController>
         FadeInOverlay(() =>
         {
             skipButton.SetActive(false);
-            if(Boss().GetComponent<Unit>() as EnemyDragonHead) bossFaceBlood.sprite = Boss().GetComponent<EnemyDragonHead>().bossFace;
+            bossFaceBlood.sprite = Boss().GetComponent<Unit>().bossFace;
             bossFaceBlood.SetNativeSize();
             backgroundBoss.SetActive(true);
             Player.transform.Find("Renderer0").GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1);
 
             float endValue = (Player.transform.position.x + Boss().transform.position.x)/2.0f;
             Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, 0);
+            
+            overlayFightingBoss.gameObject.SetActive(true);
+            overlayFightingBoss.DOFade(.5f, 0);
+
             FadeOutOverlay(() =>
             {
                 SetEnableLeanTouch(false);
@@ -796,8 +805,9 @@ public class GameController : Singleton<GameController>
                 Player.Turn = ETurn.Win;
                 Player.KillSequence();
                 Player.PlayIdle(true);
-                Boss().GetComponent<SkeletonGraphic>().Play("Swoon", false);
-                DOTween.Sequence().AppendInterval(.3f).OnComplete(()=> { Player.SavePrincessVsBoss(); });
+                Boss().GetComponent<IAnim>().PlayDead();
+                Boss().GetComponent<Unit>().State = EUnitState.Invalid;
+                DOTween.Sequence().AppendInterval(.6f).OnComplete(()=> { Player.SavePrincessVsBoss(); });
             }
         }
         else if (huggyBlood.sizeDelta.x > 60)
@@ -830,5 +840,17 @@ public class GameController : Singleton<GameController>
 
         bossBlood.sizeDelta = new Vector2(bossBloodWidthInitial, bossBlood.sizeDelta.y);
         bossBlood.localPosition = new Vector2(bossBloodXPositionInitial, bossBlood.localPosition.y);
+    }
+
+    public void TapToStartFightingBoss()
+    {
+        overlayFightingBoss.DOFade(0f, 0.3f).OnComplete(() =>
+       {
+           Player.TapToStartFightingBoss();
+           huggyBloodEffect.Play();
+           bossBloodEffect.Play();
+           centerBloodEffect.Play();
+           overlayFightingBoss.gameObject.SetActive(false);
+       });
     }
 }
