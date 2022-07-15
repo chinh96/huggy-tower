@@ -725,7 +725,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             TxtDamage.gameObject.SetActive(false);
                             DOTween.Sequence().AppendInterval(0.5f).AppendCallback(() =>
                             {
-                                if (Data.CurrentLevel < 9)
+                                if (Data.CurrentLevel < 7)
                                 {
                                     DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
                                     tapToFightingBoss.SetActive(true)
@@ -906,7 +906,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     private void OnAttackByEvent()
     {
         isAttacking = false;
-        GameController.Instance.UpdateBlood(false);
         if (_target != null)
         {
             if (Turn != ETurn.FightingBoss)
@@ -924,6 +923,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         {
                             // Damage -= _cacheTarget.Damage;
                             effectPoisonGroundSecretary.SetActive(false);
+                            txtDamageEnemy.gameObject.SetActive(false);
                         }
                     }
                     else
@@ -962,6 +962,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             }
             else if (Turn == ETurn.FightingBoss)
             {
+                GameController.Instance.UpdateBlood(false);
                 _target.PlayHurt();
 
             }
@@ -1579,10 +1580,12 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         _target.gameObject.GetComponent<Canvas>().overrideSorting = true;
                         _target.gameObject.GetComponent<Canvas>().sortingOrder = 121;
 
-                        txtDamageEnemy.text = _target.TxtDamage.text;
-                        txtDamageEnemy.transform.position = _target.TxtDamage.transform.position;
-                        txtDamageEnemy.gameObject.SetActive(true);
-
+                        if(_target as EnemyKappa == null)
+                        {
+                            txtDamageEnemy.text = _target.TxtDamage.text;
+                            txtDamageEnemy.transform.position = _target.TxtDamage.transform.position;
+                            txtDamageEnemy.gameObject.SetActive(true);
+                        }
                         _target.TxtDamage.gameObject.SetActive(false);
 
                         SoundType[] soundAttack2 = { SoundType.HuggyAttackNormal3, SoundType.HuggyAttackNormal4 };
@@ -1591,7 +1594,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         skeleton.Play(attack, false);
                         Sequence s = DOTween.Sequence();
                         _target.TxtDamage.gameObject.SetActive(false);
-                        s.Append(_target.transform.DOMove(gameObject.transform.position + new Vector3(1.5f, 1, 0), 0.4f));
+                        s.Append(_target.transform.DOMove(gameObject.transform.position + new Vector3(1.5f, 1.5f, 0), 0.4f));
                         int sign = _target.transform.localScale.x > 0 ? 1 : -1;
                         s.Join(_target.transform.DOScale(new Vector3(.3f * _target.transform.localScale.x, .3f * _target.transform.localScale.y, 1), .4f)).AppendCallback(
                         () =>

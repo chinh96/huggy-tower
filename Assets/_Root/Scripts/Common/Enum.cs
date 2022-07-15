@@ -136,7 +136,9 @@ public enum ELevelCondition
     KillPoliceStick,
     KillSpider,
     KillDragonGold,
-    KillFire
+    KillFire,
+
+    KillBoss
 }
 
 public enum SkinType

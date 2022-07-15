@@ -116,6 +116,8 @@ public class GameController : Singleton<GameController>
         huggyBloodXPositionInitial = huggyBlood.localPosition.x;
         bossBloodWidthInitial = bossBlood.sizeDelta.x;
         bossBloodXPositionInitial = bossBlood.localPosition.x;
+
+        Debug.Log("Huggy Blood x : " + huggyBloodXPositionInitial);
     }
 
     private void Update()
@@ -792,6 +794,7 @@ public class GameController : Singleton<GameController>
 
     public void UpdateBlood(bool huggyIsAttacked)
     {
+        Debug.Log("Update Blood!!!");
         if (!huggyIsAttacked && bossBlood.sizeDelta.x > 60)
         {
             huggyBlood.sizeDelta = new Vector2(huggyBlood.sizeDelta.x + huggyDameVsBoss, huggyBlood.sizeDelta.y);
@@ -835,10 +838,10 @@ public class GameController : Singleton<GameController>
 
     public void ResetBlood()
     {
-        huggyBlood.sizeDelta = new Vector2(huggyBloodWidthInitial, huggyBlood.sizeDelta.y);
+        huggyBlood.GetComponent<Image>().SetNativeSize();
         huggyBlood.localPosition = new Vector2(huggyBloodXPositionInitial, huggyBlood.localPosition.y);
 
-        bossBlood.sizeDelta = new Vector2(bossBloodWidthInitial, bossBlood.sizeDelta.y);
+        bossBlood.GetComponent<Image>().SetNativeSize();
         bossBlood.localPosition = new Vector2(bossBloodXPositionInitial, bossBlood.localPosition.y);
     }
 
