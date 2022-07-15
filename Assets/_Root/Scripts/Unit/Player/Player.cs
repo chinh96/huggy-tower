@@ -438,6 +438,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     public void SavePrincessVsBoss()
     {
+        _target.PlayDie();
         effectFadeIn.Play();
         Skeleton.Play("FadeOut", false);
         DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
@@ -1589,8 +1590,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         }
                         _target.TxtDamage.gameObject.SetActive(false);
 
-                        SoundType[] soundAttack2 = { SoundType.HuggyAttackNormal3, SoundType.HuggyAttackNormal4 };
-                        SoundController.Instance.PlayOnce(soundAttack2[UnityEngine.Random.Range(0, soundAttack2.Length)]);
+                        SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal3);
 
                         skeleton.Play(attack, false);
                         Sequence s = DOTween.Sequence();
@@ -1601,6 +1601,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         () =>
                         {
                             _target.gameObject.SetActive(false);
+                            effectAttack2.transform.position = _target.transform.position;
                             effectAttack2.Play();
                         }
                         );

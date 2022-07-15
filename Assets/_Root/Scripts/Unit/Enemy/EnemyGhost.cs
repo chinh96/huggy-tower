@@ -54,7 +54,7 @@ public class EnemyGhost : Unit, IAnim
     public void PlayAttack()
     {
         skeleton.Play("Attack", false);
-        SoundController.Instance.PlayOnce(SoundType.EnemyHit);
+        SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal2);
     }
 
     public void PLayMove(bool isLoop) { }

@@ -275,7 +275,10 @@ public enum SoundType
     EnemyVenomDie,
     HuggyAttackHammer,
     HuggyAttackNormal3,
-    HuggyAttackNormal4
+    HuggyAttackNormal4,
+
+    BossAttack,
+    BGFightingBoss
 }
 
 public enum WorldType

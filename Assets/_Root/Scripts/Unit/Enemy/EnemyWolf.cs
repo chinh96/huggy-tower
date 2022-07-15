@@ -47,14 +47,14 @@ public class EnemyWolf : Unit, IAnim
     public SkeletonGraphic Skeleton => skeleton;
     public void PlayIdle(bool isLoop) { skeleton.Play("Idle", true); }
 
-    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.PigAttack); }
+    public void PlayAttack() { skeleton.Play("Attack", false); SoundController.Instance.PlayOnce(SoundType.YetiAttack); }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
 
     public void PlayDead()
     {
         skeleton.Play("Die", false);
-        SoundController.Instance.PlayOnce(SoundType.PigDie);
+        SoundController.Instance.PlayOnce(SoundType.EnemyVenomDie);
     }
 
     public void PlayWin(bool isLoop) { }

@@ -54,7 +54,7 @@ public class EnemyDragonGold : Unit, IAnim
     public void PlayAttack()
     {
         skeleton.Play("Attack", false);
-        SoundController.Instance.PlayOnce(SoundType.DragonGoldAttack);
+        SoundController.Instance.PlayOnce(SoundType.HeroHit);
 
         //DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
         //{
@@ -72,7 +72,7 @@ public class EnemyDragonGold : Unit, IAnim
     public void PlayDead()
     {
         skeleton.Play("Swoon", false);
-        SoundController.Instance.PlayOnce(SoundType.DragonGoldDie);
+        SoundController.Instance.PlayOnce(SoundType.YetiDie);
     }
 
     public void PlayWin(bool isLoop) { }

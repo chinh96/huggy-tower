@@ -17,7 +17,8 @@ public class Princess : Unit, IAnim
 
     private void Start()
     {
-        if(transform.parent.gameObject.name != "KissyStand") SoundController.Instance.PlayOnce(SoundType.KissyHelpMe);
+        if(transform.parent.gameObject.GetComponent<RoomTower>()) 
+            SoundController.Instance.PlayOnce(SoundType.KissyHelpMe);
     }
 
     public override EUnitType Type { get; protected set; } = EUnitType.Princess;

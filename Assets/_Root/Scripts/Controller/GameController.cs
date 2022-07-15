@@ -137,7 +137,7 @@ public class GameController : Singleton<GameController>
     private void Start()
     {
         MoveInAnim();
-        SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
+        //SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
         CheckRadioCamera();
         positionCameraOrigin = Camera.main.transform.position;
         LoadLevel(Data.CurrentLevel);
@@ -162,6 +162,7 @@ public class GameController : Singleton<GameController>
 
     private void LoadBackground()
     {
+        SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
         List<GameObject> backgrounds = backgroundsNormal;
 
         //if (Data.TimeToRescueParty.TotalMilliseconds > 0)
@@ -780,6 +781,7 @@ public class GameController : Singleton<GameController>
 
             FadeOutOverlay(() =>
             {
+                SoundController.Instance.PlayBackground(SoundType.BGFightingBoss);
                 SetEnableLeanTouch(false);
                 //float endValue = (Player.transform.position.x + visitTowers[indexVisitTower + 1].transform.position.x) / 2;
                 SetEnableLeanTouch(true);
@@ -794,7 +796,6 @@ public class GameController : Singleton<GameController>
 
     public void UpdateBlood(bool huggyIsAttacked)
     {
-        Debug.Log("Update Blood!!!");
         if (!huggyIsAttacked && bossBlood.sizeDelta.x > 60)
         {
             huggyBlood.sizeDelta = new Vector2(huggyBlood.sizeDelta.x + huggyDameVsBoss, huggyBlood.sizeDelta.y);
@@ -808,8 +809,6 @@ public class GameController : Singleton<GameController>
                 Player.Turn = ETurn.Win;
                 Player.KillSequence();
                 Player.PlayIdle(true);
-                Boss().GetComponent<IAnim>().PlayDead();
-                Boss().GetComponent<Unit>().State = EUnitState.Invalid;
                 DOTween.Sequence().AppendInterval(.6f).OnComplete(()=> { Player.SavePrincessVsBoss(); });
             }
         }

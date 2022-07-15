@@ -76,7 +76,7 @@ public class EnemyDragonHead : Unit, IAnim
             GameController.Instance.Player.OnBeingAttacked();
             isAttacking = true;
             skeleton.Play("Attack", false);
-            SoundController.Instance.PlayOnce(SoundType.DemonAttack);
+            SoundController.Instance.PlayOnce(SoundType.BossAttack);
         }
 
 
@@ -129,6 +129,11 @@ public class EnemyDragonHead : Unit, IAnim
     public override void PlayHurt()
     {
         skeleton.Play("Hurt", false);
+    }
+    public override void PlayDie()
+    {
+        skeleton.Play("Swoon", false);
+        SoundController.Instance.PlayOnce(SoundType.DragonDie);
     }
 }
 

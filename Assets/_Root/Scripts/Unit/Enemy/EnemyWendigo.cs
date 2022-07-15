@@ -72,7 +72,7 @@ public class EnemyWendigo : Unit, IAnim
             GameController.Instance.Player.OnBeingAttacked();
             isAttacking = true;
             skeleton.Play("Attack", false);
-            SoundController.Instance.PlayOnce(SoundType.DemonAttack);
+            SoundController.Instance.PlayOnce(SoundType.BossAttack);
         }
     }
 
@@ -81,8 +81,6 @@ public class EnemyWendigo : Unit, IAnim
     public void PlayDead()
     {
         skeleton.Play("Die", false);
-
-        SoundController.Instance.PlayOnce(SoundType.BearDie);
     }
 
     public void PlayWin(bool isLoop) { }
@@ -91,6 +89,11 @@ public class EnemyWendigo : Unit, IAnim
     public override void PlayHurt()
     {
         skeleton.Play("Hurt", false);
+    }
+    public override void PlayDie()
+    {
+        skeleton.Play("Die", false);
+        SoundController.Instance.PlayOnce(SoundType.DragonDie);
     }
 }
 
