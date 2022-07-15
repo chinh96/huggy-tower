@@ -50,7 +50,7 @@ public class GameController : Singleton<GameController>
     private float huggyBloodXPositionInitial;
     private float bossBloodWidthInitial;
     private float bossBloodXPositionInitial;
-    
+
     [SerializeField] private GameObject skipButton;
     public GameObject BloodVsBoss
     {
@@ -62,15 +62,15 @@ public class GameController : Singleton<GameController>
     public Princess Princess => FindObjectOfType<Princess>(); // auto return Kissy in BG
     public GameObject Boss()
     {
-        foreach(Unit obj in FindObjectsOfType<Unit>())
+        foreach (Unit obj in FindObjectsOfType<Unit>())
         {
-            if(obj.Type == EUnitType.Boss)
+            if (obj.Type == EUnitType.Boss)
             {
                 return obj.gameObject;
             }
         }
         return null;
-    } 
+    }
     private ItemLock itemLock;
     public ItemLock ItemLock => itemLock ? itemLock : itemLock = FindObjectOfType<ItemLock>();
 
@@ -137,7 +137,7 @@ public class GameController : Singleton<GameController>
     private void Start()
     {
         MoveInAnim();
-        //SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
+        SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
         CheckRadioCamera();
         positionCameraOrigin = Camera.main.transform.position;
         LoadLevel(Data.CurrentLevel);
@@ -162,7 +162,7 @@ public class GameController : Singleton<GameController>
 
     private void LoadBackground()
     {
-        SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
+        if (Data.CurrentLevel + 1 == 5 || (Data.CurrentLevel + 1) % 10 == 0) SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
         List<GameObject> backgrounds = backgroundsNormal;
 
         //if (Data.TimeToRescueParty.TotalMilliseconds > 0)
@@ -809,7 +809,7 @@ public class GameController : Singleton<GameController>
                 Player.Turn = ETurn.Win;
                 Player.KillSequence();
                 Player.PlayIdle(true);
-                DOTween.Sequence().AppendInterval(.6f).OnComplete(()=> { Player.SavePrincessVsBoss(); });
+                Player.SavePrincessVsBoss();
             }
         }
         else if (huggyBlood.sizeDelta.x > 60)

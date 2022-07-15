@@ -438,10 +438,9 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     public void SavePrincessVsBoss()
     {
-        _target.PlayDie();
         effectFadeIn.Play();
         Skeleton.Play("FadeOut", false);
-        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+        DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
         {
             transform.SetParent(GameController.Instance.Princess.transform.parent);
             transform.localPosition = new Vector2(GameController.Instance.Princess.transform.localPosition.x - 357, GameController.Instance.Princess.transform.localPosition.y);
@@ -940,7 +939,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         if (txtDamageEnemy.gameObject.activeSelf)
                         {
                             txtDamageEnemy.transform.SetParent(transform);
-                            //_cacheTarget.TxtDamage.gameObject.SetActive(true);
                             txtDamageEnemy.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
                             {
                                 TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
@@ -951,7 +949,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         else
                         {
                             _cacheTarget.TxtDamage.transform.SetParent(transform);
-                            //_cacheTarget.TxtDamage.gameObject.SetActive(true);
+                            if (_cacheTarget.Type != EUnitType.Boss) _cacheTarget.TxtDamage.gameObject.SetActive(true);
                             _cacheTarget.TxtDamage.transform.DOMove(TxtDamage.transform.position, .5f).SetEase(Ease.InCubic).OnComplete(() =>
                             {
                                 TxtDamage.transform.DOPunchScale(Vector3.one * 1.1f, .3f, 0);
@@ -1052,6 +1050,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     private void AttackByEvent()
     {
+        if (Turn == ETurn.Win)
+        {
+            _target.PlayDie();
+            return;
+        }
         if (Turn != ETurn.Lost)
         {
             if (Turn != ETurn.FightingBoss)
