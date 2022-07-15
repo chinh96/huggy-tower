@@ -438,8 +438,12 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     public void SavePrincessVsBoss()
     {
-        effectFadeIn.Play();
-        Skeleton.Play("FadeOut", false);
+        _target.PlayDie();
+        DOTween.Sequence().AppendInterval(0.5f).AppendCallback( () => {
+                effectFadeIn.Play();
+                Skeleton.Play("FadeOut", false);
+        });
+        
         DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
         {
             transform.SetParent(GameController.Instance.Princess.transform.parent);

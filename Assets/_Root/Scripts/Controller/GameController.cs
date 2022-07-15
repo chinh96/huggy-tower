@@ -809,7 +809,9 @@ public class GameController : Singleton<GameController>
                 Player.Turn = ETurn.Win;
                 Player.KillSequence();
                 Player.PlayIdle(true);
-                Player.SavePrincessVsBoss();
+                DOTween.Sequence().AppendInterval(0.1f).AppendCallback( () => {
+                    Player.SavePrincessVsBoss();
+                });
             }
         }
         else if (huggyBlood.sizeDelta.x > 60)
