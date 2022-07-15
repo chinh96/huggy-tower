@@ -12,8 +12,8 @@ public class WinPopup : Popup
     [SerializeField] private Image iconCrossAds;
     [SerializeField] private Sprite[] imgIconCrossAds;
 
-    [SerializeField] private GameObject huggy_1;
     [SerializeField] private GameObject huggy_2;
+    [SerializeField] private GameObject huggy_1;
     [SerializeField] private GameObject princess;
 
     [SerializeField] private LevelText levelText;
@@ -25,6 +25,12 @@ public class WinPopup : Popup
 
     protected override void BeforeShow()
     {
+        if (GameController.Instance.Princess) havePrincess = true;
+        else havePrincess = false;
+        huggy_1.SetActive(!havePrincess);
+        huggy_2.SetActive(havePrincess);
+        princess.SetActive(havePrincess);
+
         AdController.Instance.HideBanner();
         base.BeforeShow();
 
@@ -34,15 +40,9 @@ public class WinPopup : Popup
         tapToContinueButton.SetActive(false);
         progressGift.Reset();
 
-        idCrossCurrent = idCrossCurrent == 0 ? 1 : 0;
-        iconCrossAds.sprite = imgIconCrossAds[idCrossCurrent];
-        checkCrossAds();
-
-        if (GameController.Instance.Princess != null) havePrincess = true;
-        else havePrincess = false;
-        huggy_1.SetActive(!havePrincess);
-        huggy_2.SetActive(havePrincess);
-        princess.SetActive(havePrincess);
+        //idCrossCurrent = idCrossCurrent == 0 ? 1 : 0;
+        //iconCrossAds.sprite = imgIconCrossAds[idCrossCurrent];
+        //checkCrossAds();
 
         GameObject huggy = havePrincess ? huggy_2 : huggy_1;
         huggy.GetComponent<HeroWinLoseController>().PlayWin();

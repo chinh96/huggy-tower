@@ -54,7 +54,7 @@ public class GameController : Singleton<GameController>
     }
     private Player player;
     public Player Player => player ? player : player = FindObjectOfType<Player>();
-    public Princess Princess => FindObjectOfType<Princess>();
+    public Princess Princess => FindObjectOfType<Princess>(); // auto return Kissy in BG
     public GameObject Boss()
     {
         foreach(Unit obj in FindObjectsOfType<Unit>())
@@ -167,10 +167,11 @@ public class GameController : Singleton<GameController>
         int random = UnityEngine.Random.Range(0, backgrounds.Count);
         backgrounds[random].SetActive(true);
 
-        if (backgroundBoss.transform.transform.GetComponentInChildren<Player>())
+        if (backgroundBoss.transform.GetComponentInChildren<Player>())
         {
             DestroyImmediate(backgroundBoss.transform.transform.GetComponentInChildren<Player>().gameObject);
         };
+        backgroundBoss.transform.GetComponentInChildren<Princess>().Skeleton.Play("Idle", true);
         //IsJapanBackground = backgrounds[random].name == "Jav";
         //IsSeaBackground = backgrounds[random].name == "Sea";
         //IsHalloweenBackground = Data.TimeToRescueParty.TotalMilliseconds > 0 && UnityEngine.Random.Range(0, 2) == 0;

@@ -90,7 +90,12 @@ public enum ItemType
     Poison,
     Mace,
     Bow2,
-    Polllaxe
+    Polllaxe,
+
+    X3Strength,
+    X4Strength,
+    X5Strength,
+    X6Strength
 }
 
 public enum ItemTypeHuggy{

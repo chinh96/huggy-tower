@@ -90,6 +90,18 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
                 case ItemType.HolyWater:
                     damage = player.Damage;
                     break;
+                case ItemType.X3Strength:
+                    damage = player.Damage * 2;
+                    break;
+                case ItemType.X4Strength:
+                    damage = player.Damage * 3;
+                    break;
+                case ItemType.X5Strength:
+                    damage = player.Damage * 4;
+                    break;
+                case ItemType.X6Strength:
+                    damage = player.Damage * 5;
+                    break;
                 case ItemType.Fire:
                     damage = player.Damage * 2;
                     break;
@@ -162,7 +174,12 @@ public class ItemSwordEditor : UnityEditor.Editor
             _item.EquipType != ItemType.Fire &&
             _item.EquipType != ItemType.Electric &&
             _item.EquipType != ItemType.Ice &&
-            _item.EquipType != ItemType.Poison)
+            _item.EquipType != ItemType.Poison &&
+            _item.EquipType != ItemType.X3Strength &&
+            _item.EquipType != ItemType.X4Strength &&
+            _item.EquipType != ItemType.X5Strength &&
+            _item.EquipType != ItemType.X6Strength
+            )
         {
             _item.txtDamage.text = $"{_item.damage}";
 

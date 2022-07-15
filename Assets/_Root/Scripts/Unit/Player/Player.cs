@@ -348,6 +348,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 if (item.EquipType == ItemType.Key)
                 {
                     item.GetComponent<ItemEquip>().AddJumpAnimation();
+
                 }
             }
         }
@@ -1510,7 +1511,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             {
                                 if (hasBloodEnemy)
                                 {
-                                    if (Turn != ETurn.FightingBoss) attacks = new string[] { "Attack", "Attack2" };
+                                    if (Turn != ETurn.FightingBoss) //attacks = new string[] { "Attack", "Attack2" };
+                                    attacks = new string[] { "Attack2" };
                                     else attacks = new string[] { "Attack", "Attack3" };
                                 }
                                 else attacks = new string[] { "Attack" };
@@ -1549,7 +1551,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         Sequence s = DOTween.Sequence();
                         s.Append(_target.transform.DOMove(gameObject.transform.position + new Vector3(1.5f, 1, 0), 0.4f));
                         int sign = _target.transform.localScale.x > 0 ? 1 : -1;
-                        s.Join(_target.transform.DOScale(new Vector3(sign * .3f, .3f, 1), .4f)).AppendCallback(
+                        s.Join(_target.transform.DOScale(new Vector3(.3f * _target.transform.localScale.x, .3f * _target.transform.localScale.y, 1), .4f)).AppendCallback(
                         () =>
                         {
                             _target.gameObject.SetActive(false);

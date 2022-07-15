@@ -14,7 +14,7 @@ public class HeroWinLoseController : MonoBehaviour
         // float timeDelay = 0.6f;
         // if(win == "Win") timeDelay = 1.6f;
         // DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(()=> character.Play("Idle", true));
-        character.Play(win, true);
+        character.Play(win, true);  
     }
 
     public void PlayLose(){
