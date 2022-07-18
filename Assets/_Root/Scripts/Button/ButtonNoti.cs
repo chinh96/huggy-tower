@@ -8,6 +8,7 @@ public class ButtonNoti : MonoBehaviour
 
     private void Start()
     {
+        CheckNoti();
         EventController.CoinTotalChanged += CheckNoti;
         EventController.LoginLeaderBoard += CheckNoti;
         EventController.MedalTotalChanged += CheckNoti;
@@ -17,7 +18,7 @@ public class ButtonNoti : MonoBehaviour
 
     private void OnEnable()
     {
-        CheckNoti();
+        
     }
 
     public void CheckNoti()

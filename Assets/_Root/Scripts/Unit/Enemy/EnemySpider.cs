@@ -52,7 +52,7 @@ public class EnemySpider : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Spider);
+        //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Spider);
         sequence.Kill();
     }
 

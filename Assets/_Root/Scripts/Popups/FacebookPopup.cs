@@ -48,7 +48,7 @@ public class FacebookPopup : Popup
 
             Data.JoinFbProgress = 1;
 
-            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LoginFacebook);
+            //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LoginFacebook);
 
             DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
             {
@@ -76,7 +76,7 @@ public class FacebookPopup : Popup
             {
                 Data.JoinFbProgress = 2;
                 Data.CoinTotal = coinTotal;
-                ResourcesController.Achievement.IncreaseByType(AchievementType.JoinGroupFacebookSuccessfully);
+                //ResourcesController.Achievement.IncreaseByType(AchievementType.JoinGroupFacebookSuccessfully);
                 Close();
                 isClaming = false;
             });

@@ -14,4 +14,21 @@ public class ConfigResources : ScriptableObject
     public bool EnableTest;
     public int LevelShowRate;
     public FighterOverlay FighterOverlay;
+
+    private static ConfigResources instance;
+
+    public static ConfigResources Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = Resources.Load<ConfigResources>("ConfigResources");
+            }
+
+            return instance;
+        }
+    }
+
+    public static int MaxLevel => Instance.MaxLevelCanReach;
 }

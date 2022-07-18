@@ -115,10 +115,10 @@ public class DataBridge : Singleton<DataBridge>
         //     return (obj, _cacheLevels[temp], levelIndex);
         // }
         _countGetLevel ++;
-        if (levelIndex > ResourcesController.Config.MaxLevelCanReach - 1)
+        if (levelIndex > ConfigResources.MaxLevel - 1)
         {
             if(Data.CurrentLoopLevel == -1 || (Data.CurrentLoopLevel != -1 && Data.IsWinCurrentLoopLevel) ){
-                levelIndex = Random.Range(0, ResourcesController.Config.MaxLevelCanReach);
+                levelIndex = Random.Range(0, ConfigResources.MaxLevel);
                 Data.CurrentLoopLevel = levelIndex;
                 Data.IsWinCurrentLoopLevel = false;
             }

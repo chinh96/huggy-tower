@@ -287,6 +287,6 @@ public class AdController : Singleton<AdController>
         JustShowReward = true;
         isRewardEarned = true;
 
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.WatchVideoReward);
+        //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.WatchVideoReward);
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 // using Facebook.Unity;
 
 public class LoadingController : MonoBehaviour
@@ -34,18 +35,22 @@ public class LoadingController : MonoBehaviour
 
         Vibration.Init();
 
-        var obj = DataBridge.Instance.GetLevel(Data.CurrentLevel);
+        LoadLevel();
         progress.fillAmount = 0;
-        progress.DOFillAmount(5, duration).SetEase(ease).OnComplete(() =>
-        {
-            // if (Data.IsIntro && RemoteConfigController.Instance.HasIntro)
-            // {
-            //     SceneManager.LoadScene(Constants.INTRO_SCENE);
-            // }
-            // else
-            // {
-            SceneManager.LoadScene(Constants.HOME_SCENE);
-            //}
-        });
+        progress.DOFillAmount(5, duration).SetEase(ease).OnComplete(WaitLoadingScene);
+    }
+
+    private bool _flag;
+    private async void WaitLoadingScene()
+    {
+        await UniTask.WaitUntil(() => _flag);
+        SceneManager.LoadScene(Constants.HOME_SCENE);
+    }
+
+    public async void LoadLevel()
+    {
+        var obj = await DataBridge.Instance.GetLevel(Data.CurrentLevel);
+        Debug.Log("Loaded...");
+        _flag = true;
     }
 }

@@ -42,7 +42,7 @@ public class EnemyRange : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.NormalEnemy);
+        //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.NormalEnemy);
     }
 
     public override void DarknessRise() { }

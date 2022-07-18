@@ -122,7 +122,7 @@ public class Castle : MonoBehaviour
         castle.BuildOrUpgrade();
         EventController.CastleBuilded(index);
         Reset();
-        ResourcesController.Achievement.CheckCompleteCastle();
-        ResourcesController.DailyQuest.CheckCompleteCastle();
+        //ResourcesController.Achievement.CheckCompleteCastle();
+        //ResourcesController.DailyQuest.CheckCompleteCastle();
     }
 }

@@ -27,7 +27,7 @@ public class LevelRoot : MonoBehaviour
         if (levelMapPrefab != null)
         {
 #if UNITY_EDITOR
-            // ResourcesController.Config.LevelDebug = null;
+            ResourcesController.Config.LevelDebug = null;
             if (ResourcesController.Config.LevelDebug != null)
             {
                 levelMap = Instantiate(ResourcesController.Config.LevelDebug, transform, false);

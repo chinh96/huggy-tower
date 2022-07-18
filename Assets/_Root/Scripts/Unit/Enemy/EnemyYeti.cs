@@ -43,7 +43,7 @@ public class EnemyYeti : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Yeti);
+        //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Yeti);
     }
 
     public SkeletonGraphic Skeleton => skeleton;

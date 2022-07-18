@@ -138,30 +138,30 @@ public class DailyQuestResources : ScriptableObject
 
     public void CheckCompleteCastle()
     {
-        if (ResourcesController.Universe.WorldCurrent.IsComplete)
-        {
-            switch (ResourcesController.Universe.WorldCurrent.WorldType)
-            {
-                case WorldType.Earth:
-                    IncreaseByType(DailyQuestType.CompleteEarth);
-                    break;
-                case WorldType.Desert:
-                    IncreaseByType(DailyQuestType.CompleteDesert);
-                    break;
-                case WorldType.Iceland:
-                    IncreaseByType(DailyQuestType.CompleteIceland);
-                    break;
-                case WorldType.Inferno:
-                    IncreaseByType(DailyQuestType.CompleteInferno);
-                    break;
-                case WorldType.Jade:
-                    IncreaseByType(DailyQuestType.CompleteJade);
-                    break;
-                case WorldType.Olympus:
-                    IncreaseByType(DailyQuestType.CompleteOlympus);
-                    break;
-            }
-        }
+        //if (ResourcesController.Universe.WorldCurrent.IsComplete)
+        //{
+        //    switch (ResourcesController.Universe.WorldCurrent.WorldType)
+        //    {
+        //        case WorldType.Earth:
+        //            IncreaseByType(DailyQuestType.CompleteEarth);
+        //            break;
+        //        case WorldType.Desert:
+        //            IncreaseByType(DailyQuestType.CompleteDesert);
+        //            break;
+        //        case WorldType.Iceland:
+        //            IncreaseByType(DailyQuestType.CompleteIceland);
+        //            break;
+        //        case WorldType.Inferno:
+        //            IncreaseByType(DailyQuestType.CompleteInferno);
+        //            break;
+        //        case WorldType.Jade:
+        //            IncreaseByType(DailyQuestType.CompleteJade);
+        //            break;
+        //        case WorldType.Olympus:
+        //            IncreaseByType(DailyQuestType.CompleteOlympus);
+        //            break;
+        //    }
+        //}
     }
 }
 

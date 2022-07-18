@@ -13,12 +13,12 @@ public class WorldCollectPopup : Popup
     {
         base.AfterInstantiate();
 
-        ResourcesController.Universe.Worlds.ForEach(item =>
-        {
-            WorldCollect world = Instantiate(worldCollect, content);
-            world.Init(item, this);
-            worldCollects.Add(world);
-        });
+        //ResourcesController.Universe.Worlds.ForEach(item =>
+        //{
+        //    WorldCollect world = Instantiate(worldCollect, content);
+        //    world.Init(item, this);
+        //    worldCollects.Add(world);
+        //});
     }
 
     protected override void BeforeShow()

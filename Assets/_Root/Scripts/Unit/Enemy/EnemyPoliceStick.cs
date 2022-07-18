@@ -43,7 +43,7 @@ public class EnemyPoliceStick : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.PoliceStick);
+        //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.PoliceStick);
     }
 
     public SkeletonGraphic Skeleton => skeleton;

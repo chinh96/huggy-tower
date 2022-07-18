@@ -37,11 +37,11 @@ public class AchievementPopup : Popup
         base.AfterInstantiate();
 
         int index = 0;
-        ResourcesController.Achievement.AchievementDatas.ForEach(data =>
-        {
-            achievementItems.Add(Instantiate(achievementItem, content));
-            index++;
-        });
+        //ResourcesController.Achievement.AchievementDatas.ForEach(data =>
+        //{
+        //    achievementItems.Add(Instantiate(achievementItem, content));
+        //    index++;
+        //});
     }
 
     protected override void BeforeShow()
@@ -51,7 +51,7 @@ public class AchievementPopup : Popup
         int index = 0;
         achievementItems.ForEach(item =>
         {
-            item.Init(ResourcesController.Achievement.AchievementDatas[index], this);
+            //item.Init(ResourcesController.Achievement.AchievementDatas[index], this);
             index++;
         });
     }
@@ -72,35 +72,35 @@ public class AchievementPopup : Popup
 
     public void UpdateProgress(bool hasAnimation = false)
     {
-        int total = ResourcesController.Achievement.AchievementDatas.Count;
-        int number = ResourcesController.Achievement.GetDatasIsClaimed().Count;
-        //text.text = $"Complete {number}/{total}";
-        text.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", number + "/" + total, true);
+        //int total = ResourcesController.Achievement.AchievementDatas.Count;
+        //int number = ResourcesController.Achievement.GetDatasIsClaimed().Count;
+        ////text.text = $"Complete {number}/{total}";
+        //text.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", number + "/" + total, true);
 
-        float endValue = (float)number / total;
-        if (hasAnimation)
-        {
-            progress.DOFillAmount(endValue, .3f).OnComplete(() =>
-            {
-                var index = ResourcesController.Achievement.AchievementTargetDatas.FindIndex(item => item.Number == number);
-                if (index >= 0 && !ResourcesController.Achievement.AchievementTargetDatas[index].IsClaimed)
-                {
-                    PopupController.Instance.Show<AchievementGiftPopup>(index, ShowAction.DoNothing);
-                    achievementDailyQuestPopup.Close();
-                }
-            });
-        }
-        else
-        {
-            progress.fillAmount = endValue;
-        }
+        //float endValue = (float)number / total;
+        //if (hasAnimation)
+        //{
+        //    progress.DOFillAmount(endValue, .3f).OnComplete(() =>
+        //    {
+        //        var index = ResourcesController.Achievement.AchievementTargetDatas.FindIndex(item => item.Number == number);
+        //        if (index >= 0 && !ResourcesController.Achievement.AchievementTargetDatas[index].IsClaimed)
+        //        {
+        //            PopupController.Instance.Show<AchievementGiftPopup>(index, ShowAction.DoNothing);
+        //            achievementDailyQuestPopup.Close();
+        //        }
+        //    });
+        //}
+        //else
+        //{
+        //    progress.fillAmount = endValue;
+        //}
 
-        int index = 0;
-        ResourcesController.Achievement.AchievementTargetDatas.ForEach(item =>
-        {
-            heroes[index].SetActive(!item.IsClaimed);
-            doneIcons[index].SetActive(item.IsClaimed);
-            index++;
-        });
+        //int index = 0;
+        //ResourcesController.Achievement.AchievementTargetDatas.ForEach(item =>
+        //{
+        //    heroes[index].SetActive(!item.IsClaimed);
+        //    doneIcons[index].SetActive(item.IsClaimed);
+        //    index++;
+        //});
     }
 }

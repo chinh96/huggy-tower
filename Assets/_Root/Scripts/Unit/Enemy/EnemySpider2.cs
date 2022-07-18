@@ -43,7 +43,7 @@ public class EnemySpider2 : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Spider);
+        //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Spider);
     }
 
     public SkeletonGraphic Skeleton => skeleton;

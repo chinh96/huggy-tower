@@ -8,29 +8,17 @@ public class ResourcesController : Singleton<ResourcesController>
     [SerializeField] private SkinResources heroResources;
     [SerializeField] private SkinResources princessResources;
     [SerializeField] private SoundResources soundResources;
-    [SerializeField] private UniverseResources universeResources;
     [SerializeField] private DailyRewardResources dailyRewardResources;
-    [SerializeField] private QuestResources questResources;
     [SerializeField] private ConfigResources config;
-    [SerializeField] private AchievementResources achievement;
-    [SerializeField] private DailyQuestResources dailyQuest;
-    [SerializeField] private LibraryResources library;
     [SerializeField] private CountryResources country;
-    [SerializeField] private DailyRewardEventResources dailyRewardEventResources;
     [SerializeField] private FactoryResources factoryResources;
 
     public static SkinResources Hero;
     public static SkinResources Princess;
     public static SoundResources Sound;
-    public static UniverseResources Universe;
     public static DailyRewardResources DailyReward;
-    public static QuestResources Quest;
     public static ConfigResources Config;
-    public static AchievementResources Achievement;
-    public static DailyQuestResources DailyQuest;
-    public static LibraryResources Library;
     public static CountryResources Country;
-    public static DailyRewardEventResources DailyEventReward;
     public static FactoryResources Factory;
 
     public static List<SkinData> SkinRescuePartys = new List<SkinData>();
@@ -56,11 +44,12 @@ public class ResourcesController : Singleton<ResourcesController>
 
         // GetSkinRescueParty();
         // GetSkinsTG();
+        Reset();
     }
 
     private void Start()
     {
-        Reset();
+        
     }
 
     private void Init()
@@ -68,15 +57,9 @@ public class ResourcesController : Singleton<ResourcesController>
         Hero = heroResources;
         Princess = princessResources;
         Sound = soundResources;
-        Universe = universeResources;
         DailyReward = dailyRewardResources;
-        Quest = questResources;
         Config = config;
-        Achievement = achievement;
-        DailyQuest = dailyQuest;
-        Library = library;
         Country = country;
-        DailyEventReward = dailyRewardEventResources;
         Factory = factoryResources;
     }
 
@@ -84,9 +67,6 @@ public class ResourcesController : Singleton<ResourcesController>
     {
         Hero.Reset();
         Princess.Reset();
-        DailyQuest.Reset();
-        Library.Reset();
-        Achievement.Reset();
     }
 
     public static void GetSkinRescueParty()

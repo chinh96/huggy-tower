@@ -116,8 +116,6 @@ public class GameController : Singleton<GameController>
         huggyBloodXPositionInitial = huggyBlood.localPosition.x;
         bossBloodWidthInitial = bossBlood.sizeDelta.x;
         bossBloodXPositionInitial = bossBlood.localPosition.x;
-
-        Debug.Log("Huggy Blood x : " + huggyBloodXPositionInitial);
     }
 
     private void Update()
@@ -162,13 +160,16 @@ public class GameController : Singleton<GameController>
 
     private void LoadBackground()
     {
-        if (Data.CurrentLevel + 1 == 5 || (Data.CurrentLevel + 1) % 10 == 0) SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
+        int currentLevel = Data.CurrentLevel;
+        if ( (currentLevel + 1) == 5 || currentLevel == 5 || (currentLevel + 1) % 10 == 0 || currentLevel % 10 == 0)
+            SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
         List<GameObject> backgrounds = backgroundsNormal;
 
         //if (Data.TimeToRescueParty.TotalMilliseconds > 0)
         //{
         //    backgrounds = backgroundsHalloween;
         //}
+        skipButton.SetActive(true);
         backgroundBoss.SetActive(false);
 
         backgrounds.ForEach(item => item.SetActive(false));
@@ -404,12 +405,12 @@ public class GameController : Singleton<GameController>
 
     public void UpdateDislayCurrentLevel(int level, ELevelCondition condition)
     {
-        var data = ResourcesController.Quest.GetQuestByCondition(condition);
+        //var data = ResourcesController.Quest.GetQuestByCondition(condition);
 
         //txtQuest.text = $"Level {level + 1}: {data.Quest}";
-        txtQuest.GetComponent<Localize>().SetTerm("QuestInGame_txt" + data.Condition + "Type");
+        //txtQuest.GetComponent<Localize>().SetTerm("QuestInGame_txt" + data.Condition + "Type");
         txtQuest.GetComponent<LocalizationParamsManager>().SetParameterValue("VALUE", $"{level + 1}", true);
-        imgQuest.sprite = data.Sprite;
+        //imgQuest.sprite = data.Sprite;
     }
 
     private void InternalPlayLevel()
@@ -431,11 +432,11 @@ public class GameController : Singleton<GameController>
     public void OnNextLevel()
     {
         SetEnableLeanTouch(false);
-
+        Player.KillSequence();
+        KillSequence();
         PopupController.Instance.DismissAll();
         FadeInOverlay(() =>
         {
-            KillSequence();
             AdController.Instance.ShowInterstitial(() =>
             {
                 Instance.root.Clear();
@@ -447,6 +448,9 @@ public class GameController : Singleton<GameController>
 
     public void OnReplayLevel()
     {
+        Player.KillSequence();
+        KillSequence();
+        //DOTween.KillAll();
         SetEnableLeanTouch(false);
 
         // ResourcesController.Achievement.ResetNumberTemp();
@@ -456,7 +460,6 @@ public class GameController : Singleton<GameController>
 
         FadeInOverlay(() =>
         {
-            KillSequence();
             _isReplay = true;
             Camera.main.transform.position = positionCameraOrigin;
             Instance.LoadLevel(Data.CurrentLevel);
@@ -482,6 +485,7 @@ public class GameController : Singleton<GameController>
         AnalyticController.SkipLevel();
 
         PopupController.Instance.DismissAll();
+        Player.KillSequence();
         KillSequence();
         AdController.Instance.ShowRewardedAd(() =>
         {
@@ -505,6 +509,7 @@ public class GameController : Singleton<GameController>
 
     private void KillSequence()
     {
+        DOTween.KillAll();
         sequence.Kill();
         Player.KillSequence();
     }
@@ -613,7 +618,7 @@ public class GameController : Singleton<GameController>
         GameState = EGameState.Win;
         SoundController.Instance.PlayOnce(SoundType.Win);
 
-        sequence = DOTween.Sequence().AppendInterval(delayWinLose / 2).AppendCallback(() =>
+        sequence.Append(DOTween.Sequence().AppendInterval(delayWinLose / 2).AppendCallback(() =>
         {
             FadeInOverlay(() =>
             {
@@ -627,7 +632,7 @@ public class GameController : Singleton<GameController>
                 //     PopupController.Instance.Show<RatingPopup>(null, ShowAction.DoNothing);
                 // }
             });
-        });
+        }));
     }
 
     public void OnLoseLevel()
@@ -641,13 +646,13 @@ public class GameController : Singleton<GameController>
             GameState = EGameState.Lose;
             SoundController.Instance.PlayOnce(SoundType.Lose);
 
-            sequence = DOTween.Sequence().AppendInterval(delayWinLose / 2).AppendCallback(() =>
+            sequence.Append(DOTween.Sequence().AppendInterval(delayWinLose / 2).AppendCallback(() =>
             {
                 FadeInOverlay(() =>
                 {
                     ShowPopupLose();
                 });
-            });
+            }));
         });
     }
 
@@ -778,17 +783,17 @@ public class GameController : Singleton<GameController>
             
             overlayFightingBoss.gameObject.SetActive(true);
             overlayFightingBoss.DOFade(.5f, 0);
-
+            MoveInAnim();
             FadeOutOverlay(() =>
             {
                 SoundController.Instance.PlayBackground(SoundType.BGFightingBoss);
                 SetEnableLeanTouch(false);
                 //float endValue = (Player.transform.position.x + visitTowers[indexVisitTower + 1].transform.position.x) / 2;
                 SetEnableLeanTouch(true);
-                DOTween.Sequence().AppendInterval(0.2f).OnComplete(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(0.2f).OnComplete(() =>
                 {
                     player.Turn = ETurn.FightingBoss;
-                });
+                }));
             });
 
         });
@@ -809,9 +814,9 @@ public class GameController : Singleton<GameController>
                 Player.Turn = ETurn.Win;
                 Player.KillSequence();
                 Player.PlayIdle(true);
-                DOTween.Sequence().AppendInterval(0.1f).AppendCallback( () => {
+                sequence.Append(DOTween.Sequence().AppendInterval(0.1f).AppendCallback( () => {
                     Player.SavePrincessVsBoss();
-                });
+                }));
             }
         }
         else if (huggyBlood.sizeDelta.x > 60)
@@ -829,10 +834,10 @@ public class GameController : Singleton<GameController>
                 Boss().GetComponent<SkeletonGraphic>().Play("Idle", true);
                 Player.PlayDead();
                 Player.State = EUnitState.Invalid;
-                sequence = DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
                 {
                     OnLoseLevel();
-                });
+                }));
             }
         }
     }

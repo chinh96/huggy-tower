@@ -27,8 +27,6 @@ public class HomeController : Singleton<HomeController>
     protected override void Awake()
     {
         base.Awake();
-
-        CheckButton();
         overlay.DOFade(0, 0);
 
     }
@@ -68,6 +66,7 @@ public class HomeController : Singleton<HomeController>
 
     private void Start()
     {
+        CheckButton();
         canvasScaler.matchWidthOrHeight = Camera.main.aspect > .7f ? 1 : 0;
         SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
         FadeOutOverlay();
@@ -92,7 +91,7 @@ public class HomeController : Singleton<HomeController>
         // ResourcesController.Achievement.IncreaseByType(AchievementType.PlayToLevel);
 
         // ResourcesController.Achievement.CheckCompleteCastle();
-        ResourcesController.DailyQuest.CheckCompleteCastle();
+        //ResourcesController.DailyQuest.CheckCompleteCastle();
     }
 
     private void CheckTG()

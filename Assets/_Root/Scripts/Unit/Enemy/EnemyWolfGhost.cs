@@ -40,8 +40,8 @@ public class EnemyWolfGhost : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.WolfEnemy);
-        ResourcesController.Achievement.IncreaseByType(AchievementType.WolfEnemy);
+        //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.WolfEnemy);
+        //ResourcesController.Achievement.IncreaseByType(AchievementType.WolfEnemy);
     }
 
     public SkeletonGraphic Skeleton => skeleton;

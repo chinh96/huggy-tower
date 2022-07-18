@@ -197,7 +197,7 @@ public class DailyRewardItem : MonoBehaviour
         }
         Debug.Log("Done Claimed Skin");
         dailyRewardPopup.OnClickClaim(claimButton, isSkin);
-        ResourcesController.Achievement.IncreaseByType(AchievementType.ClaimDailyReward);
+        //ResourcesController.Achievement.IncreaseByType(AchievementType.ClaimDailyReward);
     }
 
     public void SetDoneAfterClaimedAds()

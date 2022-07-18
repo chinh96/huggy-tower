@@ -19,23 +19,23 @@ public class World : MonoBehaviour
     }
     public void Reset()
     {
-        int index = 0;
-        foreach (Image castle in castles)
-        {
-            CastleData castleCurrent = ResourcesController.Universe.WorldCurrent.Castles[index].CastleCurrent; // last isActive = true
-            if (castleCurrent != null)
-            {
-                castle.sprite = castleCurrent.Sprite;
-                castle.SetNativeSize();
-                castle.gameObject.SetActive(true);
-            }
-            else
-            {
-                castle.gameObject.SetActive(false);
-            }
-            index++;
-        }
-        hammer.SetActive(false);
+        //int index = 0;
+        //foreach (Image castle in castles)
+        //{
+        //    CastleData castleCurrent = ResourcesController.Universe.WorldCurrent.Castles[index].CastleCurrent; // last isActive = true
+        //    if (castleCurrent != null)
+        //    {
+        //        castle.sprite = castleCurrent.Sprite;
+        //        castle.SetNativeSize();
+        //        castle.gameObject.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        castle.gameObject.SetActive(false);
+        //    }
+        //    index++;
+        //}
+        //hammer.SetActive(false);
     }
 
     public void Build(int castleIndex)

@@ -44,7 +44,7 @@ public class EnemyFire : Unit, IAnim
         rigid.simulated = false;
         TxtDamage.gameObject.SetActive(false);
         PlayDead();
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Fire);
+        //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Fire);
     }
 
     public SkeletonGraphic Skeleton => skeleton;

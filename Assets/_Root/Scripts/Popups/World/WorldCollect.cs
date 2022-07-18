@@ -28,7 +28,7 @@ public class WorldCollect : MonoBehaviour
         if (Data.CurrentLevel >= worldResources.LevelUnlock)
         {
             visitButton.SetActive(true);
-            noti.SetActive(ResourcesController.Universe.IsNoti(worldResources));
+            //noti.SetActive(ResourcesController.Universe.IsNoti(worldResources));
         }
         else
         {

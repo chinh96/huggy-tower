@@ -99,6 +99,8 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     private void Start()
     {
+        sequence = DOTween.Sequence();
+        sequence.id = "Player";
         dragTranslate.valiateAction = ValidateChooseRoom;
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
         UpdateDefault();
@@ -254,12 +256,12 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
         effectFadeIn.Play();
         Skeleton.Play("FadeOut", false);
-        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+        sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
         {
             MoveToSlot(parentRoom);
             effectFadeOut.Play();
             Skeleton.Play("FadeIn", false);
-        });
+        }));
     }
 
     public void MoveToSlot(RoomTower parentRoom)
@@ -368,6 +370,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         {
             if (isTapFightingBoss)
             {
+                if(tapToFightingBoss.activeSelf) tapToFightingBoss.SetActive(false);
                 RaycastHit2D hit;
                 LayerMask mask = LayerMask.GetMask("Enemy");
                 Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 2, 0), Vector2.right * 20, Color.red);
@@ -432,26 +435,27 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     }
     public void TapToStartFightingBoss()
     {
-        isTapFightingBoss = true;
         tapToFightingBoss.SetActive(false);
+        isTapFightingBoss = true;
     }
 
     public void SavePrincessVsBoss()
     {
+        leanSelectableByFinger.Deselect();
         _target.PlayDie();
-        DOTween.Sequence().AppendInterval(0.5f).AppendCallback( () => {
+        sequence.Append(DOTween.Sequence().AppendInterval(0.5f).AppendCallback( () => {
                 effectFadeIn.Play();
                 Skeleton.Play("FadeOut", false);
-        });
-        
-        DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
+        }));
+
+        sequence.Append(DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
         {
             transform.SetParent(GameController.Instance.Princess.transform.parent);
-            transform.localPosition = new Vector2(GameController.Instance.Princess.transform.localPosition.x - 357, GameController.Instance.Princess.transform.localPosition.y);
+            transform.localPosition = new Vector2(GameController.Instance.Princess.transform.localPosition.x - 300, GameController.Instance.Princess.transform.localPosition.y);
             effectFadeOut.Play();
             Skeleton.Play("FadeIn", false);
             Turn = ETurn.Searching;
-        });
+        }));
     }
     private void SearchingTarget()
     {
@@ -534,17 +538,17 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                                                 // effect of the enemy attack on the player
                                 if (_target as EnemyGoblin || _target as EnemyKappa)
                                 {
-                                    DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                                    sequence.Append(DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
                                     {
                                         if (_target as EnemyKappa)
                                         {
                                             // effectHitKappa.gameObject.SetActive(true);
                                             // effectHitKappa.Play();
                                             effectPoisonSecretary.Play();
-                                            DOTween.Sequence().AppendInterval(.01f).AppendCallback(() =>
+                                            sequence.Append(DOTween.Sequence().AppendInterval(.01f).AppendCallback(() =>
                                             {
                                                 if (effectPoisonGroundSecretary.activeSelf == false) effectPoisonGroundSecretary.SetActive(true);
-                                            });
+                                            }));
                                         }
                                         else
                                         {
@@ -557,11 +561,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                                         skeleton.Play("Die2", false);
 
-                                        DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
+                                        sequence.Append(DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
                                         {
                                             PlayAttack();
-                                        });
-                                    });
+                                        }));
+                                    }));
 
                                     var cacheDamage = Damage;
                                     Damage -= _target.Damage; // with enemy is either Kappa or Goblin
@@ -575,10 +579,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 }
                                 else
                                 {
-                                    DOTween.Sequence().AppendInterval(0.1f).AppendCallback(() =>
+                                    sequence.Append(DOTween.Sequence().AppendInterval(0.1f).AppendCallback(() =>
                                     {
                                         PlayAttack();
-                                    });
+                                    }));
                                 }
                             }
                             else
@@ -602,7 +606,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         if (distance >= 80)
                         {
                             PLayMove(true);
-                            transform.DOLocalMoveX(_target.transform.localPosition.x - 143, 1f).SetEase(Ease.Linear).OnComplete(() => { SavePrincess(); });
+                            sequence.Append(transform.DOLocalMoveX(_target.transform.localPosition.x - 143, 1f).SetEase(Ease.Linear).OnComplete(() => { SavePrincess(); }));
                         }
                         else
                         {
@@ -623,16 +627,16 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             if (princess.LockObj == null)
                             {
                                 skeleton.Play("Open", false);
-                                DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+                                sequence.Append(DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                 {
                                     princess.PlayOpen();
-                                    DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+                                    sequence.Append(DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                     {
                                         princess.PlayWin(true);
                                         GameController.Instance.OnWinLevel();
-                                    });
+                                    }));
                                     GiveFlower();
-                                });
+                                }));
                             }
                             else
                             {
@@ -650,11 +654,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                             princess.LockObj2?.DOFade(0, .3f);
                                             princess.PlayOpenCage();
                                             princess.LockObj?.gameObject.SetActive(false);
-                                            DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+                                            sequence.Append(DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                             {
                                                 princess.PlayWin(true);
                                                 GameController.Instance.OnWinLevel();
-                                            });
+                                            }));
                                             GiveFlower();
                                         });
                                     });
@@ -724,23 +728,24 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     if (_itemTarget as ItemTeleport != null)
                     {
                         //skeleton.Play("Teleport", false);
-                        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                        GameController.Instance.MoveOutAnim();
+                        sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                         {
                             _itemTarget.Collect(this);
                             TxtDamage.gameObject.SetActive(false);
-                            DOTween.Sequence().AppendInterval(0.5f).AppendCallback(() =>
+                            sequence.Append(DOTween.Sequence().AppendInterval(0.5f).AppendCallback(() =>
                             {
                                 if (Data.CurrentLevel < 7)
                                 {
-                                    DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
+                                    sequence.Append(DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
                                     tapToFightingBoss.SetActive(true)
-                                    );
+                                    ));
                                 }
                                 else tapToFightingBoss.SetActive(false);
                                 GameController.Instance.FightingBoss();
                                 isTapFightingBoss = false;
-                            });
-                        });
+                            }));
+                        }));
                         return;
                     }
 
@@ -781,7 +786,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         _itemTarget.EquipType == ItemType.Bomb ||
                         _itemTarget.EquipType == ItemType.Electric ? 1.2f : .5f;
                     // Time delay after collect item
-                    DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
+                    sequence.Append(DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
                         if (levelMap.condition == condition)
                         {
@@ -792,10 +797,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                     {
                                         float timeDelay = 0.7f;
                                         if (GameController.Instance.ItemLock == null) timeDelay = 1.7f;
-                                        DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
+                                        sequence.Append(DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                                         {
                                             GameController.Instance.OnWinLevel();
-                                        });
+                                        }));
                                         PlayIdle(true);
                                     }
                                     else
@@ -804,10 +809,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                     }
                                     break;
                                 default:
-                                    DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+                                    sequence.Append(DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                                     {
                                         GameController.Instance.OnWinLevel();
-                                    });
+                                    }));
                                     PlayWin(true);
                                     break;
                             }
@@ -816,7 +821,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         {
                             StartSerching();
                         }
-                    });
+                    }));
 
                     void StartSerching()
                     {
@@ -843,10 +848,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             else timeDelay = 2;
                             break;
                     }
-                    DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
+                    sequence.Append(DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
                         _itemTarget.Collect(this);
-                    });
+                    }));
                 }
             }
             else
@@ -934,11 +939,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     else
                     {
                         Damage += _cacheTarget.Damage;
-                        DOTween.Sequence().AppendInterval(.05f).AppendCallback(() =>
+                        sequence.Append(DOTween.Sequence().AppendInterval(.05f).AppendCallback(() =>
                         {
                             effectIncreaseDamge.gameObject.SetActive(true);
                             effectIncreaseDamge.Play();
-                        });
+                        }));
 
                         if (txtDamageEnemy.gameObject.activeSelf)
                         {
@@ -1026,25 +1031,25 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         PlayIdle(true);
         if (_target as EnemyWolfGhost)
         {
-            DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+            sequence.Append(DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
             {
                 skeleton.Play("PickUp", false);
-            });
+            }));
 
-            DOTween.Sequence().AppendInterval(.8f).AppendCallback(() =>
+            sequence.Append(DOTween.Sequence().AppendInterval(.8f).AppendCallback(() =>
             {
                 EquipType = ItemType.Claws;
 
                 ChangeSword(skinWolfGhost);
                 PlayIdle(true);
                 AttackByEvent();
-            });
+            }));
 
-            DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
+            sequence.Append(DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
             {
                 effectKillWolfGhost.gameObject.SetActive(true);
                 effectKillWolfGhost.Play();
-            });
+            }));
         }
         else
         {
@@ -1063,7 +1068,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         {
             if (Turn != ETurn.FightingBoss)
             {
-                DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
                 {
                     _target.gameObject.SetActive(false);
                     var room = levelMap.visitTower.RoomContainPlayer(this);
@@ -1083,11 +1088,14 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         }
                         else if (IsWinCondition(levelMap.condition))
                         {
-                            PlayWin(true);
-                            GameController.Instance.OnWinLevel();
+                            if(_target.Type != EUnitType.Boss)
+                            {
+                                PlayWin(true);
+                                GameController.Instance.OnWinLevel();
+                            }   
                         }
                     }
-                });
+                }));
             }
             else if (Turn == ETurn.FightingBoss)
             {
@@ -1126,10 +1134,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         if (_target as EnemyKappa)
         {
             effectPoisonSecretary.Play();
-            DOTween.Sequence().AppendInterval(.01f).AppendCallback(() =>
+            sequence.Append(DOTween.Sequence().AppendInterval(.01f).AppendCallback(() =>
             {
                 if (effectPoisonGroundSecretary.activeSelf == false) effectPoisonGroundSecretary.SetActive(true);
-            });
+            }));
         }
         else if (_target as EnemyGoblin)
         {
@@ -1151,15 +1159,16 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         State = EUnitState.Invalid;
         PlayDead();
 
-        sequence = DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
+        sequence.Append(DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
         {
             GameController.Instance.OnLoseLevel();
-        });
+        }));
     }
 
     public void KillSequence()
     {
         sequence.Kill();
+        DOTween.Kill("Player");
     }
 
     private void CollectChest() { }
@@ -1205,7 +1214,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         float timeDelay = attack == "AttackSword" ? .8f : .3f;
         if (!(_target as EnemyGhost))
         {
-            DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
+            sequence.Append(DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
             {
                 var main = effectBlood.main;
                 main.startColor = _target.ColorBlood;
@@ -1268,7 +1277,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     effectBlood.gameObject.SetActive(true);
                     effectBlood.Play();
                 }
-            });
+            }));
         }
     }
 
@@ -1330,14 +1339,14 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     // skeleton.Play("AttackKiemJapan", false);
                     skeleton.Play("Attack", false);
 
-                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                     {
                         SoundController.Instance.PlayOnce(SoundType.HeroCut3);
                         PlayBloodEnemy();
 
                         if (hasBloodEnemy)
                         {
-                            DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                            sequence.Append(DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                             {
                                 ParticleSystem tornado = Instantiate(effectTornado, transform.parent);
                                 tornado.gameObject.SetActive(true);
@@ -1347,9 +1356,9 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 {
                                     Destroy(tornado.gameObject);
                                 });
-                            });
+                            }));
                         }
-                    });
+                    }));
                     break;
                 }
             case ItemType.Sword:
@@ -1365,7 +1374,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     SoundType[] soundTypes = { SoundType.HeroCut, SoundType.HeroCut2, SoundType.HeroCut3 };
                     SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
                     float timeDelay = attack == "AttackSword" ? .5f : 0;
-                    DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
+                    sequence.Append(DOTween.Sequence().AppendInterval(timeDelay).AppendCallback(() =>
                     {
 
                         // DOTween.Sequence().SetDelay(.5f).OnComplete(() =>
@@ -1377,7 +1386,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         // });
 
                         SoundController.Instance.PlayOnce(soundType);
-                    });
+                    }));
 
                     PlayBloodEnemy(attack);
                     break;
@@ -1393,7 +1402,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
                     if (hasBloodEnemy)
                     {
-                        DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
+                        sequence.Append(DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
                         {
                             ParticleSystem temp;
                             switch (EquipType)
@@ -1417,13 +1426,13 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             elemental.Play();
                             elemental.transform.DOMove(_target.transform.position + Vector3.up * .5f + Vector3.right * .5f, .2f).OnComplete(() =>
                             {
-                                DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                                sequence.Append(DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                                 {
                                     Destroy(elemental.gameObject);
-                                });
+                                }));
                             });
                             SoundController.Instance.PlayOnce(SoundType.Elemental);
-                        });
+                        }));
                     }
                     break;
                 }
@@ -1431,17 +1440,17 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 //skeleton.Play("AttackBow", false);
                 skeleton.Play("Attack", false);
                 SoundController.Instance.PlayOnce(SoundType.Bow2);
-                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
                 {
                     PlayBloodEnemy();
-                });
-                DOTween.Sequence().AppendInterval(.8f).AppendCallback(() =>
+                }));
+                sequence.Append(DOTween.Sequence().AppendInterval(.8f).AppendCallback(() =>
                 {
                     GameObject bow1 = Instantiate(bow, transform.parent);
                     bow1.transform.position = transform.position + new Vector3(1, 1, 0);
                     Vector3 endValue = bow1.transform.position + new Vector3(5, 0, 0);
                     bow1.transform.DOMove(endValue, .5f).OnComplete(() => Destroy(bow1));
-                });
+                }));
                 break;
             case ItemType.Polllaxe:
                 //skeleton.Play("AttackPollaxe", false);
@@ -1459,14 +1468,14 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.SwordBlood:
                 //skeleton.Play("AttackSword3", false);
                 skeleton.Play("Attack", false);
-                DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                 {
                     SoundController.Instance.PlayOnce(SoundType.HeroCut3);
-                });
-                DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                }));
+                sequence.Append(DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                 {
                     PlayBloodEnemy();
-                });
+                }));
                 break;
             case ItemType.Shuriken:
                 //skeleton.Play("Shuriken", false);
@@ -1488,45 +1497,45 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Saw:
                 SoundController.Instance.PlayOnce(SoundType.HuggyAttackSaw);
                 skeleton.Play("AttackSaw", false);
-                DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
                 {
                     PlayBloodEnemy();
-                });
+                }));
                 break;
             case ItemType.Shield:
                 SoundController.Instance.PlayOnce(SoundType.HeroCut);
                 skeleton.Play("AttackAxe", false);
-                DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(.1f).AppendCallback(() =>
                 {
                     PlayBloodEnemy();
-                });
+                }));
                 break;
             case ItemType.Claws:
                 SoundController.Instance.PlayOnce(SoundType.HuggyAttackClaws);
-                DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                 {
                     PlayHitEnemy();
                     PlayBloodEnemy();
-                });
+                }));
 
-                DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                 {
                     SoundController.Instance.PlayOnce(SoundType.HeroHit3);
-                });
+                }));
                 skeleton.Play("AttackClaws", false);
                 break;
             case ItemType.Hammer:
-                DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(.2f).AppendCallback(() =>
                 {
                     SoundController.Instance.PlayOnce(SoundType.HuggyAttackHammer);
-                });
+                }));
                 skeleton.Play("AttackHammer", false);
                 if (hasBloodEnemy)
                 {
-                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                     {
                         PlayHitEnemy();
-                    });
+                    }));
                 }
                 break;
             case ItemType.Baseball:
@@ -1534,10 +1543,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 skeleton.Play("AttackBaseball", false);
                 if (hasBloodEnemy)
                 {
-                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                     {
                         PlayHitEnemy();
-                    });
+                    }));
                 }
                 break;
             default:
@@ -1577,10 +1586,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         skeleton.Play(attack, false);
                         if (hasBloodEnemy)
                         {
-                            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                            sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                             {
                                 PlayHitEnemy();
-                            });
+                            }));
                         }
                     }
                     else
@@ -1630,7 +1639,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                     offset = new Vector3(0, .5f, 0);
                                 }
 
-                                DOTween.Sequence().AppendInterval(delay).AppendCallback(() =>
+                                sequence.Append(DOTween.Sequence().AppendInterval(delay).AppendCallback(() =>
                                  {
                                      ParticleSystem particle = Instantiate(particlePrefab);
                                      particle.transform.position = _target.transform.position + offset;
@@ -1643,7 +1652,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                      {
                                          SoundController.Instance.PlayOnce(SoundType.Axe2);
                                      }
-                                 });
+                                 }));
                                 break;
                             }
 
@@ -1660,10 +1669,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
         if (Data.VibrateState)
         {
-            DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+            sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
             {
                 Vibration.VibratePeek();
-            });
+            }));
         }
     }
 
@@ -1789,63 +1798,63 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 var itemLock = GameController.Instance.ItemLock;
                 if (itemLock == null)
                 {
-                    DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                    sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                     {
                         _cacheItemTarget.gameObject.SetActive(false);
-                    });
+                    }));
                 }
                 else
                 {
-                    DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
+                    sequence.Append(DOTween.Sequence().AppendInterval(1).AppendCallback(() =>
                     {
                         _cacheItemTarget.transform.DOMove(itemLock.LockPosition.transform.position, 1).OnComplete(() =>
                         {
                             _cacheItemTarget.gameObject.SetActive(false);
                             itemLock.PlayWin();
                         });
-                    });
+                    }));
                 }
                 break;
 
             case ItemType.BrokenBrick:
                 SoundController.Instance.PlayOnce(SoundType.HeroPushWall);
                 //skeleton.Play("HitWall", false);
-                DOTween.Sequence().AppendInterval(.4f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(.4f).AppendCallback(() =>
                 {
                     ParticleSystem effectHitWall = Instantiate(this.effectHitWall, transform.parent);
                     effectHitWall.transform.position = this.effectHitWall.transform.position;
                     effectHitWall.gameObject.SetActive(true);
                     effectHitWall.Play();
-                });
+                }));
                 break;
 
             case ItemType.Electric:
-                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
                     {
                         SoundController.Instance.PlayOnce(SoundType.ElectricTrap);
                         effectElectricHuggy.gameObject.SetActive(true);
                         skeleton.Play("LoseElectric", false);
-                    });
+                    }));
                 break;
 
             case ItemType.Trap:
-                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
                 {
                     skeleton.Play("LoseTrap", false);
-                });
+                }));
                 break;
             case ItemType.Bomb:
-                DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
                {
                    skeleton.Play("LoseBomb", false);
-               });
+               }));
                 break;
             case ItemType.Bow:
                 break;
-                DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
                 {
                     skeleton.Play("Die2", false);
-                });
+                }));
                 break;
             default:
                 {

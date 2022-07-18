@@ -9,7 +9,7 @@ public class SoundController : Singleton<SoundController>
     [SerializeField] private AudioSource onceAudio;
     private List<AudioClip> audioClips = new List<AudioClip>();
 
-    private void Start()
+    private void Awake()
     {
         DontDestroyOnLoad(gameObject);
         Init();

@@ -12,7 +12,7 @@ public class CastlePopup : Popup
     {
         base.BeforeShow();
 
-        this.worldCurrent = ResourcesController.Universe.WorldCurrent;
+        //this.worldCurrent = ResourcesController.Universe.WorldCurrent;
 
         for (int i = 0; i < castles.Count; i++)
         {

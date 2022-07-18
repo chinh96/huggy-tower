@@ -81,8 +81,8 @@ public class Princess : Unit, IAnim
 
         SoundType[] soundWins = {SoundType.KissyWin, SoundType.KissyWin2};
         SoundController.Instance.PlayOnce(soundWins[UnityEngine.Random.Range(0, soundWins.Length)]);
-        ResourcesController.Achievement.IncreaseByType(AchievementType.Princess);
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Princess);
+        //ResourcesController.Achievement.IncreaseByType(AchievementType.Princess);
+        //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.Princess);
     }
 
     public void PlayLose(bool isLoop) { }

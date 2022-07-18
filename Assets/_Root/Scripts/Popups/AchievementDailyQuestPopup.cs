@@ -14,10 +14,10 @@ public class AchievementDailyQuestPopup : Popup
     {
         base.BeforeShow();
 
-        ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.BuySkin);
-        ResourcesController.Achievement.IncreaseByType(AchievementType.BuySkin);
+        //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.BuySkin);
+        //ResourcesController.Achievement.IncreaseByType(AchievementType.BuySkin);
 
-        ResourcesController.DailyQuest.Reset();
+        //ResourcesController.DailyQuest.Reset();
 
         achievementPopup.Init(this);
         dailyQuestPopup.Init();

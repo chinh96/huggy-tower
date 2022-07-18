@@ -26,37 +26,37 @@ public class DailyRewardPopupEvent : Popup
 
     void InitData()
     {
-        var dataConfig = ResourcesController.DailyEventReward.DailyRewards;
-        var numRows = Math.Ceiling(dataConfig.Count / 15f); // ?? don't use
+        //var dataConfig = ResourcesController.DailyEventReward.DailyRewards;
+        //var numRows = Math.Ceiling(dataConfig.Count / 15f); // ?? don't use
 
-        for (int i = 0; i < 2; i++)
-        {
+        //for (int i = 0; i < 2; i++)
+        //{
 
-            Transform row;
-            int maxCount = 7;
-            // if ((i + 1) * 7 > dataConfig.Count) maxCount = dataConfig.Count - i * 15;
-            if (i == 0)
-            {
-                maxCount = 7;
-            }
-            else
-            {
-                maxCount = dataConfig.Count - 7;
-            }
-            var dataWeek = dataConfig.GetRange(i * 7, maxCount);
-            if (i < containerGird.transform.childCount)
-                row = containerGird.transform.GetChild(i);
-            else
-            {
-                row = Instantiate(panalItemWeek.gameObject, containerGird.transform).transform;
-                row.SetParent(containerGird.transform);
-            }
-            var _comp = row.GetComponent<PanalItemWeek>();
-            _comp.InitDataWeek(i, dataWeek, (day, cfg, item) =>
-            {
-                OnClickClaimCallBack(day, cfg, item, coinTotal);
-            });
-        }
+        //    Transform row;
+        //    int maxCount = 7;
+        //    // if ((i + 1) * 7 > dataConfig.Count) maxCount = dataConfig.Count - i * 15;
+        //    if (i == 0)
+        //    {
+        //        maxCount = 7;
+        //    }
+        //    else
+        //    {
+        //        maxCount = dataConfig.Count - 7;
+        //    }
+        //    var dataWeek = dataConfig.GetRange(i * 7, maxCount);
+        //    if (i < containerGird.transform.childCount)
+        //        row = containerGird.transform.GetChild(i);
+        //    else
+        //    {
+        //        row = Instantiate(panalItemWeek.gameObject, containerGird.transform).transform;
+        //        row.SetParent(containerGird.transform);
+        //    }
+        //    var _comp = row.GetComponent<PanalItemWeek>();
+        //    _comp.InitDataWeek(i, dataWeek, (day, cfg, item) =>
+        //    {
+        //        OnClickClaimCallBack(day, cfg, item, coinTotal);
+        //    });
+        //}
     }
     void OnClickClaimCallBack(int day, ItemConfigEvent cfg, GameObject from, GameObject to)
     {

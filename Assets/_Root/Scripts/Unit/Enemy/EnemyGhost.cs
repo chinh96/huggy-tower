@@ -63,11 +63,7 @@ public class EnemyGhost : Unit, IAnim
     {
         skeleton.Play("Die", false);
 
-        SoundType[] soundTypes = { SoundType.EnemyDie, SoundType.EnemyDie2, SoundType.EnemyDie3 };
-        SoundType soundType = soundTypes[UnityEngine.Random.Range(0, soundTypes.Length)];
-        SoundController.Instance.PlayOnce(soundType);
-
-        fxDie.Play();
+        SoundController.Instance.PlayOnce(SoundType.EnemyVenomDie);
     }
 
     public void PlayWin(bool isLoop) { }

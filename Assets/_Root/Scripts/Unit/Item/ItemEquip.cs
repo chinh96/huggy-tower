@@ -72,7 +72,7 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
             }
             IncreaseDamage(player);
             ChangeSword(player);
-            CheckDailyQuest();
+            //CheckDailyQuest();
         }
     }
 
@@ -133,27 +133,27 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
         }
     }
 
-    private void CheckDailyQuest()
-    {
-        switch (EquipType)
-        {
-            case ItemType.Shield:
-                ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetShield);
-                break;
-            case ItemType.Food:
-                ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetFood);
-                break;
-            case ItemType.Sword:
-                ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetSword);
-                break;
-            case ItemType.Gloves:
-                ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetGloves);
-                break;
-            case ItemType.HolyWater:
-                ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetHolyWater);
-                break;
-        }
-    }
+    //private void CheckDailyQuest()
+    //{
+    //    switch (EquipType)
+    //    {
+    //        case ItemType.Shield:
+    //            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetShield);
+    //            break;
+    //        case ItemType.Food:
+    //            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetFood);
+    //            break;
+    //        case ItemType.Sword:
+    //            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetSword);
+    //            break;
+    //        case ItemType.Gloves:
+    //            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetGloves);
+    //            break;
+    //        case ItemType.HolyWater:
+    //            ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.GetHolyWater);
+    //            break;
+    //    }
+    //}
 }
 
 #if UNITY_EDITOR

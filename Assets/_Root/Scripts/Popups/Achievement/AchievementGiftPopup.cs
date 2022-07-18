@@ -18,7 +18,7 @@ public class AchievementGiftPopup : Popup
         indexSkin = (int)data;
         skinData = ResourcesController.Hero.SkinAchievements[indexSkin];
         hero.ChangeSkin(skinData.SkinName);
-        achievementTargetData = ResourcesController.Achievement.AchievementTargetDatas[indexSkin];
+        //achievementTargetData = ResourcesController.Achievement.AchievementTargetDatas[indexSkin];
 
         skinData.IsUnlocked = true;
         achievementTargetData.IsClaimed = true;

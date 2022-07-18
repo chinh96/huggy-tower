@@ -28,14 +28,14 @@ public class DailyQuestPopup : Popup
         base.AfterInstantiate();
         int index = 0;
 
-        List<DailyQuestDayItem> dailyQuestDayItems = ResourcesController.DailyQuest.DailyQuestDayCurrent.DailyQuestDayItems;
-        dailyQuestDayItems.ForEach(dailyQuestDayItem =>
-        {
-            DailyQuestItem item = Instantiate(dailyQuestItem, content);
-            item.Init(dailyQuestDayItem, this);
-            dailyQuestItems.Add(item);
-            index++;
-        });
+        //List<DailyQuestDayItem> dailyQuestDayItems = ResourcesController.DailyQuest.DailyQuestDayCurrent.DailyQuestDayItems;
+        //dailyQuestDayItems.ForEach(dailyQuestDayItem =>
+        //{
+        //    DailyQuestItem item = Instantiate(dailyQuestItem, content);
+        //    item.Init(dailyQuestDayItem, this);
+        //    dailyQuestItems.Add(item);
+        //    index++;
+        //});
     }
 
     protected override void BeforeShow()

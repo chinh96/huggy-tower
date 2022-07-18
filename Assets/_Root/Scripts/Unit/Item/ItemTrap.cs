@@ -79,7 +79,7 @@ public class ItemTrap : Item
             switch (EquipType)
             {
                 case ItemType.BrokenBrick:
-                    ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.PushWall);
+                    //ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.PushWall);
                     break;
             }
 

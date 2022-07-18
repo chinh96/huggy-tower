@@ -16,8 +16,8 @@ public class AchievementResources : ScriptableObject
 
     public void Reset()
     {
-        int number = ResourcesController.Achievement.GetDatasIsClaimed().Count;
-        ResourcesController.Hero.SkinAchievements.ForEach(skin => skin.IsUnlocked = number >= skin.NumberAchievement);
+        //int number = ResourcesController.Achievement.GetDatasIsClaimed().Count;
+        //ResourcesController.Hero.SkinAchievements.ForEach(skin => skin.IsUnlocked = number >= skin.NumberAchievement);
     }
 
     public void IncreaseByType(AchievementType type, int value = 1)
@@ -111,33 +111,33 @@ public class AchievementResources : ScriptableObject
 
     public void CheckCompleteCastle()
     {
-        ResourcesController.Universe.Worlds.ForEach(world =>
-        {
-            if (world.IsComplete)
-            {
-                switch (world.WorldType)
-                {
-                    case WorldType.Earth:
-                        IncreaseByType(AchievementType.CompleteEarth);
-                        break;
-                    case WorldType.Desert:
-                        IncreaseByType(AchievementType.CompleteDesert);
-                        break;
-                    case WorldType.Iceland:
-                        IncreaseByType(AchievementType.CompleteIceland);
-                        break;
-                    case WorldType.Inferno:
-                        IncreaseByType(AchievementType.CompleteInferno);
-                        break;
-                    case WorldType.Jade:
-                        IncreaseByType(AchievementType.CompleteJade);
-                        break;
-                    case WorldType.Olympus:
-                        IncreaseByType(AchievementType.CompleteOlympus);
-                        break;
-                }
-            }
-        });
+        //ResourcesController.Universe.Worlds.ForEach(world =>
+        //{
+        //    if (world.IsComplete)
+        //    {
+        //        switch (world.WorldType)
+        //        {
+        //            case WorldType.Earth:
+        //                IncreaseByType(AchievementType.CompleteEarth);
+        //                break;
+        //            case WorldType.Desert:
+        //                IncreaseByType(AchievementType.CompleteDesert);
+        //                break;
+        //            case WorldType.Iceland:
+        //                IncreaseByType(AchievementType.CompleteIceland);
+        //                break;
+        //            case WorldType.Inferno:
+        //                IncreaseByType(AchievementType.CompleteInferno);
+        //                break;
+        //            case WorldType.Jade:
+        //                IncreaseByType(AchievementType.CompleteJade);
+        //                break;
+        //            case WorldType.Olympus:
+        //                IncreaseByType(AchievementType.CompleteOlympus);
+        //                break;
+        //        }
+        //    }
+        //});
     }
 
     public string ConvertData()

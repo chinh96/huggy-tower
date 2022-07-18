@@ -28,10 +28,10 @@ public static class Data
         get => GetInt(Constants.CURRENT_LEVEL, 0);
         set
         {
-            ResourcesController.Achievement.IncreaseByType(AchievementType.PlayToLevel);
+            //ResourcesController.Achievement.IncreaseByType(AchievementType.PlayToLevel);
 
-            ResourcesController.Achievement.UpdateNumberCurrent();
-            ResourcesController.DailyQuest.UpdateNumberCurrent();
+            //ResourcesController.Achievement.UpdateNumberCurrent();
+            //ResourcesController.DailyQuest.UpdateNumberCurrent();
 
             SetInt(Constants.CURRENT_LEVEL, value);
         }
@@ -144,8 +144,7 @@ public static class Data
     public static bool IsUnlocked { get => GetBool(IdCheckUnlocked, false); set => SetBool(IdCheckUnlocked, value); }
 
     public static int PercentProgressGift { get => GetInt(Constants.PERCENT_PROGRESS_GIFT, 0); set => SetInt(Constants.PERCENT_PROGRESS_GIFT, value); }
-
-    public static WorldType WorldCurrent { get => (WorldType)GetInt(Constants.WORLD_CURRENT, (int)(ResourcesController.Universe.WorldDefault.WorldType)); set => SetInt(Constants.WORLD_CURRENT, (int)value); }
+    public static WorldType WorldCurrent { get => (WorldType)GetInt(Constants.WORLD_CURRENT, 1); set => SetInt(Constants.WORLD_CURRENT, (int)value); }
     public static RoomType RoomCurrent { get => (RoomType)GetInt(Constants.ROOM_CURRENT, (int)(ResourcesController.Factory.RoomDefault.roomType)); set => SetInt(Constants.ROOM_CURRENT, (int)value); }
     public static SkinData SkinGift;
 

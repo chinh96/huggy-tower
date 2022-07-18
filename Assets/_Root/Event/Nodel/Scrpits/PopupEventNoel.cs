@@ -21,46 +21,47 @@ public class PopupEventNoel : MonoBehaviour
     }
     void InitData()
     {
-        var data = ResourcesController.DailyEventReward.EventCollectRewards;
-        for (int i = 0; i < data.Count; i++)
-        {
-            var itemData = data[i];
-            var itemEvent = ListItem[i];
-            var state = GetStateItem(itemData.NumCandyXmas, itemData.Id);
-            itemEvent.InitItemEventNoel(state, itemData, (e, gameObject) =>
-              {
-                  TGDatas.ClaimedItems = Util.Add<string>(TGDatas.ClaimedItems, e.Id);
+        //var data = ResourcesController.DailyEventReward.EventCollectRewards;
+        //for (int i = 0; i < data.Count; i++)
+        //{
+        //    var itemData = data[i];
+        //    var itemEvent = ListItem[i];
+        //    var state = GetStateItem(itemData.NumCandyXmas, itemData.Id);
+        //    itemEvent.InitItemEventNoel(state, itemData, (e, gameObject) =>
+        //      {
+        //          TGDatas.ClaimedItems = Util.Add<string>(TGDatas.ClaimedItems, e.Id);
 
-                  if (!e.isSkinPrincess)
-                  {
-                      var dataSkin = ResourcesController.Hero.SkinDatas[e.SkinId];
-                      dataSkin.IsUnlocked = true;
-                      Data.currentSkinHeroId = dataSkin.Id;
-                      Data.CurrentSkinHero = dataSkin.SkinName;
+        //          if (!e.isSkinPrincess)
+        //          {
+        //              var dataSkin = ResourcesController.Hero.SkinDatas[e.SkinId];
+        //              dataSkin.IsUnlocked = true;
+        //              Data.currentSkinHeroId = dataSkin.Id;
+        //              Data.CurrentSkinHero = dataSkin.SkinName;
 
-                  }
-                  else
-                  {
-                      var dataSkin = ResourcesController.Princess.SkinDatas[e.SkinId];
-                      dataSkin.IsUnlocked = true;
-                      Data.CurrentSkinPrincess = dataSkin.SkinName;
-                  }
+        //          }
+        //          else
+        //          {
+        //              var dataSkin = ResourcesController.Princess.SkinDatas[e.SkinId];
+        //              dataSkin.IsUnlocked = true;
+        //              Data.CurrentSkinPrincess = dataSkin.SkinName;
+        //          }
 
-              });
-        }
-        isInitData = true;
+        //      });
+        //}
+        //isInitData = true;
     }
+
     void updateState()
     {
-        var data = ResourcesController.DailyEventReward.EventCollectRewards;
-        for (int i = 0; i < data.Count; i++)
-        {
-            var itemData = data[i];
-            var itemEvent = ListItem[i];
-            if (itemData.NumCandyXmas == -1) continue;
-            var state = GetStateItem(itemData.NumCandyXmas, itemData.Id);
-            itemEvent.SetStateItem(state);
-        }
+        //var data = ResourcesController.DailyEventReward.EventCollectRewards;
+        //for (int i = 0; i < data.Count; i++)
+        //{
+        //    var itemData = data[i];
+        //    var itemEvent = ListItem[i];
+        //    if (itemData.NumCandyXmas == -1) continue;
+        //    var state = GetStateItem(itemData.NumCandyXmas, itemData.Id);
+        //    itemEvent.SetStateItem(state);
+        //}
     }
 
     private StateClaimDailyEvent GetStateItem(int sockXMmas, string idItem) // get state of item that has sockXMas

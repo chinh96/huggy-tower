@@ -31,7 +31,7 @@ public class SettingPopup : Popup
     public void OnClickUpdateButton()
     {
 #if UNITY_ANDROID
-        Application.OpenURL("market://details?id=com.gamee.herotowerwar");
+        Application.OpenURL("market://details?id=com.gamee.wuggykissytower");
 #else
         Application.OpenURL("itms-apps://itunes.apple.com/app/id1570840391");
 #endif
@@ -91,7 +91,8 @@ public class SettingPopup : Popup
                     },
                     {
                         "data_part3",
-                        $"{ResourcesController.Hero.ConvertData()}_{ResourcesController.Princess.ConvertData()}_{ResourcesController.Universe.ConvertData()}_{ResourcesController.Achievement.ConvertData()}_{ResourcesController.Achievement.ConvertDataTarget()}"
+                        $"{ResourcesController.Hero.ConvertData()}_{ResourcesController.Princess.ConvertData()} "
+                        //_{ResourcesController.Universe.ConvertData()}_{ResourcesController.Achievement.ConvertData()}_{ResourcesController.Achievement.ConvertDataTarget()}"
                     },
                     {
                         "data_part4",
@@ -223,9 +224,9 @@ public class SettingPopup : Popup
 
                                 ResourcesController.Hero.TransformTargetData(hero);
                                 ResourcesController.Princess.TransformTargetData(princess);
-                                ResourcesController.Universe.TransformData(universe);
-                                ResourcesController.Achievement.TransformData(achievement);
-                                ResourcesController.Achievement.TransformTargetData(achievementTarget);
+                                //ResourcesController.Universe.TransformData(universe);
+                                //ResourcesController.Achievement.TransformData(achievement);
+                                //ResourcesController.Achievement.TransformTargetData(achievementTarget);
                             }
 
                             if (result.Data.ContainsKey("data_part4"))
