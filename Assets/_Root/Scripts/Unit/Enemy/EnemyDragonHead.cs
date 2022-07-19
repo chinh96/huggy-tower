@@ -62,7 +62,7 @@ public class EnemyDragonHead : Unit, IAnim
     {
         State = EUnitState.Invalid;
         coll2D.enabled = false;
-        TxtDamage.gameObject.SetActive(false);
+        TxtDamage?.gameObject.SetActive(false);
         PlayDead();
     }
 
@@ -132,8 +132,7 @@ public class EnemyDragonHead : Unit, IAnim
     }
     public override void PlayDie()
     {
-        skeleton.Play("Swoon", false);
-        SoundController.Instance.PlayOnce(SoundType.DragonDie);
+        OnDead();
     }
 }
 
@@ -148,8 +147,6 @@ public class EnemyDragonHeadEditor : UnityEditor.Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-
-        _enemy.TxtDamage.text = _enemy.Damage.ToString();
 
         serializedObject.Update();
         serializedObject.ApplyModifiedProperties();

@@ -370,7 +370,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         {
             if (isTapFightingBoss)
             {
-                if(tapToFightingBoss.activeSelf) tapToFightingBoss.SetActive(false);
+                if (tapToFightingBoss.activeSelf) tapToFightingBoss.SetActive(false);
                 RaycastHit2D hit;
                 LayerMask mask = LayerMask.GetMask("Enemy");
                 Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 2, 0), Vector2.right * 20, Color.red);
@@ -400,12 +400,21 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     }
                     else
                     {
-                        if (Turn != ETurn.Lost && Turn != ETurn.Win)
+                        if (Input.GetMouseButtonDown(0))
                         {
-                            if (Input.GetMouseButtonDown(0))
+                            _target.OnBeingAttacked();
+                            cache = 1;
+                            if (!isAttacking && !isAttacked)
                             {
-                                _target.OnBeingAttacked();
-                                cache = 1;
+                                cache = 0;
+                                isAttacking = true;
+                                PlayAttack();
+                            }
+                        }
+                        else
+                        {
+                            if (cache != 0)
+                            {
                                 if (!isAttacking && !isAttacked)
                                 {
                                     cache = 0;
@@ -413,19 +422,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                     PlayAttack();
                                 }
                             }
-                            else
-                            {
-                                if (cache != 0)
-                                {
-                                    if (!isAttacking && !isAttacked)
-                                    {
-                                        cache = 0;
-                                        isAttacking = true;
-                                        PlayAttack();
-                                    }
-                                }
-                                else _target.OnAttack(0, null);
-                            }
+                            else _target.OnAttack(0, null);
                         }
                     }
                 }
@@ -443,9 +440,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         leanSelectableByFinger.Deselect();
         _target.PlayDie();
-        sequence.Append(DOTween.Sequence().AppendInterval(0.5f).AppendCallback( () => {
-                effectFadeIn.Play();
-                Skeleton.Play("FadeOut", false);
+        sequence.Append(DOTween.Sequence().AppendInterval(0.5f).AppendCallback(() =>
+        {
+            effectFadeIn.Play();
+            Skeleton.Play("FadeOut", false);
         }));
 
         sequence.Append(DOTween.Sequence().AppendInterval(1f).AppendCallback(() =>
@@ -454,7 +452,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             transform.localPosition = new Vector2(GameController.Instance.Princess.transform.localPosition.x - 300, GameController.Instance.Princess.transform.localPosition.y);
             effectFadeOut.Play();
             Skeleton.Play("FadeIn", false);
-            Turn = ETurn.Searching;
+            sequence.Append(DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
+            {
+                Turn = ETurn.Searching;
+            }));
         }));
     }
     private void SearchingTarget()
@@ -1059,11 +1060,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     private void AttackByEvent()
     {
-        if (Turn == ETurn.Win)
-        {
-            _target.PlayDie();
-            return;
-        }
         if (Turn != ETurn.Lost)
         {
             if (Turn != ETurn.FightingBoss)
@@ -1088,11 +1084,11 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         }
                         else if (IsWinCondition(levelMap.condition))
                         {
-                            if(_target.Type != EUnitType.Boss)
+                            if (_target.Type != EUnitType.Boss)
                             {
                                 PlayWin(true);
                                 GameController.Instance.OnWinLevel();
-                            }   
+                            }
                         }
                     }
                 }));
@@ -1598,7 +1594,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         _target.gameObject.GetComponent<Canvas>().overrideSorting = true;
                         _target.gameObject.GetComponent<Canvas>().sortingOrder = 121;
 
-                        if(_target as EnemyKappa == null)
+                        if (_target as EnemyKappa == null)
                         {
                             txtDamageEnemy.text = _target.TxtDamage.text;
                             txtDamageEnemy.transform.position = _target.TxtDamage.transform.position;

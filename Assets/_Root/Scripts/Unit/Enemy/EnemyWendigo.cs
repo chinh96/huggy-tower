@@ -59,7 +59,7 @@ public class EnemyWendigo : Unit, IAnim
         State = EUnitState.Invalid;
         coll2D.enabled = false;
         rigid.simulated = false;
-        TxtDamage.gameObject.SetActive(false);
+        TxtDamage?.gameObject.SetActive(false);
         PlayDead();
     }
 
@@ -92,8 +92,7 @@ public class EnemyWendigo : Unit, IAnim
     }
     public override void PlayDie()
     {
-        skeleton.Play("Die", false);
-        SoundController.Instance.PlayOnce(SoundType.DragonDie);
+        OnDead();
     }
 }
 

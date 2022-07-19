@@ -66,7 +66,7 @@ public class EnemyPoisonSnake : Unit, IAnim
         State = EUnitState.Invalid;
         coll2D.enabled = false;
         rigid.simulated = false;
-        TxtDamage.gameObject.SetActive(false);
+        TxtDamage?.gameObject.SetActive(false);
         PlayDead();
     }
 
@@ -101,8 +101,7 @@ public class EnemyPoisonSnake : Unit, IAnim
     }
     public override void PlayDie()
     {
-        skeleton.Play("Swoon", false);
-        SoundController.Instance.PlayOnce(SoundType.DragonDie);
+        OnDead();
     }
 }
 

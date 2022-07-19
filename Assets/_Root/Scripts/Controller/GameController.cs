@@ -815,10 +815,9 @@ public class GameController : Singleton<GameController>
             bossBlood.sizeDelta = new Vector2(Math.Max(bossBlood.sizeDelta.x - huggyDameVsBoss, 60), huggyBlood.sizeDelta.y);
             bossBlood.localPosition = new Vector3(bossBlood.localPosition.x + huggyDameVsBoss, bossBlood.localPosition.y, 0);
 
-            if (bossBlood.sizeDelta.x == 60)
+            if (bossBlood.sizeDelta.x <= 60)
             {
                 Player.Turn = ETurn.Win;
-                Player.KillSequence();
                 Player.PlayIdle(true);
                 sequence.Append(DOTween.Sequence().AppendInterval(0.1f).AppendCallback(() =>
                 {
