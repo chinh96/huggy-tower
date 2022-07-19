@@ -14,6 +14,8 @@ public class DataBridge : Singleton<DataBridge>
 
     private int[] _cacheLevels;
     private int _countGetLevel = 0;
+
+    public bool isLoaded = false;
     private void Start()
     {
         DontDestroyOnLoad(gameObject);

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System;
 using UnityEngine.Purchasing;
+using Spine.Unity;
 
 public class HomeController : Singleton<HomeController>
 {
@@ -27,8 +28,7 @@ public class HomeController : Singleton<HomeController>
     protected override void Awake()
     {
         base.Awake();
-        overlay.DOFade(0, 0);
-
+        overlay.DOFade(1, 0);
     }
 
     public void ResetBackground(){
@@ -69,13 +69,23 @@ public class HomeController : Singleton<HomeController>
         CheckButton();
         canvasScaler.matchWidthOrHeight = Camera.main.aspect > .7f ? 1 : 0;
         SoundController.Instance.PlayBackground(SoundType.BackgroundHome);
-        FadeOutOverlay();
         CheckNewUpdatePopup();
+        if (DataBridge.Instance.isLoaded)
+        {
+            DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
+            {
+                FadeOutOverlay();
+            });
+        }
+        else
+        {
+            FadeOutOverlay();
+        }
         // CheckAchievementDailyQuest();
         // CheckRescueParty();
         // CheckTG();
         // checkAllEvent();
-        
+
         // AdController.Instance.Request();
         // AdController.Instance.HideBanner();
 
@@ -122,13 +132,14 @@ public class HomeController : Singleton<HomeController>
     {
         SoundController.Instance.PlayOnce(SoundType.ButtonStart);
         overlay.gameObject.SetActive(true);
-
         // PopupController.Instance.GetPopup<RoomPopup>().gameObject.GetComponent<RoomPopup>().ReturnCurrentRoomToOriginalPosition();
-        
-        FadeInOverlay(() =>
-        {
-            SceneManager.LoadSceneAsync(Constants.GAME_SCENE);
-        });
+        overlay.DOFade(1, 0);
+        PopupController.Instance.PlayWuggyLogo();
+        SceneManager.LoadScene(Constants.GAME_SCENE);
+        //FadeInOverlay(() =>
+        //{
+        //    SceneManager.LoadSceneAsync(Constants.GAME_SCENE);
+        //});
     }
 
     private void FadeInOverlay(Action action = null)
@@ -142,7 +153,7 @@ public class HomeController : Singleton<HomeController>
 
     private void FadeOutOverlay()
     {
-        overlay.DOFade(0, .3f).OnComplete(() =>
+        overlay.DOFade(0, 1f).OnComplete(() =>
         {
             overlay.gameObject.SetActive(false);
         });

@@ -44,6 +44,7 @@ public class GameController : Singleton<GameController>
     [SerializeField] private ParticleSystem huggyBloodEffect;
     [SerializeField] private ParticleSystem bossBloodEffect;
     [SerializeField] private ParticleSystem centerBloodEffect;
+
     public Image overlayFightingBoss;
 
     private float huggyBloodWidthInitial;
@@ -116,6 +117,8 @@ public class GameController : Singleton<GameController>
         huggyBloodXPositionInitial = huggyBlood.localPosition.x;
         bossBloodWidthInitial = bossBlood.sizeDelta.x;
         bossBloodXPositionInitial = bossBlood.localPosition.x;
+
+        DataBridge.Instance.isLoaded = true;
     }
 
     private void Update()
@@ -161,7 +164,7 @@ public class GameController : Singleton<GameController>
     private void LoadBackground()
     {
         int currentLevel = Data.CurrentLevel;
-        if ( (currentLevel + 1) == 5 || currentLevel == 5 || (currentLevel + 1) % 10 == 0 || currentLevel % 10 == 0)
+        if ((currentLevel + 1) == 5 || currentLevel == 5 || (currentLevel + 1) % 10 == 0 || currentLevel % 10 == 0)
             SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
         List<GameObject> backgrounds = backgroundsNormal;
 
@@ -181,9 +184,6 @@ public class GameController : Singleton<GameController>
             DestroyImmediate(backgroundBoss.transform.transform.GetComponentInChildren<Player>().gameObject);
         };
         backgroundBoss.transform.GetComponentInChildren<Princess>().Skeleton.Play("Idle", true);
-        //IsJapanBackground = backgrounds[random].name == "Jav";
-        //IsSeaBackground = backgrounds[random].name == "Sea";
-        //IsHalloweenBackground = Data.TimeToRescueParty.TotalMilliseconds > 0 && UnityEngine.Random.Range(0, 2) == 0;
     }
 
     public async void LoadLevel(int fakeIndex)
@@ -498,13 +498,18 @@ public class GameController : Singleton<GameController>
 
     public void OnBackToHome()
     {
-        FadeInOverlay(() =>
-        {
-            AdController.Instance.HideBanner();
-            PopupController.Instance.DismissAll();
-            KillSequence();
-            SceneManager.LoadScene(Constants.HOME_SCENE);
-        });
+        AdController.Instance.HideBanner();
+        PopupController.Instance.DismissAll();
+        KillSequence();
+        PopupController.Instance.PlayWuggyLogo();
+        SceneManager.LoadSceneAsync(Constants.HOME_SCENE);
+        //FadeInOverlay(() =>
+        //{
+        //    AdController.Instance.HideBanner();
+        //    PopupController.Instance.DismissAll();
+        //    KillSequence();
+        //    SceneManager.LoadSceneAsync(Constants.HOME_SCENE);
+        //});
     }
 
     private void KillSequence()
@@ -770,6 +775,7 @@ public class GameController : Singleton<GameController>
 
     public void FightingBoss()
     {
+        PopupController.Instance.PlayBossFight();
         FadeInOverlay(() =>
         {
             skipButton.SetActive(false);
@@ -778,9 +784,9 @@ public class GameController : Singleton<GameController>
             backgroundBoss.SetActive(true);
             Player.transform.Find("Renderer0").GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1);
 
-            float endValue = (Player.transform.position.x + Boss().transform.position.x)/2.0f;
+            float endValue = (Player.transform.position.x + Boss().transform.position.x) / 2.0f;
             Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, 0);
-            
+
             overlayFightingBoss.gameObject.SetActive(true);
             overlayFightingBoss.DOFade(.5f, 0);
             MoveInAnim();
@@ -814,7 +820,8 @@ public class GameController : Singleton<GameController>
                 Player.Turn = ETurn.Win;
                 Player.KillSequence();
                 Player.PlayIdle(true);
-                sequence.Append(DOTween.Sequence().AppendInterval(0.1f).AppendCallback( () => {
+                sequence.Append(DOTween.Sequence().AppendInterval(0.1f).AppendCallback(() =>
+                {
                     Player.SavePrincessVsBoss();
                 }));
             }

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
-
+using Spine.Unity;
 public class PopupController : Singleton<PopupController>
 {
     [SerializeField] private Popup[] popupPrefabs;
     [SerializeField] private Canvas canvas;
     [SerializeField] private CanvasScaler canvasScaler;
+    [SerializeField] private SkeletonGraphic wuggyLogo;
+    [SerializeField] private SkeletonGraphic bossFight;
 
     private Dictionary<Type, Popup> popupDict;
     private LinkedList<Popup> popups;
@@ -23,6 +25,16 @@ public class PopupController : Singleton<PopupController>
         Initialize();
     }
 
+    public void PlayWuggyLogo()
+    {
+        wuggyLogo.gameObject.SetActive(true);
+        wuggyLogo.Play("animation", false);
+    }
+    public void PlayBossFight()
+    {
+        bossFight.gameObject.SetActive(true);
+        bossFight.Play("animation", false);
+    }
     public void Initialize()
     {
         if (initialized) return;

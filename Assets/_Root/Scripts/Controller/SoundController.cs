@@ -12,9 +12,12 @@ public class SoundController : Singleton<SoundController>
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        Init();
     }
 
+    private void Start()
+    {
+        Init();
+    }
     private void Init()
     {
         backgroundAudio.loop = true;
