@@ -312,7 +312,8 @@ public class GameController : Singleton<GameController>
         SavePreviousLevel(levelInstall);
         AnalyticController.StartLevel();
 
-
+        if (levelInstall.condition == ELevelCondition.KillBoss) FightingBoss();
+        Debug.Log("Condition :" + levelInstall.condition);
         switch (Data.CurrentLevel)
         {
             case 0:
@@ -436,6 +437,7 @@ public class GameController : Singleton<GameController>
     {
         SetEnableLeanTouch(false);
         KillSequence();
+        _isEffectBloodBoss = false;
         PopupController.Instance.DismissAll();
         FadeInOverlay(() =>
         {
@@ -453,6 +455,9 @@ public class GameController : Singleton<GameController>
         KillSequence();
         SetEnableLeanTouch(false);
 
+        DestroyImmediate(player);
+        player = null;
+        _isEffectBloodBoss = false;
         // ResourcesController.Achievement.ResetNumberTemp();
         // ResourcesController.DailyQuest.ResetNumberTemp();
 
@@ -486,6 +491,7 @@ public class GameController : Singleton<GameController>
 
         PopupController.Instance.DismissAll();
         KillSequence();
+        _isEffectBloodBoss = false;
         AdController.Instance.ShowRewardedAd(() =>
         {
             Data.CurrentLevel++;
@@ -784,36 +790,34 @@ public class GameController : Singleton<GameController>
     public void FightingBoss()
     {
         PopupController.Instance.PlayBossFight();
-        FadeInOverlay(() =>
+        //FadeInOverlay(() =>
+        //{
+        skipButton.SetActive(false);
+
+        bossFaceBlood.sprite = Boss().GetComponent<Unit>().bossFace;
+        bossFaceBlood.SetNativeSize();
+
+        backgroundBoss.SetActive(true);
+        Player.GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1);
+        Player.TxtDamage.gameObject.SetActive(false);
+        float endValue = (Player.transform.position.x + Boss().transform.position.x) / 2.0f;
+        Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, 0);
+        overlayFightingBoss.gameObject.SetActive(true);
+
+        MoveInAnim();
+        //FadeOutOverlay(() =>
+        //{
+        SoundController.Instance.PlayBackground(SoundType.BGFightingBoss);
+        Boss().GetComponent<Unit>().PlayChainIdle();
+        SetEnableLeanTouch(false);
+
+        sequence.Append(DOTween.Sequence().AppendInterval(0.2f).OnComplete(() =>
         {
-            skipButton.SetActive(false);
+            player.Turn = ETurn.FightingBoss;
+        }));
+        //});
 
-            bossFaceBlood.sprite = Boss().GetComponent<Unit>().bossFace;
-            bossFaceBlood.SetNativeSize();
-
-            backgroundBoss.SetActive(true);
-
-            Player.GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1);
-
-            float endValue = (Player.transform.position.x + Boss().transform.position.x) / 2.0f;
-            Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, 0);
-
-            overlayFightingBoss.gameObject.SetActive(true);
-            //overlayFightingBoss.DOFade(.5f, 0);
-            MoveInAnim();
-            FadeOutOverlay(() =>
-            {
-                SoundController.Instance.PlayBackground(SoundType.BGFightingBoss);
-                SetEnableLeanTouch(false);
-                //float endValue = (Player.transform.position.x + visitTowers[indexVisitTower + 1].transform.position.x) / 2;
-                SetEnableLeanTouch(true);
-                sequence.Append(DOTween.Sequence().AppendInterval(0.2f).OnComplete(() =>
-                {
-                    player.Turn = ETurn.FightingBoss;
-                }));
-            });
-
-        });
+        //});
     }
     private bool _isEffectBloodBoss = false;
     public void UpdateBlood(bool huggyIsAttacked)
@@ -829,32 +833,32 @@ public class GameController : Singleton<GameController>
                     effectMinusBloodPooler.GenerateEffect();
                     sequence.Append(DOTween.Sequence().AppendInterval(0.2f).AppendCallback(() =>
                     {
-                        effectMinusBloodPooler.GenerateEffect(); 
+                        effectMinusBloodPooler.GenerateEffect();
                         _isEffectBloodBoss = false;
                     }
                     ));
                 }));
-        }
+            }
 
-        huggyBloodEffect.Play();
-        bossBloodEffect.Stop();
+            huggyBloodEffect.Play();
+            bossBloodEffect.Stop();
 
-        huggyBlood.sizeDelta = new Vector2(huggyBlood.sizeDelta.x + huggyDameVsBoss, huggyBlood.sizeDelta.y);
-        huggyBlood.localPosition = new Vector3(huggyBlood.localPosition.x + huggyDameVsBoss, huggyBlood.localPosition.y, 0);
+            huggyBlood.sizeDelta = new Vector2(huggyBlood.sizeDelta.x + huggyDameVsBoss, huggyBlood.sizeDelta.y);
+            huggyBlood.localPosition = new Vector3(huggyBlood.localPosition.x + huggyDameVsBoss, huggyBlood.localPosition.y, 0);
 
-        bossBlood.sizeDelta = new Vector2(Math.Max(bossBlood.sizeDelta.x - huggyDameVsBoss, 60), huggyBlood.sizeDelta.y);
-        bossBlood.localPosition = new Vector3(bossBlood.localPosition.x + huggyDameVsBoss, bossBlood.localPosition.y, 0);
+            bossBlood.sizeDelta = new Vector2(Math.Max(bossBlood.sizeDelta.x - huggyDameVsBoss, 60), huggyBlood.sizeDelta.y);
+            bossBlood.localPosition = new Vector3(bossBlood.localPosition.x + huggyDameVsBoss, bossBlood.localPosition.y, 0);
 
-        if (bossBlood.sizeDelta.x <= 60)
-        {
-            Player.Turn = ETurn.Win;
-            Player.PlayIdle(true);
-            sequence.Append(DOTween.Sequence().AppendInterval(0.1f).AppendCallback(() =>
+            if (bossBlood.sizeDelta.x <= 60)
             {
-                Player.SavePrincessVsBoss();
-            }));
+                Player.Turn = ETurn.Win;
+                Player.PlayIdle(true);
+                sequence.Append(DOTween.Sequence().AppendInterval(0.1f).AppendCallback(() =>
+                {
+                    Player.SavePrincessVsBoss();
+                }));
+            }
         }
-    }
         else if (huggyBlood.sizeDelta.x > 60)
         {
             huggyBloodEffect.Stop();
@@ -863,40 +867,42 @@ public class GameController : Singleton<GameController>
             huggyBlood.sizeDelta = new Vector2(Math.Max(huggyBlood.sizeDelta.x - bossDameVsHuggy, 60), huggyBlood.sizeDelta.y);
             huggyBlood.localPosition = new Vector3(huggyBlood.localPosition.x - bossDameVsHuggy, huggyBlood.localPosition.y, 0);
 
-    bossBlood.sizeDelta = new Vector2(bossBlood.sizeDelta.x + bossDameVsHuggy, huggyBlood.sizeDelta.y);
-    bossBlood.localPosition = new Vector3(bossBlood.localPosition.x - bossDameVsHuggy, bossBlood.localPosition.y, 0);
+            bossBlood.sizeDelta = new Vector2(bossBlood.sizeDelta.x + bossDameVsHuggy, huggyBlood.sizeDelta.y);
+            bossBlood.localPosition = new Vector3(bossBlood.localPosition.x - bossDameVsHuggy, bossBlood.localPosition.y, 0);
 
             if (huggyBlood.sizeDelta.x == 60)
             {
                 Player.KillSequence();
                 Player.Turn = ETurn.Lost;
                 Boss().GetComponent<SkeletonGraphic>().Play("Idle", true);
-    Player.PlayDead();
+                Player.PlayDead();
                 Player.State = EUnitState.Invalid;
                 sequence.Append(DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
                 {
-        OnLoseLevel();
-    }));
+                    OnLoseLevel();
+                }));
             }
         }
     }
 
     public void ResetBlood()
-{
-    huggyBlood.GetComponent<Image>().SetNativeSize();
-    huggyBlood.localPosition = new Vector2(huggyBloodXPositionInitial, huggyBlood.localPosition.y);
+    {
+        huggyBlood.GetComponent<Image>().SetNativeSize();
+        huggyBlood.localPosition = new Vector2(huggyBloodXPositionInitial, huggyBlood.localPosition.y);
 
-    bossBlood.GetComponent<Image>().SetNativeSize();
-    bossBlood.localPosition = new Vector2(bossBloodXPositionInitial, bossBlood.localPosition.y);
-}
+        bossBlood.GetComponent<Image>().SetNativeSize();
+        bossBlood.localPosition = new Vector2(bossBloodXPositionInitial, bossBlood.localPosition.y);
+    }
 
-public void TapToStartFightingBoss()
-{
-    overlayFightingBoss.DOFade(0f, 0.3f).OnComplete(() =>
-   {
-       Player.TapToStartFightingBoss();
-       centerBloodEffect.Play();
-       overlayFightingBoss.gameObject.SetActive(false);
-   });
-}
+    public void TapToStartFightingBoss()
+    {
+        if (overlayFightingBoss.gameObject.activeSelf)
+            overlayFightingBoss.DOFade(0f, 0.3f).OnComplete(() =>
+           {
+               Player.Turn = ETurn.FightingBoss;
+               Player.TapToStartFightingBoss();
+               centerBloodEffect.Play();
+               overlayFightingBoss.gameObject.SetActive(false);
+           });
+    }
 }

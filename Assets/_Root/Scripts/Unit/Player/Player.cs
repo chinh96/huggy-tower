@@ -377,7 +377,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 hit = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y + 2, 0), Vector2.right, distance: 20f, layerMask: mask);
                 if (hit.collider != null)
                 {
-                    Debug.Log("Distance: " + hit.distance);
                     if (hit.distance >= 3)
                     {
                         Turn = ETurn.MoveToEnemy;
@@ -390,6 +389,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             PlayIdle(true);
                         });
                         Boss = GameController.Instance.Boss();
+                        Boss.GetComponent<Unit>().StopAnimation();
                         Boss.GetComponent<SkeletonGraphic>().Play("Run", true);
                         Boss.transform.DOLocalMoveX(endPoint + 230f, 1f)
                             .SetEase(Ease.Linear).OnComplete(() =>
@@ -697,7 +697,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                 }
                                 if (_itemTarget as ItemTeleport)
                                 {
-                                    endValue = _itemTarget.transform.position.x - .5f;
+                                    endValue = _itemTarget.transform.position.x - 1.5f;
                                 }
                                 transform.DOMoveX(endValue, 0.5f).SetEase(Ease.Linear).OnComplete(() => UseItem());
                             }
@@ -730,26 +730,37 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 {
                     if (_itemTarget as ItemTeleport != null)
                     {
-                        //skeleton.Play("Teleport", false);
-                        GameController.Instance.MoveOutAnim();
-                        sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                        // skeleton.Play("Teleport", false);
+                        // GameController.Instance.MoveOutAnim();
+                        //sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+                        //{
+                        //    _itemTarget.Collect(this);
+                        //    TxtDamage.gameObject.SetActive(false);
+                        //    sequence.Append(DOTween.Sequence().AppendInterval(0.5f).AppendCallback(() =>
+                        //    {
+                        //        if (Data.CurrentLevel < 7)
+                        //        {
+                        //            sequence.Append(DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
+                        //            tapToFightingBoss.SetActive(true)
+                        //            ));
+                        //        }
+                        //        else tapToFightingBoss.SetActive(false);
+                        //        GameController.Instance.FightingBoss();
+                        //        isTapFightingBoss = false;
+                        //    }));
+                        //}));
+                        Turn = ETurn.UsingItem;
+                        Sequence s = DOTween.Sequence();
+                        s.Append(transform.DOMove(_itemTarget.transform.position, 0.3f));
+                        s.Join(transform.DOScale(new Vector3(transform.localScale.x * 0.3f, transform.localScale.y * 0.3f, 0), 0.3f));
+                        s.Join(transform.DOScale(new Vector3(transform.localScale.x * 0.3f, transform.localScale.y * 0.3f, 0), 0.3f));
+                        s.OnComplete(() =>
                         {
-                            _itemTarget.Collect(this);
-                            TxtDamage.gameObject.SetActive(false);
-                            sequence.Append(DOTween.Sequence().AppendInterval(0.5f).AppendCallback(() =>
-                            {
-                                if (Data.CurrentLevel < 7)
-                                {
-                                    sequence.Append(DOTween.Sequence().AppendInterval(1.5f).AppendCallback(() =>
-                                    tapToFightingBoss.SetActive(true)
-                                    ));
-                                }
-                                else tapToFightingBoss.SetActive(false);
-                                GameController.Instance.FightingBoss();
-                                isTapFightingBoss = false;
-                            }));
-                        }));
-                        return;
+                            gameObject.SetActive(false);
+                            GameController.Instance.OnWinLevel();
+                            PlayWin(true);
+                        });
+                        sequence.Append(s);
                     }
 
                     if (!hasKey && _itemTarget as ItemChest != null)

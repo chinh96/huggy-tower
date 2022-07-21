@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
-  m_Name: PoisonSnake_SkeletonData
+  m_Name: Octavius_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: acf9b634c0e32e74f885d3265f4da045, type: 2}
-  scale: 0.008
-  skeletonJSON: {fileID: 4900000, guid: 6da59cd3deef8d44996b7da7bd4a8a25, type: 3}
+  - {fileID: 11400000, guid: e394ed01c4e7a1a429a050895f615fdc, type: 2}
+  scale: 0.01
+  skeletonJSON: {fileID: 4900000, guid: d93bbc4429c3f9443a59d839dbf16b3b, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
     requiresBlendModeMaterials: 0
@@ -24,8 +24,11 @@ MonoBehaviour:
     multiplyMaterials: []
     screenMaterials: []
   skeletonDataModifiers: []
-  fromAnimation: []
-  toAnimation: []
-  duration: []
+  fromAnimation:
+  - Idle
+  toAnimation:
+  - Idle2
+  duration:
+  - 0
   defaultMix: 0.2
   controller: {fileID: 0}

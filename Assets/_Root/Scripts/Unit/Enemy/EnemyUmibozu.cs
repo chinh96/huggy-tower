@@ -5,7 +5,7 @@ using UnityEditor;
 #endif
 using UnityEngine;
 using DG.Tweening;
-
+using Spine;
 public class EnemyUmibozu : Unit, IAnim
 {
     public SkeletonGraphic skeleton;
@@ -35,15 +35,15 @@ public class EnemyUmibozu : Unit, IAnim
 
     private void OnAttackByEvent() {
         _callbackAttackPlayer?.Invoke();
-        GameController.Instance.Player.Skeleton.Play("Die2", false);
+        GameController.Instance.Player?.Skeleton.Play("Die2", false);
         GameController.Instance.UpdateBlood(true);
     }
 
     private void OnEndAttackByEvent() {
-        GameController.Instance.Player.isAttacked = false;
+        if(GameController.Instance.Player) GameController.Instance.Player.isAttacked = false;
         isAttacking = false;
         PlayIdle(true);
-        GameController.Instance.Player.PlayIdle(true);
+        GameController.Instance.Player?.PlayIdle(true);
     }
 
     public override void DarknessRise() { }
@@ -66,10 +66,10 @@ public class EnemyUmibozu : Unit, IAnim
     {
         if (!isAttacking && !isAttacked)
         {
-            GameController.Instance.Player.OnBeingAttacked();
+            GameController.Instance.Player?.OnBeingAttacked();
             isAttacking = true;
             skeleton.Play("Attack", false);
-            SoundController.Instance.PlayOnce(SoundType.BossAttack);
+            SoundController.Instance.PlayOnce(SoundType.OctaviusAttack);
         }
     }
 
@@ -79,7 +79,7 @@ public class EnemyUmibozu : Unit, IAnim
     {
         skeleton.Play("Die", false);
         isDead = true;
-        SoundController.Instance.PlayOnce(SoundType.DragonDie);
+        SoundController.Instance.PlayOnce(SoundType.OctaviusDie);
     }
 
     public void PlayWin(bool isLoop) { }
@@ -94,6 +94,23 @@ public class EnemyUmibozu : Unit, IAnim
     public override void PlayDie()
     {
         OnDead();
+    }
+
+    private int _cnt = 1;
+    public override void PlayChainIdle()
+    {
+        string idleName = "Idle";
+        if (_cnt == 4) idleName = "Idle3";
+        else if (_cnt == 2) idleName = "Idle2";
+        TrackEntry state = skeleton.AnimationState.SetAnimation(0, idleName, true);
+        state.MixDuration = 0;
+        state.Complete += HandleComplete;
+        _cnt++;
+    }
+
+    void HandleComplete(TrackEntry trackEntry)
+    {
+        PlayChainIdle();
     }
 }
 

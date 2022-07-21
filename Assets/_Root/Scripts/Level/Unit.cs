@@ -77,4 +77,9 @@ public abstract class Unit : MonoBehaviour, IUnit, IAttack
     {
 
     }
+    public virtual void PlayChainIdle()
+    {
+
+    }
+    public virtual void StopAnimation() { }
 }

@@ -32,6 +32,13 @@ public static partial class Util
         skeleton.AnimationState.SetAnimation(0, nameAnimation, loop: isLoop);
     }
 
+    public static void Play(this SkeletonGraphic skeleton, string nameAnimation, bool isLoop, Action onComplete)
+    {
+        skeleton.AnimationState.SetAnimation(0, nameAnimation, loop: isLoop).End += delegate{
+            onComplete?.Invoke();
+        };
+    }
+
     public static void GetSpineInterfaces(
         this Component component,
         out IAnimationStateComponent iAnimationState,

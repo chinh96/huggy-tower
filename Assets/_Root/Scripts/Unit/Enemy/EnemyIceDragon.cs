@@ -6,7 +6,7 @@ using Spine.Unity;
 using UnityEditor;
 #endif
 using UnityEngine;
-
+using Spine;
 public class EnemyIceDragon : Unit, IAnim
 {
     public SkeletonGraphic skeleton;
@@ -21,10 +21,6 @@ public class EnemyIceDragon : Unit, IAnim
     private void Start()
     {
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
-        DOTween.Sequence().AppendInterval(UnityEngine.Random.Range(0, .5f)).AppendCallback(() =>
-        {
-            skeleton.Play("Idle3", true);
-        });
     }
 
     public override void OnAttack(int damage, Action callback)
@@ -48,15 +44,15 @@ public class EnemyIceDragon : Unit, IAnim
         //particleSystem1.transform.DOMove(GameController.Instance.Player.transform.position + Vector3.left / 2 + Vector3.up / 2, .3f).OnComplete(() => DestroyImmediate(particleSystem1.gameObject));
         //particleSystem2.transform.DOMove(GameController.Instance.Player.transform.position + Vector3.left / 2 + Vector3.up / 2, .3f).OnComplete(() => DestroyImmediate(particleSystem2.gameObject));
         _callbackAttackPlayer?.Invoke();
-        GameController.Instance.Player.Skeleton.Play("Die2", false);
+        GameController.Instance.Player?.Skeleton.Play("Die2", false);
         GameController.Instance.UpdateBlood(true);
     }
 
     private void OnEndAttackByEvent() {
-        GameController.Instance.Player.isAttacked = false;
+        if (GameController.Instance.Player) GameController.Instance.Player.isAttacked = false;
         isAttacking = false;
         PlayIdle(true);
-        GameController.Instance.Player.PlayIdle(true);
+        GameController.Instance.Player?.PlayIdle(true);
     }
 
     public override void DarknessRise() { }
@@ -78,7 +74,7 @@ public class EnemyIceDragon : Unit, IAnim
     public void PlayAttack() {
         if (!isAttacking && !isAttacked)
         {
-            GameController.Instance.Player.OnBeingAttacked();
+            GameController.Instance.Player?.OnBeingAttacked();
             isAttacking = true;
             skeleton.Play("Attack", false);
             SoundController.Instance.PlayOnce(SoundType.BossAttack);
@@ -104,6 +100,23 @@ public class EnemyIceDragon : Unit, IAnim
     public override void PlayDie()
     {
         OnDead();
+    }
+
+    private int _cnt = 1;
+    public override void PlayChainIdle()
+    {
+        string idleName = "Idle";
+        if (_cnt == 4) idleName = "Idle3";
+        else if (_cnt == 2) idleName = "Idle2";
+        TrackEntry state = skeleton.AnimationState.SetAnimation(0, idleName, true);
+        state.MixDuration = 0;
+        state.Complete += HandleComplete;
+        _cnt++;
+    }
+
+    void HandleComplete(TrackEntry trackEntry)
+    {
+        PlayChainIdle();
     }
 }
 

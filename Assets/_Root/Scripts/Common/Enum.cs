@@ -278,7 +278,11 @@ public enum SoundType
     HuggyAttackNormal4,
 
     BossAttack,
-    BGFightingBoss
+    BGFightingBoss,
+
+    OctaviusAttack,
+    OctaviusDie,
+    MonkeyToyAttack
 }
 
 public enum WorldType
