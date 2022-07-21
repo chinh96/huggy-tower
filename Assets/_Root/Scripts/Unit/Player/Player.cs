@@ -377,6 +377,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                 hit = Physics2D.Raycast(new Vector3(transform.position.x, transform.position.y + 2, 0), Vector2.right, distance: 20f, layerMask: mask);
                 if (hit.collider != null)
                 {
+                    Debug.Log("Distance: " + hit.distance);
                     if (hit.distance >= 3)
                     {
                         Turn = ETurn.MoveToEnemy;
@@ -450,6 +451,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         {
             transform.SetParent(GameController.Instance.Princess.transform.parent);
             transform.localPosition = new Vector2(GameController.Instance.Princess.transform.localPosition.x - 300, GameController.Instance.Princess.transform.localPosition.y);
+            GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1);
             effectFadeOut.Play();
             Skeleton.Play("FadeIn", false);
             sequence.Append(DOTween.Sequence().AppendInterval(0.3f).AppendCallback(() =>
@@ -1163,8 +1165,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
 
     public void KillSequence()
     {
-        sequence.Kill();
-        DOTween.Kill("Player");
+        sequence?.Kill();
     }
 
     private void CollectChest() { }
@@ -1513,11 +1514,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     PlayHitEnemy();
                     PlayBloodEnemy();
                 }));
-
-                sequence.Append(DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
-                {
-                    SoundController.Instance.PlayOnce(SoundType.HeroHit3);
-                }));
                 skeleton.Play("AttackClaws", false);
                 break;
             case ItemType.Hammer:
@@ -1562,11 +1558,16 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             {
                                 if (hasBloodEnemy)
                                 {
-                                    if (Turn != ETurn.FightingBoss) attacks = new string[] { "Attack", "Attack2" };
+                                    if (Turn != ETurn.FightingBoss)
+                                    {
+                                        int attackRandom = UnityEngine.Random.Range(1, 11);
+                                        if(attackRandom <= 7) attacks = new string[]{ "Attack2"};
+                                        else attacks = new string[] { "Attack3" };
+                                    }
                                     //attacks = new string[] { "Attack2" };
                                     else attacks = new string[] { "Attack", "Attack3" };
                                 }
-                                else attacks = new string[] { "Attack" };
+                                else attacks = new string[] { "Attack", "Attack3"};
                                 break;
                             }
                     }
@@ -1575,9 +1576,9 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                     //attack = "Attack2"; test
                     if (attack != "Attack2")
                     {
-                        //if (attack == "Attack") 
-                        SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal);
-                        //else SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal2);
+                        //if (attack == "Attack") SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal);
+                        //else 
+                        SoundController.Instance.PlayOnce(SoundType.HuggyAttackNormal2); // Attack3
 
                         skeleton.Play(attack, false);
                         if (hasBloodEnemy)
@@ -1608,7 +1609,6 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                         Sequence s = DOTween.Sequence();
                         _target.TxtDamage.gameObject.SetActive(false);
                         s.Append(_target.transform.DOMove(gameObject.transform.position + new Vector3(1.5f, 1.5f, 0), 0.4f));
-                        int sign = _target.transform.localScale.x > 0 ? 1 : -1;
                         s.Join(_target.transform.DOScale(new Vector3(.3f * _target.transform.localScale.x, .3f * _target.transform.localScale.y, 1), .4f)).AppendCallback(
                         () =>
                         {
@@ -1836,6 +1836,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             case ItemType.Trap:
                 sequence.Append(DOTween.Sequence().AppendInterval(.3f).AppendCallback(() =>
                 {
+                    SoundController.Instance.PlayOnce(SoundType.Trap);
                     skeleton.Play("LoseTrap", false);
                 }));
                 break;

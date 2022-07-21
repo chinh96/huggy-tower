@@ -12,10 +12,7 @@ public class EnemyUmibozu : Unit, IAnim
     public Rigidbody2D rigid;
     public Collider2D coll2D;
     public SpineAttackHandle attackHandle;
-    public override EUnitType Type { get; protected set; } = EUnitType.Enemy;
-    public Transform FxTransform;
-    public ParticleSystem Fx;
-    public ParticleSystem FxWater;
+    public override EUnitType Type { get; protected set; } = EUnitType.Boss;
 
     private Action _callbackAttackPlayer;
     private bool isDead;
@@ -23,7 +20,6 @@ public class EnemyUmibozu : Unit, IAnim
     private void Start()
     {
         attackHandle.Initialize(OnAttackByEvent, OnEndAttackByEvent);
-        SoundController.Instance.PlayOnce(SoundType.BearStart);
     }
 
     public override void OnAttack(int damage, Action callback)
@@ -32,11 +28,23 @@ public class EnemyUmibozu : Unit, IAnim
         PlayAttack();
     }
 
-    public override void OnBeingAttacked() { OnDead(); }
+    public override void OnBeingAttacked() {
+        isAttacking = false;
+        isAttacked = true;
+    }
 
-    private void OnAttackByEvent() { _callbackAttackPlayer?.Invoke(); }
+    private void OnAttackByEvent() {
+        _callbackAttackPlayer?.Invoke();
+        GameController.Instance.Player.Skeleton.Play("Die2", false);
+        GameController.Instance.UpdateBlood(true);
+    }
 
-    private void OnEndAttackByEvent() { PlayIdle(true); }
+    private void OnEndAttackByEvent() {
+        GameController.Instance.Player.isAttacked = false;
+        isAttacking = false;
+        PlayIdle(true);
+        GameController.Instance.Player.PlayIdle(true);
+    }
 
     public override void DarknessRise() { }
 
@@ -47,7 +55,7 @@ public class EnemyUmibozu : Unit, IAnim
         State = EUnitState.Invalid;
         coll2D.enabled = false;
         rigid.simulated = false;
-        TxtDamage.gameObject.SetActive(false);
+        TxtDamage?.gameObject.SetActive(false);
         PlayDead();
     }
 
@@ -56,22 +64,13 @@ public class EnemyUmibozu : Unit, IAnim
 
     public void PlayAttack()
     {
-        DOTween.Sequence().AppendInterval(.5f).AppendCallback(() =>
+        if (!isAttacking && !isAttacked)
         {
-            if (!isDead)
-            {
-                ParticleSystem fx = Instantiate(Fx);
-                fx.transform.position = FxTransform.position;
-                fx.transform.DOMove(GameController.Instance.Player.transform.position + Vector3.up, .3f).OnComplete(() =>
-                {
-                    ParticleSystem fxWater = Instantiate(FxWater);
-                    fxWater.transform.position = fx.transform.position;
-                    DestroyImmediate(fx.gameObject);
-                });
-            }
-        });
-        skeleton.Play("Attack", false);
-        SoundController.Instance.PlayOnce(SoundType.DemonAttack);
+            GameController.Instance.Player.OnBeingAttacked();
+            isAttacking = true;
+            skeleton.Play("Attack", false);
+            SoundController.Instance.PlayOnce(SoundType.BossAttack);
+        }
     }
 
     public void PLayMove(bool isLoop) { skeleton.Play("Run", true); }
@@ -80,13 +79,22 @@ public class EnemyUmibozu : Unit, IAnim
     {
         skeleton.Play("Die", false);
         isDead = true;
-
-        SoundController.Instance.PlayOnce(SoundType.BearDie);
+        SoundController.Instance.PlayOnce(SoundType.DragonDie);
     }
 
     public void PlayWin(bool isLoop) { }
 
     public void PlayLose(bool isLoop) { }
+
+    public override void PlayHurt()
+    {
+        skeleton.Play("Hurt", false);
+    }
+
+    public override void PlayDie()
+    {
+        OnDead();
+    }
 }
 
 #if UNITY_EDITOR

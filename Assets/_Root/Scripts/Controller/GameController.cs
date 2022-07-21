@@ -10,6 +10,8 @@ using Lean.Touch;
 using Spine.Unity;
 using I2.Loc;
 
+using UnityEngine.Purchasing;
+using UnityEngine.Scripting;
 public class GameController : Singleton<GameController>
 {
     [SerializeField] private Camera UICamera;
@@ -45,6 +47,7 @@ public class GameController : Singleton<GameController>
     [SerializeField] private ParticleSystem bossBloodEffect;
     [SerializeField] private ParticleSystem centerBloodEffect;
 
+    [SerializeField] private EffectMinusBloodPool effectMinusBloodPooler;
     public Image overlayFightingBoss;
 
     private float huggyBloodWidthInitial;
@@ -110,7 +113,7 @@ public class GameController : Singleton<GameController>
     {
         base.Awake();
         AdController.Instance.ShowBanner();
-        overlay.DOFade(1, 0);
+        //overlay.DOFade(1, 0);
         SetEnableLeanTouch(false);
 
         huggyBloodWidthInitial = huggyBlood.sizeDelta.x;
@@ -432,7 +435,6 @@ public class GameController : Singleton<GameController>
     public void OnNextLevel()
     {
         SetEnableLeanTouch(false);
-        Player.KillSequence();
         KillSequence();
         PopupController.Instance.DismissAll();
         FadeInOverlay(() =>
@@ -448,9 +450,7 @@ public class GameController : Singleton<GameController>
 
     public void OnReplayLevel()
     {
-        Player.KillSequence();
         KillSequence();
-        //DOTween.KillAll();
         SetEnableLeanTouch(false);
 
         // ResourcesController.Achievement.ResetNumberTemp();
@@ -485,7 +485,6 @@ public class GameController : Singleton<GameController>
         AnalyticController.SkipLevel();
 
         PopupController.Instance.DismissAll();
-        Player.KillSequence();
         KillSequence();
         AdController.Instance.ShowRewardedAd(() =>
         {
@@ -498,25 +497,34 @@ public class GameController : Singleton<GameController>
 
     public void OnBackToHome()
     {
+        PopupController.Instance.PlayWuggyLogo();
         AdController.Instance.HideBanner();
         PopupController.Instance.DismissAll();
         KillSequence();
-        PopupController.Instance.PlayWuggyLogo();
-        SceneManager.LoadSceneAsync(Constants.HOME_SCENE);
-        //FadeInOverlay(() =>
-        //{
-        //    AdController.Instance.HideBanner();
-        //    PopupController.Instance.DismissAll();
-        //    KillSequence();
-        //    SceneManager.LoadSceneAsync(Constants.HOME_SCENE);
-        //});
+#if UNITY_ANDROID && !UNITY_EDITOR
+        GarbageCollector.GCMode = GarbageCollector.Mode.Disabled;
+#endif
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        sequence.Append(DOTween.Sequence().AppendInterval(0.8f).AppendCallback(() =>
+       {
+           SceneManager.LoadScene(Constants.HOME_SCENE);
+       }));
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        GarbageCollector.GCMode = GarbageCollector.Mode.Enabled;
+#endif
     }
 
     private void KillSequence()
     {
-        DOTween.KillAll();
         sequence.Kill();
         Player.KillSequence();
+        DOTween.KillAll();
+        effectMinusBloodPooler.HideAllEffect();
     }
 
     public void OnWinLevel()
@@ -779,16 +787,19 @@ public class GameController : Singleton<GameController>
         FadeInOverlay(() =>
         {
             skipButton.SetActive(false);
+
             bossFaceBlood.sprite = Boss().GetComponent<Unit>().bossFace;
             bossFaceBlood.SetNativeSize();
+
             backgroundBoss.SetActive(true);
-            Player.transform.Find("Renderer0").GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1);
+
+            Player.GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1);
 
             float endValue = (Player.transform.position.x + Boss().transform.position.x) / 2.0f;
             Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, 0);
 
             overlayFightingBoss.gameObject.SetActive(true);
-            overlayFightingBoss.DOFade(.5f, 0);
+            //overlayFightingBoss.DOFade(.5f, 0);
             MoveInAnim();
             FadeOutOverlay(() =>
             {
@@ -804,68 +815,88 @@ public class GameController : Singleton<GameController>
 
         });
     }
-
+    private bool _isEffectBloodBoss = false;
     public void UpdateBlood(bool huggyIsAttacked)
     {
         if (!huggyIsAttacked && bossBlood.sizeDelta.x > 60)
         {
-            huggyBlood.sizeDelta = new Vector2(huggyBlood.sizeDelta.x + huggyDameVsBoss, huggyBlood.sizeDelta.y);
-            huggyBlood.localPosition = new Vector3(huggyBlood.localPosition.x + huggyDameVsBoss, huggyBlood.localPosition.y, 0);
-
-            bossBlood.sizeDelta = new Vector2(Math.Max(bossBlood.sizeDelta.x - huggyDameVsBoss, 60), huggyBlood.sizeDelta.y);
-            bossBlood.localPosition = new Vector3(bossBlood.localPosition.x + huggyDameVsBoss, bossBlood.localPosition.y, 0);
-
-            if (bossBlood.sizeDelta.x <= 60)
+            if (!_isEffectBloodBoss)
             {
-                Player.Turn = ETurn.Win;
-                Player.PlayIdle(true);
-                sequence.Append(DOTween.Sequence().AppendInterval(0.1f).AppendCallback(() =>
+                _isEffectBloodBoss = true;
+                effectMinusBloodPooler.GenerateEffect();
+                sequence.Append(DOTween.Sequence().AppendInterval(0.2f).AppendCallback(() =>
                 {
-                    Player.SavePrincessVsBoss();
+                    effectMinusBloodPooler.GenerateEffect();
+                    sequence.Append(DOTween.Sequence().AppendInterval(0.2f).AppendCallback(() =>
+                    {
+                        effectMinusBloodPooler.GenerateEffect(); 
+                        _isEffectBloodBoss = false;
+                    }
+                    ));
                 }));
-            }
         }
+
+        huggyBloodEffect.Play();
+        bossBloodEffect.Stop();
+
+        huggyBlood.sizeDelta = new Vector2(huggyBlood.sizeDelta.x + huggyDameVsBoss, huggyBlood.sizeDelta.y);
+        huggyBlood.localPosition = new Vector3(huggyBlood.localPosition.x + huggyDameVsBoss, huggyBlood.localPosition.y, 0);
+
+        bossBlood.sizeDelta = new Vector2(Math.Max(bossBlood.sizeDelta.x - huggyDameVsBoss, 60), huggyBlood.sizeDelta.y);
+        bossBlood.localPosition = new Vector3(bossBlood.localPosition.x + huggyDameVsBoss, bossBlood.localPosition.y, 0);
+
+        if (bossBlood.sizeDelta.x <= 60)
+        {
+            Player.Turn = ETurn.Win;
+            Player.PlayIdle(true);
+            sequence.Append(DOTween.Sequence().AppendInterval(0.1f).AppendCallback(() =>
+            {
+                Player.SavePrincessVsBoss();
+            }));
+        }
+    }
         else if (huggyBlood.sizeDelta.x > 60)
         {
+            huggyBloodEffect.Stop();
+            bossBloodEffect.Play();
+
             huggyBlood.sizeDelta = new Vector2(Math.Max(huggyBlood.sizeDelta.x - bossDameVsHuggy, 60), huggyBlood.sizeDelta.y);
             huggyBlood.localPosition = new Vector3(huggyBlood.localPosition.x - bossDameVsHuggy, huggyBlood.localPosition.y, 0);
 
-            bossBlood.sizeDelta = new Vector2(bossBlood.sizeDelta.x + bossDameVsHuggy, huggyBlood.sizeDelta.y);
-            bossBlood.localPosition = new Vector3(bossBlood.localPosition.x - bossDameVsHuggy, bossBlood.localPosition.y, 0);
+    bossBlood.sizeDelta = new Vector2(bossBlood.sizeDelta.x + bossDameVsHuggy, huggyBlood.sizeDelta.y);
+    bossBlood.localPosition = new Vector3(bossBlood.localPosition.x - bossDameVsHuggy, bossBlood.localPosition.y, 0);
 
             if (huggyBlood.sizeDelta.x == 60)
             {
                 Player.KillSequence();
                 Player.Turn = ETurn.Lost;
                 Boss().GetComponent<SkeletonGraphic>().Play("Idle", true);
-                Player.PlayDead();
+    Player.PlayDead();
                 Player.State = EUnitState.Invalid;
                 sequence.Append(DOTween.Sequence().AppendInterval(.6f).AppendCallback(() =>
                 {
-                    OnLoseLevel();
-                }));
+        OnLoseLevel();
+    }));
             }
         }
     }
 
     public void ResetBlood()
-    {
-        huggyBlood.GetComponent<Image>().SetNativeSize();
-        huggyBlood.localPosition = new Vector2(huggyBloodXPositionInitial, huggyBlood.localPosition.y);
+{
+    huggyBlood.GetComponent<Image>().SetNativeSize();
+    huggyBlood.localPosition = new Vector2(huggyBloodXPositionInitial, huggyBlood.localPosition.y);
 
-        bossBlood.GetComponent<Image>().SetNativeSize();
-        bossBlood.localPosition = new Vector2(bossBloodXPositionInitial, bossBlood.localPosition.y);
-    }
+    bossBlood.GetComponent<Image>().SetNativeSize();
+    bossBlood.localPosition = new Vector2(bossBloodXPositionInitial, bossBlood.localPosition.y);
+}
 
-    public void TapToStartFightingBoss()
-    {
-        overlayFightingBoss.DOFade(0f, 0.3f).OnComplete(() =>
-       {
-           Player.TapToStartFightingBoss();
-           huggyBloodEffect.Play();
-           bossBloodEffect.Play();
-           centerBloodEffect.Play();
-           overlayFightingBoss.gameObject.SetActive(false);
-       });
-    }
+public void TapToStartFightingBoss()
+{
+    overlayFightingBoss.DOFade(0f, 0.3f).OnComplete(() =>
+   {
+       Player.TapToStartFightingBoss();
+       centerBloodEffect.Play();
+       overlayFightingBoss.gameObject.SetActive(false);
+   });
+}
 }
