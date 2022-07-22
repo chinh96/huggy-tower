@@ -6,7 +6,15 @@ public class ItemTeleport : Item
     [SerializeField] private ItemTeleport itemTeleport;
 
     public CanvasGroup canvasGroup;
+    [SerializeField] private GameObject teleportParticle;
 
+    private void Update()
+    {
+        if (GameController.Instance.Player && GameController.Instance.Player.IsTapFightingBoss)
+        {
+            teleportParticle.transform.DOScale(new Vector3(0, 0, 0), 1f);
+        }
+    }
     public override void Collect(IUnit affectTarget)
     {
         var player = (Player)affectTarget;

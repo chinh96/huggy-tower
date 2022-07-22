@@ -127,7 +127,7 @@ public class ItemEquip : Item, IHasSkeletonDataAsset
             return;
         }
 
-        if (EquipType != ItemType.Food && EquipType != ItemType.HolyWater)
+        if (EquipType != ItemType.Food && EquipType != ItemType.HolyWater && EquipType != ItemType.X3Strength && EquipType != ItemType.X4Strength && EquipType != ItemType.X5Strength && EquipType != ItemType.X6Strength)
         {
             player.ChangeSword(itemSwordSkin);
         }

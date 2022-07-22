@@ -194,7 +194,6 @@ public class GameController : Singleton<GameController>
     public async void LoadLevel(int fakeIndex)
     {
         // EventController.CurrentLevelChanged?.Invoke();
-        levelText.ChangeLevel();
         TGDatas.TotalTurkeyText = TGDatas.TotalTurkey;
         if (fighterOverlay != null)
         {
@@ -314,7 +313,13 @@ public class GameController : Singleton<GameController>
         SavePreviousLevel(levelInstall);
         AnalyticController.StartLevel();
 
-        if (levelInstall.condition == ELevelCondition.KillBoss) FightingBoss();
+        if (levelInstall.condition == ELevelCondition.KillBoss)
+        {
+            FightingBoss();
+            levelText.LevelBoss();
+
+        }
+        else levelText.ChangeLevel();
         Debug.Log("Condition :" + levelInstall.condition);
         switch (Data.CurrentLevel)
         {
@@ -816,10 +821,12 @@ public class GameController : Singleton<GameController>
         fighterOverlay = Instantiate(ResourcesController.Config.FighterOverlay, Root.transform.parent);
     }
 
+    private string[] playerWeapons = { "Axe", "Baseball", "Claws", "Hammer", "Pipe" };
     public void FightingBoss()
     {
         //FadeInOverlay(() =>
         //{
+        int currentLevel = Data.CurrentLevel > ConfigResources.MaxLevel - 1 ? Data.CurrentLoopLevel : Data.CurrentLevel;
         skipButton.SetActive(false);
 
         bossFaceBlood.sprite = Boss().GetComponent<Unit>().bossFace;
@@ -830,7 +837,6 @@ public class GameController : Singleton<GameController>
         player = null;
         Player.GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1);
         Player.TxtDamage.gameObject.SetActive(false);
-
         float endValue = (Player.transform.position.x + Boss().transform.position.x) / 2.0f;
         Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, 0);
 
@@ -845,6 +851,25 @@ public class GameController : Singleton<GameController>
         sequence.Append(DOTween.Sequence().AppendInterval(0.2f).OnComplete(() =>
         {
             Player.Turn = ETurn.FightingBoss;
+            Player.ChangeSword(playerWeapons[(currentLevel / 10) % 5]);
+            switch ((currentLevel / 10) % 5)
+            {
+                case 0:
+                    Player.EquipType = ItemType.Shield;
+                    break;
+                case 1:
+                    Player.EquipType = ItemType.Baseball;
+                    break;
+                case 2:
+                    Player.EquipType = ItemType.Claws;
+                    break;
+                case 3:
+                    Player.EquipType = ItemType.Hammer;
+                    break;
+                default:
+                    Player.EquipType = ItemType.Shuriken;
+                    break;
+            }
         }));
         //});
 

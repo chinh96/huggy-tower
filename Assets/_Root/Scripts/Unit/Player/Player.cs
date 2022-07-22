@@ -92,6 +92,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     private bool hasBloodEnemy;
     private Sequence sequence;
     private bool isTapFightingBoss = false;
+    public bool IsTapFightingBoss => isTapFightingBoss;
     public void SetParentRoom(RoomTower parentRoom)
     {
         _parentRoom = parentRoom;
@@ -1307,37 +1308,44 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
             hitEnemy.transform.position = _target.transform.position;
         }
 
-        if (_target as EnemyDragonHead)
+        if (Turn != ETurn.FightingBoss)
         {
-            hitEnemy.transform.position += new Vector3(0, 2, 0);
-        }
-        else if (_target as EnemyKraken)
-        {
-            hitEnemy.transform.position += new Vector3(-2, 1, 0);
-        }
-        else if (_target as EnemyKraken2)
-        {
-            hitEnemy.transform.position += new Vector3(0, -1, 0);
-        }
-        else if (_target as EnemyKraken3)
-        {
-            hitEnemy.transform.position += new Vector3(0, -1, 0);
-        }
-        else if (_target as EnemyKraken4)
-        {
-            hitEnemy.transform.position += new Vector3(0, -1, 0);
-        }
-        else if (_target as EnemyKraken5)
-        {
-            hitEnemy.transform.position += new Vector3(0, -6, 0);
-        }
-        else if (_target as EnemyKraken6)
-        {
-            hitEnemy.transform.position += new Vector3(0, -6, 0);
+            if (_target as EnemyDragonHead)
+            {
+                hitEnemy.transform.position += new Vector3(0, 2, 0);
+            }
+            else if (_target as EnemyKraken)
+            {
+                hitEnemy.transform.position += new Vector3(-2, 1, 0);
+            }
+            else if (_target as EnemyKraken2)
+            {
+                hitEnemy.transform.position += new Vector3(0, -1, 0);
+            }
+            else if (_target as EnemyKraken3)
+            {
+                hitEnemy.transform.position += new Vector3(0, -1, 0);
+            }
+            else if (_target as EnemyKraken4)
+            {
+                hitEnemy.transform.position += new Vector3(0, -1, 0);
+            }
+            else if (_target as EnemyKraken5)
+            {
+                hitEnemy.transform.position += new Vector3(0, -6, 0);
+            }
+            else if (_target as EnemyKraken6)
+            {
+                hitEnemy.transform.position += new Vector3(0, -6, 0);
+            }
+            else
+            {
+                hitEnemy.transform.position += new Vector3(0, 1, 0);
+            }
         }
         else
         {
-            hitEnemy.transform.position += new Vector3(0, 1, 0);
+            hitEnemy.transform.position += new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(0, 4f), 0);
         }
         hitEnemy.gameObject.SetActive(true);
         hitEnemy.Play();

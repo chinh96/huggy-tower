@@ -12,12 +12,13 @@ public class EffectMinusBloodPool : MonoBehaviour
     void Start()
     {
         pooler = new List<GameObject>();
+        int currentLevel = Data.CurrentLevel > ConfigResources.MaxLevel - 1 ? Data.CurrentLoopLevel : Data.CurrentLevel;
         for (int i = 0; i < 15; i++)
         {
             GameObject _new = Instantiate(effectMinusBlood, transform);
-            if (i < 5) _new.GetComponent<TextMeshProUGUI>().text = "-49";
-            else if (i < 10) _new.GetComponent<TextMeshProUGUI>().text = "-50";
-            else _new.GetComponent<TextMeshProUGUI>().text = "-51";
+            if (i < 5) _new.GetComponent<TextMeshProUGUI>().text = "-" + (currentLevel);
+            else if (i < 10) _new.GetComponent<TextMeshProUGUI>().text = "-" + (currentLevel+1);
+            else _new.GetComponent<TextMeshProUGUI>().text = "-" + (currentLevel + 2);
 
             pooler.Add(_new);
         }

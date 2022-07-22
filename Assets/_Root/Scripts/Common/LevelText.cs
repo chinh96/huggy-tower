@@ -20,13 +20,19 @@ public class LevelText : MonoBehaviour
 
     public void ChangeLevel()
     {
-        //level.text = $"Level {Data.CurrentLevel + 1}";
+        level.text = $"Level {Data.CurrentLevel + 1}";
         var localizationParamsManager = level.GetComponent<LocalizationParamsManager>();
         if(localizationParamsManager!= null) localizationParamsManager.SetParameterValue("VALUE", (Data.CurrentLevel + 1).ToString(), true);
     }
 
     public void ChangeLevelMinusOne(){
+        level.text = $"Level {Data.CurrentLevel}";
         var localizationParamsManager = level.GetComponent<LocalizationParamsManager>();
         if(localizationParamsManager!= null) localizationParamsManager.SetParameterValue("VALUE", (Data.CurrentLevel).ToString(), true);
+    }
+
+    public void LevelBoss()
+    {
+        level.text = "BOSS";
     }
 }
