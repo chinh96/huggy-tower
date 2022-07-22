@@ -36,6 +36,7 @@ public class GameController : Singleton<GameController>
     [SerializeField] private LevelText levelText;
 
     [SerializeField] private GameObject backgroundBoss;
+    [SerializeField] private GameObject kissyStand;
     [SerializeField] private GameObject bloodVsBoss;
     [SerializeField] private Image bossFaceBlood;
     [SerializeField] private RectTransform huggyBlood;
@@ -142,9 +143,7 @@ public class GameController : Singleton<GameController>
     private void Start()
     {
         MoveInAnim();
-        int currentLevel = Data.CurrentLevel > ConfigResources.MaxLevel - 1 ? Data.CurrentLoopLevel : Data.CurrentLevel;
-        if (currentLevel == 5 || currentLevel % 10 == 0) SoundController.Instance.PlayBackground(SoundType.BGFightingBoss);
-        else SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
+        SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
 
         CheckRadioCamera();
         positionCameraOrigin = Camera.main.transform.position;
@@ -184,11 +183,12 @@ public class GameController : Singleton<GameController>
         int random = UnityEngine.Random.Range(0, backgrounds.Count);
         backgrounds[random].SetActive(true);
 
-        if (backgroundBoss.transform.GetComponentInChildren<Player>())
+        Transform oldPlayer = kissyStand.transform.Find("Player");
+        if (oldPlayer)
         {
-            DestroyImmediate(backgroundBoss.transform.transform.GetComponentInChildren<Player>().gameObject);
+            DestroyImmediate(oldPlayer.gameObject);
         };
-        backgroundBoss.transform.GetComponentInChildren<Princess>().Skeleton.Play("Idle", true);
+        kissyStand.transform.GetComponentInChildren<Princess>().Skeleton.Play("Idle", true);
     }
 
     public async void LoadLevel(int fakeIndex)
@@ -238,6 +238,7 @@ public class GameController : Singleton<GameController>
         {
             DataBridge.Instance.PreviousLevelLoaded = localLevelMap;
             DataBridge.Instance.PreviousLevelLoaded.SetLevelLoaded(localLevelMap.CurrentRealLevelIndex, localLevelMap.CurrentFakeLevelIndex);
+            if(Data.CurrentLevel > ConfigResources.MaxLevel-1) Data.CurrentLoopLevel = localLevelMap.CurrentRealLevelIndex;
         }
 
         ResetFlagNextLevel();
@@ -316,10 +317,8 @@ public class GameController : Singleton<GameController>
         if (levelInstall.condition == ELevelCondition.KillBoss)
         {
             FightingBoss();
-            levelText.LevelBoss();
-
         }
-        else levelText.ChangeLevel();
+        levelText.ChangeLevel();
         Debug.Log("Condition :" + levelInstall.condition);
         switch (Data.CurrentLevel)
         {
@@ -446,33 +445,29 @@ public class GameController : Singleton<GameController>
         KillSequence();
         _isEffectBloodBoss = false;
         PopupController.Instance.DismissAll();
-
-        if (Data.CurrentLevel % 10 == 0 || Data.CurrentLevel == 5) PopupController.Instance.PlayBossFight();
         FadeInOverlay(() =>
         {
+            if(root.LevelMap.condition == ELevelCondition.KillBoss) SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
             AdController.Instance.ShowInterstitial(() =>
             {
                 Instance.root.Clear();
                 Camera.main.transform.position = positionCameraOrigin;
                 Instance.LoadLevel(Data.CurrentLevel);
-
-                int currentLevel = Data.CurrentLevel > ConfigResources.MaxLevel - 1 ? Data.CurrentLoopLevel : Data.CurrentLevel;
-                if (currentLevel == 5 || currentLevel % 10 == 0) SoundController.Instance.PlayBackground(SoundType.BGFightingBoss);
-                else SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
             });
         });
     }
 
     public void OnReplayLevel()
     {
+        _isReplay = true;
         KillSequence();
         SetEnableLeanTouch(false);
 
-        DestroyImmediate(player);
+        Player.TargetClearTracks();
+        //DestroyImmediate(player);
         _isEffectBloodBoss = false;
         // ResourcesController.Achievement.ResetNumberTemp();
         // ResourcesController.DailyQuest.ResetNumberTemp();
-
         PopupController.Instance.DismissAll();
 
         FadeInOverlay(() =>
@@ -480,7 +475,6 @@ public class GameController : Singleton<GameController>
             _isReplay = true;
             Camera.main.transform.position = positionCameraOrigin;
             Instance.LoadLevel(Data.CurrentLevel);
-
             AdController.Instance.ShowInterstitial(() =>
             {
 
@@ -539,8 +533,8 @@ public class GameController : Singleton<GameController>
 
     private void KillSequence()
     {
-        sequence.Kill();
-        Player.KillSequence();
+        sequence?.Kill();
+        Player?.KillSequence();
         DOTween.KillAll();
         effectMinusBloodPooler.HideAllEffect();
     }
@@ -826,6 +820,7 @@ public class GameController : Singleton<GameController>
     {
         //FadeInOverlay(() =>
         //{
+        SoundController.Instance.PlayBackground(SoundType.BGFightingBoss);
         int currentLevel = Data.CurrentLevel > ConfigResources.MaxLevel - 1 ? Data.CurrentLoopLevel : Data.CurrentLevel;
         skipButton.SetActive(false);
 
@@ -834,9 +829,14 @@ public class GameController : Singleton<GameController>
 
         backgroundBoss.SetActive(true);
 
+        if (player) DestroyImmediate(player);
         player = null;
         Player.GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1);
         Player.TxtDamage.gameObject.SetActive(false);
+        if (Data.CurrentLevel < 7)
+        {
+            Player?.TapToFightingBoss.SetActive(true);
+        };
         float endValue = (Player.transform.position.x + Boss().transform.position.x) / 2.0f;
         Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, 0);
 
@@ -847,7 +847,7 @@ public class GameController : Singleton<GameController>
         //{
         Boss().GetComponent<Unit>().PlayChainIdle();
         SetEnableLeanTouch(false);
-
+        SoundController.Instance.PlayOnce(SoundType.KissyHelpMe);
         sequence.Append(DOTween.Sequence().AppendInterval(0.2f).OnComplete(() =>
         {
             Player.Turn = ETurn.FightingBoss;

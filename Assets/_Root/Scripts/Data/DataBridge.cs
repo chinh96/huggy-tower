@@ -126,7 +126,7 @@ public class DataBridge : Singleton<DataBridge>
             }
             else
             {
-                if(_countGetLevel != 1) levelIndex = Random.Range(0, ResourcesController.Config.MaxLevelCanReach);
+                if(_countGetLevel != 1) levelIndex = Random.Range(6, ResourcesController.Config.MaxLevelCanReach);
                 else levelIndex = Data.CurrentLoopLevel;
             }
         }

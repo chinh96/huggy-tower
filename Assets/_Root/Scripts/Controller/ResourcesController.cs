@@ -12,6 +12,7 @@ public class ResourcesController : Singleton<ResourcesController>
     [SerializeField] private ConfigResources config;
     [SerializeField] private CountryResources country;
     [SerializeField] private FactoryResources factoryResources;
+    [SerializeField] private LibraryResources library;
 
     public static SkinResources Hero;
     public static SkinResources Princess;
@@ -20,6 +21,7 @@ public class ResourcesController : Singleton<ResourcesController>
     public static ConfigResources Config;
     public static CountryResources Country;
     public static FactoryResources Factory;
+    public static LibraryResources Library;
 
     public static List<SkinData> SkinRescuePartys = new List<SkinData>();
     public static List<SkinData> SkinsTG = new List<SkinData>();
@@ -61,12 +63,14 @@ public class ResourcesController : Singleton<ResourcesController>
         Config = config;
         Country = country;
         Factory = factoryResources;
+        Library = library;
     }
 
     private void Reset()
     {
         Hero.Reset();
         Princess.Reset();
+        Library.Reset();
     }
 
     public static void GetSkinRescueParty()

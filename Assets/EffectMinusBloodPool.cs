@@ -27,12 +27,14 @@ public class EffectMinusBloodPool : MonoBehaviour
     public void GenerateEffect()
     {
         int random = Random.Range(1, 4);
+        int currentLevel = Data.CurrentLevel > ConfigResources.MaxLevel - 1 ? Data.CurrentLoopLevel : Data.CurrentLevel;
         if (random == 1)
         {
             for (int i = 0; i < 5; i++)
             {
                 if (!pooler[i].activeSelf)
                 {
+                    pooler[i].GetComponent<TextMeshProUGUI>().text = "-" + (currentLevel);
                     pooler[i].SetActive(true);
                     break;
                 }
@@ -44,6 +46,7 @@ public class EffectMinusBloodPool : MonoBehaviour
             {
                 if (!pooler[i].activeSelf)
                 {
+                    pooler[i].GetComponent<TextMeshProUGUI>().text = "-" + (currentLevel + 1);
                     pooler[i].SetActive(true);
                     break;
                 }
@@ -55,6 +58,7 @@ public class EffectMinusBloodPool : MonoBehaviour
             {
                 if (!pooler[i].activeSelf)
                 {
+                    pooler[i].GetComponent<TextMeshProUGUI>().text = "-" + (currentLevel + 2);
                     pooler[i].SetActive(true);
                     break;
                 }

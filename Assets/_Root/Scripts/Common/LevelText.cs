@@ -30,9 +30,4 @@ public class LevelText : MonoBehaviour
         var localizationParamsManager = level.GetComponent<LocalizationParamsManager>();
         if(localizationParamsManager!= null) localizationParamsManager.SetParameterValue("VALUE", (Data.CurrentLevel).ToString(), true);
     }
-
-    public void LevelBoss()
-    {
-        level.text = $"Level {Data.CurrentLevel} : BOSS";
-    }
 }

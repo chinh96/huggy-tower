@@ -123,8 +123,10 @@ public class HomeController : Singleton<HomeController>
     {
         SoundController.Instance.PlayOnce(SoundType.ButtonStart);
         overlay.gameObject.SetActive(true);
-        if (Data.CurrentLevel % 10 == 0 || Data.CurrentLevel == 5) PopupController.Instance.PlayBossFight();
+        int currentLevel = Data.CurrentLevel > ConfigResources.MaxLevel - 1 ? Data.CurrentLoopLevel : Data.CurrentLevel;
+        if (currentLevel > 0 && (currentLevel % 10 == 0 || currentLevel == 5)) PopupController.Instance.PlayBossFight();
         else PopupController.Instance.PlayWuggyLogo();
+        Debug.Log("level: " + currentLevel);
 #if UNITY_ANDROID && !UNITY_EDITOR
         GarbageCollector.GCMode = GarbageCollector.Mode.Disabled;
 #endif

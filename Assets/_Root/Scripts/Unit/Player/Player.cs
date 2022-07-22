@@ -70,6 +70,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     [SerializeField] private TextMeshProUGUI txtDamageEnemy;
     [SerializeField] private GameObject tapToFightingBoss;
 
+    public GameObject TapToFightingBoss => tapToFightingBoss;
     public override EUnitType Type { get; protected set; } = EUnitType.Hero;
     public ETurn Turn { get => turn; set => turn = value; }
 
@@ -108,6 +109,13 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
         StartDragTurn();
     }
 
+    public void TargetClearTracks()
+    {
+        if (_target && (_target.Type == EUnitType.Enemy || _target.Type == EUnitType.Boss))
+        {
+            _target.gameObject.GetComponent<SkeletonGraphic>().AnimationState.ClearTracks();
+        }
+    }
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (_isMouseUpDragDetected && other.gameObject == _parentRoom.floor.gameObject)
