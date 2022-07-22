@@ -123,7 +123,8 @@ public class HomeController : Singleton<HomeController>
     {
         SoundController.Instance.PlayOnce(SoundType.ButtonStart);
         overlay.gameObject.SetActive(true);
-        PopupController.Instance.PlayWuggyLogo();
+        if (Data.CurrentLevel % 10 == 0 || Data.CurrentLevel == 5) PopupController.Instance.PlayBossFight();
+        else PopupController.Instance.PlayWuggyLogo();
 #if UNITY_ANDROID && !UNITY_EDITOR
         GarbageCollector.GCMode = GarbageCollector.Mode.Disabled;
 #endif

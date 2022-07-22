@@ -114,6 +114,7 @@ public class GameController : Singleton<GameController>
         base.Awake();
         AdController.Instance.ShowBanner();
         //overlay.DOFade(1, 0);
+        overlayFightingBoss.gameObject.SetActive(false);
         SetEnableLeanTouch(false);
 
         huggyBloodWidthInitial = huggyBlood.sizeDelta.x;
@@ -141,7 +142,10 @@ public class GameController : Singleton<GameController>
     private void Start()
     {
         MoveInAnim();
-        SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
+        int currentLevel = Data.CurrentLevel > ConfigResources.MaxLevel - 1 ? Data.CurrentLoopLevel : Data.CurrentLevel;
+        if (currentLevel == 5 || currentLevel % 10 == 0) SoundController.Instance.PlayBackground(SoundType.BGFightingBoss);
+        else SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
+
         CheckRadioCamera();
         positionCameraOrigin = Camera.main.transform.position;
         LoadLevel(Data.CurrentLevel);
@@ -167,8 +171,6 @@ public class GameController : Singleton<GameController>
     private void LoadBackground()
     {
         int currentLevel = Data.CurrentLevel;
-        if ((currentLevel + 1) == 5 || currentLevel == 5 || (currentLevel + 1) % 10 == 0 || currentLevel % 10 == 0)
-            SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
         List<GameObject> backgrounds = backgroundsNormal;
 
         //if (Data.TimeToRescueParty.TotalMilliseconds > 0)
@@ -439,6 +441,8 @@ public class GameController : Singleton<GameController>
         KillSequence();
         _isEffectBloodBoss = false;
         PopupController.Instance.DismissAll();
+
+        if (Data.CurrentLevel % 10 == 0 || Data.CurrentLevel == 5) PopupController.Instance.PlayBossFight();
         FadeInOverlay(() =>
         {
             AdController.Instance.ShowInterstitial(() =>
@@ -446,6 +450,10 @@ public class GameController : Singleton<GameController>
                 Instance.root.Clear();
                 Camera.main.transform.position = positionCameraOrigin;
                 Instance.LoadLevel(Data.CurrentLevel);
+
+                int currentLevel = Data.CurrentLevel > ConfigResources.MaxLevel - 1 ? Data.CurrentLoopLevel : Data.CurrentLevel;
+                if (currentLevel == 5 || currentLevel % 10 == 0) SoundController.Instance.PlayBackground(SoundType.BGFightingBoss);
+                else SoundController.Instance.PlayBackground(SoundType.BackgroundInGame);
             });
         });
     }
@@ -456,7 +464,6 @@ public class GameController : Singleton<GameController>
         SetEnableLeanTouch(false);
 
         DestroyImmediate(player);
-        player = null;
         _isEffectBloodBoss = false;
         // ResourcesController.Achievement.ResetNumberTemp();
         // ResourcesController.DailyQuest.ResetNumberTemp();
@@ -628,7 +635,11 @@ public class GameController : Singleton<GameController>
 
                 break;
         }
-        root.LevelMap.visitTower.ChangeToHomeTower();
+
+
+        Debug.Log(root.LevelMap.condition);
+        if (root.LevelMap.condition != ELevelCondition.KillBoss) root.LevelMap.visitTower.ChangeToHomeTower();
+
         // ResourcesController.DailyQuest.IncreaseByType(DailyQuestType.LevelPassed);
 
         MoveOutAnim();
@@ -656,7 +667,25 @@ public class GameController : Singleton<GameController>
 
     public void OnLoseLevel()
     {
-        root.LevelMap.homeTower.RemoveAll(() =>
+        if (root.LevelMap.condition != ELevelCondition.KillBoss)
+            root.LevelMap.homeTower.RemoveAll(() =>
+            {
+                AnalyticController.FailLevel();
+
+                MoveOutAnim();
+
+                GameState = EGameState.Lose;
+                SoundController.Instance.PlayOnce(SoundType.Lose);
+
+                sequence.Append(DOTween.Sequence().AppendInterval(delayWinLose / 2).AppendCallback(() =>
+                {
+                    FadeInOverlay(() =>
+                    {
+                        ShowPopupLose();
+                    });
+                }));
+            });
+        else
         {
             AnalyticController.FailLevel();
 
@@ -672,7 +701,7 @@ public class GameController : Singleton<GameController>
                     ShowPopupLose();
                 });
             }));
-        });
+        }
     }
 
     private void ShowPopupWin()
@@ -789,7 +818,6 @@ public class GameController : Singleton<GameController>
 
     public void FightingBoss()
     {
-        PopupController.Instance.PlayBossFight();
         //FadeInOverlay(() =>
         //{
         skipButton.SetActive(false);
@@ -798,22 +826,25 @@ public class GameController : Singleton<GameController>
         bossFaceBlood.SetNativeSize();
 
         backgroundBoss.SetActive(true);
+
+        player = null;
         Player.GetComponent<RectTransform>().localScale = new Vector3(0.8f, 0.8f, 1);
         Player.TxtDamage.gameObject.SetActive(false);
+
         float endValue = (Player.transform.position.x + Boss().transform.position.x) / 2.0f;
         Camera.main.transform.position = new Vector3(endValue, Camera.main.transform.position.y, 0);
+
         overlayFightingBoss.gameObject.SetActive(true);
 
         MoveInAnim();
         //FadeOutOverlay(() =>
         //{
-        SoundController.Instance.PlayBackground(SoundType.BGFightingBoss);
         Boss().GetComponent<Unit>().PlayChainIdle();
         SetEnableLeanTouch(false);
 
         sequence.Append(DOTween.Sequence().AppendInterval(0.2f).OnComplete(() =>
         {
-            player.Turn = ETurn.FightingBoss;
+            Player.Turn = ETurn.FightingBoss;
         }));
         //});
 
@@ -896,10 +927,9 @@ public class GameController : Singleton<GameController>
 
     public void TapToStartFightingBoss()
     {
-        if (overlayFightingBoss.gameObject.activeSelf)
+        if (Player.Turn == ETurn.FightingBoss)
             overlayFightingBoss.DOFade(0f, 0.3f).OnComplete(() =>
            {
-               Player.Turn = ETurn.FightingBoss;
                Player.TapToStartFightingBoss();
                centerBloodEffect.Play();
                overlayFightingBoss.gameObject.SetActive(false);

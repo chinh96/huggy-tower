@@ -395,15 +395,15 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                             .SetEase(Ease.Linear).OnComplete(() =>
                             {
                                 Boss.GetComponent<SkeletonGraphic>().Play("Idle", true);
-                                Turn = ETurn.FightingBoss;
                                 _target = Boss.GetComponent<Unit>();
+                                Turn = ETurn.FightingBoss;
                             });
                     }
                     else
                     {
                         if (Input.GetMouseButtonDown(0))
                         {
-                            _target.OnBeingAttacked();
+                            _target?.OnBeingAttacked();
                             cache = 1;
                             if (!isAttacking && !isAttacked)
                             {
@@ -423,7 +423,10 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                     PlayAttack();
                                 }
                             }
-                            else _target.OnAttack(0, null);
+                            else
+                            {
+                                _target?.OnAttack(0, null);
+                            }
                         }
                     }
                 }
@@ -435,6 +438,7 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
     {
         tapToFightingBoss.SetActive(false);
         isTapFightingBoss = true;
+        hasBloodEnemy = true;
     }
 
     public void SavePrincessVsBoss()
@@ -1572,13 +1576,13 @@ public class Player : Unit, IAnim, IHasSkeletonDataAsset
                                     if (Turn != ETurn.FightingBoss)
                                     {
                                         int attackRandom = UnityEngine.Random.Range(1, 11);
-                                        if(attackRandom <= 7) attacks = new string[]{ "Attack2"};
+                                        if (attackRandom <= 7) attacks = new string[] { "Attack2" };
                                         else attacks = new string[] { "Attack3" };
                                     }
                                     //attacks = new string[] { "Attack2" };
                                     else attacks = new string[] { "Attack", "Attack3" };
                                 }
-                                else attacks = new string[] { "Attack", "Attack3"};
+                                else attacks = new string[] { "Attack", "Attack3" };
                                 break;
                             }
                     }
