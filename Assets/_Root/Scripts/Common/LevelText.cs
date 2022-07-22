@@ -33,6 +33,6 @@ public class LevelText : MonoBehaviour
 
     public void LevelBoss()
     {
-        level.text = "BOSS";
+        level.text = $"Level {Data.CurrentLevel} : BOSS";
     }
 }
