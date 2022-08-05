@@ -23,6 +23,7 @@ public class LibraryItem : MonoBehaviour
 
         text.text = "Lv:" + libraryData.LevelUnlock;
         avatar.sprite = libraryData.Sprite;
+        if (libraryData.IsFlipXSprite) avatar.transform.localScale = new Vector2(avatar.transform.localScale.x * -1, avatar.transform.localScale.y);
     }
 
     public void Reset()

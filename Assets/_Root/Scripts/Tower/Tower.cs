@@ -5,6 +5,9 @@ using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 using System;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class Tower : MonoBehaviour
 {
@@ -118,6 +121,7 @@ public class Tower : MonoBehaviour
             slot.GetComponent<Image>().SetNativeSize();
             slot.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(520, 289);
         }
+        EditorUtility.SetDirty(this);
     }
     private void NumberedUnits()
     {

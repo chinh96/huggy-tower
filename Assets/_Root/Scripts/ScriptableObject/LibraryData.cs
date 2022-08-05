@@ -13,6 +13,7 @@ public class LibraryData : ScriptableObject, IHasSkeletonDataAsset
     public int LevelUnlock;
     public Sprite Sprite;
     public string Description;
+    public bool IsFlipXSprite;
     public bool IsUnlocked => Data.CurrentLevel >= LevelUnlock;
     public SkeletonDataAsset SkeletonDataAsset => SkeDataAsset;
     public LibrarySkeletonData LibraryAnimation;
